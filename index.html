@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>APTO | AI Productivity Tools for Everyone</title>
+  <meta name="description" content="APTO helps everyday people and small businesses use AI tools to save time, simplify work and get more done." />
+  <style>
+    :root {
+      --navy: #041a2e;
+      --navy-2: #08233c;
+      --charcoal: #222222;
+      --coral: #f28d68;
+      --soft: #fff4ee;
+      --white: #ffffff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      line-height: 1.6;
+    }
+
+    header {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+      background: radial-gradient(circle at top, #123b5e 0%, var(--navy) 55%);
+    }
+
+    .hero {
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .logo {
+      width: min(360px, 85vw);
+      border-radius: 28px;
+      margin-bottom: 28px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 7vw, 5rem);
+      margin: 0 0 10px;
+      letter-spacing: 2px;
+      color: var(--coral);
+    }
+
+    .tagline {
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      margin: 0 0 22px;
+      font-weight: 700;
+    }
+
+    .description {
+      max-width: 720px;
+      margin: 0 auto 32px;
+      font-size: 1.15rem;
+      color: #e8eef5;
+    }
+
+    .button {
+      display: inline-block;
+      background: var(--coral);
+      color: var(--charcoal);
+      padding: 15px 26px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 800;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .button:hover { transform: translateY(-2px); opacity: 0.9; }
+
+    section {
+      padding: 70px 20px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin-bottom: 14px;
+      color: var(--coral);
+    }
+
+    .section-intro {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 40px;
+      color: #d7e1ea;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 22px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 22px;
+      padding: 28px;
+    }
+
+    .card h3 {
+      color: var(--coral);
+      margin-top: 0;
+    }
+
+    .signup {
+      background: var(--soft);
+      color: var(--charcoal);
+    }
+
+    .signup .section-title { color: var(--navy); }
+    .signup .section-intro { color: #4b4b4b; }
+
+    form {
+      max-width: 620px;
+      margin: auto;
+      background: var(--white);
+      padding: 30px;
+      border-radius: 24px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    input {
+      width: 100%;
+      padding: 15px;
+      margin-bottom: 18px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      font-size: 1rem;
+    }
+
+    button {
+      width: 100%;
+      border: none;
+      background: var(--coral);
+      color: var(--charcoal);
+      padding: 16px;
+      border-radius: 14px;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .small-note {
+      font-size: 0.9rem;
+      color: #666;
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      background: #031221;
+      color: #b9c6d2;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="hero">
+      <img src="apto-logo.png" alt="APTO logo" class="logo" />
+      <h1>APTO</h1>
+      <p class="tagline">AI Productivity Tools for Everyone</p>
+      <p class="description">
+        APTO helps everyday people and small business owners use AI without the jargon. We share simple tools, honest guides and practical ideas that save time, improve workflows and make modern technology easier to use.
+      </p>
+      <a href="#signup" class="button">Join the free email list</a>
+    </div>
+  </header>
+
+  <section>
+    <div class="container">
+      <h2 class="section-title">What APTO Offers</h2>
+      <p class="section-intro">Simple, useful AI support for people who want to get more done without becoming tech experts.</p>
+      <div class="cards">
+        <div class="card">
+          <h3>AI Tool Guides</h3>
+          <p>Clear walkthroughs showing which AI tools are worth using and how to use them properly.</p>
+        </div>
+        <div class="card">
+          <h3>Productivity Tips</h3>
+          <p>Practical ideas for saving time with emails, planning, content creation, admin and daily business tasks.</p>
+        </div>
+        <div class="card">
+          <h3>Templates & Prompts</h3>
+          <p>Ready-to-use prompts, checklists and templates designed for beginners and small business owners.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="signup" id="signup">
+    <div class="container">
+      <h2 class="section-title">Get APTO Updates</h2>
+      <p class="section-intro">Sign up for simple AI productivity tips, useful tools and honest recommendations.</p>
+
+      <!-- Netlify will capture this form automatically when deployed. -->
+      <form name="apto-signup" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="apto-signup" />
+        <p style="display:none;">
+          <label>Don’t fill this out: <input name="bot-field" /></label>
+        </p>
+
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" placeholder="Your name" required />
+
+        <label for="email">Email address</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" required />
+
+        <button type="submit">Sign me up</button>
+        <p class="small-note">No spam. Just useful AI productivity ideas.</p>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 APTO. AI Productivity Tools for Everyone.</p>
+  </footer>
+</body>
+</html>
