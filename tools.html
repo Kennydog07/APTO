@@ -395,7 +395,7 @@
   <a href="index.html" class="back-btn">← Back</a>
 
   <a href="index.html" class="nav-logo" id="nav-logo-link">
-    <img id="nav-logo-img" src="Business.png" alt="APTO" />
+    <img id="nav-logo-img" src="BS.png" alt="APTO" />
     <span id="nav-logo-text">APTO Business</span>
   </a>
 
@@ -406,7 +406,7 @@
 
 <!-- PAGE HEADER -->
 <div class="page-header" id="page-header">
-  <img id="header-logo" src="Business.png" alt="APTO" />
+  <img id="header-logo" src="BS.png" alt="APTO" />
   <div class="page-header-text">
     <h1 id="header-title">Business Tools</h1>
     <p id="header-sub">AI tools to save time, automate tasks and grow your business.</p>
@@ -671,11 +671,11 @@
     const isBusiness = section === 'business';
 
     // Nav logo + text
-    document.getElementById('nav-logo-img').src = isBusiness ? 'Business.png' : 'Personal.png';
+    document.getElementById('nav-logo-img').src = isBusiness ? 'BS.png' : 'PW.png';
     document.getElementById('nav-logo-text').textContent = isBusiness ? 'APTO Business' : 'APTO Personal';
 
     // Page header
-    document.getElementById('header-logo').src = isBusiness ? 'Business.png' : 'Personal.png';
+    document.getElementById('header-logo').src = isBusiness ? 'BS.png' : 'PW.png';
     document.getElementById('header-title').textContent = isBusiness ? 'Business Tools' : 'Personal Wealth Tools';
     document.getElementById('header-sub').textContent = isBusiness
       ? 'AI tools to save time, automate tasks and grow your business.'
