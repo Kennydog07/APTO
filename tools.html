@@ -353,6 +353,28 @@
     .signup-row button:hover { opacity: .85; }
     .success-msg { display: none; color: #1a6b4a; font-size: .9rem; margin-top: 12px; }
 
+    .signup-beehiiv-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 13px 28px;
+      border-radius: 999px;
+      background: var(--btn-bg);
+      color: var(--btn-text);
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: .95rem;
+      letter-spacing: .02em;
+      text-decoration: none;
+      margin-top: 4px;
+      transition: opacity .18s, transform .15s;
+    }
+    .signup-beehiiv-btn:hover { opacity: .85; transform: translateY(-1px); }
+    .signup-note {
+      margin-top: 12px;
+      font-size: .75rem;
+      color: var(--muted);
+    }
     .disclosure {
       text-align: center;
       font-size: .72rem;
@@ -614,17 +636,27 @@
 </div><!-- end tool-grid -->
 
 <!-- SIGNUP -->
-<div class="signup-section" id="signup-section">
+<!-- BUSINESS SIGNUP -->
+<div class="signup-section" id="signup-business">
   <div class="signup-box">
-    <h2 id="signup-title">Get the Business Starter Kit</h2>
-    <p id="signup-sub">Free AI prompts, tool guides and productivity tips straight to your inbox.</p>
-    <form onsubmit="submitForm(event)">
-      <div class="signup-row">
-        <input type="email" placeholder="your@email.com" required />
-        <button type="submit">Send it</button>
-      </div>
-    </form>
-    <p class="success-msg" id="success-msg">✓ On its way — check your inbox!</p>
+    <h2>Get the Business Starter Kit</h2>
+    <p>Free AI prompts, tool guides and time-saving templates — straight to your inbox. No spam.</p>
+    <a href="https://apto.beehiiv.com/subscribe" target="_blank" class="signup-beehiiv-btn">
+      Send me the free kit →
+    </a>
+    <p class="signup-note">Free forever · No spam · Unsubscribe any time</p>
+  </div>
+</div>
+
+<!-- PERSONAL SIGNUP -->
+<div class="signup-section" id="signup-personal" style="display:none">
+  <div class="signup-box">
+    <h2>Get the Personal Wealth Starter Kit</h2>
+    <p>Free budget templates, money prompts and practical wealth-building tips. No spam.</p>
+    <a href="https://apto.beehiiv.com/subscribe" target="_blank" class="signup-beehiiv-btn">
+      Send me the free kit →
+    </a>
+    <p class="signup-note">Free forever · No spam · Unsubscribe any time</p>
   </div>
 </div>
 
@@ -657,11 +689,9 @@
     document.querySelectorAll('.tool-card[data-group="business"]').forEach(c => c.style.display = isBusiness ? 'flex' : 'none');
     document.querySelectorAll('.tool-card[data-group="personal"]').forEach(c => c.style.display = isBusiness ? 'none' : 'flex');
 
-    // Signup
-    document.getElementById('signup-title').textContent = isBusiness ? 'Get the Business Starter Kit' : 'Get the Personal Wealth Starter Kit';
-    document.getElementById('signup-sub').textContent = isBusiness
-      ? 'Free AI prompts, tool guides and productivity tips straight to your inbox.'
-      : 'Free budget templates, money prompts and practical wealth-building tips.';
+    // Signup boxes
+    document.getElementById('signup-business').style.display = isBusiness ? 'block' : 'none';
+    document.getElementById('signup-personal').style.display = isBusiness ? 'none' : 'block';
   }
 
   initSection();
@@ -693,11 +723,6 @@
     document.getElementById('theme-btn').textContent = '☀️ Light';
   }
 
-  // ── SIGNUP ──
-  function submitForm(e) {
-    e.preventDefault();
-    document.getElementById('success-msg').style.display = 'block';
-  }
 </script>
 </body>
 </html>
