@@ -1,681 +1,702 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Free Tools — APTO | AI & Money Tools for People & Business</title>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <title>APTO Tools</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    :root {
-      --bg: #0d0d0d;
-      --surface: #161616;
-      --surface2: #1e1e1e;
-      --border: #2a2a2a;
-      --orange: #ff6a00;
-      --orange-light: #ff8c3a;
-      --orange-glow: rgba(255,106,0,0.15);
-      --navy: #0d1b2e;
-      --navy-surface: #112240;
-      --navy-border: #1a3a5c;
-      --blue: #4fa8d5;
-      --blue-glow: rgba(79,168,213,0.15);
+    /* ── THEME TOKENS ── */
+    [data-theme="light"] {
+      --bg: #f8f4ee;
+      --surface: #ffffff;
+      --border: rgba(0,0,0,.09);
+      --text: #111111;
+      --muted: #5a5550;
+      --tag-bg: #fff2e8;
+      --tag-text: #b85200;
+      --badge-bg: #e8f5ef;
+      --badge-text: #1a6b4a;
+      --btn-bg: #111;
+      --btn-text: #fff;
+      --shadow: 0 4px 20px rgba(0,0,0,.08);
+      --nav-bg: rgba(248,244,238,.92);
+    }
+    [data-theme="dark"] {
+      --bg: #0f0f0f;
+      --surface: #1c1c1c;
+      --border: rgba(255,255,255,.1);
       --text: #f0ede8;
-      --muted: #7a7570;
+      --muted: #9a9490;
+      --tag-bg: #2a1a0a;
+      --tag-text: #ff8c3a;
+      --badge-bg: #0d2018;
+      --badge-text: #4fcf97;
+      --btn-bg: #ff7a2f;
+      --btn-text: #fff;
+      --shadow: 0 4px 20px rgba(0,0,0,.4);
+      --nav-bg: rgba(15,15,15,.94);
     }
 
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
 
     body {
+      font-family: 'DM Sans', system-ui, sans-serif;
       background: var(--bg);
       color: var(--text);
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 300;
       line-height: 1.6;
       min-height: 100vh;
-      overflow-x: hidden;
-      transition: background 0.4s ease;
+      transition: background .3s, color .3s;
     }
 
-    body.mode-personal {
-      background: #0d0d0d;
-    }
-    body.mode-business {
-      background: #0a1220;
-    }
-
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      transition: background-image 0.4s;
-    }
-
-    body.mode-personal::before {
-      background-image:
-        linear-gradient(rgba(255,106,0,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,106,0,0.03) 1px, transparent 1px);
-      background-size: 44px 44px;
-    }
-
-    body.mode-business::before {
-      background-image:
-        linear-gradient(rgba(79,168,213,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(79,168,213,0.04) 1px, transparent 1px);
-      background-size: 44px 44px;
-    }
-
-    /* Nav */
-    nav {
+    /* ── TOP NAV ── */
+    .topnav {
       position: sticky;
       top: 0;
       z-index: 100;
+      background: var(--nav-bg);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 1.5rem;
+      height: 60px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1rem 2.5rem;
-      background: rgba(13,13,13,0.9);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border);
-      transition: background 0.4s;
+      gap: 1rem;
     }
 
-    body.mode-business nav {
-      background: rgba(10,18,32,0.9);
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: .85rem;
+      color: var(--text);
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      transition: border-color .2s, color .2s;
     }
+    .back-btn:hover { border-color: var(--tag-text); color: var(--tag-text); }
 
     .nav-logo {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 10px;
       text-decoration: none;
     }
-
     .nav-logo img {
-      height: 40px;
-      width: 40px;
-      object-fit: contain;
+      height: 36px;
+      width: 36px;
       border-radius: 50%;
-      transition: opacity 0.3s;
+      object-fit: cover;
     }
-
-    .nav-logo-personal { display: block; }
-    .nav-logo-business { display: none; }
-
-    body.mode-business .nav-logo-personal { display: none; }
-    body.mode-business .nav-logo-business { display: block; }
-
-    .nav-logo-text {
+    .nav-logo span {
       font-family: 'Syne', sans-serif;
       font-weight: 800;
-      font-size: 1.2rem;
-      letter-spacing: -0.02em;
-      color: var(--orange);
-      transition: color 0.4s;
-    }
-
-    body.mode-business .nav-logo-text { color: var(--blue); }
-
-    nav a.nav-link {
-      font-size: 0.82rem;
-      color: var(--muted);
-      text-decoration: none;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      transition: color 0.2s;
-    }
-    nav a.nav-link:hover { color: var(--orange); }
-    body.mode-business nav a.nav-link:hover { color: var(--blue); }
-
-    /* Hero */
-    .hero {
-      position: relative;
-      z-index: 1;
-      max-width: 820px;
-      margin: 0 auto;
-      padding: 4.5rem 2rem 2.5rem;
-      text-align: center;
-    }
-
-    .hero-logo-wrap {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 2rem;
-      animation: fadeUp 0.5s ease both;
-    }
-
-    .hero-logo-wrap img {
-      height: 90px;
-      width: 90px;
-      object-fit: contain;
-      border-radius: 50%;
-      transition: opacity 0.3s;
-    }
-
-    .hero-logo-personal { display: block; }
-    .hero-logo-business { display: none; }
-    body.mode-business .hero-logo-personal { display: none; }
-    body.mode-business .hero-logo-business { display: block; }
-
-    h1 {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: clamp(2rem, 5.5vw, 3.6rem);
-      line-height: 1.05;
-      letter-spacing: -0.03em;
-      margin-bottom: 1rem;
-      animation: fadeUp 0.5s 0.1s ease both;
-    }
-
-    h1 em {
-      font-style: normal;
-      color: var(--orange);
-      transition: color 0.4s;
-    }
-
-    body.mode-business h1 em { color: var(--blue); }
-
-    .hero-sub {
       font-size: 1rem;
-      color: var(--muted);
-      max-width: 500px;
-      margin: 0 auto 0.8rem;
-      animation: fadeUp 0.5s 0.15s ease both;
+      color: var(--text);
+      letter-spacing: -.02em;
     }
 
-    .disclosure {
-      font-size: 0.72rem;
-      color: var(--muted);
-      opacity: 0.5;
-      animation: fadeUp 0.5s 0.2s ease both;
-    }
+    .nav-right { display: flex; align-items: center; gap: 10px; }
 
-    /* Tab switcher */
-    .tab-row {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      justify-content: center;
-      padding: 0 2rem 2rem;
-      animation: fadeUp 0.5s 0.22s ease both;
-    }
-
-    .tab-btn {
-      font-family: 'Syne', sans-serif;
-      font-size: 0.82rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      padding: 0.7rem 1.8rem;
-      border: 1px solid var(--border);
-      background: transparent;
-      color: var(--muted);
+    /* Dark mode toggle */
+    .theme-toggle {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 999px;
+      padding: 5px 12px;
       cursor: pointer;
-      transition: all 0.25s;
+      font-size: .8rem;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      color: var(--text);
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 5px;
+      transition: border-color .2s;
     }
+    .theme-toggle:hover { border-color: var(--tag-text); }
 
-    .tab-btn:first-child { border-radius: 8px 0 0 8px; }
-    .tab-btn:last-child  { border-radius: 0 8px 8px 0; border-left: none; }
-
-    .tab-btn.active-p {
-      background: var(--orange-glow);
-      border-color: var(--orange);
-      color: var(--orange);
+    /* ── PAGE HEADER ── */
+    .page-header {
+      padding: 3rem 1.5rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 20px;
     }
-
-    .tab-btn.active-b {
-      background: var(--blue-glow);
-      border-color: var(--blue);
-      color: var(--blue);
-    }
-
-    .tab-logo {
-      height: 18px;
-      width: 18px;
+    .page-header img {
+      height: 72px;
+      width: 72px;
       border-radius: 50%;
-      object-fit: contain;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .page-header-text h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 800;
+      letter-spacing: -.03em;
+      line-height: 1.1;
+    }
+    .page-header-text p {
+      color: var(--muted);
+      font-size: .95rem;
+      font-weight: 300;
+      margin-top: 4px;
     }
 
-    /* Filter bar */
+    /* ── FILTER BAR ── */
     .filter-bar {
-      position: relative;
-      z-index: 1;
+      padding: 0 1.5rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
       display: flex;
       flex-wrap: wrap;
-      gap: 0.45rem;
-      justify-content: center;
-      padding: 0 2rem 2.5rem;
+      gap: 8px;
     }
-
     .filter-btn {
+      padding: 7px 16px;
+      border-radius: 999px;
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      color: var(--muted);
       font-family: 'DM Sans', sans-serif;
-      font-size: 0.75rem;
+      font-size: .82rem;
       font-weight: 500;
-      padding: 0.36rem 0.9rem;
-      border-radius: 100px;
-      border: 1px solid var(--border);
-      background: transparent;
-      color: var(--muted);
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all .2s;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: .04em;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      border-color: var(--tag-text);
+      color: var(--tag-text);
+      background: var(--tag-bg);
     }
 
-    .filter-btn.active-p { border-color: var(--orange); color: var(--orange); background: var(--orange-glow); }
-    .filter-btn.active-b { border-color: var(--blue); color: var(--blue); background: var(--blue-glow); }
-
-    /* Section label */
-    .section-label {
-      position: relative;
-      z-index: 1;
-      max-width: 1100px;
-      margin: 0 auto 1.2rem;
-      padding: 0 2rem;
-      font-family: 'Syne', sans-serif;
-      font-size: 0.7rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--muted);
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-    .section-label::after {
-      content: ''; flex: 1; height: 1px; background: var(--border);
-    }
-
-    /* Grid */
-    .grid {
-      position: relative;
-      z-index: 1;
+    /* ── GRID ── */
+    .tool-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.1rem;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
       max-width: 1100px;
       margin: 0 auto;
-      padding: 0 2rem 6rem;
+      padding: 0 1.5rem 4rem;
     }
 
-    /* Card */
-    .card {
-      border-radius: 14px;
-      padding: 1.5rem;
+    /* ── CARD ── */
+    .tool-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 22px 20px 20px;
       display: flex;
       flex-direction: column;
-      gap: 0.9rem;
-      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
-      animation: fadeUp 0.5s ease both;
-      position: relative;
-      overflow: hidden;
+      gap: 10px;
+      box-shadow: var(--shadow);
+      transition: transform .2s, border-color .2s, box-shadow .2s;
     }
-
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      opacity: 0;
-      transition: opacity 0.3s;
+    .tool-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255,122,47,.35);
+      box-shadow: 0 10px 32px rgba(0,0,0,.12);
     }
-
-    .card:hover { transform: translateY(-3px); }
-    .card:hover::before { opacity: 1; }
-
-    /* Personal card */
-    .card.personal {
-      background: var(--surface);
-      border: 1px solid var(--border);
-    }
-    .card.personal::before { background: linear-gradient(90deg, transparent, var(--orange), transparent); }
-    .card.personal:hover { border-color: rgba(255,106,0,0.4); box-shadow: 0 12px 36px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,106,0,0.1); }
-
-    /* Business card */
-    .card.business {
-      background: #0e1c30;
-      border: 1px solid var(--navy-border);
-    }
-    .card.business::before { background: linear-gradient(90deg, transparent, var(--blue), transparent); }
-    .card.business:hover { border-color: rgba(79,168,213,0.4); box-shadow: 0 12px 36px rgba(0,0,0,0.5), 0 0 0 1px rgba(79,168,213,0.1); }
 
     .card-top {
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-      gap: 1rem;
+      gap: 10px;
     }
 
     .card-icon {
-      width: 42px; height: 42px;
-      border-radius: 10px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
+      font-size: 1.6rem;
+      line-height: 1;
       flex-shrink: 0;
     }
 
-    .card.business .card-icon {
-      background: #0a1830;
-      border-color: var(--navy-border);
-    }
-
-    .card-tag {
-      font-size: 0.68rem;
+    .card-cat {
+      font-size: .7rem;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      padding: 0.22rem 0.6rem;
-      border-radius: 100px;
+      letter-spacing: .08em;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: var(--tag-bg);
+      color: var(--tag-text);
       white-space: nowrap;
     }
 
-    .card.personal .card-tag { color: var(--orange); background: var(--orange-glow); border: 1px solid rgba(255,106,0,0.25); }
-    .card.business .card-tag { color: var(--blue); background: var(--blue-glow); border: 1px solid rgba(79,168,213,0.25); }
-
-    .card-name {
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 1rem;
-      letter-spacing: -0.01em;
+    .card-type {
+      font-size: .72rem;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--muted);
+      font-weight: 500;
     }
 
-    .card-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.55; flex: 1; }
-
-    .card-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
+    .tool-card h3 {
       font-family: 'Syne', sans-serif;
-      font-weight: 600;
-      font-size: 0.78rem;
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -.01em;
+      color: var(--text);
+    }
+
+    .tool-card p {
+      font-size: .88rem;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: .68rem;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      text-decoration: none;
-      padding: 0.6rem 1.1rem;
-      border-radius: 7px;
-      transition: all 0.2s;
+      letter-spacing: .06em;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: var(--badge-bg);
+      color: var(--badge-text);
       align-self: flex-start;
     }
 
-    .card.personal .card-cta { color: var(--orange); border: 1px solid rgba(255,106,0,0.3); background: var(--orange-glow); }
-    .card.personal .card-cta:hover { background: var(--orange); color: #000; border-color: var(--orange); }
-
-    .card.business .card-cta { color: var(--blue); border: 1px solid rgba(79,168,213,0.3); background: var(--blue-glow); }
-    .card.business .card-cta:hover { background: var(--blue); color: #000; border-color: var(--blue); }
-
-    .card-cta svg { width: 11px; height: 11px; transition: transform 0.2s; }
-    .card-cta:hover svg { transform: translateX(3px); }
-
-    .card:nth-child(1)  { animation-delay: 0.04s; }
-    .card:nth-child(2)  { animation-delay: 0.08s; }
-    .card:nth-child(3)  { animation-delay: 0.12s; }
-    .card:nth-child(4)  { animation-delay: 0.16s; }
-    .card:nth-child(5)  { animation-delay: 0.20s; }
-    .card:nth-child(6)  { animation-delay: 0.24s; }
-    .card:nth-child(7)  { animation-delay: 0.28s; }
-    .card:nth-child(8)  { animation-delay: 0.32s; }
-    .card:nth-child(9)  { animation-delay: 0.36s; }
-    .card:nth-child(10) { animation-delay: 0.40s; }
-    .card:nth-child(11) { animation-delay: 0.44s; }
-    .card:nth-child(12) { animation-delay: 0.48s; }
-    .card:nth-child(13) { animation-delay: 0.52s; }
-    .card:nth-child(14) { animation-delay: 0.56s; }
-    .card:nth-child(15) { animation-delay: 0.60s; }
-    .card:nth-child(16) { animation-delay: 0.64s; }
-
-    footer {
-      position: relative; z-index: 1;
-      text-align: center; padding: 2rem;
-      border-top: 1px solid var(--border);
-      font-size: 0.78rem; color: var(--muted);
+    .tool-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 4px;
+      padding: 9px 18px;
+      border-radius: 999px;
+      background: var(--btn-bg);
+      color: var(--btn-text);
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: .82rem;
+      text-decoration: none;
+      align-self: flex-start;
+      transition: opacity .18s, transform .15s;
     }
-    footer a { color: var(--orange); text-decoration: none; }
-    body.mode-business footer a { color: var(--blue); }
+    .tool-link:hover { opacity: .85; transform: translateY(-1px); }
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(14px); }
-      to   { opacity: 1; transform: translateY(0); }
+    /* ── SIGNUP SECTION ── */
+    .signup-section {
+      max-width: 600px;
+      margin: 0 auto 5rem;
+      padding: 0 1.5rem;
+      text-align: center;
+    }
+    .signup-box {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      box-shadow: var(--shadow);
+    }
+    .signup-box h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .signup-box p {
+      color: var(--muted);
+      font-size: .9rem;
+      margin-bottom: 20px;
+      font-weight: 300;
+    }
+    .signup-row {
+      display: flex;
+      gap: 8px;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    .signup-row input {
+      flex: 1;
+      padding: 11px 16px;
+      border-radius: 999px;
+      border: 1.5px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: .9rem;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .signup-row input::placeholder { color: var(--muted); }
+    .signup-row input:focus { border-color: var(--tag-text); }
+    .signup-row button {
+      padding: 11px 20px;
+      border-radius: 999px;
+      background: var(--btn-bg);
+      color: var(--btn-text);
+      border: 0;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: .85rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity .18s;
+    }
+    .signup-row button:hover { opacity: .85; }
+    .success-msg { display: none; color: #1a6b4a; font-size: .9rem; margin-top: 12px; }
+
+    .disclosure {
+      text-align: center;
+      font-size: .72rem;
+      color: var(--muted);
+      padding: 0 1.5rem 3rem;
     }
 
-    @media (max-width: 600px) {
-      nav { padding: 1rem 1.2rem; }
-      .hero { padding: 3rem 1.2rem 2rem; }
-      .grid { padding: 0 1.2rem 4rem; }
-      .filter-bar, .tab-row { padding-left: 1.2rem; padding-right: 1.2rem; }
-      .tab-btn { padding: 0.6rem 1.1rem; font-size: 0.75rem; }
+    @media (max-width: 560px) {
+      .page-header { flex-direction: column; text-align: center; padding-top: 2rem; }
+      .signup-row { flex-direction: column; }
     }
   </style>
 </head>
-<body class="mode-personal">
+<body>
 
-<nav>
-  <a class="nav-logo" href="/">
-    <img class="nav-logo-personal" src="apto-logo.png" alt="APTO logo" />
-    <img class="nav-logo-business" src="APTO_Logo_2.png" alt="APTO logo" />
-    <span class="nav-logo-text">APTOAItools</span>
+<!-- TOP NAV -->
+<nav class="topnav">
+  <a href="index.html" class="back-btn">← Back</a>
+
+  <a href="index.html" class="nav-logo" id="nav-logo-link">
+    <img id="nav-logo-img" src="Business.png" alt="APTO" />
+    <span id="nav-logo-text">APTO Business</span>
   </a>
-  <a class="nav-link" href="/">← Back home</a>
+
+  <div class="nav-right">
+    <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">🌙 Dark</button>
+  </div>
 </nav>
 
-<section class="hero">
-  <div class="hero-logo-wrap">
-    <img class="hero-logo-personal" src="apto-logo.png" alt="APTO" />
-    <img class="hero-logo-business" src="APTO_Logo_2.png" alt="APTO" />
+<!-- PAGE HEADER -->
+<div class="page-header" id="page-header">
+  <img id="header-logo" src="Business.png" alt="APTO" />
+  <div class="page-header-text">
+    <h1 id="header-title">Business Tools</h1>
+    <p id="header-sub">AI tools to save time, automate tasks and grow your business.</p>
   </div>
-  <h1>Tools that actually <em>work</em></h1>
-  <p class="hero-sub">The best free and freemium tools for your personal finances and your business — all in one place.</p>
-  <p class="disclosure">⚡ Some links are affiliate links — I may earn a small commission at no cost to you.</p>
-</section>
-
-<!-- Tab switcher -->
-<div class="tab-row">
-  <button class="tab-btn active-p" id="tab-personal" onclick="switchTab('personal')">
-    <img class="tab-logo" src="apto-logo.png" alt="" /> Personal Finance
-  </button>
-  <button class="tab-btn" id="tab-business" onclick="switchTab('business')">
-    <img class="tab-logo" src="APTO_Logo_2.png" alt="" /> Business & AI Tools
-  </button>
 </div>
 
-<!-- PERSONAL filters -->
-<div class="filter-bar" id="filters-personal">
-  <button class="filter-btn active-p" onclick="filterCards('all-p', this, 'personal')">All</button>
-  <button class="filter-btn" onclick="filterCards('budgeting', this, 'personal')">Budgeting</button>
-  <button class="filter-btn" onclick="filterCards('saving', this, 'personal')">Saving</button>
-  <button class="filter-btn" onclick="filterCards('investing', this, 'personal')">Investing</button>
-  <button class="filter-btn" onclick="filterCards('side-hustle', this, 'personal')">Side Hustle</button>
-  <button class="filter-btn" onclick="filterCards('debt', this, 'personal')">Debt & Credit</button>
-  <button class="filter-btn" onclick="filterCards('buying', this, 'personal')">First Home</button>
-  <button class="filter-btn" onclick="filterCards('cashback', this, 'personal')">Cashback</button>
-</div>
-
-<!-- BUSINESS filters -->
-<div class="filter-bar" id="filters-business" style="display:none">
-  <button class="filter-btn active-b" onclick="filterCards('all-b', this, 'business')">All</button>
+<!-- FILTER BAR (business) -->
+<div class="filter-bar" id="filter-bar-business">
+  <button class="filter-btn active" onclick="filterCards('all-b', this, 'business')">All</button>
   <button class="filter-btn" onclick="filterCards('ai-writing', this, 'business')">AI Writing</button>
-  <button class="filter-btn" onclick="filterCards('ai-image', this, 'business')">AI Image</button>
-  <button class="filter-btn" onclick="filterCards('productivity', this, 'business')">Productivity</button>
   <button class="filter-btn" onclick="filterCards('design', this, 'business')">Design</button>
+  <button class="filter-btn" onclick="filterCards('productivity', this, 'business')">Productivity</button>
   <button class="filter-btn" onclick="filterCards('marketing', this, 'business')">Marketing</button>
   <button class="filter-btn" onclick="filterCards('automation', this, 'business')">Automation</button>
   <button class="filter-btn" onclick="filterCards('finance-biz', this, 'business')">Finance</button>
 </div>
 
-<div class="section-label" id="section-label">8 personal finance tools · updated regularly</div>
-
-<div class="grid" id="toolGrid">
-
-  <!-- ===== PERSONAL FINANCE ===== -->
-  <div class="card personal" data-cat="budgeting" data-group="personal">
-    <div class="card-top"><div class="card-icon">💰</div><span class="card-tag">Budgeting</span></div>
-    <div class="card-name">YNAB</div>
-    <p class="card-desc">Zero-based budgeting that gives every pound a job. The gold standard for getting your money under control.</p>
-    <a class="card-cta" href="PASTE_SOVRN_YNAB_LINK_HERE" target="_blank" rel="sponsored">Try free <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-  </div>
-
-  <div class="card personal" data-cat="saving" data-group="personal">
-    <div class="card-top"><div class="card-icon">🐷</div><span class="card-tag">Saving</span></div>
-    <div class="card-name">Plum</div>
-    <p class="card-desc">AI that automatically stashes money you won't miss. Analyses your spending and saves in the background.</p>
-    <a class="card-cta" href="PASTE_SOVRN_PLUM_LINK_HERE" target="_blank" rel="sponsored">Start saving <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-  </div>
-
-  <div class="card personal" data-cat="investing" data-group="personal">
-    <div class="card-top"><div class="card-icon">📈</div><span class="card-tag">Investing</span></div>
-    <div class="card-name">Trading 212</div>
-    <p class="card-desc">Commission-free investing and a free share on sign-up. The easiest entry point for beginner investors.</p>
-    <a class="card-cta" href="https://sovrn.co/7enchey" target="_blank" rel="sponsored">Get a free share <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-  </div>
-
-  <div class="card personal" data-cat="side-hustle" data-group="personal">
-    <div class="card-top"><div class="card-icon">🚀</div><span class="card-tag">Side Hustle</span></div>
-    <div class="card-name">Fiverr</div>
-    <p class="card-desc">Turn a skill you already have into income. Writing, design, social media — there's a buyer for almost everything.</p>
-    <a class="card-cta" href="PASTE_SOVRN_FIVERR_LINK_HERE" target="_blank" rel="sponsored">Start earning <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-  </div>
-
-  <div class="card personal" data-cat="debt" data-group="personal">
-    <div class="card-top"><div class="card-icon">📊</div><span class="card-tag">Debt & Credit</span></div>
-    <div class="card-name">ClearScore</div>
-    <p class="card-desc">Free credit score for life. Know exactly where you stand and get personalised tips to improve over time.</p>
-    <a class="card-cta" href="https://sovrn.co/p1e74z8" target="_blank" rel="sponsored">Check free <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-  </div>
-
-  <div class="card personal" data-cat="buying" data-group="personal">
-    <div class="card-top"><div class="card-icon">🏠</div><span class="card-tag">First Home</span></div>
-    <div class="card-name">Habito</div>
-    <p class="card-desc">Free online mortgage broker that searches the whole market. No jargon, no fees — just the best deal.</p>
-    <a class="card-cta" href="PASTE_SOVRN_HABITO_LINK_HERE" target="_blank" rel="sponsored">Find my mortgage <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-  </div>
-
-  <div class="card personal" data-cat="cashback" data-group="personal">
-    <div class="card-top"><div class="card-icon">💸</div><span class="card-tag">Cashback</span></div>
-    <div class="card-name">TopCashback</div>
-    <p class="card-desc">Get paid to shop at places you already use. The UK's highest paying cashback site — £10 free on join.</p>
-    <a class="card-cta" href="https://sovrn.co/9o4geqx" target="_blank" rel="sponsored">Claim £10 bonus <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-  </div>
-
-  <div class="card personal" data-cat="saving" data-group="personal">
-    <div class="card-top"><div class="card-icon">🏦</div><span class="card-tag">Banking</span></div>
-    <div class="card-name">Monzo</div>
-    <p class="card-desc">The bank built for people serious about money. Instant notifications, saving pots, and zero hidden fees.</p>
-    <a class="card-cta" href="PASTE_SOVRN_MONZO_LINK_HERE" target="_blank" rel="sponsored">Open free account <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-  </div>
-
-  <!-- ===== BUSINESS & AI TOOLS ===== -->
-  <div class="card business" data-cat="ai-writing" data-group="business" style="display:none">
-    <div class="card-top"><div class="card-icon">✍️</div><span class="card-tag">AI Writing</span></div>
-    <div class="card-name">Claude</div>
-    <p class="card-desc">The AI assistant built for real work. Write, research, summarise, code, and think — faster than ever before.</p>
-    <a class="card-cta" href="https://claude.ai" target="_blank" rel="sponsored">Try free <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-  </div>
-
-  <div class="card business" data-cat="design" data-group="business" style="display:none">
-    <div class="card-top"><div class="card-icon">🎨</div><span class="card-tag">Design</span></div>
-    <div class="card-name">Canva</div>
-    <p class="card-desc">Design everything from social posts to pitch decks in minutes. The free plan is genuinely powerful for small businesses.</p>
-    <a class="card-cta" href="PASTE_SOVRN_CANVA_LINK_HERE" target="_blank" rel="sponsored">Design free <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-  </div>
-
-  <div class="card business" data-cat="productivity" data-group="business" style="display:none">
-    <div class="card-top"><div class="card-icon">📋</div><span class="card-tag">Productivity</span></div>
-    <div class="card-name">Notion</div>
-    <p class="card-desc">Your entire business in one tool. Notes, databases, projects, wikis — the free plan covers most small teams completely.</p>
-    <a class="card-cta" href="PASTE_SOVRN_NOTION_LINK_HERE" target="_blank" rel="sponsored">Start free <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-  </div>
-
-  <div class="card business" data-cat="ai-writing" data-group="business" style="display:none">
-    <div class="card-top"><div class="card-icon">🤖</div><span class="card-tag">AI Writing</span></div>
-    <div class="card-name">ChatGPT</div>
-    <p class="card-desc">The AI tool that started it all. Great for drafting emails, brainstorming, and answering business questions fast.</p>
-    <a class="card-cta" href="PASTE_SOVRN_CHATGPT_LINK_HERE" target="_blank" rel="sponsored">Try free <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-  </div>
-
-  <div class="card business" data-cat="marketing" data-group="business" style="display:none">
-    <div class="card-top"><div class="card-icon">📧</div><span class="card-tag">Marketing</span></div>
-    <div class="card-name">Beehiiv</div>
-    <p class="card-desc">The newsletter platform built for growth. Free up to 2,500 subscribers — the best starting point for email marketing.</p>
-    <a class="card-cta" href="PASTE_SOVRN_BEEHIIV_LINK_HERE" target="_blank" rel="sponsored">Start free <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-  </div>
-
-  <div class="card business" data-cat="automation" data-group="business" style="display:none">
-    <div class="card-top"><div class="card-icon">⚡</div><span class="card-tag">Automation</span></div>
-    <div class="card-name">Zapier</div>
-    <p class="card-desc">Connect your apps and automate repetitive tasks without writing a line of code. Save hours every week.</p>
-    <a class="card-cta" href="PASTE_SOVRN_ZAPIER_LINK_HERE" target="_blank" rel="sponsored">Automate free <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-  </div>
-
-  <div class="card business" data-cat="ai-image" data-group="business" style="display:none">
-    <div class="card-top"><div class="card-icon">🖼️</div><span class="card-tag">AI Image</span></div>
-    <div class="card-name">Midjourney</div>
-    <p class="card-desc">Generate stunning images for your brand, content, and marketing in seconds. The best AI image tool available today.</p>
-    <a class="card-cta" href="PASTE_SOVRN_MIDJOURNEY_LINK_HERE" target="_blank" rel="sponsored">Try it <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-  </div>
-
-  <div class="card business" data-cat="finance-biz" data-group="business" style="display:none">
-    <div class="card-top"><div class="card-icon">🧾</div><span class="card-tag">Finance</span></div>
-    <div class="card-name">Xero</div>
-    <p class="card-desc">Simple cloud accounting for small businesses. Send invoices, track expenses, and stay on top of your cash flow.</p>
-    <a class="card-cta" href="PASTE_SOVRN_XERO_LINK_HERE" target="_blank" rel="sponsored">Try free <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-  </div>
-
+<!-- FILTER BAR (personal) -->
+<div class="filter-bar" id="filter-bar-personal" style="display:none">
+  <button class="filter-btn active" onclick="filterCards('all-p', this, 'personal')">All</button>
+  <button class="filter-btn" onclick="filterCards('investing', this, 'personal')">Investing</button>
+  <button class="filter-btn" onclick="filterCards('cashback', this, 'personal')">Cashback</button>
+  <button class="filter-btn" onclick="filterCards('debt', this, 'personal')">Credit</button>
+  <button class="filter-btn" onclick="filterCards('saving', this, 'personal')">Saving</button>
+  <button class="filter-btn" onclick="filterCards('budgeting', this, 'personal')">Budgeting</button>
 </div>
 
-<footer>
-  <p>© 2026 APTOAItools · <a href="/">Home</a> · ⚡ Affiliate disclosure: some links earn APTO a small commission at no extra cost to you.</p>
-</footer>
+<!-- TOOL GRID -->
+<div class="tool-grid" id="tool-grid">
+
+  <!-- ── BUSINESS CARDS ── -->
+
+  <div class="tool-card" data-cat="ai-writing" data-group="business">
+    <div class="card-top">
+      <span class="card-icon">✍️</span>
+      <span class="card-cat">AI Writing</span>
+    </div>
+    <span class="card-type">AI Assistant</span>
+    <h3>Claude</h3>
+    <p>The AI assistant built for real work. Write, research, summarise and think faster than ever.</p>
+    <span class="badge">Free tier</span>
+    <a class="tool-link" href="https://claude.ai" target="_blank" rel="sponsored noopener">Try free →</a>
+  </div>
+
+  <div class="tool-card" data-cat="design" data-group="business">
+    <div class="card-top">
+      <span class="card-icon">🎨</span>
+      <span class="card-cat">Design</span>
+    </div>
+    <span class="card-type">Design Tool</span>
+    <h3>Canva</h3>
+    <p>Design social posts, pitch decks and marketing materials in minutes. Genuinely powerful free plan.</p>
+    <span class="badge">Free tier</span>
+    <a class="tool-link" href="PASTE_SOVRN_CANVA_LINK_HERE" target="_blank" rel="sponsored noopener">Start free →</a>
+  </div>
+
+  <div class="tool-card" data-cat="productivity" data-group="business">
+    <div class="card-top">
+      <span class="card-icon">📋</span>
+      <span class="card-cat">Productivity</span>
+    </div>
+    <span class="card-type">Workspace</span>
+    <h3>Notion</h3>
+    <p>Your entire business in one tool — notes, databases, projects and wikis. Free plan covers most small teams.</p>
+    <span class="badge">Free tier</span>
+    <a class="tool-link" href="PASTE_SOVRN_NOTION_LINK_HERE" target="_blank" rel="sponsored noopener">Start free →</a>
+  </div>
+
+  <div class="tool-card" data-cat="marketing" data-group="business">
+    <div class="card-top">
+      <span class="card-icon">📧</span>
+      <span class="card-cat">Marketing</span>
+    </div>
+    <span class="card-type">Newsletter</span>
+    <h3>Beehiiv</h3>
+    <p>The newsletter platform built for growth. Free up to 2,500 subscribers — the best starting point for email marketing.</p>
+    <span class="badge">Free tier</span>
+    <a class="tool-link" href="PASTE_SOVRN_BEEHIIV_LINK_HERE" target="_blank" rel="sponsored noopener">Start free →</a>
+  </div>
+
+  <div class="tool-card" data-cat="automation" data-group="business">
+    <div class="card-top">
+      <span class="card-icon">⚡</span>
+      <span class="card-cat">Automation</span>
+    </div>
+    <span class="card-type">No-code Automation</span>
+    <h3>Zapier</h3>
+    <p>Connect your apps and automate repetitive tasks without writing a line of code. Save hours every week.</p>
+    <span class="badge">Free tier</span>
+    <a class="tool-link" href="PASTE_SOVRN_ZAPIER_LINK_HERE" target="_blank" rel="sponsored noopener">Start free →</a>
+  </div>
+
+  <div class="tool-card" data-cat="finance-biz" data-group="business">
+    <div class="card-top">
+      <span class="card-icon">🧾</span>
+      <span class="card-cat">Finance</span>
+    </div>
+    <span class="card-type">Accounting</span>
+    <h3>Xero</h3>
+    <p>Simple cloud accounting for small businesses. Send invoices, track expenses and stay on top of cash flow.</p>
+    <span class="badge">Paid</span>
+    <a class="tool-link" href="PASTE_SOVRN_XERO_LINK_HERE" target="_blank" rel="sponsored noopener">Try free →</a>
+  </div>
+
+  <div class="tool-card" data-cat="ai-writing" data-group="business">
+    <div class="card-top">
+      <span class="card-icon">🤖</span>
+      <span class="card-cat">AI Writing</span>
+    </div>
+    <span class="card-type">AI Assistant</span>
+    <h3>ChatGPT</h3>
+    <p>Great for drafting emails, brainstorming ideas and answering business questions fast.</p>
+    <span class="badge">Free tier</span>
+    <a class="tool-link" href="https://chat.openai.com" target="_blank" rel="noopener">Try free →</a>
+  </div>
+
+  <div class="tool-card" data-cat="design" data-group="business">
+    <div class="card-top">
+      <span class="card-icon">🖼️</span>
+      <span class="card-cat">Design</span>
+    </div>
+    <span class="card-type">AI Image</span>
+    <h3>Midjourney</h3>
+    <p>Generate stunning images for your brand, content and marketing in seconds.</p>
+    <span class="badge">Paid</span>
+    <a class="tool-link" href="https://midjourney.com" target="_blank" rel="noopener">Explore →</a>
+  </div>
+
+  <!-- ── PERSONAL CARDS ── -->
+
+  <div class="tool-card" data-cat="investing" data-group="personal" style="display:none">
+    <div class="card-top">
+      <span class="card-icon">📈</span>
+      <span class="card-cat">Investing</span>
+    </div>
+    <span class="card-type">Investment Platform</span>
+    <h3>Trading 212</h3>
+    <p>Commission-free investing and a free share on sign-up. The easiest entry point for beginner investors.</p>
+    <span class="badge">Affiliate</span>
+    <a class="tool-link" href="https://sovrn.co/7enchey" target="_blank" rel="nofollow sponsored noopener">Get a free share →</a>
+  </div>
+
+  <div class="tool-card" data-cat="cashback" data-group="personal" style="display:none">
+    <div class="card-top">
+      <span class="card-icon">💸</span>
+      <span class="card-cat">Cashback</span>
+    </div>
+    <span class="card-type">Cashback Site</span>
+    <h3>TopCashback</h3>
+    <p>Get paid to shop at places you already use. The UK's highest paying cashback site — £10 free on join.</p>
+    <span class="badge">Affiliate</span>
+    <a class="tool-link" href="https://sovrn.co/9o4geqx" target="_blank" rel="nofollow sponsored noopener">Claim £10 bonus →</a>
+  </div>
+
+  <div class="tool-card" data-cat="debt" data-group="personal" style="display:none">
+    <div class="card-top">
+      <span class="card-icon">📊</span>
+      <span class="card-cat">Credit</span>
+    </div>
+    <span class="card-type">Credit Score</span>
+    <h3>ClearScore</h3>
+    <p>Free credit score for life. Know exactly where you stand and get personalised tips to improve over time.</p>
+    <span class="badge">Affiliate</span>
+    <a class="tool-link" href="https://sovrn.co/p1e74z8" target="_blank" rel="nofollow sponsored noopener">Check free →</a>
+  </div>
+
+  <div class="tool-card" data-cat="saving" data-group="personal" style="display:none">
+    <div class="card-top">
+      <span class="card-icon">🐷</span>
+      <span class="card-cat">Saving</span>
+    </div>
+    <span class="card-type">AI Savings App</span>
+    <h3>Plum</h3>
+    <p>AI that automatically stashes money you won't miss. Analyses your spending and saves in the background.</p>
+    <span class="badge">Free tier</span>
+    <a class="tool-link" href="PASTE_SOVRN_PLUM_LINK_HERE" target="_blank" rel="nofollow sponsored noopener">Start saving →</a>
+  </div>
+
+  <div class="tool-card" data-cat="budgeting" data-group="personal" style="display:none">
+    <div class="card-top">
+      <span class="card-icon">💰</span>
+      <span class="card-cat">Budgeting</span>
+    </div>
+    <span class="card-type">Budget App</span>
+    <h3>YNAB</h3>
+    <p>Zero-based budgeting that gives every pound a job. The gold standard for getting money under control.</p>
+    <span class="badge">Free trial</span>
+    <a class="tool-link" href="PASTE_SOVRN_YNAB_LINK_HERE" target="_blank" rel="nofollow sponsored noopener">Try free →</a>
+  </div>
+
+  <div class="tool-card" data-cat="saving" data-group="personal" style="display:none">
+    <div class="card-top">
+      <span class="card-icon">🏦</span>
+      <span class="card-cat">Banking</span>
+    </div>
+    <span class="card-type">Digital Bank</span>
+    <h3>Monzo</h3>
+    <p>The bank built for people serious about money. Instant notifications, saving pots and zero hidden fees.</p>
+    <span class="badge">Free</span>
+    <a class="tool-link" href="PASTE_SOVRN_MONZO_LINK_HERE" target="_blank" rel="nofollow sponsored noopener">Open free account →</a>
+  </div>
+
+  <div class="tool-card" data-cat="investing" data-group="personal" style="display:none">
+    <div class="card-top">
+      <span class="card-icon">🏠</span>
+      <span class="card-cat">First Home</span>
+    </div>
+    <span class="card-type">Mortgage Broker</span>
+    <h3>Habito</h3>
+    <p>Free online mortgage broker that searches the whole market. No jargon, no fees — just the best deal.</p>
+    <span class="badge">Free</span>
+    <a class="tool-link" href="PASTE_SOVRN_HABITO_LINK_HERE" target="_blank" rel="nofollow sponsored noopener">Find my mortgage →</a>
+  </div>
+
+  <div class="tool-card" data-cat="cashback" data-group="personal" style="display:none">
+    <div class="card-top">
+      <span class="card-icon">🚀</span>
+      <span class="card-cat">Side Hustle</span>
+    </div>
+    <span class="card-type">Freelance Platform</span>
+    <h3>Fiverr</h3>
+    <p>Turn a skill you already have into income. Writing, design, social media — there's a buyer for almost everything.</p>
+    <span class="badge">Free to join</span>
+    <a class="tool-link" href="PASTE_SOVRN_FIVERR_LINK_HERE" target="_blank" rel="nofollow sponsored noopener">Start earning →</a>
+  </div>
+
+</div><!-- end tool-grid -->
+
+<!-- SIGNUP -->
+<div class="signup-section" id="signup-section">
+  <div class="signup-box">
+    <h2 id="signup-title">Get the Business Starter Kit</h2>
+    <p id="signup-sub">Free AI prompts, tool guides and productivity tips straight to your inbox.</p>
+    <form onsubmit="submitForm(event)">
+      <div class="signup-row">
+        <input type="email" placeholder="your@email.com" required />
+        <button type="submit">Send it</button>
+      </div>
+    </form>
+    <p class="success-msg" id="success-msg">✓ On its way — check your inbox!</p>
+  </div>
+</div>
+
+<p class="disclosure">⚡ Some links are affiliate links — APTO may earn a small commission at no cost to you.</p>
 
 <script>
-  function switchTab(tab) {
-    const body = document.body;
-    const tabP = document.getElementById('tab-personal');
-    const tabB = document.getElementById('tab-business');
-    const filtersP = document.getElementById('filters-personal');
-    const filtersB = document.getElementById('filters-business');
-    const label = document.getElementById('section-label');
+  // ── SECTION DETECTION ──
+  const params = new URLSearchParams(window.location.search);
+  const section = params.get('section') || 'business';
 
-    if (tab === 'personal') {
-      body.className = 'mode-personal';
-      tabP.className = 'tab-btn active-p';
-      tabB.className = 'tab-btn';
-      filtersP.style.display = 'flex';
-      filtersB.style.display = 'none';
-      label.textContent = '8 personal finance tools · updated regularly';
-      document.querySelectorAll('.card[data-group="personal"]').forEach(c => c.style.display = 'flex');
-      document.querySelectorAll('.card[data-group="business"]').forEach(c => c.style.display = 'none');
-      filtersP.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active-p','active-b'));
-      filtersP.querySelectorAll('.filter-btn')[0].classList.add('active-p');
-    } else {
-      body.className = 'mode-business';
-      tabB.className = 'tab-btn active-b';
-      tabP.className = 'tab-btn';
-      filtersB.style.display = 'flex';
-      filtersP.style.display = 'none';
-      label.textContent = '8 business & AI tools · updated regularly';
-      document.querySelectorAll('.card[data-group="business"]').forEach(c => c.style.display = 'flex');
-      document.querySelectorAll('.card[data-group="personal"]').forEach(c => c.style.display = 'none');
-      filtersB.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active-p','active-b'));
-      filtersB.querySelectorAll('.filter-btn')[0].classList.add('active-b');
-    }
+  function initSection() {
+    const isBusiness = section === 'business';
+
+    // Nav logo + text
+    document.getElementById('nav-logo-img').src = isBusiness ? 'Business.png' : 'Personal.png';
+    document.getElementById('nav-logo-text').textContent = isBusiness ? 'APTO Business' : 'APTO Personal';
+
+    // Page header
+    document.getElementById('header-logo').src = isBusiness ? 'Business.png' : 'Personal.png';
+    document.getElementById('header-title').textContent = isBusiness ? 'Business Tools' : 'Personal Wealth Tools';
+    document.getElementById('header-sub').textContent = isBusiness
+      ? 'AI tools to save time, automate tasks and grow your business.'
+      : 'AI tools to budget smarter, save faster and build real wealth.';
+
+    // Filter bars
+    document.getElementById('filter-bar-business').style.display = isBusiness ? 'flex' : 'none';
+    document.getElementById('filter-bar-personal').style.display = isBusiness ? 'none' : 'flex';
+
+    // Cards
+    document.querySelectorAll('.tool-card[data-group="business"]').forEach(c => c.style.display = isBusiness ? 'flex' : 'none');
+    document.querySelectorAll('.tool-card[data-group="personal"]').forEach(c => c.style.display = isBusiness ? 'none' : 'flex');
+
+    // Signup
+    document.getElementById('signup-title').textContent = isBusiness ? 'Get the Business Starter Kit' : 'Get the Personal Wealth Starter Kit';
+    document.getElementById('signup-sub').textContent = isBusiness
+      ? 'Free AI prompts, tool guides and productivity tips straight to your inbox.'
+      : 'Free budget templates, money prompts and practical wealth-building tips.';
   }
 
+  initSection();
+
+  // ── FILTER ──
   function filterCards(cat, btn, group) {
-    const bar = document.getElementById('filters-' + group);
-    bar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active-p', 'active-b'));
-    btn.classList.add(group === 'business' ? 'active-b' : 'active-p');
-    const allKey = group === 'personal' ? 'all-p' : 'all-b';
-    document.querySelectorAll('.card[data-group="' + group + '"]').forEach(card => {
+    const bar = document.getElementById('filter-bar-' + group);
+    bar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const allKey = group === 'business' ? 'all-b' : 'all-p';
+    document.querySelectorAll('.tool-card[data-group="' + group + '"]').forEach(card => {
       card.style.display = (cat === allKey || card.dataset.cat === cat) ? 'flex' : 'none';
     });
+  }
+
+  // ── DARK MODE ──
+  function toggleTheme() {
+    const html = document.documentElement;
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    document.getElementById('theme-btn').textContent = isDark ? '🌙 Dark' : '☀️ Light';
+    localStorage.setItem('apto-theme', isDark ? 'light' : 'dark');
+  }
+
+  // Restore saved theme
+  const saved = localStorage.getItem('apto-theme');
+  if (saved === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.getElementById('theme-btn').textContent = '☀️ Light';
+  }
+
+  // ── SIGNUP ──
+  function submitForm(e) {
+    e.preventDefault();
+    document.getElementById('success-msg').style.display = 'block';
   }
 </script>
 </body>
