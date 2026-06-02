@@ -163,19 +163,51 @@
       .signup-form-inline { width: 100%; flex-direction: column; }
       .signup-form-inline input { min-width: 0; width: 100%; }
     }
+  
+    /* ── SHARED NAV STYLES ── */
+    .nav { background: var(--navy); padding: 0 2rem; position: sticky; top: 0; z-index: 100; }
+    .nav-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 62px; }
+    .nav-logo { font-size: 1.2rem; font-weight: 800; color: var(--white); letter-spacing: -.01em; }
+    .nav-links { display: flex; gap: .15rem; list-style: none; }
+    .nav-links a { padding: .35rem .8rem; border-radius: 6px; font-size: .82rem; font-weight: 500; color: rgba(255,255,255,.5); transition: all .2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--white); background: rgba(255,255,255,.08); }
+    .nav-actions { display: flex; align-items: center; }
+    .nav-cta { padding: .42rem 1.1rem; background: var(--coral); color: var(--white); border-radius: 999px; font-size: .8rem; font-weight: 700; transition: all .2s; }
+    .nav-cta:hover { background: var(--coral-dk); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: rgba(255,255,255,.65); border-radius: 2px; transition: all .3s; }
+    .nav-mobile { display: none; position: absolute; top: 62px; left: 0; right: 0; background: var(--navy); border-bottom: 1px solid rgba(255,255,255,.08); padding: .75rem 1.5rem; flex-direction: column; gap: .2rem; z-index: 99; }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a { padding: .65rem .9rem; border-radius: 8px; font-size: .9rem; color: rgba(255,255,255,.6); font-weight: 500; transition: all .2s; }
+    .nav-mobile a:hover { background: rgba(255,255,255,.07); color: var(--white); }
+    @media (max-width: 768px) { .nav-links, .nav-actions { display: none; } .hamburger { display: flex; } }
   </style>
 </head>
 <body>
 
-<nav class="nav">
+<nav class="nav" id="nav">
   <div class="nav-inner">
     <a href="../index.html" class="nav-logo">APTO</a>
     <ul class="nav-links">
       <li><a href="../index.html">Home</a></li>
       <li><a href="index.html" class="active">Newsletter</a></li>
+      <li><a href="../index.html#what">What we do</a></li>
       <li><a href="../index.html#tools">Tools</a></li>
-      <li><a href="../index.html#signup" class="nav-cta">Free kit</a></li>
+      <li><a href="../index.html#signup">Free kit</a></li>
     </ul>
+    <div class="nav-actions">
+      <a href="../index.html#signup" class="nav-cta">Get free kit →</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="../index.html">Home</a>
+    <a href="index.html">Newsletter</a>
+    <a href="../index.html#what">What we do</a>
+    <a href="../index.html#tools">Tools</a>
+    <a href="../index.html#signup" style="color:var(--coral);font-weight:700">Get free kit →</a>
   </div>
 </nav>
 
@@ -291,5 +323,15 @@ function handleSignup(e, form) {
   form.innerHTML = '<p style="color:var(--coral);font-weight:700;font-size:.9rem">✓ Subscribed — check your inbox.</p>';
 }
 </script>
-</body>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navMobile = document.getElementById('nav-mobile');
+    if (hamburger && navMobile) {
+      hamburger.addEventListener('click', () => navMobile.classList.toggle('open'));
+      document.addEventListener('click', (e) => {
+        if (!document.getElementById('nav').contains(e.target)) navMobile.classList.remove('open');
+      });
+    }
+  </body>
 </html>
