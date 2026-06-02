@@ -1,337 +1,295 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>APTO — AI Tools for Business and Personal Wealth</title>
-  <meta name="description" content="APTO offers simple AI tools for small businesses and personal wealth." />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Newsletter Archive — APTO</title>
+  <meta name="description" content="Every APTO newsletter issue in one place. AI tool guides, money habits and productivity workflows for small business owners. Free to read.">
+  <link rel="canonical" href="https://aptotools.netlify.app/newsletter/">
+  <link rel="stylesheet" href="newsletter.css">
   <style>
-    [data-theme="light"] {
-      --bg: #f8f4ee;
-      --bg-grad1: rgba(255,110,30,.16);
-      --bg-grad2: rgba(255,110,30,.10);
-      --surface: rgba(255,255,255,.92);
-      --border: rgba(0,0,0,.08);
-      --text: #111111;
-      --muted: #5a5550;
-      --eyebrow-bg: #fff2e8;
-      --eyebrow-text: #b85200;
-      --btn-bg: #111;
-      --btn-text: #fff;
-      --shadow: 0 12px 40px rgba(20,14,4,.09);
-      --nav-bg: rgba(248,244,238,.92);
-      --strip-bg: #111;
-      --strip-text: #fff;
-      --strip-muted: rgba(255,255,255,.55);
-      --strip-btn: #ff7a2f;
+    .archive-header {
+      background: var(--navy);
+      padding: 3.5rem 0 3rem;
+      position: relative; overflow: hidden;
     }
-    [data-theme="dark"] {
-      --bg: #0f0f0f;
-      --bg-grad1: rgba(255,110,30,.08);
-      --bg-grad2: rgba(255,110,30,.05);
-      --surface: rgba(28,28,28,.95);
-      --border: rgba(255,255,255,.1);
-      --text: #f0ede8;
-      --muted: #9a9490;
-      --eyebrow-bg: #2a1a0a;
-      --eyebrow-text: #ff8c3a;
-      --btn-bg: #ff7a2f;
-      --btn-text: #fff;
-      --shadow: 0 12px 40px rgba(0,0,0,.4);
-      --nav-bg: rgba(15,15,15,.94);
-      --strip-bg: #1c1c1c;
-      --strip-text: #f0ede8;
-      --strip-muted: rgba(240,237,232,.5);
-      --strip-btn: #ff7a2f;
+    .archive-header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 50% 80% at 80% 50%, rgba(235,110,20,.1) 0%, transparent 60%);
+      pointer-events: none;
     }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'DM Sans', system-ui, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      min-height: 100vh;
-      transition: background .3s, color .3s;
-    }
-
-    /* ── TOP NAV ── */
-    .topnav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: var(--nav-bg);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border);
-      padding: 0 1.5rem;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .nav-brand {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: 1.1rem;
-      letter-spacing: -.02em;
-      color: var(--text);
-    }
-    .theme-toggle {
-      background: var(--surface);
-      border: 1.5px solid var(--border);
+    .archive-header .container { position: relative; z-index: 1; }
+    .archive-eyebrow {
+      display: inline-flex; align-items: center; gap: .4rem;
+      background: rgba(235,110,20,.15);
+      border: 1px solid rgba(235,110,20,.25);
       border-radius: 999px;
-      padding: 5px 14px;
-      cursor: pointer;
-      font-size: .8rem;
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 500;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      transition: border-color .2s;
+      padding: .25rem .85rem;
+      font-size: .75rem; font-weight: 700;
+      color: rgba(235,110,20,.9);
+      letter-spacing: .04em; text-transform: uppercase;
+      margin-bottom: 1.1rem;
     }
-    .theme-toggle:hover { border-color: var(--eyebrow-text); }
+    .archive-header h1 {
+      font-size: clamp(1.9rem, 4vw, 2.9rem);
+      font-weight: 800; line-height: 1.1;
+      letter-spacing: -.02em; color: var(--white);
+      margin-bottom: .75rem;
+    }
+    .archive-header p {
+      font-size: .97rem; color: rgba(255,255,255,.55);
+      max-width: 480px; line-height: 1.7;
+    }
+    .archive-stats {
+      display: flex; gap: 2.5rem; margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+    .stat-val { font-size: 1.7rem; font-weight: 800; color: var(--white); line-height: 1; }
+    .stat-lab { font-size: .75rem; color: rgba(255,255,255,.4); margin-top: .15rem; }
 
-    /* ── HERO ── */
-    .hero {
-      min-height: calc(100vh - 56px);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 3rem 1.5rem;
-      background:
-        radial-gradient(circle at 12% 20%, var(--bg-grad1), transparent 38%),
-        radial-gradient(circle at 88% 80%, var(--bg-grad2), transparent 38%);
-      text-align: center;
+    /* FILTER BAR */
+    .filter-bar {
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--mist);
+      margin-bottom: 2.5rem;
+      display: flex; gap: .4rem; flex-wrap: wrap; align-items: center;
     }
-    .hero-inner { max-width: 900px; width: 100%; }
+    .filter-label { font-size: .8rem; color: var(--slate); margin-right: .4rem; }
+    .filter-btn {
+      padding: .35rem .85rem; border-radius: 999px;
+      border: 1px solid var(--mist); background: var(--white);
+      font-family: var(--font-head); font-size: .8rem; font-weight: 500;
+      color: var(--slate); cursor: pointer; transition: all .2s;
+    }
+    .filter-btn:hover { border-color: var(--coral); color: var(--coral); }
+    .filter-btn.active { background: var(--coral); border-color: var(--coral); color: var(--white); }
 
-    .eyebrow {
-      display: inline-block;
-      padding: 6px 16px;
-      border-radius: 999px;
-      background: var(--eyebrow-bg);
-      color: var(--eyebrow-text);
-      font-weight: 700;
-      font-size: 13px;
-      letter-spacing: .04em;
-      text-transform: uppercase;
-      margin-bottom: 20px;
-    }
-    h1 {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(2.4rem, 6vw, 4.5rem);
-      font-weight: 800;
-      letter-spacing: -.03em;
-      line-height: 1.05;
-      margin-bottom: 16px;
-      color: var(--text);
-    }
-    .lead {
-      font-size: clamp(1rem, 2vw, 1.15rem);
-      color: var(--muted);
-      max-width: 560px;
-      margin: 0 auto 44px;
-      font-weight: 300;
-    }
-
-    /* ── CARDS ── */
-    .choice-grid {
+    /* ISSUE CARDS */
+    .issues-grid { display: flex; flex-direction: column; gap: 1px; background: var(--mist); border: 1px solid var(--mist); border-radius: 16px; overflow: hidden; }
+    .issue-card {
+      background: var(--white);
+      padding: 1.6rem 1.75rem;
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      max-width: 820px;
-      margin: 0 auto 40px;
-    }
-    .choice-card {
-      background: var(--surface);
-      border: 1.5px solid var(--border);
-      border-radius: 20px;
-      padding: 36px 28px 32px;
-      box-shadow: var(--shadow);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+      grid-template-columns: 72px 1fr auto;
+      gap: 0 1.5rem;
+      align-items: start;
+      transition: background .2s;
       text-decoration: none;
-      color: inherit;
     }
-    .choice-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 22px 60px rgba(20,14,4,.14);
-      border-color: rgba(255,110,30,.45);
+    .issue-card:hover { background: var(--off-white); }
+    .issue-num-col {
+      display: flex; flex-direction: column; align-items: center; gap: .3rem;
+      padding-top: .15rem;
     }
-    /* Transparent logo — just size it, no background */
-    .card-logo-wrap {
-      width: 160px;
-      height: 160px;
-      margin-bottom: 22px;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .issue-num {
+      font-size: .65rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--slate);
     }
-    .card-logo-wrap img {
-      width: 160px;
-      height: 160px;
-      object-fit: contain;
-      display: block;
+    .issue-dot {
+      width: 10px; height: 10px; border-radius: 50%;
     }
-    .choice-card h2 {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(1.35rem, 2.5vw, 1.7rem);
-      font-weight: 800;
-      letter-spacing: -.02em;
-      margin-bottom: 10px;
-      color: var(--text);
-    }
-    .choice-card p {
-      color: var(--muted);
-      font-size: .95rem;
-      font-weight: 300;
-      margin-bottom: 24px;
-      flex: 1;
-      line-height: 1.65;
-    }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 12px 26px;
-      border-radius: 999px;
-      background: var(--btn-bg);
-      color: var(--btn-text);
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: .88rem;
-      letter-spacing: .02em;
-      border: 0;
-      cursor: pointer;
-      text-decoration: none;
-      transition: opacity .18s, transform .15s;
-    }
-    .btn:hover { opacity: .85; transform: translateY(-1px); }
+    .dot-bs { background: var(--coral); }
+    .dot-pw { background: var(--navy); }
+    .dot-both { background: linear-gradient(135deg, var(--coral) 50%, var(--navy) 50%); }
 
-    /* ── SUBSCRIBE STRIP ── */
-    .subscribe-strip {
-      background: var(--strip-bg);
-      border: 1.5px solid var(--border);
-      border-radius: 20px;
-      padding: 28px 28px;
-      max-width: 820px;
-      margin: 0 auto 28px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      flex-wrap: wrap;
-      text-align: left;
+    .issue-body { min-width: 0; }
+    .issue-niche {
+      display: inline-flex; align-items: center;
+      font-size: .7rem; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase;
+      padding: .18rem .55rem; border-radius: 4px;
+      margin-bottom: .5rem;
     }
-    .subscribe-strip-text h3 {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.05rem;
-      font-weight: 800;
-      color: var(--strip-text);
-      margin-bottom: 3px;
+    .niche-bs { background: var(--coral-lt); color: #7a2a00; }
+    .niche-pw { background: #e8eef8; color: #0c447c; }
+    .issue-title {
+      font-size: 1.05rem; font-weight: 700;
+      color: var(--black); letter-spacing: -.01em;
+      margin-bottom: .3rem; line-height: 1.3;
     }
-    .subscribe-strip-text p {
-      font-size: .83rem;
-      color: var(--strip-muted);
-      font-weight: 300;
+    .issue-preview {
+      font-size: .875rem; color: var(--slate);
+      line-height: 1.6; margin-bottom: .6rem;
     }
-    .strip-btn {
-      background: var(--strip-btn);
-      color: #fff;
-      white-space: nowrap;
-      flex-shrink: 0;
-      display: inline-flex;
-      align-items: center;
-      padding: 12px 24px;
-      border-radius: 999px;
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: .88rem;
-      text-decoration: none;
-      transition: opacity .18s, transform .15s;
+    .issue-meta {
+      display: flex; gap: 1rem; align-items: center;
+      font-size: .75rem; color: var(--slate);
     }
-    .strip-btn:hover { opacity: .85; transform: translateY(-1px); }
+    .issue-meta-sep { color: var(--mist); }
+    .issue-arrow {
+      color: var(--slate); font-size: 1.1rem;
+      transition: all .2s; align-self: center;
+      padding-left: .5rem;
+    }
+    .issue-card:hover .issue-arrow { color: var(--coral); transform: translateX(3px); }
 
-    .disclosure {
-      font-size: .72rem;
-      color: var(--muted);
+    /* SIGNUP STRIP */
+    .signup-strip {
+      background: var(--black);
+      border-radius: 16px; padding: 2.25rem 2.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 2rem; flex-wrap: wrap;
+      margin: 3rem 0;
     }
+    .signup-strip h3 { font-size: 1.2rem; font-weight: 800; color: var(--white); margin-bottom: .35rem; }
+    .signup-strip p { font-size: .875rem; color: rgba(255,255,255,.5); }
+    .signup-form-inline { display: flex; gap: .4rem; flex-wrap: wrap; flex-shrink: 0; }
+    .signup-form-inline input {
+      padding: .7rem 1rem; background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12); border-radius: 8px;
+      color: var(--white); font-family: var(--font-head); font-size: .875rem;
+      outline: none; min-width: 220px;
+    }
+    .signup-form-inline input::placeholder { color: rgba(255,255,255,.3); }
+    .signup-form-inline button {
+      padding: .7rem 1.25rem; background: var(--coral); color: var(--white);
+      border: none; border-radius: 8px;
+      font-family: var(--font-head); font-size: .875rem; font-weight: 700;
+      cursor: pointer; white-space: nowrap; transition: background .2s;
+    }
+    .signup-form-inline button:hover { background: var(--coral-dk); }
 
-    @media (max-width: 620px) {
-      .choice-grid { grid-template-columns: 1fr; max-width: 360px; }
-      .card-logo-wrap { width: 130px; height: 130px; }
-      .card-logo-wrap img { width: 130px; height: 130px; }
-      .subscribe-strip { flex-direction: column; text-align: center; }
-      .subscribe-strip-text { text-align: center; }
+    /* EMPTY STATE */
+    .empty-state { text-align: center; padding: 3rem; color: var(--slate); font-size: .9rem; }
+
+    @media (max-width: 640px) {
+      .issue-card { grid-template-columns: 1fr; gap: .5rem; }
+      .issue-num-col { flex-direction: row; justify-content: flex-start; }
+      .archive-stats { gap: 1.5rem; }
+      .signup-strip { flex-direction: column; }
+      .signup-form-inline { width: 100%; flex-direction: column; }
+      .signup-form-inline input { min-width: 0; width: 100%; }
     }
   </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav class="topnav">
-  <span class="nav-brand">APTO</span>
-  <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">🌙 Dark</button>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">APTO</a>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="index.html" class="active">Newsletter</a></li>
+      <li><a href="../index.html#tools">Tools</a></li>
+      <li><a href="../index.html#signup" class="nav-cta">Free kit</a></li>
+    </ul>
+  </div>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-inner">
-
-    <span class="eyebrow">Choose your APTO path</span>
-    <h1>AI tools made simple.</h1>
-    <p class="lead">Choose Business or Personal Wealth. Each section has its own tools, guides and newsletter.</p>
-
-    <div class="choice-grid">
-      <a class="choice-card" href="tools.html?section=business">
-        <div class="card-logo-wrap"><img src="BS.png" alt="APTO Business" /></div>
-        <h2>Business Tools</h2>
-        <p>AI tools for content, emails, automation, customer replies and small business productivity.</p>
-        <span class="btn">Enter Business →</span>
-      </a>
-      <a class="choice-card" href="tools.html?section=personal">
-        <div class="card-logo-wrap"><img src="PW.png" alt="APTO Personal Wealth" /></div>
-        <h2>Personal Wealth</h2>
-        <p>AI tools for budgeting, saving, side hustles, money habits and personal finance planning.</p>
-        <span class="btn">Enter Personal →</span>
-      </a>
-    </div>
-
-    <div class="subscribe-strip">
-      <div class="subscribe-strip-text">
-        <h3>Get the free APTO newsletter</h3>
-        <p>AI tips, tool guides and money strategies — free forever. No spam.</p>
+<!-- HEADER -->
+<div class="archive-header">
+  <div class="container">
+    <div class="archive-eyebrow">Free to read</div>
+    <h1>The APTO Newsletter</h1>
+    <p>Every issue in one place. AI tool guides, money habits and productivity workflows — written for small business owners and anyone building personal wealth.</p>
+    <div class="archive-stats">
+      <div>
+        <div class="stat-val" id="issue-count">1</div>
+        <div class="stat-lab">Issues published</div>
       </div>
-      <a href="https://apto.beehiiv.com/subscribe" target="_blank" class="strip-btn">Subscribe free →</a>
+      <div>
+        <div class="stat-val">2</div>
+        <div class="stat-lab">Niches covered</div>
+      </div>
+      <div>
+        <div class="stat-val">Tue</div>
+        <div class="stat-lab">Published every week</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FILTER + ISSUES -->
+<div style="padding: 2rem 0 1rem;">
+  <div class="container">
+
+    <div class="filter-bar">
+      <span class="filter-label">Filter:</span>
+      <button class="filter-btn active" data-niche="all" onclick="filterIssues(this)">All issues</button>
+      <button class="filter-btn" data-niche="bs" onclick="filterIssues(this)">AI Productivity (BS)</button>
+      <button class="filter-btn" data-niche="pw" onclick="filterIssues(this)">Personal Wealth (PW)</button>
     </div>
 
-    <p class="disclosure">⚡ Some links are affiliate links — APTO may earn a small commission at no cost to you.</p>
+    <div class="issues-grid" id="issues-grid">
+
+      <!-- ISSUE 1 — BS -->
+      <a class="issue-card" href="issues/issue-001-bs.html" data-niche="bs">
+        <div class="issue-num-col">
+          <div class="issue-num">Issue 1</div>
+          <div class="issue-dot dot-bs"></div>
+        </div>
+        <div class="issue-body">
+          <div class="issue-niche niche-bs">AI Productivity</div>
+          <div class="issue-title">The ChatGPT prompt that writes your emails in 90 seconds</div>
+          <div class="issue-preview">Most business owners spend hours every week writing emails. This one prompt changes that. Copy it, paste it into ChatGPT free, and get a clean first draft in under two minutes.</div>
+          <div class="issue-meta">
+            <span>Tuesday, 3 June 2026</span>
+            <span class="issue-meta-sep">·</span>
+            <span>2 min read</span>
+            <span class="issue-meta-sep">·</span>
+            <span>Free</span>
+          </div>
+        </div>
+        <div class="issue-arrow">→</div>
+      </a>
+
+      <!-- Placeholder for future issues — hidden initially -->
+      <div class="empty-state" id="empty-state" style="display:none">
+        No issues in this category yet. Check back next week.
+      </div>
+
+    </div>
+
+    <!-- SIGNUP STRIP -->
+    <div class="signup-strip">
+      <div>
+        <h3>Get every issue in your inbox</h3>
+        <p>Free. One email per week. Unsubscribe any time.</p>
+      </div>
+      <form class="signup-form-inline" onsubmit="handleSignup(event, this)">
+        <input type="email" placeholder="your@email.com" required>
+        <button type="submit">Subscribe free</button>
+      </form>
+    </div>
 
   </div>
-</section>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">APTO</div>
+    <ul class="footer-links">
+      <li><a href="index.html">Newsletter</a></li>
+      <li><a href="../index.html#tools">Tools</a></li>
+      <li><a href="../index.html#signup">Free kit</a></li>
+    </ul>
+    <div class="footer-copy">© 2026 APTO · aptotools.netlify.app</div>
+  </div>
+</footer>
 
 <script>
-  function toggleTheme() {
-    const html = document.documentElement;
-    const isDark = html.getAttribute('data-theme') === 'dark';
-    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
-    document.getElementById('theme-btn').textContent = isDark ? '🌙 Dark' : '☀️ Light';
-    localStorage.setItem('apto-theme', isDark ? 'light' : 'dark');
-  }
-  const saved = localStorage.getItem('apto-theme');
-  if (saved === 'dark') {
-    document.documentElement.setAttribute('data-theme', 'dark');
-    document.getElementById('theme-btn').textContent = '☀️ Light';
-  }
+function filterIssues(btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const niche = btn.dataset.niche;
+  const cards = document.querySelectorAll('.issue-card');
+  let visible = 0;
+  cards.forEach(c => {
+    const show = niche === 'all' || c.dataset.niche === niche;
+    c.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  document.getElementById('empty-state').style.display = visible === 0 ? 'block' : 'none';
+}
+
+function handleSignup(e, form) {
+  e.preventDefault();
+  // Replace with your Beehiiv form action URL
+  form.innerHTML = '<p style="color:var(--coral);font-weight:700;font-size:.9rem">✓ Subscribed — check your inbox.</p>';
+}
 </script>
 </body>
 </html>
