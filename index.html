@@ -152,9 +152,32 @@ img{display:block;max-width:100%;}
 [data-theme="dark"] .tool-link{color:var(--coral-mid);}
 .tool-link:hover{color:var(--coral);}
 
+/* ── HERO BANNER ── */
+.hero-banner{background:var(--navy);border-bottom:3px solid var(--coral);padding:2.5rem 2rem;text-align:center;position:relative;overflow:hidden;}
+.hero-banner::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 120% at 50% -20%,rgba(235,110,20,.12) 0%,transparent 65%);pointer-events:none;}
+.hero-banner-inner{max-width:1140px;margin:0 auto;position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:1.25rem;}
+.hero-banner-logos{display:flex;align-items:center;justify-content:center;gap:1.25rem;flex-wrap:wrap;}
+.hero-banner-logo{height:52px;width:auto;object-fit:contain;}
+.hero-banner-divider{width:2px;height:40px;background:rgba(235,110,20,.35);border-radius:2px;}
+.hero-banner-tagline{font-size:clamp(1.5rem,3.5vw,2.4rem);font-weight:800;letter-spacing:-.02em;color:var(--white);line-height:1.1;}
+.hero-banner-tagline span{color:var(--coral);}
+.hero-banner-sub{font-size:.9rem;color:rgba(255,255,255,.45);letter-spacing:.05em;text-transform:uppercase;font-weight:600;}
+
+/* ── DOWNLOADS SECTION ── */
+.downloads-section{background:var(--bg2);}
+.downloads-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:2.75rem;}
+.download-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:18px;padding:2rem 1.6rem;display:flex;flex-direction:column;align-items:center;text-align:center;transition:transform .2s,box-shadow .2s;}
+.download-card:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(235,110,20,.12);}
+.dl-icon{font-size:2.5rem;margin-bottom:.9rem;}
+.dl-name{font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:.4rem;}
+.dl-desc{font-size:.83rem;color:var(--text2);line-height:1.65;margin-bottom:1.25rem;flex:1;}
+.dl-price{font-size:.75rem;font-weight:700;color:var(--coral);letter-spacing:.07em;text-transform:uppercase;margin-bottom:.85rem;}
+.dl-btn{display:inline-block;padding:.55rem 1.4rem;background:var(--coral);color:var(--white);border-radius:999px;font-size:.84rem;font-weight:700;transition:all .2s;width:100%;text-align:center;}
+.dl-btn:hover{background:var(--coral-dk);}
+
 /* ── AFFILIATE SECTION ── */
 .affiliate-section{background:var(--bg2);}
-.affiliate-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--card-border);border:1px solid var(--card-border);border-radius:18px;overflow:hidden;margin-top:2.75rem;}
+.affiliate-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:var(--card-border);border:1px solid var(--card-border);border-radius:18px;overflow:hidden;margin-top:2.75rem;}
 .affiliate-card{background:var(--card-bg);padding:1.6rem 1.4rem;text-align:center;transition:background .2s;display:flex;flex-direction:column;align-items:center;}
 .affiliate-card:hover{background:var(--bg3);}
 .aff-icon{font-size:2rem;margin-bottom:.7rem;}
@@ -288,6 +311,7 @@ img{display:block;max-width:100%;}
       <li><a href="newsletter/index.html">Newsletter</a></li>
       <li><a href="#what">What we do</a></li>
       <li><a href="#tools">Tools</a></li>
+      <li><a href="#downloads">Downloads</a></li>
       <li><a href="#affiliate">Affiliate</a></li>
       <li><a href="#signup">Free kit</a></li>
     </ul>
@@ -304,12 +328,25 @@ img{display:block;max-width:100%;}
     <a href="newsletter/index.html">Newsletter</a>
     <a href="#what">What we do</a>
     <a href="#tools">Tools</a>
+    <a href="#downloads">Downloads</a>
     <a href="#affiliate">Affiliate</a>
     <a href="#signup" style="color:var(--coral);font-weight:700">Get free kit →</a>
   </div>
 </nav>
 
-<!-- NICHE SWITCHER -->
+<!-- ══════ HERO BANNER ══════ -->
+<div class="hero-banner">
+  <div class="hero-banner-inner">
+    <div class="hero-banner-logos">
+      <img class="hero-banner-logo" id="nav-logo-img-banner" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAAH0CAYAAADL1t+KAAEAAElEQVR4nOy9d7xkdX3//3x/Pp9zZm7bu5Wl9+YidQULwgUNYmIPXKxRky+iP3vveldIojG2WBIxRU1MdBdNYoxRAWEpgsCKIKz0Xrfv3jJ35nw+7/fvj3Mud7+6P1Dfzfe4v2X3znTMzN0zZ+acOf/8znO+IYQQCCGEEEKIo5//B2AvqbkAAAAASUVORK5CYII=" alt="APTO BS" onerror="this.style.display='none'">
+      <div class="hero-banner-divider"></div>
+      <img class="hero-banner-logo" id="nav-logo-pw-banner" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAAH0CAYAAADL1t+KAAEAAElEQVR4nOy9d7xkdX3//3x/Pp9zZm7bu5Wl9+YidQULwgUNYmIPXKxRky+iP3vveldIojG2WBIxRU1MdBdNYoxRAWEpgsCKIKz0Xrfv3jJ35nw+7/fvj3Mud7+6P1Dfzfe4v2X3znTMzN0zZ+acOf/8znO+IYQQCCGEEEKIo5//B2AvqbkAAAAASUVORK5CYII=" alt="APTO PW" onerror="this.style.display='none'">
+    </div>
+    <div class="hero-banner-tagline">APTO : <span>Saving you Time &amp; Money</span></div>
+    <div class="hero-banner-sub">AI tools for small business · personal wealth · done properly</div>
+  </div>
+</div>
+
 <div class="niche-bar" id="niche-bar">
   <div class="niche-bar-inner">
     <span class="niche-label">You're viewing:</span>
@@ -559,6 +596,34 @@ img{display:block;max-width:100%;}
 </section>
 
 <!-- ══════ SHARED: AFFILIATE ══════ -->
+<!-- ══════ SHARED: DOWNLOADS ══════ -->
+<section class="section downloads-section" id="downloads">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">APTO Resources</div>
+      <h2 class="section-h2">Guides &amp; kits you can <em>use today.</em></h2>
+      <p class="section-body">Practical downloads from our Gumroad store — pay once, keep forever. No subscriptions.</p>
+    </div>
+    <div class="downloads-grid reveal">
+      <div class="download-card">
+        <div class="dl-icon">🚀</div>
+        <div class="dl-name">AI Prompt Pack for Small Business</div>
+        <div class="dl-desc">50 ready-to-use AI prompts for marketing, emails, social media, customer service and more. Save hours every week.</div>
+        <div class="dl-price">Available on Gumroad</div>
+        <a href="https://apto.gumroad.com" target="_blank" rel="noopener noreferrer" class="dl-btn">Get it now →</a>
+      </div>
+      <div class="download-card">
+        <div class="dl-icon">💰</div>
+        <div class="dl-name">Personal Wealth AI Starter Kit</div>
+        <div class="dl-desc">AI-powered budgeting templates, investment checklists and money prompts. Take control of your finances in a weekend.</div>
+        <div class="dl-price">Available on Gumroad</div>
+        <a href="https://apto.gumroad.com" target="_blank" rel="noopener noreferrer" class="dl-btn">Get it now →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ SHARED: AFFILIATES ══════ -->
 <section class="section affiliate-section" id="affiliate">
   <div class="container">
     <div class="reveal">
@@ -589,7 +654,25 @@ img{display:block;max-width:100%;}
         <div class="aff-icon">📈</div>
         <div class="aff-name">Trading 212</div>
         <div class="aff-desc">Commission-free stocks &amp; shares ISA. Start investing with any amount. Great for beginners.</div>
-        <a href="https://www.trading212.com/invite/apto" target="_blank" rel="noopener noreferrer" class="aff-btn">Open free →</a>
+        <a href="https://sovrn.co/9o4geqx" target="_blank" rel="noopener noreferrer" class="aff-btn">Open free →</a>
+      </div>
+      <div class="affiliate-card">
+        <div class="aff-icon">🏷️</div>
+        <div class="aff-name">121</div>
+        <div class="aff-desc">Smart cashback &amp; savings deals. Earn money back on everyday spending with top UK brands.</div>
+        <a href="https://sovrn.co/7enchey" target="_blank" rel="noopener noreferrer" class="aff-btn">Join free →</a>
+      </div>
+      <div class="affiliate-card">
+        <div class="aff-icon">💳</div>
+        <div class="aff-name">TopCashback</div>
+        <div class="aff-desc">The UK's highest paying cashback site. Earn cashback at 5,000+ retailers — completely free to join.</div>
+        <a href="https://sovrn.co/9o4geqx" target="_blank" rel="noopener noreferrer" class="aff-btn">Join free →</a>
+      </div>
+      <div class="affiliate-card">
+        <div class="aff-icon">📊</div>
+        <div class="aff-name">ClearScore</div>
+        <div class="aff-desc">Free credit score &amp; report. Understand and improve your credit score to access better financial deals.</div>
+        <a href="https://sovrn.co/p1e74z8" target="_blank" rel="noopener noreferrer" class="aff-btn">Check free →</a>
       </div>
     </div>
     <div class="aff-disclosure reveal">
@@ -689,6 +772,22 @@ function switchNiche(n) {
     });
   }, 50);
 }
+
+// ── BANNER LOGOS — copy from nav logo ──
+(function(){
+  var navLogo = document.getElementById('nav-logo-img');
+  var bannerLogo = document.getElementById('nav-logo-img-banner');
+  var bannerLogoPw = document.getElementById('nav-logo-pw-banner');
+  if(navLogo && bannerLogo) {
+    bannerLogo.src = navLogo.src;
+    bannerLogo.style.display = '';
+  }
+  // For PW logo, use same image — you can swap src when PW-specific logo is available
+  if(navLogo && bannerLogoPw) {
+    bannerLogoPw.src = navLogo.src;
+    bannerLogoPw.style.display = '';
+  }
+})();
 
 // ── THEME TOGGLE ──
 function toggleTheme() {
