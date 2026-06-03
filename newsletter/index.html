@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Newsletter — APTO</title>
+<meta name="description" content="Every APTO newsletter issue in one place. AI tool guides, money habits and productivity workflows. Free to read.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@300;400;500;700;800&family=Lora:ital,wght@1,400&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0d1f35;--navy-mid:#162d4a;--coral:#eb6e14;--coral-dk:#c8580e;--coral-lt:#fce8e0;--black:#0d0d0d;--off-white:#faf8f5;--stone:#f2efe8;--mist:#e8e4db;--slate:#8a8478;--ink:#3d3a35;--white:#ffffff;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;}
+body{font-family:'Cabinet Grotesk',system-ui,sans-serif;background:var(--white);color:var(--black);line-height:1.6;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}
+
+    .nav{background:var(--navy);padding:0 2rem;position:sticky;top:0;z-index:200;}
+    .nav-inner{max-width:1120px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;gap:1rem;}
+    .nav-logo{font-size:1.15rem;font-weight:800;color:var(--white);letter-spacing:-.01em;display:flex;align-items:center;gap:.5rem;flex-shrink:0;}
+    .nav-logo img{width:36px;height:36px;border-radius:50%;object-fit:contain;background:#000;}
+    .nav-links{display:flex;gap:.1rem;list-style:none;}
+    .nav-links a{padding:.38rem .8rem;border-radius:6px;font-size:.83rem;font-weight:500;color:rgba(255,255,255,.5);transition:all .2s;}
+    .nav-links a:hover,.nav-links a.active{color:var(--white);background:rgba(255,255,255,.09);}
+    .nav-cta{padding:.45rem 1.1rem;background:var(--coral);color:var(--white);border-radius:999px;font-size:.82rem;font-weight:700;transition:all .2s;white-space:nowrap;flex-shrink:0;}
+    .nav-cta:hover{background:var(--coral-dk);}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;}
+    .hamburger span{display:block;width:22px;height:2px;background:rgba(255,255,255,.7);border-radius:2px;}
+    .nav-mobile{display:none;position:absolute;top:64px;left:0;right:0;background:var(--navy);border-bottom:1px solid rgba(255,255,255,.08);padding:.75rem 1.5rem;flex-direction:column;gap:.2rem;z-index:199;}
+    .nav-mobile.open{display:flex;}
+    .nav-mobile a{padding:.65rem .9rem;border-radius:8px;font-size:.9rem;color:rgba(255,255,255,.6);font-weight:500;}
+    .nav-mobile a:hover{background:rgba(255,255,255,.07);color:var(--white);}
+    .footer{background:var(--navy);padding:2rem 0;margin-top:4rem;}
+    .footer-inner{max-width:1120px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+    .footer-logo{font-size:1rem;font-weight:800;color:var(--white);}
+    .footer-links{display:flex;gap:1.5rem;list-style:none;}
+    .footer-links a{font-size:.8rem;color:rgba(255,255,255,.32);}
+    .footer-links a:hover{color:rgba(255,255,255,.65);}
+    .footer-copy{font-size:.75rem;color:rgba(255,255,255,.2);}
+    .container{max-width:1120px;margin:0 auto;padding:0 2rem;}
+    .container-narrow{max-width:680px;margin:0 auto;padding:0 2rem;}
+    @media(max-width:768px){.nav-links,.nav-cta{display:none;}.hamburger{display:flex;}}
+
+
+.archive-header{background:var(--navy);padding:3.5rem 0 3rem;position:relative;overflow:hidden;}
+.archive-header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 80% at 80% 50%,rgba(235,110,20,.1) 0%,transparent 60%);}
+.archive-header .container-narrow{position:relative;z-index:1;}
+.eyebrow{display:inline-flex;align-items:center;background:rgba(235,110,20,.15);border:1px solid rgba(235,110,20,.25);border-radius:999px;padding:.25rem .85rem;font-size:.72rem;font-weight:700;color:rgba(235,110,20,.9);letter-spacing:.06em;text-transform:uppercase;margin-bottom:1.1rem;}
+.archive-header h1{font-size:clamp(1.9rem,4vw,2.8rem);font-weight:800;line-height:1.1;letter-spacing:-.02em;color:var(--white);margin-bottom:.75rem;}
+.archive-header p{font-size:.95rem;color:rgba(255,255,255,.52);max-width:480px;line-height:1.7;}
+.archive-stats{display:flex;gap:2.5rem;margin-top:2rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,.08);flex-wrap:wrap;}
+.stat-val{font-size:1.7rem;font-weight:800;color:var(--white);line-height:1;}
+.stat-lab{font-size:.74rem;color:rgba(255,255,255,.38);margin-top:.15rem;}
+
+.filter-bar{padding:1.5rem 0;border-bottom:1px solid var(--mist);margin-bottom:2.25rem;display:flex;gap:.35rem;flex-wrap:wrap;align-items:center;}
+.filter-label{font-size:.8rem;color:var(--slate);margin-right:.35rem;}
+.filter-btn{padding:.33rem .82rem;border-radius:999px;border:1px solid var(--mist);background:var(--white);font-family:'Cabinet Grotesk',sans-serif;font-size:.79rem;font-weight:500;color:var(--slate);cursor:pointer;transition:all .2s;}
+.filter-btn:hover{border-color:var(--coral);color:var(--coral);}
+.filter-btn.active{background:var(--coral);border-color:var(--coral);color:var(--white);}
+
+.issues-grid{display:flex;flex-direction:column;gap:1px;background:var(--mist);border:1px solid var(--mist);border-radius:16px;overflow:hidden;}
+.issue-card{background:var(--white);padding:1.6rem 1.75rem;display:grid;grid-template-columns:80px 1fr auto;gap:0 1.4rem;align-items:start;transition:background .2s;}
+.issue-card:hover{background:var(--off-white);}
+.issue-num-col{display:flex;flex-direction:column;align-items:center;gap:.3rem;padding-top:.2rem;}
+.issue-num{font-size:.63rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--slate);}
+.issue-dot{width:10px;height:10px;border-radius:50%;}
+.dot-bs{background:var(--coral);}
+.dot-pw{background:var(--navy);}
+.issue-niche{display:inline-flex;font-size:.69rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.18rem .55rem;border-radius:4px;margin-bottom:.45rem;}
+.niche-bs{background:var(--coral-lt);color:#7a2a00;}
+.niche-pw{background:#e8eef8;color:#0c447c;}
+.issue-title{font-size:1.03rem;font-weight:700;color:var(--black);letter-spacing:-.01em;margin-bottom:.3rem;line-height:1.3;}
+.issue-preview{font-size:.875rem;color:var(--slate);line-height:1.6;margin-bottom:.55rem;}
+.issue-meta{display:flex;gap:.9rem;font-size:.74rem;color:var(--slate);flex-wrap:wrap;}
+.issue-arrow{color:var(--slate);font-size:1.1rem;transition:all .2s;align-self:center;}
+.issue-card:hover .issue-arrow{color:var(--coral);transform:translateX(3px);}
+
+.signup-strip{background:var(--black);border-radius:16px;padding:2.2rem 2.4rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;margin:3rem 0;}
+.signup-strip h3{font-size:1.15rem;font-weight:800;color:var(--white);margin-bottom:.3rem;}
+.signup-strip p{font-size:.875rem;color:rgba(255,255,255,.48);}
+.sub-inline{display:flex;gap:.4rem;flex-wrap:wrap;flex-shrink:0;}
+.sub-inline input{padding:.68rem 1rem;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:8px;color:var(--white);font-family:'Cabinet Grotesk',sans-serif;font-size:.875rem;outline:none;min-width:210px;}
+.sub-inline input::placeholder{color:rgba(255,255,255,.3);}
+.sub-inline button{padding:.68rem 1.2rem;background:var(--coral);color:var(--white);border:none;border-radius:8px;font-family:'Cabinet Grotesk',sans-serif;font-size:.875rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .2s;}
+.sub-inline button:hover{background:var(--coral-dk);}
+.empty{text-align:center;padding:3rem;color:var(--slate);font-size:.9rem;display:none;}
+
+@media(max-width:640px){
+  .issue-card{grid-template-columns:1fr;gap:.5rem;}
+  .issue-num-col{flex-direction:row;justify-content:flex-start;}
+  .signup-strip{flex-direction:column;}
+  .sub-inline{width:100%;flex-direction:column;}
+  .sub-inline input{min-width:0;width:100%;}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="main-nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">
+      <img src="../BS.png" alt="APTO">
+      APTO
+    </a>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="index.html" class="active">Newsletter</a></li>
+      <li><a href="../index.html#what">What we do</a></li>
+      <li><a href="../index.html#tools">Tools</a></li>
+      <li><a href="../index.html#signup">Free kit</a></li>
+    </ul>
+    <a href="../index.html#signup" class="nav-cta">Get free kit →</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="../index.html">Home</a>
+    <a href="index.html">Newsletter</a>
+    <a href="../index.html#what">What we do</a>
+    <a href="../index.html#tools">Tools</a>
+    <a href="../index.html#signup" style="color:var(--coral);font-weight:700">Get free kit →</a>
+  </div>
+</nav>
+
+<div class="archive-header">
+  <div class="container-narrow">
+    <div class="eyebrow">Free to read</div>
+    <h1>The APTO Newsletter</h1>
+    <p>Every issue in one place. AI tool guides, money habits and productivity workflows — written for small business owners and anyone building personal wealth.</p>
+    <div class="archive-stats">
+      <div><div class="stat-val">1</div><div class="stat-lab">Issues published</div></div>
+      <div><div class="stat-val">2</div><div class="stat-lab">Niches covered</div></div>
+      <div><div class="stat-val">Tue</div><div class="stat-lab">Published weekly</div></div>
+    </div>
+  </div>
+</div>
+
+<div style="padding:2rem 0 1rem">
+  <div class="container-narrow">
+    <div class="filter-bar">
+      <span class="filter-label">Filter:</span>
+      <button class="filter-btn active" data-n="all" onclick="fil(this)">All issues</button>
+      <button class="filter-btn" data-n="bs" onclick="fil(this)">AI Productivity (BS)</button>
+      <button class="filter-btn" data-n="pw" onclick="fil(this)">Personal Wealth (PW)</button>
+    </div>
+
+    <div class="issues-grid">
+      <a class="issue-card" href="issues/issue-001-bs.html" data-n="bs">
+        <div class="issue-num-col">
+          <div class="issue-num">Issue 1</div>
+          <div class="issue-dot dot-bs"></div>
+        </div>
+        <div>
+          <div class="issue-niche niche-bs">AI Productivity</div>
+          <div class="issue-title">The ChatGPT prompt that writes your emails in 90 seconds</div>
+          <div class="issue-preview">Most business owners spend hours writing emails every week. This one prompt changes that — copy it, paste it, get a clean first draft in under two minutes.</div>
+          <div class="issue-meta">
+            <span>Tuesday, 3 June 2026</span>
+            <span>·</span>
+            <span>2 min read</span>
+            <span>·</span>
+            <span>Free</span>
+          </div>
+        </div>
+        <div class="issue-arrow">→</div>
+      </a>
+    </div>
+    <div class="empty" id="empty">No issues in this category yet. Check back next week.</div>
+
+    <div class="signup-strip">
+      <div>
+        <h3>Get every issue in your inbox</h3>
+        <p>Free. One email per week. Unsubscribe any time.</p>
+      </div>
+      <form class="sub-inline" onsubmit="event.preventDefault();this.innerHTML='<p style=color:var(--coral);font-weight:700;font-size:.9rem>✓ Subscribed — check your inbox.</p>'">
+        <input type="email" placeholder="your@email.com" required>
+        <button type="submit">Subscribe free</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">APTO</div>
+    <ul class="footer-links">
+      <li><a href="index.html">Newsletter</a></li>
+      <li><a href="../index.html#tools">Tools</a></li>
+      <li><a href="../index.html#signup">Free kit</a></li>
+    </ul>
+    <div class="footer-copy">© 2026 APTO</div>
+  </div>
+</footer>
+
+<script>
+function fil(btn){
+  document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  var n=btn.dataset.n;
+  var cards=document.querySelectorAll('.issue-card');
+  var v=0;
+  cards.forEach(function(c){var s=(n==='all'||c.dataset.n===n);c.style.display=s?'':'none';if(s)v++;});
+  document.getElementById('empty').style.display=v===0?'block':'none';
+}
+</script>
+
+<script>
+(function(){
+  var hb=document.getElementById('hamburger');
+  var nm=document.getElementById('nav-mobile');
+  var nv=document.getElementById('main-nav');
+  if(hb&&nm){
+    hb.addEventListener('click',function(){nm.classList.toggle('open');});
+    document.addEventListener('click',function(e){if(nv&&!nv.contains(e.target))nm.classList.remove('open');});
+  }
+})();
+</script>
+
+</body>
+</html>

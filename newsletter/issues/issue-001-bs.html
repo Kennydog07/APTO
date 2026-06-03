@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>The ChatGPT prompt that writes your emails in 90 seconds — APTO Issue 1</title>
+<meta name="description" content="Most business owners spend hours writing emails every week. This one ChatGPT prompt changes that. Free, works in 90 seconds.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@300;400;500;700;800&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0d1f35;--navy-mid:#162d4a;--coral:#eb6e14;--coral-dk:#c8580e;--coral-lt:#fce8e0;--black:#0d0d0d;--off-white:#faf8f5;--stone:#f2efe8;--mist:#e8e4db;--slate:#8a8478;--ink:#3d3a35;--white:#ffffff;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;scroll-behavior:smooth;}
+body{font-family:'Cabinet Grotesk',system-ui,sans-serif;background:var(--white);color:var(--black);line-height:1.6;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}
+
+    .nav{background:var(--navy);padding:0 2rem;position:sticky;top:0;z-index:200;}
+    .nav-inner{max-width:1120px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;gap:1rem;}
+    .nav-logo{font-size:1.15rem;font-weight:800;color:var(--white);letter-spacing:-.01em;display:flex;align-items:center;gap:.5rem;flex-shrink:0;}
+    .nav-logo img{width:36px;height:36px;border-radius:50%;object-fit:contain;background:#000;}
+    .nav-links{display:flex;gap:.1rem;list-style:none;}
+    .nav-links a{padding:.38rem .8rem;border-radius:6px;font-size:.83rem;font-weight:500;color:rgba(255,255,255,.5);transition:all .2s;}
+    .nav-links a:hover,.nav-links a.active{color:var(--white);background:rgba(255,255,255,.09);}
+    .nav-cta{padding:.45rem 1.1rem;background:var(--coral);color:var(--white);border-radius:999px;font-size:.82rem;font-weight:700;transition:all .2s;white-space:nowrap;flex-shrink:0;}
+    .nav-cta:hover{background:var(--coral-dk);}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;}
+    .hamburger span{display:block;width:22px;height:2px;background:rgba(255,255,255,.7);border-radius:2px;}
+    .nav-mobile{display:none;position:absolute;top:64px;left:0;right:0;background:var(--navy);border-bottom:1px solid rgba(255,255,255,.08);padding:.75rem 1.5rem;flex-direction:column;gap:.2rem;z-index:199;}
+    .nav-mobile.open{display:flex;}
+    .nav-mobile a{padding:.65rem .9rem;border-radius:8px;font-size:.9rem;color:rgba(255,255,255,.6);font-weight:500;}
+    .nav-mobile a:hover{background:rgba(255,255,255,.07);color:var(--white);}
+    .footer{background:var(--navy);padding:2rem 0;margin-top:4rem;}
+    .footer-inner{max-width:1120px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+    .footer-logo{font-size:1rem;font-weight:800;color:var(--white);}
+    .footer-links{display:flex;gap:1.5rem;list-style:none;}
+    .footer-links a{font-size:.8rem;color:rgba(255,255,255,.32);}
+    .footer-links a:hover{color:rgba(255,255,255,.65);}
+    .footer-copy{font-size:.75rem;color:rgba(255,255,255,.2);}
+    .container{max-width:1120px;margin:0 auto;padding:0 2rem;}
+    .container-narrow{max-width:680px;margin:0 auto;padding:0 2rem;}
+    @media(max-width:768px){.nav-links,.nav-cta{display:none;}.hamburger{display:flex;}}
+
+
+.issue-header{background:var(--navy);padding:3rem 0 2.5rem;position:relative;overflow:hidden;}
+.issue-header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 40% 70% at 85% 50%,rgba(235,110,20,.08) 0%,transparent 60%);}
+.issue-header .container-narrow{position:relative;z-index:1;}
+.back-link{display:inline-flex;align-items:center;gap:.4rem;font-size:.8rem;color:rgba(255,255,255,.4);margin-bottom:1.4rem;transition:color .2s;}
+.back-link:hover{color:rgba(255,255,255,.7);}
+.issue-meta-top{display:flex;align-items:center;gap:.7rem;margin-bottom:1rem;flex-wrap:wrap;}
+.niche-badge{font-size:.69rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:.2rem .6rem;border-radius:4px;background:rgba(235,110,20,.2);color:rgba(235,110,20,.9);}
+.issue-num-lbl{font-size:.74rem;color:rgba(255,255,255,.32);font-weight:500;}
+.issue-header h1{font-size:clamp(1.55rem,3.5vw,2.3rem);font-weight:800;line-height:1.15;letter-spacing:-.02em;color:var(--white);margin-bottom:.75rem;}
+.issue-header-meta{display:flex;gap:1.2rem;font-size:.79rem;color:rgba(255,255,255,.36);flex-wrap:wrap;}
+
+.issue-wrap{padding:3rem 0 2rem;}
+.issue-body{font-size:1rem;color:var(--ink);line-height:1.82;}
+.issue-body p{margin-bottom:1.3rem;}
+.issue-body p:last-child{margin-bottom:0;}
+.issue-body strong{font-weight:700;color:var(--black);}
+.issue-body h2{font-size:1.15rem;font-weight:700;color:var(--black);letter-spacing:-.01em;margin:2.25rem 0 .75rem;}
+.issue-body ul{padding-left:1.25rem;margin-bottom:1.3rem;}
+.issue-body li{margin-bottom:.5rem;}
+
+.prompt-box{background:var(--stone);border-left:3px solid var(--coral);border-radius:0 10px 10px 0;padding:1.2rem 1.35rem 1.2rem 1.2rem;margin:1.75rem 0;position:relative;}
+.prompt-label{font-size:.67rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--coral);margin-bottom:.55rem;}
+.prompt-text{font-family:monospace;font-size:.93rem;line-height:1.72;color:var(--black);}
+.copy-btn{position:absolute;top:.85rem;right:.85rem;padding:.28rem .7rem;border-radius:5px;background:var(--white);border:1px solid var(--mist);font-family:'Cabinet Grotesk',sans-serif;font-size:.72rem;font-weight:500;color:var(--slate);cursor:pointer;transition:all .15s;}
+.copy-btn:hover{background:var(--coral);color:var(--white);border-color:var(--coral);}
+
+.callout{background:var(--off-white);border:1px solid var(--mist);border-radius:10px;padding:1.1rem 1.25rem;margin:1.75rem 0;font-size:.93rem;color:var(--ink);line-height:1.75;}
+.action-block{background:var(--black);border-radius:12px;padding:1.5rem 1.6rem;margin:2.25rem 0;}
+.action-label{font-size:.67rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--coral);margin-bottom:.48rem;}
+.action-text{font-size:.97rem;font-weight:500;color:var(--white);line-height:1.65;}
+hr.divider{border:none;border-top:1px solid var(--mist);margin:2rem 0;}
+.ps{font-size:.88rem;color:var(--slate);line-height:1.75;}
+.ps a{color:var(--coral);font-weight:600;}
+.ps a:hover{text-decoration:underline;}
+
+.sub-box{background:var(--navy);border-radius:14px;padding:2rem;margin:2.5rem 0;}
+.sub-box h3{font-size:1.1rem;font-weight:800;color:var(--white);margin-bottom:.38rem;}
+.sub-box p{font-size:.875rem;color:rgba(255,255,255,.48);margin-bottom:1rem;}
+.sub-form{display:flex;gap:.4rem;flex-wrap:wrap;}
+.sub-form input{flex:1;min-width:200px;padding:.65rem .9rem;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:8px;color:var(--white);font-family:'Cabinet Grotesk',sans-serif;font-size:.875rem;outline:none;}
+.sub-form input::placeholder{color:rgba(255,255,255,.28);}
+.sub-form button{padding:.65rem 1.2rem;background:var(--coral);color:var(--white);border:none;border-radius:8px;font-family:'Cabinet Grotesk',sans-serif;font-size:.875rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .2s;}
+.sub-form button:hover{background:var(--coral-dk);}
+
+.issue-nav{display:flex;justify-content:space-between;align-items:center;padding:1.4rem 0;border-top:1px solid var(--mist);margin-top:1rem;gap:1rem;flex-wrap:wrap;}
+.issue-nav a{display:flex;align-items:center;gap:.4rem;font-size:.85rem;font-weight:500;color:var(--slate);transition:color .2s;}
+.issue-nav a:hover{color:var(--coral);}
+
+@media(max-width:640px){.sub-form{flex-direction:column;}.sub-form input{min-width:0;}}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="main-nav">
+  <div class="nav-inner">
+    <a href="../../index.html" class="nav-logo">
+      <img src="../../BS.png" alt="APTO">
+      APTO
+    </a>
+    <ul class="nav-links">
+      <li><a href="../../index.html">Home</a></li>
+      <li><a href="../index.html" class="active">Newsletter</a></li>
+      <li><a href="../../index.html#what">What we do</a></li>
+      <li><a href="../../index.html#tools">Tools</a></li>
+      <li><a href="../../index.html#signup">Free kit</a></li>
+    </ul>
+    <a href="../../index.html#signup" class="nav-cta">Get free kit →</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="../../index.html">Home</a>
+    <a href="../index.html">Newsletter</a>
+    <a href="../../index.html#what">What we do</a>
+    <a href="../../index.html#tools">Tools</a>
+    <a href="../../index.html#signup" style="color:var(--coral);font-weight:700">Get free kit →</a>
+  </div>
+</nav>
+
+<div class="issue-header">
+  <div class="container-narrow">
+    <a href="../index.html" class="back-link">← All issues</a>
+    <div class="issue-meta-top">
+      <span class="niche-badge">AI Productivity</span>
+      <span class="issue-num-lbl">Issue 1</span>
+    </div>
+    <h1>The ChatGPT prompt that writes your emails in 90 seconds</h1>
+    <div class="issue-header-meta">
+      <span>Tuesday, 3 June 2026</span>
+      <span>·</span>
+      <span>2 min read</span>
+      <span>·</span>
+      <span>Free</span>
+    </div>
+  </div>
+</div>
+
+<div class="issue-wrap">
+  <div class="container-narrow">
+    <div class="issue-body">
+      <p>Hey,</p>
+      <p>Quick one this week — because this prompt is too good not to share immediately.</p>
+      <p>I've been running a small business for a while now, and the task that ate the most time every single week wasn't strategy. Wasn't the actual work. It was email.</p>
+      <p>Follow-ups. Proposals. Checking in after meetings. Cold outreach. Responding to complaints. Every one of them started with a blank page and ended with me rewriting the same sentence four times.</p>
+      <p>Then I started using this prompt.</p>
+
+      <h2>The prompt</h2>
+      <div class="prompt-box">
+        <div class="prompt-label">Copy this → paste into ChatGPT free</div>
+        <div class="prompt-text" id="the-prompt">"You are a professional email writer for a small business owner. Write a follow-up email to [client name] about [the proposal / project / meeting / invoice]. Keep it under 80 words. Tone: friendly but direct. End with one clear next step. No filler phrases like 'I hope this finds you well.'"</div>
+        <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+      </div>
+
+      <p>Replace the brackets with your specifics. Paste into ChatGPT — the free version works perfectly. Hit enter.</p>
+      <p>What comes back is a clean, professional first draft in about 90 seconds. Always edit AI output before you send it — but you're editing, not starting from nothing. That's the difference.</p>
+
+      <h2>Why this prompt actually works</h2>
+      <p>Most AI email prompts fail because they're too vague. "Write me a follow-up email" gives you something generic. This prompt gives ChatGPT four specific constraints: length, tone, structure and what to leave out. The more specific your instructions, the better the output.</p>
+
+      <div class="callout"><strong>The rule:</strong> Treat ChatGPT like a capable new hire who doesn't know your business yet. You wouldn't say "write me an email." You'd say "write a follow-up to Sarah at Acme about the proposal I sent Monday — keep it short, friendly, and ask if she has questions before Friday."</div>
+
+      <h2>Adapt it for anything</h2>
+      <p>The same structure works for any email situation:</p>
+      <ul>
+        <li><strong>Cold outreach:</strong> "Write a cold outreach email to [type of business] introducing [your service]. Lead with one specific insight. Under 100 words. No generic openers."</li>
+        <li><strong>Complaint response:</strong> "Write a polite response to a customer who complained about [issue]. Acknowledge, apologise briefly, explain the next step. Under 120 words."</li>
+        <li><strong>Re-engagement:</strong> "Write an email to [client] who went quiet two weeks ago. Friendly, not pushy. Add one small piece of value. Leave the door open. Under 80 words."</li>
+        <li><strong>Proposal follow-up:</strong> "Write a follow-up to [client] about a proposal sent on [date]. Short. Assume they're busy not uninterested. One clear next step."</li>
+      </ul>
+      <p>Save the ones that work. You'll use them every week.</p>
+
+      <div class="action-block">
+        <div class="action-label">This week's action</div>
+        <div class="action-text">Pick one email you've been putting off this week. Use the prompt above. Send it. That's it.</div>
+      </div>
+
+      <p>See you next Tuesday,</p>
+      <p><strong>APTO</strong></p>
+
+      <hr class="divider">
+      <p class="ps">P.S. If you want 19 more prompts like this one — covering proposals, social posts, customer service, operations and sales — the free APTO AI Starter Kit is waiting at <a href="../../index.html#signup">aptotools.netlify.app</a>.</p>
+    </div>
+
+    <div class="sub-box">
+      <h3>Get the next issue in your inbox</h3>
+      <p>Free weekly newsletter. AI tools, automation and money workflows for small business owners.</p>
+      <form class="sub-form" onsubmit="event.preventDefault();this.innerHTML='<p style=color:rgba(235,110,20,.9);font-weight:700;font-size:.9rem>✓ Subscribed — check your inbox.</p>'">
+        <input type="email" placeholder="your@email.com" required>
+        <button type="submit">Subscribe free</button>
+      </form>
+    </div>
+
+    <div class="issue-nav">
+      <a href="../index.html">← All issues</a>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">APTO</div>
+    <ul class="footer-links">
+      <li><a href="../index.html">Newsletter</a></li>
+      <li><a href="../../index.html#tools">Tools</a></li>
+      <li><a href="../../index.html#signup">Free kit</a></li>
+    </ul>
+    <div class="footer-copy">© 2026 APTO</div>
+  </div>
+</footer>
+
+<script>
+function copyPrompt(btn){
+  var text=document.getElementById('the-prompt').textContent.trim();
+  navigator.clipboard.writeText(text).then(function(){
+    btn.textContent='Copied!';
+    btn.style.background='var(--coral)';
+    btn.style.color='var(--white)';
+    btn.style.borderColor='var(--coral)';
+    setTimeout(function(){btn.textContent='Copy';btn.style.background='';btn.style.color='';btn.style.borderColor='';},2000);
+  });
+}
+</script>
+
+<script>
+(function(){
+  var hb=document.getElementById('hamburger');
+  var nm=document.getElementById('nav-mobile');
+  var nv=document.getElementById('main-nav');
+  if(hb&&nm){
+    hb.addEventListener('click',function(){nm.classList.toggle('open');});
+    document.addEventListener('click',function(e){if(nv&&!nv.contains(e.target))nm.classList.remove('open');});
+  }
+})();
+</script>
+
+</body>
+</html>
