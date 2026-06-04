@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>APTO — AI for Small Business</title>
+<meta name="description" content="Free AI tools for small business owners. ChatGPT prompts, Canva templates, Make.com automations. Save hours every week starting today.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@300;400;500;700;800&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0d1f35;--navy-mid:#162d4a;--navy-lt:#1e3d5c;--coral:#eb6e14;--coral-dk:#c8580e;--coral-lt:#fce8e0;--coral-mid:#f0a070;--black:#0d0d0d;--off-white:#faf8f5;--stone:#f2efe8;--mist:#e8e4db;--slate:#8a8478;--ink:#3d3a35;--white:#ffffff;--green:#1a6b4a;--green-lt:#e8f5ef;--font-head:'Cabinet Grotesk',system-ui,sans-serif;--font-serif:'Lora',Georgia,serif;--bg:var(--white);--bg2:var(--off-white);--bg3:var(--stone);--text:var(--black);--text2:var(--ink);--text3:var(--slate);--card-bg:var(--white);--card-border:var(--mist);--nav-bg:var(--navy);}
+[data-theme="dark"]{--bg:#0a0a0a;--bg2:#111;--bg3:#1a1a1a;--text:#f0ede8;--text2:#b8b4ae;--text3:#6e6b65;--card-bg:#141414;--card-border:#2a2a2a;--nav-bg:#060f1a;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;scroll-behavior:smooth;}
+body{font-family:var(--font-head);background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;}
+a{color:inherit;text-decoration:none;}img{display:block;max-width:100%;}
+.nav{background:var(--nav-bg);padding:0 2rem;position:sticky;top:0;z-index:200;}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;gap:1rem;}
+.nav-logo{display:flex;align-items:center;gap:.6rem;flex-shrink:0;}
+.nav-logo img{width:34px;height:34px;object-fit:contain;border-radius:50%;}
+.nav-logo-text{font-size:1.1rem;font-weight:800;color:var(--white);}
+.nav-links{display:flex;gap:.1rem;list-style:none;}
+.nav-links a{padding:.38rem .78rem;border-radius:6px;font-size:.82rem;font-weight:500;color:rgba(255,255,255,.5);transition:all .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--white);background:rgba(255,255,255,.09);}
+.nav-right{display:flex;align-items:center;gap:.6rem;flex-shrink:0;}
+.btn-coral{display:inline-flex;align-items:center;gap:.4rem;padding:.48rem 1.15rem;background:var(--coral);color:var(--white);border-radius:999px;font-size:.82rem;font-weight:700;transition:all .2s;border:none;cursor:pointer;white-space:nowrap;}
+.btn-coral:hover{background:var(--coral-dk);transform:translateY(-1px);}
+.btn-outline{display:inline-flex;align-items:center;gap:.4rem;padding:.46rem 1.15rem;border:2px solid var(--coral);color:var(--coral);border-radius:999px;font-size:.82rem;font-weight:700;transition:all .2s;background:transparent;cursor:pointer;}
+.btn-outline:hover{background:var(--coral);color:var(--white);}
+.theme-btn{width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.07);color:rgba(255,255,255,.7);font-size:.85rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;}
+.hamburger span{display:block;width:22px;height:2px;background:rgba(255,255,255,.7);border-radius:2px;}
+.nav-mobile{display:none;position:absolute;top:64px;left:0;right:0;background:var(--nav-bg);border-bottom:1px solid rgba(255,255,255,.08);padding:.75rem 1.5rem;flex-direction:column;gap:.2rem;z-index:199;}
+.nav-mobile.open{display:flex;}
+.nav-mobile a{padding:.65rem .9rem;border-radius:8px;font-size:.9rem;color:rgba(255,255,255,.6);font-weight:500;transition:all .2s;}
+.nav-mobile a:hover{background:rgba(255,255,255,.07);color:var(--white);}
+@media(max-width:900px){.nav-links{display:none;}.hamburger{display:flex;}}
+/* PAGE HERO */
+.page-hero{background:var(--navy);padding:5rem 2rem 4rem;position:relative;overflow:hidden;}
+.page-hero-dots{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px);background-size:28px 28px;}
+.page-hero-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 380px;gap:4rem;align-items:center;position:relative;z-index:1;}
+.page-hero-breadcrumb{font-size:.73rem;color:rgba(255,255,255,.35);margin-bottom:1rem;display:flex;align-items:center;gap:.4rem;}
+.page-hero-breadcrumb a{color:rgba(255,255,255,.4);transition:color .2s;}
+.page-hero-breadcrumb a:hover{color:rgba(255,255,255,.8);}
+.page-hero-label{display:inline-flex;align-items:center;gap:.4rem;background:rgba(235,110,20,.15);border:1px solid rgba(235,110,20,.25);border-radius:999px;padding:.26rem .85rem;font-size:.7rem;font-weight:700;color:rgba(235,110,20,.9);letter-spacing:.05em;text-transform:uppercase;margin-bottom:1.2rem;}
+.page-hero h1{font-size:clamp(2.2rem,4vw,3.4rem);font-weight:800;line-height:1.07;letter-spacing:-.025em;color:var(--white);margin-bottom:1rem;}
+.page-hero h1 em{font-style:italic;font-family:var(--font-serif);font-weight:400;color:var(--coral);}
+.page-hero-sub{font-size:1rem;color:rgba(255,255,255,.52);line-height:1.75;max-width:480px;margin-bottom:2rem;}
+.page-hero-actions{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;}
+.page-hero-char{display:flex;justify-content:center;align-items:flex-end;position:relative;}
+.page-hero-char img{width:300px;filter:drop-shadow(0 16px 36px rgba(0,0,0,.45));animation:charFloat 3.5s ease-in-out infinite;}
+@keyframes charFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+.page-hero-char-badge{position:absolute;top:40px;right:-10px;background:var(--white);border-radius:14px;padding:.75rem 1rem;box-shadow:0 4px 20px rgba(0,0,0,.15);font-size:.78rem;font-weight:700;color:var(--navy);line-height:1.35;min-width:140px;}
+.page-hero-char-badge span{display:block;font-size:1.3rem;font-weight:800;color:var(--coral);}
+/* LAYOUT */
+.container{max-width:1200px;margin:0 auto;padding:0 2rem;}
+.section{padding:5rem 0;}
+.section-alt{background:var(--bg2);}
+.section-label{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--coral);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem;}
+.section-label::before{content:'';display:inline-block;width:18px;height:2px;background:var(--coral);border-radius:2px;}
+.section-h2{font-size:clamp(1.7rem,3vw,2.4rem);font-weight:800;line-height:1.1;letter-spacing:-.02em;margin-bottom:.85rem;}
+.section-h2 em{font-style:italic;font-family:var(--font-serif);font-weight:400;color:var(--coral);}
+.section-body{font-size:.95rem;color:var(--text2);line-height:1.75;max-width:560px;}
+.badge-free{display:inline-flex;align-items:center;gap:.3rem;background:var(--green-lt);color:var(--green);font-size:.67rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:.22rem .6rem;border-radius:999px;width:fit-content;}
+[data-theme="dark"] .badge-free{background:rgba(26,107,74,.25);color:#5fcca0;}
+/* TOOLS GRID */
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;margin-top:3rem;}
+.tool-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:22px;padding:2rem;display:flex;flex-direction:column;gap:1rem;transition:all .2s;position:relative;overflow:hidden;}
+.tool-card:hover{transform:translateY(-3px);border-color:var(--coral-mid);box-shadow:0 8px 32px rgba(235,110,20,.09);}
+.tool-card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;}
+.tool-icon{font-size:2.2rem;}
+.tool-name{font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:.2rem;}
+.tool-tagline{font-size:.8rem;color:var(--text3);}
+.tool-body{font-size:.86rem;color:var(--text2);line-height:1.65;flex:1;}
+.tool-footer{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding-top:.5rem;border-top:1px solid var(--card-border);}
+/* PROMPT BOX */
+.prompt-section{background:var(--navy);padding:5rem 2rem;}
+.prompt-inner{max-width:1200px;margin:0 auto;}
+.prompt-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:3rem;}
+.prompt-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:18px;padding:1.75rem;}
+.prompt-label{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(235,110,20,.7);margin-bottom:.75rem;}
+.prompt-title{font-size:.95rem;font-weight:700;color:var(--white);margin-bottom:.75rem;}
+.prompt-box{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:1rem 1.1rem;font-size:.8rem;color:rgba(255,255,255,.7);line-height:1.65;font-family:monospace;}
+.prompt-use{font-size:.75rem;color:rgba(255,255,255,.35);margin-top:.65rem;}
+/* CHARACTER POINTER */
+.char-pointer-section{padding:4rem 2rem;background:var(--bg2);}
+.char-pointer-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 220px;gap:3rem;align-items:center;}
+.char-pointer-img{position:relative;display:flex;justify-content:flex-end;}
+.char-pointer-img img{width:200px;filter:drop-shadow(0 8px 24px rgba(0,0,0,.15));}
+/* CTA STRIP */
+.cta-strip{background:var(--coral);padding:3.5rem 2rem;}
+.cta-strip-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;}
+.cta-strip h3{font-size:clamp(1.3rem,2.5vw,1.9rem);font-weight:800;color:var(--white);line-height:1.15;}
+.cta-strip p{font-size:.88rem;color:rgba(255,255,255,.75);margin-top:.4rem;}
+.btn-white{display:inline-flex;align-items:center;gap:.4rem;padding:.6rem 1.4rem;background:var(--white);color:var(--coral);border-radius:999px;font-size:.85rem;font-weight:800;transition:all .2s;white-space:nowrap;}
+.btn-white:hover{background:var(--off-white);}
+/* FOOTER */
+footer{background:var(--navy);padding:2.5rem 0 1.5rem;}
+.footer-inner{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:2.5rem;}
+.footer-brand{display:flex;align-items:center;gap:.6rem;margin-bottom:.7rem;}
+.footer-brand img{width:30px;height:30px;object-fit:contain;border-radius:50%;}
+.footer-brand-text{font-size:1rem;font-weight:800;color:var(--white);}
+.footer-tagline{font-size:.8rem;color:rgba(255,255,255,.35);line-height:1.6;max-width:220px;}
+.footer-col h4{font-size:.75rem;font-weight:700;color:rgba(255,255,255,.5);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.9rem;}
+.footer-col a{display:block;font-size:.82rem;color:rgba(255,255,255,.4);font-weight:500;margin-bottom:.45rem;transition:color .2s;}
+.footer-col a:hover{color:rgba(255,255,255,.8);}
+.footer-bottom{max-width:1200px;margin:1.5rem auto 0;padding:1rem 2rem 0;border-top:1px solid rgba(255,255,255,.07);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;}
+.footer-bottom p{font-size:.72rem;color:rgba(255,255,255,.28);}
+/* MARQUEE */
+.marquee-wrap{background:var(--navy-mid);padding:.65rem 0;overflow:hidden;}
+.marquee-track{display:flex;gap:2.5rem;animation:marquee 22s linear infinite;width:max-content;}
+.marquee-item{font-size:.68rem;font-weight:600;color:rgba(255,255,255,.4);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;display:flex;align-items:center;gap:.7rem;}
+.marquee-item::after{content:'·';}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease;}
+.reveal.visible{opacity:1;transform:none;}
+@media(max-width:900px){.page-hero-inner{grid-template-columns:1fr;}.page-hero-char{display:none;}.prompt-grid{grid-template-columns:1fr;}.char-pointer-inner{grid-template-columns:1fr;}.char-pointer-img{display:none;}.footer-inner{grid-template-columns:1fr 1fr;}.cta-strip-inner{flex-direction:column;text-align:center;}}
+@media(max-width:540px){.tools-grid{grid-template-columns:1fr;}.footer-inner{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<nav class="nav" id="main-nav" style="position:relative;">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="char-fist.png" alt="APTO"><span class="nav-logo-text">APTO</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="business.html" class="active">AI for Business</a></li>
+      <li><a href="wealth.html">AI for Wealth</a></li>
+      <li><a href="tools.html">Tool Directory</a></li>
+      <li><a href="kit.html">Free Kit</a></li>
+      <li><a href="newsletter/index.html">Newsletter</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" title="Toggle theme">🌙</button>
+      <a href="kit.html" class="btn-coral">Get free kit →</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="index.html">Home</a><a href="business.html">AI for Business</a><a href="wealth.html">AI for Wealth</a><a href="tools.html">Tool Directory</a><a href="kit.html" style="color:var(--coral);font-weight:700">Get Free Kit →</a><a href="newsletter/index.html">Newsletter</a>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="page-hero-dots"></div>
+  <div class="page-hero-inner">
+    <div>
+      <div class="page-hero-breadcrumb"><a href="index.html">Home</a> <span>/</span> <span style="color:rgba(255,255,255,.7);">AI for Business</span></div>
+      <div class="page-hero-label">💼 Small Business Hub</div>
+      <h1>AI tools that save<br>your small business<br><em>hours every week.</em></h1>
+      <p class="page-hero-sub">Real AI tools that real small business owners actually use. ChatGPT for emails, Canva for design, Make.com for automation. All free to start — no tech skills needed.</p>
+      <div class="page-hero-actions">
+        <a href="kit.html" class="btn-coral">Get the free prompt pack →</a>
+        <a href="tools.html" class="btn-outline" style="border-color:rgba(255,255,255,.25);color:rgba(255,255,255,.7);">See all tools</a>
+      </div>
+    </div>
+    <div class="page-hero-char">
+      <img src="char-suit-point-up.png" alt="Suited APTO character pointing up">
+      <div class="page-hero-char-badge"><span>3hrs</span>saved per week on average</div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee-wrap"><div class="marquee-track"><span class="marquee-item">Email writing</span><span class="marquee-item">Social media</span><span class="marquee-item">Customer replies</span><span class="marquee-item">Design &amp; branding</span><span class="marquee-item">Automation</span><span class="marquee-item">Content creation</span><span class="marquee-item">Proposals &amp; quotes</span><span class="marquee-item">Email writing</span><span class="marquee-item">Social media</span><span class="marquee-item">Customer replies</span><span class="marquee-item">Design &amp; branding</span><span class="marquee-item">Automation</span><span class="marquee-item">Content creation</span><span class="marquee-item">Proposals &amp; quotes</span></div></div>
+
+<!-- TOOLS -->
+<section class="section">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">The toolkit</div>
+      <h2 class="section-h2">Three tools. <em>Massive time savings.</em></h2>
+      <p class="section-body">These are the three tools we recommend to every small business owner starting with AI. All have a free tier. All are genuinely useful from day one.</p>
+    </div>
+    <div class="tools-grid reveal">
+      <div class="tool-card" id="chatgpt">
+        <div class="tool-card-header">
+          <div><div class="tool-icon">🤖</div></div>
+          <span class="badge-free">✓ Free tier</span>
+        </div>
+        <div class="tool-name">ChatGPT</div>
+        <div class="tool-tagline">Your AI writing assistant — available 24/7</div>
+        <p class="tool-body">Use ChatGPT to write follow-up emails, draft proposals, reply to complaints, plan social media content, and create marketing copy — all in seconds. The APTO prompt pack gives you 20 ready-to-use templates so you don't start from a blank page.</p>
+        <div class="tool-footer">
+          <a href="https://chat.openai.com" target="_blank" rel="noopener" class="btn-coral" style="font-size:.78rem;padding:.4rem 1rem;">Open ChatGPT →</a>
+          <a href="kit.html" style="font-size:.78rem;color:var(--coral);font-weight:600;">Get prompt pack</a>
+        </div>
+      </div>
+      <div class="tool-card" id="canva">
+        <div class="tool-card-header">
+          <div><div class="tool-icon">🎨</div></div>
+          <span class="badge-free">✓ Free tier</span>
+        </div>
+        <div class="tool-name">Canva</div>
+        <div class="tool-tagline">Professional design — no designer needed</div>
+        <p class="tool-body">Create social media posts, flyers, presentations, business cards and logos in minutes. Canva's AI features now write text, remove backgrounds and resize designs automatically. The free tier gives you thousands of templates and most features you'll ever need.</p>
+        <div class="tool-footer">
+          <a href="https://www.canva.com/join/affiliate" target="_blank" rel="noopener" class="btn-coral" style="font-size:.78rem;padding:.4rem 1rem;">Open Canva →</a>
+          <span style="font-size:.72rem;color:var(--text3);">Affiliate link</span>
+        </div>
+      </div>
+      <div class="tool-card" id="make">
+        <div class="tool-card-header">
+          <div><div class="tool-icon">⚡</div></div>
+          <span class="badge-free">✓ Free tier</span>
+        </div>
+        <div class="tool-name">Make.com</div>
+        <div class="tool-tagline">Automate the tasks you do every day</div>
+        <p class="tool-body">Make.com connects your apps and automates repetitive tasks without any coding. Get notified when a new enquiry lands, automatically add leads to a spreadsheet, or send a follow-up email when someone fills in your form. 1,000 free operations per month.</p>
+        <div class="tool-footer">
+          <a href="https://www.make.com/en/register?promo=apto" target="_blank" rel="noopener" class="btn-coral" style="font-size:.78rem;padding:.4rem 1rem;">Open Make.com →</a>
+          <span style="font-size:.72rem;color:var(--text3);">Affiliate link</span>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-card-header">
+          <div><div class="tool-icon">📧</div></div>
+          <span class="badge-free">✓ Free to 2,500</span>
+        </div>
+        <div class="tool-name">Beehiiv</div>
+        <div class="tool-tagline">Start your own newsletter — free to 2,500 subscribers</div>
+        <p class="tool-body">Beehiiv is what APTO itself runs on. If you want to build an audience or stay in touch with customers, it's the best free newsletter platform out there. No monthly fee until you hit 2,500 subscribers.</p>
+        <div class="tool-footer">
+          <a href="https://www.beehiiv.com?via=apto" target="_blank" rel="noopener" class="btn-coral" style="font-size:.78rem;padding:.4rem 1rem;">Open Beehiiv →</a>
+          <span style="font-size:.72rem;color:var(--text3);">Affiliate link</span>
+        </div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-card-header">
+          <div><div class="tool-icon">🔗</div></div>
+          <span class="badge-free">✓ Free tier</span>
+        </div>
+        <div class="tool-name">HubSpot CRM</div>
+        <div class="tool-tagline">Track leads and customers — free forever</div>
+        <p class="tool-body">HubSpot's free CRM lets you track every contact, deal and conversation in one place. Connect it to Gmail, Outlook or your website and it logs everything automatically. The free plan is genuinely generous and works well for small businesses.</p>
+        <div class="tool-footer">
+          <a href="https://www.hubspot.com" target="_blank" rel="noopener" class="btn-coral" style="font-size:.78rem;padding:.4rem 1rem;">Open HubSpot →</a>
+        </div>
+      </div>
+      <div class="tool-card" style="background:var(--bg2);border-style:dashed;justify-content:center;align-items:center;text-align:center;min-height:200px;">
+        <div style="font-size:2rem;margin-bottom:.75rem;">📋</div>
+        <div class="tool-name">More tools incoming</div>
+        <p class="tool-body" style="margin-top:.4rem;">We add new tested tools every month. Subscribe to the newsletter to be first to know.</p>
+        <a href="kit.html" class="btn-outline" style="margin-top:1rem;font-size:.78rem;">Subscribe free →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROMPTS SHOWCASE -->
+<section class="prompt-section">
+  <div class="prompt-inner">
+    <div class="reveal">
+      <div class="section-label" style="color:rgba(235,110,20,.85);">Ready-to-use prompts</div>
+      <h2 class="section-h2" style="color:var(--white);">Copy. Paste. <em>Done.</em></h2>
+      <p class="section-body" style="color:rgba(255,255,255,.5);">Four of the 20 prompts from the free APTO AI Starter Kit. Each one works with ChatGPT's free tier. Just swap the brackets for your details.</p>
+    </div>
+    <div class="prompt-grid reveal">
+      <div class="prompt-card">
+        <div class="prompt-label">Email writing</div>
+        <div class="prompt-title">Follow-up after a meeting</div>
+        <div class="prompt-box">"Write a follow-up email to [client name] about [topic]. Keep it under 80 words. Tone: friendly but direct. End with one clear next step. No filler phrases like 'I hope this finds you well.'"</div>
+        <div class="prompt-use">Works with: ChatGPT free tier</div>
+      </div>
+      <div class="prompt-card">
+        <div class="prompt-label">Social media</div>
+        <div class="prompt-title">Instagram caption generator</div>
+        <div class="prompt-box">"Write 3 Instagram caption options for [my business, which does X]. Tone: [professional/friendly/fun]. Include a question to drive comments. Keep each under 150 characters."</div>
+        <div class="prompt-use">Works with: ChatGPT free tier</div>
+      </div>
+      <div class="prompt-card">
+        <div class="prompt-label">Customer service</div>
+        <div class="prompt-title">Polite complaint response</div>
+        <div class="prompt-box">"Write a professional reply to this customer complaint: [paste complaint]. Acknowledge the issue, apologise sincerely, offer [solution]. Keep it under 100 words. Do not be defensive."</div>
+        <div class="prompt-use">Works with: ChatGPT free tier</div>
+      </div>
+      <div class="prompt-card">
+        <div class="prompt-label">Sales</div>
+        <div class="prompt-title">Proposal introduction</div>
+        <div class="prompt-box">"Write the opening paragraph of a business proposal for [client name] at [company]. We are proposing [service/product] to solve [their problem]. Tone: confident, clear, no jargon."</div>
+        <div class="prompt-use">Works with: ChatGPT free tier</div>
+      </div>
+    </div>
+    <div class="reveal" style="text-align:center;margin-top:2.5rem;">
+      <p style="color:rgba(255,255,255,.4);font-size:.85rem;margin-bottom:1rem;">Get all 20 prompts — free, instant, no credit card.</p>
+      <a href="kit.html" class="btn-coral">Get the free kit →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CHARACTER POINTER -->
+<section class="char-pointer-section">
+  <div class="char-pointer-inner">
+    <div class="reveal">
+      <div class="section-label">Every Tuesday morning</div>
+      <h2 class="section-h2">One new tool. One new habit.<br><em>Under 5 minutes.</em></h2>
+      <p class="section-body">The APTO newsletter covers the AI tools and business prompts that actually work — without the hype. One issue every Tuesday. Free forever.</p>
+      <div style="margin-top:1.75rem;display:flex;gap:1rem;flex-wrap:wrap;">
+        <a href="kit.html" class="btn-coral">Get the newsletter →</a>
+        <a href="newsletter/index.html" style="font-size:.85rem;color:var(--text2);font-weight:600;display:flex;align-items:center;gap:.3rem;">Read the archive →</a>
+      </div>
+    </div>
+    <div class="char-pointer-img reveal">
+      <img src="char-suit-point-right.png" alt="Suited APTO character pointing at newsletter CTA">
+    </div>
+  </div>
+</section>
+
+<!-- CTA STRIP -->
+<section class="cta-strip">
+  <div class="cta-strip-inner">
+    <div>
+      <h3>Get 20 free AI prompts for your business.</h3>
+      <p>Instantly. No credit card. No faff.</p>
+    </div>
+    <a href="kit.html" class="btn-white">Download the free kit →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div><div class="footer-brand"><img src="char-fist.png" alt="APTO"><span class="footer-brand-text">APTO</span></div><p class="footer-tagline">AI tools for small business and personal wealth. Plain English. Free to start.</p></div>
+    <div class="footer-col"><h4>Pages</h4><a href="index.html">Home</a><a href="business.html">AI for Business</a><a href="wealth.html">AI for Wealth</a><a href="tools.html">Tool Directory</a><a href="kit.html">Free Kit</a></div>
+    <div class="footer-col"><h4>Tools</h4><a href="tools.html#chatgpt">ChatGPT</a><a href="tools.html#canva">Canva</a><a href="tools.html#make">Make.com</a><a href="tools.html#beehiiv">Beehiiv</a></div>
+    <div class="footer-col"><h4>Affiliate</h4><a href="https://www.beehiiv.com?via=apto" target="_blank" rel="noopener">Beehiiv</a><a href="https://www.canva.com/join/affiliate" target="_blank" rel="noopener">Canva Pro</a><a href="https://www.make.com/en/register?promo=apto" target="_blank" rel="noopener">Make.com</a></div>
+  </div>
+  <div class="footer-bottom"><p>© 2025 APTO. Some links are affiliate links — we only recommend tools we use ourselves.</p><p>aptotools.netlify.app</p></div>
+</footer>
+
+<script>
+function toggleTheme(){var d=document.documentElement,t=d.getAttribute('data-theme')==='dark';d.setAttribute('data-theme',t?'light':'dark');document.getElementById('theme-btn').textContent=t?'🌙':'☀️';try{localStorage.setItem('apto-theme',t?'light':'dark');}catch(e){}}
+(function(){try{var t=localStorage.getItem('apto-theme');if(t==='dark'){document.documentElement.setAttribute('data-theme','dark');var b=document.getElementById('theme-btn');if(b)b.textContent='☀️';}}catch(e){}})();
+document.getElementById('hamburger').addEventListener('click',function(){document.getElementById('nav-mobile').classList.toggle('open');});
+document.addEventListener('click',function(e){var nav=document.getElementById('main-nav');if(nav&&!nav.contains(e.target))document.getElementById('nav-mobile').classList.remove('open');});
+var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.07,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
+</script>
+</body>
+</html>

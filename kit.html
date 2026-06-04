@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>APTO AI Starter Kit — Free Download</title>
+<meta name="description" content="Get the free APTO AI Starter Kit. 20 AI prompts for small business and personal finance. Instant delivery. No credit card. No spam.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@300;400;500;700;800&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0d1f35;--navy-mid:#162d4a;--navy-lt:#1e3d5c;--coral:#eb6e14;--coral-dk:#c8580e;--coral-lt:#fce8e0;--coral-mid:#f0a070;--black:#0d0d0d;--off-white:#faf8f5;--stone:#f2efe8;--mist:#e8e4db;--slate:#8a8478;--ink:#3d3a35;--white:#ffffff;--green:#1a6b4a;--green-lt:#e8f5ef;--font-head:'Cabinet Grotesk',system-ui,sans-serif;--font-serif:'Lora',Georgia,serif;--bg:var(--white);--bg2:var(--off-white);--text:var(--black);--text2:var(--ink);--text3:var(--slate);--card-bg:var(--white);--card-border:var(--mist);--nav-bg:var(--navy);}
+[data-theme="dark"]{--bg:#0a0a0a;--bg2:#111;--text:#f0ede8;--text2:#b8b4ae;--text3:#6e6b65;--card-bg:#141414;--card-border:#2a2a2a;--nav-bg:#060f1a;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;scroll-behavior:smooth;}
+body{font-family:var(--font-head);background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;}
+a{color:inherit;text-decoration:none;}img{display:block;max-width:100%;}
+.nav{background:var(--nav-bg);padding:0 2rem;position:sticky;top:0;z-index:200;}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;gap:1rem;}
+.nav-logo{display:flex;align-items:center;gap:.6rem;flex-shrink:0;}
+.nav-logo img{width:34px;height:34px;object-fit:contain;border-radius:50%;}
+.nav-logo-text{font-size:1.1rem;font-weight:800;color:var(--white);}
+.nav-links{display:flex;gap:.1rem;list-style:none;}
+.nav-links a{padding:.38rem .78rem;border-radius:6px;font-size:.82rem;font-weight:500;color:rgba(255,255,255,.5);transition:all .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--white);background:rgba(255,255,255,.09);}
+.nav-right{display:flex;align-items:center;gap:.6rem;flex-shrink:0;}
+.btn-coral{display:inline-flex;align-items:center;gap:.4rem;padding:.48rem 1.15rem;background:var(--coral);color:var(--white);border-radius:999px;font-size:.82rem;font-weight:700;transition:all .2s;border:none;cursor:pointer;white-space:nowrap;}
+.btn-coral:hover{background:var(--coral-dk);}
+.theme-btn{width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.07);color:rgba(255,255,255,.7);font-size:.85rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;}
+.hamburger span{display:block;width:22px;height:2px;background:rgba(255,255,255,.7);border-radius:2px;}
+.nav-mobile{display:none;position:absolute;top:64px;left:0;right:0;background:var(--nav-bg);border-bottom:1px solid rgba(255,255,255,.08);padding:.75rem 1.5rem;flex-direction:column;gap:.2rem;z-index:199;}
+.nav-mobile.open{display:flex;}
+.nav-mobile a{padding:.65rem .9rem;border-radius:8px;font-size:.9rem;color:rgba(255,255,255,.6);font-weight:500;transition:all .2s;}
+.nav-mobile a:hover{background:rgba(255,255,255,.07);color:var(--white);}
+@media(max-width:900px){.nav-links{display:none;}.hamburger{display:flex;}}
+/* KIT HERO — single conversion page */
+.kit-hero{background:var(--navy);min-height:85svh;display:flex;align-items:center;padding:5rem 2rem;position:relative;overflow:hidden;}
+.kit-hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px);background-size:28px 28px;}
+.kit-hero-glow{position:absolute;width:700px;height:700px;background:radial-gradient(circle,rgba(235,110,20,.12) 0%,transparent 65%);right:-150px;top:-100px;pointer-events:none;}
+.kit-hero-inner{max-width:1000px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 380px;gap:5rem;align-items:center;position:relative;z-index:1;}
+.kit-eyebrow{display:inline-flex;align-items:center;gap:.4rem;background:rgba(235,110,20,.15);border:1px solid rgba(235,110,20,.28);border-radius:999px;padding:.28rem .9rem;font-size:.72rem;font-weight:700;color:rgba(235,110,20,.9);letter-spacing:.05em;text-transform:uppercase;margin-bottom:1.4rem;}
+.kit-hero h1{font-size:clamp(2.4rem,4.5vw,3.6rem);font-weight:800;line-height:1.05;letter-spacing:-.025em;color:var(--white);margin-bottom:1rem;}
+.kit-hero h1 em{font-style:italic;font-family:var(--font-serif);font-weight:400;color:var(--coral);}
+.kit-hero-sub{font-size:1rem;color:rgba(255,255,255,.52);line-height:1.75;margin-bottom:.5rem;}
+/* WHAT'S INSIDE */
+.kit-includes{display:flex;flex-direction:column;gap:.65rem;margin:1.75rem 0;}
+.kit-item{display:flex;align-items:flex-start;gap:.75rem;}
+.kit-item-icon{width:26px;height:26px;border-radius:50%;background:rgba(235,110,20,.15);display:flex;align-items:center;justify-content:center;font-size:.7rem;flex-shrink:0;margin-top:.1rem;}
+.kit-item-text{font-size:.88rem;color:rgba(255,255,255,.65);line-height:1.5;}
+.kit-item-text strong{color:var(--white);}
+/* SIGNUP CARD */
+.kit-card{background:var(--white);border-radius:24px;padding:2.25rem;box-shadow:0 24px 64px rgba(0,0,0,.35);}
+[data-theme="dark"] .kit-card{background:#1a1a1a;}
+.kit-card-title{font-size:1.2rem;font-weight:800;color:var(--text);margin-bottom:.3rem;}
+.kit-card-sub{font-size:.82rem;color:var(--text3);margin-bottom:1.5rem;}
+.kit-form{display:flex;flex-direction:column;gap:.75rem;}
+.kit-form label{font-size:.78rem;font-weight:600;color:var(--text2);}
+.kit-form input{width:100%;background:var(--bg2);border:1.5px solid var(--card-border);border-radius:10px;padding:.65rem 1rem;font-family:var(--font-head);font-size:.9rem;color:var(--text);outline:none;transition:border-color .2s;}
+.kit-form input:focus{border-color:var(--coral);}
+.kit-form-submit{width:100%;padding:.8rem;background:var(--coral);color:var(--white);border:none;border-radius:10px;font-family:var(--font-head);font-size:.95rem;font-weight:700;cursor:pointer;transition:background .2s;}
+.kit-form-submit:hover{background:var(--coral-dk);}
+.kit-form-note{font-size:.72rem;color:var(--text3);text-align:center;}
+.kit-success{display:none;text-align:center;padding:1.5rem 0;}
+.kit-success-icon{font-size:3rem;margin-bottom:.75rem;}
+.kit-success-title{font-size:1.15rem;font-weight:800;color:var(--text);margin-bottom:.4rem;}
+.kit-success-body{font-size:.85rem;color:var(--text2);line-height:1.6;}
+/* WHAT YOU GET */
+.kit-content{padding:5rem 2rem;background:var(--bg2);}
+.kit-content-inner{max-width:900px;margin:0 auto;}
+.section-label{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--coral);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem;}
+.section-label::before{content:'';display:inline-block;width:18px;height:2px;background:var(--coral);border-radius:2px;}
+.section-h2{font-size:clamp(1.7rem,3vw,2.3rem);font-weight:800;line-height:1.1;letter-spacing:-.02em;margin-bottom:.85rem;}
+.section-h2 em{font-style:italic;font-family:var(--font-serif);font-weight:400;color:var(--coral);}
+.content-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-top:2.5rem;}
+.content-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:18px;padding:1.5rem;}
+.content-card-num{font-size:2rem;font-weight:800;color:var(--coral);line-height:1;margin-bottom:.4rem;}
+.content-card-title{font-size:.95rem;font-weight:700;color:var(--text);margin-bottom:.35rem;}
+.content-card-body{font-size:.82rem;color:var(--text2);line-height:1.6;}
+/* CHAR SECTION */
+.kit-char-section{background:var(--navy);padding:4.5rem 2rem;}
+.kit-char-inner{max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 220px;gap:3rem;align-items:center;}
+.kit-char-inner img{width:100%;filter:drop-shadow(0 10px 28px rgba(0,0,0,.4));}
+footer{background:var(--navy);padding:2.5rem 0 1.5rem;border-top:1px solid rgba(255,255,255,.05);}
+.footer-inner{max-width:1200px;margin:0 auto;padding:0 2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.5rem;}
+.footer-brand{display:flex;align-items:center;gap:.6rem;}
+.footer-brand img{width:28px;height:28px;object-fit:contain;border-radius:50%;}
+.footer-brand-text{font-size:1rem;font-weight:800;color:var(--white);}
+.footer-links{display:flex;gap:1.25rem;flex-wrap:wrap;}
+.footer-links a{font-size:.78rem;color:rgba(255,255,255,.4);font-weight:500;transition:color .2s;}
+.footer-links a:hover{color:rgba(255,255,255,.8);}
+.footer-bottom{max-width:1200px;margin:.75rem auto 0;padding:.75rem 2rem 0;border-top:1px solid rgba(255,255,255,.07);}
+.footer-bottom p{font-size:.72rem;color:rgba(255,255,255,.28);}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease;}
+.reveal.visible{opacity:1;transform:none;}
+@media(max-width:900px){.kit-hero-inner{grid-template-columns:1fr;}.kit-char-inner{grid-template-columns:1fr;}.content-grid{grid-template-columns:1fr;}}
+@media(max-width:540px){.content-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<nav class="nav" id="main-nav" style="position:relative;">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="char-fist.png" alt="APTO"><span class="nav-logo-text">APTO</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="business.html">AI for Business</a></li>
+      <li><a href="wealth.html">AI for Wealth</a></li>
+      <li><a href="tools.html">Tool Directory</a></li>
+      <li><a href="kit.html" class="active">Free Kit</a></li>
+      <li><a href="newsletter/index.html">Newsletter</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" title="Toggle theme">🌙</button>
+      <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="index.html">Home</a><a href="business.html">AI for Business</a><a href="wealth.html">AI for Wealth</a><a href="tools.html">Tool Directory</a><a href="newsletter/index.html">Newsletter</a>
+  </div>
+</nav>
+
+<section class="kit-hero">
+  <div class="kit-hero-glow"></div>
+  <div class="kit-hero-inner">
+    <div>
+      <div class="kit-eyebrow">🎁 Free · Instant · No credit card</div>
+      <h1>20 AI prompts.<br><em>Free. Right now.</em></h1>
+      <p class="kit-hero-sub">The APTO AI Starter Kit gives you 20 ready-to-use AI prompts for your business and your wallet. Copy, paste, and start saving time and money today.</p>
+      <div class="kit-includes">
+        <div class="kit-item"><div class="kit-item-icon">✉️</div><div class="kit-item-text"><strong>5 email prompts</strong> — follow-ups, cold outreach, complaint replies, proposals</div></div>
+        <div class="kit-item"><div class="kit-item-icon">📱</div><div class="kit-item-text"><strong>5 social media prompts</strong> — captions, content calendars, hashtag research</div></div>
+        <div class="kit-item"><div class="kit-item-icon">⚙️</div><div class="kit-item-text"><strong>5 operations prompts</strong> — meeting agendas, SOP writing, process documentation</div></div>
+        <div class="kit-item"><div class="kit-item-icon">💰</div><div class="kit-item-text"><strong>5 money prompts</strong> — 50/30/20 budget, subscription audit, savings plan</div></div>
+        <div class="kit-item"><div class="kit-item-icon">📅</div><div class="kit-item-text"><strong>Bonus: Monday 30-minute AI workflow</strong> — your AI routine in one page</div></div>
+      </div>
+      <p style="font-size:.78rem;color:rgba(255,255,255,.3);">Works with ChatGPT free tier. No paid subscription needed.</p>
+    </div>
+    <div>
+      <div class="kit-card">
+        <div class="kit-card-title">Get the free kit →</div>
+        <div class="kit-card-sub">Delivered instantly. No spam. Unsubscribe any time.</div>
+        <form class="kit-form" id="kit-form" onsubmit="kitSubmit(event)">
+          <div>
+            <label for="kit-email">Your email</label>
+            <input type="email" id="kit-email" placeholder="you@example.com" required autocomplete="email">
+          </div>
+          <button type="submit" class="kit-form-submit">Send me the free kit →</button>
+          <p class="kit-form-note">Free forever · No spam · 1-click unsubscribe</p>
+        </form>
+        <div class="kit-success" id="kit-success">
+          <div class="kit-success-icon">🎉</div>
+          <div class="kit-success-title">It's on its way!</div>
+          <p class="kit-success-body">Check your inbox — your 20 AI prompts will arrive in the next few minutes. You're also subscribed to the free Tuesday newsletter.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT'S INSIDE -->
+<section class="kit-content">
+  <div class="kit-content-inner">
+    <div class="reveal">
+      <div class="section-label">What's in the kit</div>
+      <h2 class="section-h2">Six sections. <em>Immediate value.</em></h2>
+      <p style="font-size:.95rem;color:var(--text2);line-height:1.75;max-width:560px;">The APTO AI Starter Kit is structured so you can get a result within 10 minutes of downloading it. No fluff. No filler. Just prompts that work.</p>
+    </div>
+    <div class="content-grid reveal">
+      <div class="content-card"><div class="content-card-num">01</div><div class="content-card-title">Writing &amp; Email</div><p class="content-card-body">Follow-ups, cold outreach, complaint replies, newsletter drafts. All formatted so you swap the brackets for your details and hit send.</p></div>
+      <div class="content-card"><div class="content-card-num">02</div><div class="content-card-title">Social Media &amp; Content</div><p class="content-card-body">Instagram captions, LinkedIn posts, content calendar planning, hashtag strategy. Works for any industry.</p></div>
+      <div class="content-card"><div class="content-card-num">03</div><div class="content-card-title">Business Operations</div><p class="content-card-body">Meeting agendas, standard operating procedures, project plans, job descriptions. The boring-but-important stuff, done fast.</p></div>
+      <div class="content-card"><div class="content-card-num">04</div><div class="content-card-title">Marketing &amp; Sales</div><p class="content-card-body">Sales page copy, proposal introductions, customer testimonial requests, referral programme copy. All tested on real businesses.</p></div>
+      <div class="content-card"><div class="content-card-num">05</div><div class="content-card-title">Personal Finance</div><p class="content-card-body">50/30/20 budget builder, subscription audit, savings goal planner, weekly money review. Your AI financial assistant for free.</p></div>
+      <div class="content-card"><div class="content-card-num">🎁</div><div class="content-card-title">Monday 30-Minute Workflow</div><p class="content-card-body">The exact routine APTO recommends for using AI tools effectively each week. One page. Fits on your desk. Saves hours.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CHARACTER SECTION -->
+<section class="kit-char-section">
+  <div class="kit-char-inner">
+    <div class="reveal">
+      <div class="section-label" style="color:rgba(235,110,20,.85);">Every week after that</div>
+      <h2 class="section-h2" style="color:var(--white);">One new tool.<br><em>Every Tuesday.</em></h2>
+      <p style="font-size:.95rem;color:rgba(255,255,255,.5);line-height:1.75;max-width:480px;margin-bottom:1.75rem;">When you sign up for the kit, you're also joining the free APTO newsletter. Every Tuesday morning: one new AI tool or money habit, explained in plain English, under 5 minutes to read.</p>
+      <div style="display:flex;gap:.75rem;align-items:center;flex-wrap:wrap;">
+        <a href="https://apto.beehiiv.com" target="_blank" rel="noopener" class="btn-coral">Read an issue first →</a>
+        <span style="font-size:.78rem;color:rgba(255,255,255,.35);">Opens on Beehiiv</span>
+      </div>
+    </div>
+    <div class="reveal" style="display:flex;justify-content:center;">
+      <img src="char-flag.png" alt="APTO character with APTO flag" style="width:220px;filter:drop-shadow(0 12px 32px rgba(0,0,0,.4));animation:charFloat 3.5s ease-in-out infinite;">
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand"><img src="char-fist.png" alt="APTO"><span class="footer-brand-text">APTO</span></div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="business.html">AI for Business</a>
+      <a href="wealth.html">AI for Wealth</a>
+      <a href="tools.html">Tools</a>
+      <a href="newsletter/index.html">Newsletter</a>
+    </div>
+  </div>
+  <div class="footer-bottom"><p>© 2025 APTO. Free forever. No spam. Unsubscribe any time.</p></div>
+</footer>
+
+<script>
+function toggleTheme(){var d=document.documentElement,t=d.getAttribute('data-theme')==='dark';d.setAttribute('data-theme',t?'light':'dark');document.getElementById('theme-btn').textContent=t?'🌙':'☀️';try{localStorage.setItem('apto-theme',t?'light':'dark');}catch(e){}}
+(function(){try{var t=localStorage.getItem('apto-theme');if(t==='dark'){document.documentElement.setAttribute('data-theme','dark');var b=document.getElementById('theme-btn');if(b)b.textContent='☀️';}}catch(e){}})();
+document.getElementById('hamburger').addEventListener('click',function(){document.getElementById('nav-mobile').classList.toggle('open');});
+document.addEventListener('click',function(e){var nav=document.getElementById('main-nav');if(nav&&!nav.contains(e.target))document.getElementById('nav-mobile').classList.remove('open');});
+var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.07,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
+@keyframes charFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+function kitSubmit(e){
+  e.preventDefault();
+  var em=document.getElementById('kit-email').value;
+  document.getElementById('kit-form').style.display='none';
+  document.getElementById('kit-success').style.display='block';
+  // Redirect to Beehiiv with email pre-filled
+  setTimeout(function(){
+    window.open('https://apto.beehiiv.com/subscribe?email='+encodeURIComponent(em),'_blank');
+  },1000);
+}
+</script>
+</body>
+</html>

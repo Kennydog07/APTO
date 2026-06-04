@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>APTO Tool Directory — Every AI Tool We've Tested</title>
+<meta name="description" content="The APTO tool directory. Every AI tool we've personally tested and recommend. Every tool has a free tier. No paid placements.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@300;400;500;700;800&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0d1f35;--navy-mid:#162d4a;--navy-lt:#1e3d5c;--coral:#eb6e14;--coral-dk:#c8580e;--coral-lt:#fce8e0;--coral-mid:#f0a070;--black:#0d0d0d;--off-white:#faf8f5;--stone:#f2efe8;--mist:#e8e4db;--slate:#8a8478;--ink:#3d3a35;--white:#ffffff;--green:#1a6b4a;--green-lt:#e8f5ef;--font-head:'Cabinet Grotesk',system-ui,sans-serif;--font-serif:'Lora',Georgia,serif;--bg:var(--white);--bg2:var(--off-white);--text:var(--black);--text2:var(--ink);--text3:var(--slate);--card-bg:var(--white);--card-border:var(--mist);--nav-bg:var(--navy);}
+[data-theme="dark"]{--bg:#0a0a0a;--bg2:#111;--text:#f0ede8;--text2:#b8b4ae;--text3:#6e6b65;--card-bg:#141414;--card-border:#2a2a2a;--nav-bg:#060f1a;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;scroll-behavior:smooth;}
+body{font-family:var(--font-head);background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;}
+a{color:inherit;text-decoration:none;}img{display:block;max-width:100%;}
+.nav{background:var(--nav-bg);padding:0 2rem;position:sticky;top:0;z-index:200;}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;gap:1rem;}
+.nav-logo{display:flex;align-items:center;gap:.6rem;flex-shrink:0;}
+.nav-logo img{width:34px;height:34px;object-fit:contain;border-radius:50%;}
+.nav-logo-text{font-size:1.1rem;font-weight:800;color:var(--white);}
+.nav-links{display:flex;gap:.1rem;list-style:none;}
+.nav-links a{padding:.38rem .78rem;border-radius:6px;font-size:.82rem;font-weight:500;color:rgba(255,255,255,.5);transition:all .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--white);background:rgba(255,255,255,.09);}
+.nav-right{display:flex;align-items:center;gap:.6rem;flex-shrink:0;}
+.btn-coral{display:inline-flex;align-items:center;gap:.4rem;padding:.48rem 1.15rem;background:var(--coral);color:var(--white);border-radius:999px;font-size:.82rem;font-weight:700;transition:all .2s;border:none;cursor:pointer;white-space:nowrap;}
+.btn-coral:hover{background:var(--coral-dk);}
+.theme-btn{width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.07);color:rgba(255,255,255,.7);font-size:.85rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;}
+.hamburger span{display:block;width:22px;height:2px;background:rgba(255,255,255,.7);border-radius:2px;}
+.nav-mobile{display:none;position:absolute;top:64px;left:0;right:0;background:var(--nav-bg);border-bottom:1px solid rgba(255,255,255,.08);padding:.75rem 1.5rem;flex-direction:column;gap:.2rem;z-index:199;}
+.nav-mobile.open{display:flex;}
+.nav-mobile a{padding:.65rem .9rem;border-radius:8px;font-size:.9rem;color:rgba(255,255,255,.6);font-weight:500;transition:all .2s;}
+.nav-mobile a:hover{background:rgba(255,255,255,.07);color:var(--white);}
+@media(max-width:900px){.nav-links{display:none;}.hamburger{display:flex;}}
+/* DIR HERO */
+.dir-hero{background:var(--navy);padding:4rem 2rem 3.5rem;position:relative;overflow:hidden;}
+.dir-hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px);background-size:28px 28px;}
+.dir-hero-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 260px;gap:3rem;align-items:center;position:relative;z-index:1;}
+.dir-hero h1{font-size:clamp(2rem,3.5vw,2.9rem);font-weight:800;line-height:1.08;letter-spacing:-.025em;color:var(--white);margin-bottom:.8rem;}
+.dir-hero h1 em{font-style:italic;font-family:var(--font-serif);font-weight:400;color:var(--coral);}
+.dir-hero-sub{font-size:.95rem;color:rgba(255,255,255,.5);line-height:1.7;max-width:500px;}
+.dir-hero-badge{display:flex;gap:.75rem;margin-top:1.5rem;flex-wrap:wrap;}
+.dir-badge{display:inline-flex;align-items:center;gap:.35rem;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.35rem .8rem;font-size:.75rem;font-weight:600;color:rgba(255,255,255,.6);}
+.dir-hero-char img{width:100%;filter:drop-shadow(0 10px 28px rgba(0,0,0,.4));animation:charFloat 3.5s ease-in-out infinite;}
+@keyframes charFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+/* LAYOUT */
+.container{max-width:1200px;margin:0 auto;padding:0 2rem;}
+.section{padding:4.5rem 0;}
+.section-alt{background:var(--bg2);}
+.section-label{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--coral);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem;}
+.section-label::before{content:'';display:inline-block;width:18px;height:2px;background:var(--coral);border-radius:2px;}
+.section-h2{font-size:clamp(1.5rem,2.5vw,2rem);font-weight:800;line-height:1.12;letter-spacing:-.02em;margin-bottom:.75rem;}
+.section-h2 em{font-style:italic;font-family:var(--font-serif);font-weight:400;color:var(--coral);}
+.badge-free{display:inline-flex;align-items:center;gap:.3rem;background:var(--green-lt);color:var(--green);font-size:.67rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:.22rem .6rem;border-radius:999px;width:fit-content;}
+[data-theme="dark"] .badge-free{background:rgba(26,107,74,.25);color:#5fcca0;}
+/* FILTER TABS */
+.filter-bar{display:flex;gap:.5rem;margin-bottom:2.5rem;flex-wrap:wrap;}
+.filter-tab{padding:.42rem 1rem;border-radius:8px;border:1.5px solid var(--card-border);background:var(--card-bg);font-size:.8rem;font-weight:600;color:var(--text3);cursor:pointer;transition:all .2s;}
+.filter-tab:hover,.filter-tab.active{background:var(--coral);border-color:var(--coral);color:var(--white);}
+/* TOOL CARDS FULL */
+.tool-list{display:flex;flex-direction:column;gap:1.25rem;}
+.tool-row{background:var(--card-bg);border:1px solid var(--card-border);border-radius:20px;padding:1.75rem 2rem;display:grid;grid-template-columns:auto 1fr auto;gap:1.75rem;align-items:center;transition:all .2s;}
+.tool-row:hover{border-color:var(--coral-mid);box-shadow:0 4px 24px rgba(235,110,20,.08);}
+.tool-row-icon{font-size:2.5rem;flex-shrink:0;}
+.tool-row-info{min-width:0;}
+.tool-row-header{display:flex;align-items:center;gap:.75rem;margin-bottom:.4rem;flex-wrap:wrap;}
+.tool-row-name{font-size:1.05rem;font-weight:700;color:var(--text);}
+.tool-row-cat{display:inline-block;background:var(--bg2);border:1px solid var(--card-border);border-radius:6px;padding:.18rem .55rem;font-size:.68rem;font-weight:600;color:var(--text3);}
+.tool-row-desc{font-size:.85rem;color:var(--text2);line-height:1.6;}
+.tool-row-actions{display:flex;flex-direction:column;gap:.6rem;align-items:flex-end;flex-shrink:0;}
+.aff-note{font-size:.67rem;color:var(--text3);text-align:right;}
+/* HONEST REVIEW BOX */
+.review-box{background:var(--bg2);border-left:3px solid var(--coral);padding:1rem 1.25rem;border-radius:0 10px 10px 0;margin-top:.75rem;}
+.review-box-label{font-size:.66rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--coral);margin-bottom:.3rem;}
+.review-box-text{font-size:.82rem;color:var(--text2);line-height:1.6;}
+/* BOTTOM CTA */
+.dir-cta{background:var(--navy);padding:4rem 2rem;}
+.dir-cta-inner{max-width:900px;margin:0 auto;display:grid;grid-template-columns:200px 1fr;gap:3rem;align-items:center;}
+.dir-cta-char img{width:100%;filter:drop-shadow(0 8px 20px rgba(0,0,0,.4));}
+.dir-cta-text h2{font-size:clamp(1.5rem,2.5vw,2rem);font-weight:800;color:var(--white);margin-bottom:.7rem;}
+.dir-cta-text h2 em{font-style:italic;font-family:var(--font-serif);color:var(--coral);}
+.dir-cta-text p{font-size:.9rem;color:rgba(255,255,255,.5);line-height:1.7;margin-bottom:1.5rem;}
+footer{background:var(--navy);padding:2.5rem 0 1.5rem;}
+.footer-inner{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:2.5rem;}
+.footer-brand{display:flex;align-items:center;gap:.6rem;margin-bottom:.7rem;}
+.footer-brand img{width:30px;height:30px;object-fit:contain;border-radius:50%;}
+.footer-brand-text{font-size:1rem;font-weight:800;color:var(--white);}
+.footer-tagline{font-size:.8rem;color:rgba(255,255,255,.35);line-height:1.6;max-width:220px;}
+.footer-col h4{font-size:.75rem;font-weight:700;color:rgba(255,255,255,.5);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.9rem;}
+.footer-col a{display:block;font-size:.82rem;color:rgba(255,255,255,.4);font-weight:500;margin-bottom:.45rem;transition:color .2s;}
+.footer-col a:hover{color:rgba(255,255,255,.8);}
+.footer-bottom{max-width:1200px;margin:1.5rem auto 0;padding:1rem 2rem 0;border-top:1px solid rgba(255,255,255,.07);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;}
+.footer-bottom p{font-size:.72rem;color:rgba(255,255,255,.28);}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease;}
+.reveal.visible{opacity:1;transform:none;}
+@media(max-width:900px){.dir-hero-inner{grid-template-columns:1fr;}.dir-hero-char{display:none;}.tool-row{grid-template-columns:auto 1fr;}.tool-row-actions{grid-column:2;flex-direction:row;align-items:center;}.dir-cta-inner{grid-template-columns:1fr;}.dir-cta-char{display:none;}.footer-inner{grid-template-columns:1fr 1fr;}}
+@media(max-width:540px){.tool-row{grid-template-columns:1fr;}.footer-inner{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<nav class="nav" id="main-nav" style="position:relative;">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="char-fist.png" alt="APTO"><span class="nav-logo-text">APTO</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="business.html">AI for Business</a></li>
+      <li><a href="wealth.html">AI for Wealth</a></li>
+      <li><a href="tools.html" class="active">Tool Directory</a></li>
+      <li><a href="kit.html">Free Kit</a></li>
+      <li><a href="newsletter/index.html">Newsletter</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" title="Toggle theme">🌙</button>
+      <a href="kit.html" class="btn-coral">Get free kit →</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="index.html">Home</a><a href="business.html">AI for Business</a><a href="wealth.html">AI for Wealth</a><a href="tools.html">Tool Directory</a><a href="kit.html" style="color:var(--coral);font-weight:700">Get Free Kit →</a><a href="newsletter/index.html">Newsletter</a>
+  </div>
+</nav>
+
+<section class="dir-hero">
+  <div class="dir-hero-inner">
+    <div>
+      <h1>The APTO<br><em>Tool Directory.</em></h1>
+      <p class="dir-hero-sub">Every tool we personally tested and genuinely use. No paid placements. No hype. Every single tool here has a free tier — confirmed by us before it makes the list.</p>
+      <div class="dir-hero-badge">
+        <span class="dir-badge">✓ All free-tier confirmed</span>
+        <span class="dir-badge">✓ No paid placements</span>
+        <span class="dir-badge">✓ Personally tested</span>
+      </div>
+    </div>
+    <div class="dir-hero-char"><img src="char-suit-arms.png" alt="Confident APTO character with arms crossed"></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="filter-bar">
+      <button class="filter-tab active" onclick="filterTools('all',this)">All tools</button>
+      <button class="filter-tab" onclick="filterTools('business',this)">💼 Business</button>
+      <button class="filter-tab" onclick="filterTools('wealth',this)">💰 Wealth</button>
+      <button class="filter-tab" onclick="filterTools('design',this)">🎨 Design</button>
+      <button class="filter-tab" onclick="filterTools('automation',this)">⚡ Automation</button>
+    </div>
+
+    <div class="tool-list reveal">
+
+      <div class="tool-row" id="chatgpt" data-cat="business">
+        <div class="tool-row-icon">🤖</div>
+        <div class="tool-row-info">
+          <div class="tool-row-header"><span class="tool-row-name">ChatGPT</span><span class="tool-row-cat">Business · Writing</span><span class="badge-free">✓ Free tier</span></div>
+          <p class="tool-row-desc">The most useful AI writing tool available. Write emails, social posts, proposals, customer replies and marketing copy in seconds. The free tier (GPT-3.5) handles 90% of what small business owners need.</p>
+          <div class="review-box"><div class="review-box-label">Honest review</div><div class="review-box-text">The free tier is genuinely impressive for writing tasks. Upgrade to GPT-4 only if you need it for research or complex reasoning — most small business tasks work fine for free.</div></div>
+        </div>
+        <div class="tool-row-actions">
+          <a href="https://chat.openai.com" target="_blank" rel="noopener" class="btn-coral" style="font-size:.78rem;padding:.42rem 1rem;">Open →</a>
+          <span class="aff-note">No affiliate</span>
+        </div>
+      </div>
+
+      <div class="tool-row" id="canva" data-cat="design">
+        <div class="tool-row-icon">🎨</div>
+        <div class="tool-row-info">
+          <div class="tool-row-header"><span class="tool-row-name">Canva</span><span class="tool-row-cat">Design · Business</span><span class="badge-free">✓ Free tier</span></div>
+          <p class="tool-row-desc">Design social posts, presentations, flyers and logos without any design experience. AI-powered background removal, text generation and image editing are included. Thousands of templates to start from.</p>
+          <div class="review-box"><div class="review-box-label">Honest review</div><div class="review-box-text">Free tier covers most needs. Pro adds brand kit, more AI features and background removal in bulk. Worth upgrading only if you're producing a lot of content regularly.</div></div>
+        </div>
+        <div class="tool-row-actions">
+          <a href="https://www.canva.com/join/affiliate" target="_blank" rel="noopener" class="btn-coral" style="font-size:.78rem;padding:.42rem 1rem;">Open →</a>
+          <span class="aff-note">Affiliate link</span>
+        </div>
+      </div>
+
+      <div class="tool-row" id="make" data-cat="automation">
+        <div class="tool-row-icon">⚡</div>
+        <div class="tool-row-info">
+          <div class="tool-row-header"><span class="tool-row-name">Make.com</span><span class="tool-row-cat">Automation · Business</span><span class="badge-free">✓ Free tier</span></div>
+          <p class="tool-row-desc">Connect your apps and automate repetitive tasks with a visual drag-and-drop builder. No code needed. 1,000 free operations per month is enough to run several useful automations for a small business.</p>
+          <div class="review-box"><div class="review-box-label">Honest review</div><div class="review-box-text">Steeper learning curve than Zapier but far more powerful on the free tier. Start with one simple automation (e.g. form submission → email notification) before building complex workflows.</div></div>
+        </div>
+        <div class="tool-row-actions">
+          <a href="https://www.make.com/en/register?promo=apto" target="_blank" rel="noopener" class="btn-coral" style="font-size:.78rem;padding:.42rem 1rem;">Open →</a>
+          <span class="aff-note">Affiliate link</span>
+        </div>
+      </div>
+
+      <div class="tool-row" id="beehiiv" data-cat="business">
+        <div class="tool-row-icon">📧</div>
+        <div class="tool-row-info">
+          <div class="tool-row-header"><span class="tool-row-name">Beehiiv</span><span class="tool-row-cat">Newsletter · Business</span><span class="badge-free">✓ Free to 2,500</span></div>
+          <p class="tool-row-desc">The newsletter platform APTO runs on. Clean editor, built-in subscriber growth tools, public web archive for SEO, and genuinely free up to 2,500 subscribers with no feature limits on the free plan.</p>
+          <div class="review-box"><div class="review-box-label">Honest review</div><div class="review-box-text">Best free newsletter platform we've tried. Substack is easier to start but Beehiiv's free tier is more generous and the analytics are better. Our first choice for small businesses starting a newsletter.</div></div>
+        </div>
+        <div class="tool-row-actions">
+          <a href="https://www.beehiiv.com?via=apto" target="_blank" rel="noopener" class="btn-coral" style="font-size:.78rem;padding:.42rem 1rem;">Open →</a>
+          <span class="aff-note">Affiliate link</span>
+        </div>
+      </div>
+
+      <div class="tool-row" id="trading212" data-cat="wealth">
+        <div class="tool-row-icon">📈</div>
+        <div class="tool-row-info">
+          <div class="tool-row-header"><span class="tool-row-name">Trading 212</span><span class="tool-row-cat">Investing · Wealth</span><span class="badge-free">✓ Free</span></div>
+          <p class="tool-row-desc">Commission-free stocks, ETFs and a cash ISA. Start with any amount — there's no minimum deposit. The APTO approach: open a Stocks and Shares ISA, set up a monthly deposit into a global index fund, and leave it alone.</p>
+          <div class="review-box"><div class="review-box-label">Honest review</div><div class="review-box-text">Excellent for beginners. The interface is clean, the ISA is genuinely free, and the fractional shares feature means you can invest £5 in any company. Capital is at risk with all investing.</div></div>
+        </div>
+        <div class="tool-row-actions">
+          <a href="https://sovrn.co/9o4geqx" target="_blank" rel="noopener" class="btn-coral" style="font-size:.78rem;padding:.42rem 1rem;">Open →</a>
+          <span class="aff-note">Affiliate link</span>
+        </div>
+      </div>
+
+      <div class="tool-row" id="clearscore" data-cat="wealth">
+        <div class="tool-row-icon">📋</div>
+        <div class="tool-row-info">
+          <div class="tool-row-header"><span class="tool-row-name">ClearScore</span><span class="tool-row-cat">Credit · Wealth</span><span class="badge-free">✓ Free forever</span></div>
+          <p class="tool-row-desc">Free credit score and full credit report, updated weekly. Helps you understand and improve your credit score to get better mortgage rates, loan rates and credit card deals. Completely free, no premium tier to upsell.</p>
+          <div class="review-box"><div class="review-box-label">Honest review</div><div class="review-box-text">Genuinely useful and genuinely free. The score explanation feature is excellent — it tells you exactly what's helping and hurting your score. Worth checking even if you have no immediate plans to borrow.</div></div>
+        </div>
+        <div class="tool-row-actions">
+          <a href="https://sovrn.co/p1e74z8" target="_blank" rel="noopener" class="btn-coral" style="font-size:.78rem;padding:.42rem 1rem;">Open →</a>
+          <span class="aff-note">Affiliate link</span>
+        </div>
+      </div>
+
+      <div class="tool-row" id="topcashback" data-cat="wealth">
+        <div class="tool-row-icon">💳</div>
+        <div class="tool-row-info">
+          <div class="tool-row-header"><span class="tool-row-name">TopCashback</span><span class="tool-row-cat">Cashback · Wealth</span><span class="badge-free">✓ Free</span></div>
+          <p class="tool-row-desc">Earn cashback at 5,000+ retailers when you shop through the TopCashback portal. Works for insurance, travel, clothing, electronics and more. Completely free to join and the cashback adds up fast.</p>
+          <div class="review-box"><div class="review-box-label">Honest review</div><div class="review-box-text">One of the genuinely easy wins for personal finance. Set it up once and remember to check before every online purchase. Annual car insurance alone can earn £50+ cashback.</div></div>
+        </div>
+        <div class="tool-row-actions">
+          <a href="https://sovrn.co/9o4geqx" target="_blank" rel="noopener" class="btn-coral" style="font-size:.78rem;padding:.42rem 1rem;">Open →</a>
+          <span class="aff-note">Affiliate link</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="dir-cta">
+  <div class="dir-cta-inner">
+    <div class="dir-cta-char"><img src="char-suit-flag.png" alt="APTO with flag"></div>
+    <div class="dir-cta-text">
+      <h2>Get the 20-prompt<br><em>AI Starter Kit free.</em></h2>
+      <p>Sign up and instantly get 20 AI prompts for business and personal finance. Then one new tool or habit every Tuesday. Free forever.</p>
+      <a href="kit.html" class="btn-coral">Get the free kit →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div><div class="footer-brand"><img src="char-fist.png" alt="APTO"><span class="footer-brand-text">APTO</span></div><p class="footer-tagline">AI tools for small business and personal wealth. Plain English. Free to start.</p></div>
+    <div class="footer-col"><h4>Pages</h4><a href="index.html">Home</a><a href="business.html">AI for Business</a><a href="wealth.html">AI for Wealth</a><a href="tools.html">Tool Directory</a><a href="kit.html">Free Kit</a></div>
+    <div class="footer-col"><h4>Business tools</h4><a href="#chatgpt">ChatGPT</a><a href="#canva">Canva</a><a href="#make">Make.com</a><a href="#beehiiv">Beehiiv</a></div>
+    <div class="footer-col"><h4>Wealth tools</h4><a href="#trading212">Trading 212</a><a href="#clearscore">ClearScore</a><a href="#topcashback">TopCashback</a></div>
+  </div>
+  <div class="footer-bottom"><p>© 2025 APTO. Affiliate links marked. Capital at risk with investing. Not financial advice.</p><p>aptotools.netlify.app</p></div>
+</footer>
+
+<script>
+function toggleTheme(){var d=document.documentElement,t=d.getAttribute('data-theme')==='dark';d.setAttribute('data-theme',t?'light':'dark');document.getElementById('theme-btn').textContent=t?'🌙':'☀️';try{localStorage.setItem('apto-theme',t?'light':'dark');}catch(e){}}
+(function(){try{var t=localStorage.getItem('apto-theme');if(t==='dark'){document.documentElement.setAttribute('data-theme','dark');var b=document.getElementById('theme-btn');if(b)b.textContent='☀️';}}catch(e){}})();
+document.getElementById('hamburger').addEventListener('click',function(){document.getElementById('nav-mobile').classList.toggle('open');});
+document.addEventListener('click',function(e){var nav=document.getElementById('main-nav');if(nav&&!nav.contains(e.target))document.getElementById('nav-mobile').classList.remove('open');});
+var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.07,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
+function filterTools(cat,btn){
+  document.querySelectorAll('.filter-tab').forEach(function(t){t.classList.remove('active');});
+  btn.classList.add('active');
+  document.querySelectorAll('.tool-row').forEach(function(row){
+    if(cat==='all'||row.dataset.cat===cat){row.style.display='grid';}
+    else{row.style.display='none';}
+  });
+}
+</script>
+</body>
+</html>
