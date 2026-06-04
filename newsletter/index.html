@@ -16,7 +16,7 @@ html{scroll-behavior:smooth}
 body{font-family:'Cabinet Grotesk',sans-serif;background:var(--off-white);color:var(--text);transition:background .25s,color .25s}
 nav{background:var(--navy);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:62px;position:sticky;top:0;z-index:200}
 .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff;font-weight:800;font-size:1.15rem;letter-spacing:-.02em}
-.nav-logo-icon{width:32px;height:32px;border-radius:50%;background:var(--coral);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:900;font-size:14px;color:#fff;}
+.nav-logo-icon{width:32px;height:32px;border-radius:50%;background:var(--coral);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:900;font-size:14px;color:#fff}
 .nav-links{display:flex;align-items:center;gap:2px}
 .nav-links a{color:rgba(255,255,255,.72);text-decoration:none;font-size:.875rem;font-weight:500;padding:.4rem .9rem;border-radius:6px;transition:color .15s,background .15s;white-space:nowrap}
 .nav-links a:hover{color:#fff;background:rgba(255,255,255,.1)}
@@ -46,17 +46,15 @@ nav{background:var(--navy);display:flex;align-items:center;justify-content:space
 .section h2 em{font-family:'Lora',serif;font-style:italic;color:var(--coral)}
 .section-intro{color:var(--text-muted);font-size:1rem;line-height:1.6;margin-bottom:3rem;max-width:560px}
 
-.issues-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.25rem}
+.issues-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:1.25rem}
 .issue-card{background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:1.75rem;box-shadow:var(--shadow);transition:transform .18s,box-shadow .18s;text-decoration:none;color:inherit;display:block}
 .issue-card:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,.1)}
-.issue-meta{display:flex;align-items:center;gap:.75rem;margin-bottom:1rem}
-.issue-num{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--coral);background:rgba(235,110,20,.1);padding:.2rem .6rem;border-radius:100px}
+.issue-meta{display:flex;align-items:center;gap:.6rem;margin-bottom:1rem;flex-wrap:wrap}
+.issue-num{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--coral);background:rgba(235,110,20,.1);padding:.2rem .6rem;border-radius:100px;white-space:nowrap}
 .issue-date{font-size:.8rem;color:var(--text-muted)}
-.issue-tag{margin-left:auto;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.2rem .6rem;border-radius:100px;white-space:nowrap}
-.issue-tag.business{background:rgba(13,31,53,.08);color:var(--navy)}
-[data-theme=dark] .issue-tag.business{background:rgba(255,255,255,.1);color:rgba(255,255,255,.7)}
-.issue-tag.wealth{background:rgba(26,107,74,.1);color:var(--green)}
-.issue-card h3{font-size:1.1rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.5rem;line-height:1.3}
+.issue-tag{margin-left:auto;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.2rem .6rem;border-radius:100px;white-space:nowrap;background:rgba(13,31,53,.08);color:var(--navy)}
+[data-theme=dark] .issue-tag{background:rgba(255,255,255,.1);color:rgba(255,255,255,.7)}
+.issue-card h3{font-size:1.1rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.5rem;line-height:1.3;color:var(--text)}
 .issue-card p{color:var(--text-muted);font-size:.875rem;line-height:1.6;margin-bottom:1.25rem}
 .issue-read{color:var(--coral);font-weight:700;font-size:.85rem;display:inline-flex;align-items:center;gap:4px}
 
@@ -65,11 +63,7 @@ nav{background:var(--navy);display:flex;align-items:center;justify-content:space
 .subscribe-inner h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:900;letter-spacing:-.03em;color:#fff;margin-bottom:.75rem;line-height:1.1}
 .subscribe-inner h2 em{font-family:'Lora',serif;font-style:italic;color:var(--coral)}
 .subscribe-inner p{color:rgba(255,255,255,.65);font-size:.95rem;line-height:1.6;margin-bottom:2rem}
-.subscribe-form{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;margin-bottom:.75rem}
-.subscribe-form input{flex:1;min-width:240px;max-width:340px;padding:.75rem 1rem;border-radius:8px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);color:#fff;font-family:inherit;font-size:.92rem}
-.subscribe-form input::placeholder{color:rgba(255,255,255,.38)}
-.subscribe-form input:focus{outline:none;border-color:var(--coral)}
-.subscribe-fine{color:rgba(255,255,255,.35);font-size:.78rem}
+.subscribe-fine{color:rgba(255,255,255,.35);font-size:.78rem;margin-top:.75rem}
 
 footer{background:#07101c;padding:2.5rem 2rem}
 .footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
@@ -107,7 +101,7 @@ footer{background:#07101c;padding:2.5rem 2rem}
     <h1>The APTO Newsletter.<br><em>Free to read.</em></h1>
     <p class="hero-sub">One new AI tool. One new habit. Under 5 minutes every Tuesday morning. Plain English, no jargon, no hype — just stuff that works for small business owners and everyday people.</p>
     <div class="hero-actions">
-      <a href="https://beehiiv.com?via=apto" target="_blank" rel="noopener" class="btn-primary">Subscribe free on Beehiiv →</a>
+      <a href="https://apto.beehiiv.com" target="_blank" rel="noopener" class="btn-primary">Subscribe free →</a>
       <span class="hero-note">Free forever · No spam · Unsubscribe any time</span>
     </div>
   </div>
@@ -117,74 +111,19 @@ footer{background:#07101c;padding:2.5rem 2rem}
   <div class="section-inner">
     <div class="label">Archive</div>
     <h2>Every issue, <em>all free to read.</em></h2>
-    <p class="section-intro">Browse every issue of the APTO newsletter. Click any issue to read it in full on Beehiiv.</p>
+    <p class="section-intro">Browse every issue of the APTO newsletter. Click any issue to read it in full.</p>
 
     <div class="issues-grid">
 
-      <a href="https://beehiiv.com?via=apto" target="_blank" rel="noopener" class="issue-card">
+      <a href="https://apto.beehiiv.com/p/the-chatgpt-prompt-that-writes-your-emails-in-90-seconds" target="_blank" rel="noopener" class="issue-card">
         <div class="issue-meta">
           <span class="issue-num">#001</span>
-          <span class="issue-date">Coming soon</span>
-          <span class="issue-tag business">Business</span>
+          <span class="issue-date">2 Jun 2026</span>
+          <span class="issue-tag">Business</span>
         </div>
-        <h3>The 5 AI tools every small business owner should use in 2025</h3>
-        <p>ChatGPT, Canva, Make.com, Beehiiv, and HubSpot — why these five, how to start free, and the exact prompts to use on day one.</p>
-        <span class="issue-read">Read on Beehiiv →</span>
-      </a>
-
-      <a href="https://beehiiv.com?via=apto" target="_blank" rel="noopener" class="issue-card">
-        <div class="issue-meta">
-          <span class="issue-num">#002</span>
-          <span class="issue-date">Coming soon</span>
-          <span class="issue-tag wealth">Wealth</span>
-        </div>
-        <h3>The 50/30/20 budget prompt that actually sticks</h3>
-        <p>How to build a personalised monthly budget in 15 minutes using ChatGPT — and why this method works when spreadsheets don't.</p>
-        <span class="issue-read">Read on Beehiiv →</span>
-      </a>
-
-      <a href="https://beehiiv.com?via=apto" target="_blank" rel="noopener" class="issue-card">
-        <div class="issue-meta">
-          <span class="issue-num">#003</span>
-          <span class="issue-date">Coming soon</span>
-          <span class="issue-tag business">Business</span>
-        </div>
-        <h3>How to automate your client follow-ups with Make.com</h3>
-        <p>A step-by-step walkthrough of building a follow-up sequence that runs automatically — no code, no monthly fee to start.</p>
-        <span class="issue-read">Read on Beehiiv →</span>
-      </a>
-
-      <a href="https://beehiiv.com?via=apto" target="_blank" rel="noopener" class="issue-card">
-        <div class="issue-meta">
-          <span class="issue-num">#004</span>
-          <span class="issue-date">Coming soon</span>
-          <span class="issue-tag wealth">Wealth</span>
-        </div>
-        <h3>Commission-free investing: getting started with Trading 212</h3>
-        <p>How to open a stocks and shares ISA, what to put in it, and the one index fund most beginners should start with.</p>
-        <span class="issue-read">Read on Beehiiv →</span>
-      </a>
-
-      <a href="https://beehiiv.com?via=apto" target="_blank" rel="noopener" class="issue-card">
-        <div class="issue-meta">
-          <span class="issue-num">#005</span>
-          <span class="issue-date">Coming soon</span>
-          <span class="issue-tag business">Business</span>
-        </div>
-        <h3>Write a month of social posts in one hour with ChatGPT</h3>
-        <p>The exact prompt framework we use to generate 30 days of Instagram and LinkedIn content — including the editing pass that makes it sound human.</p>
-        <span class="issue-read">Read on Beehiiv →</span>
-      </a>
-
-      <a href="https://beehiiv.com?via=apto" target="_blank" rel="noopener" class="issue-card">
-        <div class="issue-meta">
-          <span class="issue-num">#006</span>
-          <span class="issue-date">Coming soon</span>
-          <span class="issue-tag wealth">Wealth</span>
-        </div>
-        <h3>TopCashback: earn £200+ a year doing nothing different</h3>
-        <p>The simplest money habit we know. Browser extension, two extra clicks per purchase, real money back on things you already buy.</p>
-        <span class="issue-read">Read on Beehiiv →</span>
+        <h3>The ChatGPT prompt that writes your emails in 90 seconds</h3>
+        <p>Copy this. Paste it. Done. The one prompt that ends the blank-page problem for every follow-up, proposal, and client email you've been putting off.</p>
+        <span class="issue-read">Read now →</span>
       </a>
 
     </div>
@@ -195,10 +134,7 @@ footer{background:#07101c;padding:2.5rem 2rem}
   <div class="subscribe-inner">
     <h2>Never miss an issue.<br><em>Subscribe free.</em></h2>
     <p>One email every Tuesday. No spam. Unsubscribe any time. Read by small business owners and everyday people who want to get more done with AI.</p>
-    <div class="subscribe-form">
-      <input type="email" placeholder="your@email.com">
-      <button class="btn-primary" onclick="window.open('https://beehiiv.com?via=apto','_blank')">Subscribe on Beehiiv →</button>
-    </div>
+    <a href="https://apto.beehiiv.com" target="_blank" rel="noopener" class="btn-primary">Subscribe on Beehiiv →</a>
     <p class="subscribe-fine">Free forever · Powered by Beehiiv</p>
   </div>
 </section>
@@ -214,7 +150,7 @@ footer{background:#07101c;padding:2.5rem 2rem}
       <a href="../kit.html">Free Kit</a>
       <a href="index.html">Newsletter</a>
     </div>
-    <div class="footer-copy">© 2025 APTO</div>
+    <div class="footer-copy">© 2026 APTO</div>
   </div>
 </footer>
 
