@@ -36,6 +36,10 @@ a{color:inherit;text-decoration:none;}img{display:block;max-width:100%;}
 @media(max-width:900px){.nav-links{display:none;}.hamburger{display:flex;}}
 .hero{background:var(--navy);min-height:90svh;display:flex;align-items:center;padding:5rem 2rem 4rem;position:relative;overflow:hidden;}
 .hero-dots{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,.045) 1px,transparent 1px);background-size:30px 30px;mask-image:radial-gradient(ellipse 70% 80% at 10% 50%,black 20%,transparent 75%);}
+
+/* CORNER FLAG CHAR */
+.hero-corner-char{position:absolute;bottom:0;left:2rem;width:180px;z-index:2;pointer-events:none;filter:drop-shadow(0 8px 24px rgba(0,0,0,.35));animation:charFloat 4s ease-in-out infinite;}
+@media(max-width:700px){.hero-corner-char{width:110px;left:1rem;}}
 .hero-glow{position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(235,110,20,.1) 0%,transparent 65%);top:-80px;right:-50px;pointer-events:none;}
 .hero-inner{position:relative;z-index:1;max-width:1200px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 420px;gap:4rem;align-items:center;}
 .hero-eyebrow{display:inline-flex;align-items:center;gap:.45rem;background:rgba(235,110,20,.13);border:1px solid rgba(235,110,20,.25);border-radius:999px;padding:.28rem .9rem;font-size:.72rem;font-weight:700;color:rgba(235,110,20,.9);letter-spacing:.05em;text-transform:uppercase;margin-bottom:1.4rem;}
@@ -138,11 +142,11 @@ footer{background:var(--navy);padding:3rem 0 1.5rem;}
 <body>
 <nav class="nav" id="main-nav" style="position:relative;">
   <div class="nav-inner">
-    <a href="index.html" class="nav-logo"><img src="char-fist.png" alt="APTO"><span class="nav-logo-text">APTO</span></a>
+    <a href="index.html" class="nav-logo"><img src="" data-char="char-fist" alt="APTO"><span class="nav-logo-text">APTO</span></a>
     <ul class="nav-links">
       <li><a href="index.html" class="active">Home</a></li>
       <li><a href="business.html">AI for Business</a></li>
-      <li><a href="wealth.html">AI for Wealth</a></li>
+      <li><a href="wealth.html">Personal Wealth</a></li>
       <li><a href="tools.html">Tool Directory</a></li>
       <li><a href="kit.html">Free Kit</a></li>
       <li><a href="newsletter/index.html">Newsletter</a></li>
@@ -154,12 +158,13 @@ footer{background:var(--navy);padding:3rem 0 1.5rem;}
     </div>
   </div>
   <div class="nav-mobile" id="nav-mobile">
-    <a href="index.html">Home</a><a href="business.html">AI for Business</a><a href="wealth.html">AI for Wealth</a><a href="tools.html">Tool Directory</a><a href="kit.html" style="color:var(--coral);font-weight:700">Get Free Kit →</a><a href="newsletter/index.html">Newsletter</a>
+    <a href="index.html">Home</a><a href="business.html">AI for Business</a><a href="wealth.html">Personal Wealth</a><a href="tools.html">Tool Directory</a><a href="kit.html" style="color:var(--coral);font-weight:700">Get Free Kit →</a><a href="newsletter/index.html">Newsletter</a>
   </div>
 </nav>
 
 <section class="hero">
   <div class="hero-dots"></div><div class="hero-glow"></div>
+  <img src="" data-char="char-flag" class="hero-corner-char" alt="APTO mascot with flag">
   <div class="hero-inner">
     <div>
       <div class="hero-eyebrow">✦ Free weekly newsletter</div>
@@ -173,11 +178,11 @@ footer{background:var(--navy);padding:3rem 0 1.5rem;}
       <p class="hero-trust">Free forever · No spam · Unsubscribe in one click</p>
       <div class="hero-paths">
         <a href="business.html" class="path-btn"><span>💼</span> AI for Business</a>
-        <a href="wealth.html" class="path-btn"><span>💰</span> AI for Wealth</a>
+        <a href="wealth.html" class="path-btn"><span>💰</span> Personal Wealth</a>
       </div>
     </div>
     <div class="hero-char-area">
-      <img src="char-flag.png" class="hero-char" alt="APTO character with APTO flag">
+      <img src="" data-char="char-flag" class="hero-char" alt="APTO character with APTO flag">
       <div class="hero-char-card">
         <div class="hero-char-card-label">This week's kit</div>
         <div class="stat-row"><span class="stat-num">20</span><span class="stat-label">AI prompts</span></div>
@@ -201,13 +206,13 @@ footer{background:var(--navy);padding:3rem 0 1.5rem;}
         <div class="path-card-icon">💼</div>
         <div><div class="path-card-title">AI for Small Business</div><p class="path-card-body">ChatGPT prompts that write your emails, Canva templates that design your posts, Make.com automations that run while you sleep. All free to start.</p></div>
         <div><a href="business.html" class="path-card-btn">Explore business tools →</a></div>
-        <img src="char-suit-point-right.png" class="path-card-char" alt="Suited APTO character pointing right">
+        <img src="" data-char="char-suit-point-right" class="path-card-char" alt="Suited APTO character pointing right">
       </div>
       <div class="path-card pw">
         <div class="path-card-icon">💰</div>
-        <div><div class="path-card-title">AI for Personal Wealth</div><p class="path-card-body">The 50/30/20 budget that actually sticks, Trading 212 for commission-free investing, and AI money habits that take 5 minutes a day.</p></div>
+        <div><div class="path-card-title">Personal Wealth</div><p class="path-card-body">The 50/30/20 budget that actually sticks, Trading 212 for commission-free investing, and AI money habits that take 5 minutes a day.</p></div>
         <div><a href="wealth.html" class="path-card-btn">Explore wealth tools →</a></div>
-        <img src="char-standing.png" class="path-card-char" alt="Casual APTO character standing">
+        <img src="" data-char="char-standing" class="path-card-char" alt="Casual APTO character standing">
       </div>
     </div>
   </div>
@@ -222,7 +227,7 @@ footer{background:var(--navy);padding:3rem 0 1.5rem;}
         <p class="section-body">No recommendations without testing. Every tool in the APTO directory has a free tier. Our reviews stay honest because nobody pays to be here.</p>
       </div>
       <div style="display:flex;align-items:center;gap:1rem;margin-top:1rem;">
-        <img src="char-suit-arms.png" alt="Confident APTO character" style="width:85px;flex-shrink:0;">
+        <img src="" data-char="char-suit-arms" alt="Confident APTO character" style="width:85px;flex-shrink:0;">
         <div style="font-size:.8rem;color:var(--text2);line-height:1.5;max-width:155px;"><strong style="color:var(--text);">No paid placements.</strong><br>Ever. Tools earn their spot by being genuinely useful.</div>
       </div>
     </div>
@@ -255,7 +260,7 @@ footer{background:var(--navy);padding:3rem 0 1.5rem;}
 <section class="section section-alt">
   <div class="container">
     <div class="reveal" style="text-align:center;max-width:500px;margin:0 auto 0;">
-      <img src="char-suit-arms.png" class="trust-char" alt="APTO trustworthy character">
+      <img src="" data-char="char-suit-arms" class="trust-char" alt="APTO trustworthy character">
       <div class="section-label" style="justify-content:center;">Real people, real results</div>
       <h2 class="section-h2">What people <em>actually say.</em></h2>
     </div>
@@ -269,7 +274,7 @@ footer{background:var(--navy);padding:3rem 0 1.5rem;}
 
 <section class="char-cta">
   <div class="char-cta-inner">
-    <div class="char-cta-char"><img src="char-suit-flag.png" alt="APTO character with APTO flag"></div>
+    <div class="char-cta-char"><img src="" data-char="char-suit-flag" alt="APTO character with APTO flag"></div>
     <div class="char-cta-text">
       <h2>Start saving time<br>and <em>building wealth.</em></h2>
       <p>Get the free APTO AI Starter Kit — 20 prompts for your business and your wallet — then one new tool every Tuesday morning. Free forever.</p>
@@ -285,8 +290,8 @@ footer{background:var(--navy);padding:3rem 0 1.5rem;}
 
 <footer>
   <div class="footer-inner">
-    <div><div class="footer-brand"><img src="char-fist.png" alt="APTO"><span class="footer-brand-text">APTO</span></div><p class="footer-tagline">AI tools for small business and personal wealth. Plain English. Free to start.</p></div>
-    <div class="footer-col"><h4>Pages</h4><a href="index.html">Home</a><a href="business.html">AI for Business</a><a href="wealth.html">AI for Wealth</a><a href="tools.html">Tool Directory</a><a href="kit.html">Free Kit</a></div>
+    <div><div class="footer-brand"><img src="" data-char="char-fist" alt="APTO"><span class="footer-brand-text">APTO</span></div><p class="footer-tagline">AI tools for small business and personal wealth. Plain English. Free to start.</p></div>
+    <div class="footer-col"><h4>Pages</h4><a href="index.html">Home</a><a href="business.html">AI for Business</a><a href="wealth.html">Personal Wealth</a><a href="tools.html">Tool Directory</a><a href="kit.html">Free Kit</a></div>
     <div class="footer-col"><h4>Newsletter</h4><a href="https://apto.beehiiv.com" target="_blank" rel="noopener">Read on Beehiiv</a><a href="newsletter/index.html">Archive</a></div>
     <div class="footer-col"><h4>Affiliate</h4><a href="https://www.beehiiv.com?via=apto" target="_blank" rel="noopener">Beehiiv</a><a href="https://www.canva.com/join/affiliate" target="_blank" rel="noopener">Canva Pro</a><a href="https://sovrn.co/9o4geqx" target="_blank" rel="noopener">Trading 212</a><a href="https://sovrn.co/p1e74z8" target="_blank" rel="noopener">ClearScore</a></div>
   </div>
@@ -302,5 +307,6 @@ var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){i
 document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
 function subForm(e,form,okId){e.preventDefault();form.style.display='none';var ok=document.getElementById(okId);if(ok)ok.style.display='block';}
 </script>
+<script src="chars.js"></script>
 </body>
 </html>
