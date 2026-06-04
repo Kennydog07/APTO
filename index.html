@@ -2,614 +2,153 @@
 <html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>APTO — Saving you Time & Money with AI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
 <script src="chars.js" defer></script>
+<script>(function(){var t=localStorage.getItem('apto-theme');if(t)document.documentElement.setAttribute('data-theme',t);})();</script>
 <style>
-  :root {
-    --navy: #0d1f35;
-    --coral: #eb6e14;
-    --green: #1a6b4a;
-    --off-white: #faf8f5;
-    --text: #1a1a1a;
-    --text-muted: #555;
-    --card-bg: #fff;
-    --border: #e5e0d8;
-    --nav-bg: var(--navy);
-    --nav-text: #fff;
-  }
-  [data-theme="dark"] {
-    --off-white: #111827;
-    --text: #f0ece4;
-    --text-muted: #9ca3af;
-    --card-bg: #1e2a3a;
-    --border: #2d3f55;
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Cabinet Grotesk', sans-serif; background: var(--off-white); color: var(--text); transition: background 0.3s, color 0.3s; }
+:root{--navy:#0d1f35;--coral:#eb6e14;--green:#1a6b4a;--off-white:#faf8f5;--text:#1a1a1a;--text-muted:#5a5a5a;--card-bg:#fff;--border:#e2ddd6;--shadow:0 2px 16px rgba(0,0,0,.07)}
+[data-theme=dark]{--off-white:#0f1923;--text:#edeae4;--text-muted:#8a9ab0;--card-bg:#1a2535;--border:#253447;--shadow:0 2px 16px rgba(0,0,0,.3)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Cabinet Grotesk',sans-serif;background:var(--off-white);color:var(--text);transition:background .25s,color .25s}
+nav{background:var(--navy);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:62px;position:sticky;top:0;z-index:200}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff;font-weight:800;font-size:1.15rem;letter-spacing:-.02em}
+.nav-logo-icon{width:32px;height:32px;border-radius:50%;background:var(--coral);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
+.nav-logo-icon img{width:26px;height:26px;object-fit:contain;mix-blend-mode:multiply}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nav-links a{color:rgba(255,255,255,.72);text-decoration:none;font-size:.875rem;font-weight:500;padding:.4rem .9rem;border-radius:6px;transition:color .15s,background .15s;white-space:nowrap}
+.nav-links a:hover{color:#fff;background:rgba(255,255,255,.1)}
+.nav-links a.active{color:#fff;background:rgba(255,255,255,.14);font-weight:700}
+.nav-links a.nav-cta{background:var(--coral);color:#fff!important;font-weight:700;margin-left:4px}
+.nav-links a.nav-cta:hover{background:#d05e0e}
+.theme-toggle{background:none;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);border-radius:6px;padding:.3rem .55rem;cursor:pointer;font-size:.85rem;transition:all .15s}
+.theme-toggle:hover{border-color:rgba(255,255,255,.5);color:#fff}
 
-  /* NAV */
-  nav {
-    background: var(--navy);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 2rem;
-    height: 60px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  .nav-logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-    color: #fff;
-    font-weight: 800;
-    font-size: 1.15rem;
-    letter-spacing: -0.02em;
-  }
-  .nav-logo-icon {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    background: var(--coral);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-  .nav-logo-icon img {
-    width: 28px;
-    height: 28px;
-    object-fit: contain;
-  }
-  .nav-links { display: flex; align-items: center; gap: 0.25rem; }
-  .nav-links a {
-    color: rgba(255,255,255,0.75);
-    text-decoration: none;
-    font-size: 0.875rem;
-    font-weight: 500;
-    padding: 0.4rem 0.85rem;
-    border-radius: 6px;
-    transition: color 0.2s, background 0.2s;
-  }
-  .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.1); }
-  .nav-links a.active { color: #fff; background: rgba(255,255,255,0.15); font-weight: 700; }
-  .nav-links a.nav-cta {
-    background: var(--coral);
-    color: #fff;
-    font-weight: 700;
-    margin-left: 0.5rem;
-  }
-  .nav-links a.nav-cta:hover { background: #d45e0a; }
-  .nav-right { display: flex; align-items: center; gap: 0.75rem; }
-  .theme-toggle {
-    background: none;
-    border: 1px solid rgba(255,255,255,0.25);
-    color: rgba(255,255,255,0.75);
-    border-radius: 6px;
-    padding: 0.3rem 0.6rem;
-    cursor: pointer;
-    font-size: 0.8rem;
-    transition: all 0.2s;
-  }
-  .theme-toggle:hover { border-color: rgba(255,255,255,0.6); color: #fff; }
+/* HERO */
+.hero{background:var(--navy);padding:5rem 2rem 4rem;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:var(--coral)}
+.hero-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 300px;gap:3rem;align-items:center}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(235,110,20,.15);border:1px solid rgba(235,110,20,.4);color:var(--coral);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .85rem;border-radius:100px;margin-bottom:1.25rem}
+.hero h1{font-size:clamp(2.4rem,5vw,3.8rem);font-weight:900;line-height:1.05;color:#fff;margin-bottom:1.2rem;letter-spacing:-.03em}
+.hero h1 em{font-family:'Lora',serif;font-style:italic;color:var(--coral);font-weight:600}
+.hero-sub{color:rgba(255,255,255,.7);font-size:1rem;line-height:1.65;margin-bottom:1.75rem;max-width:480px}
+.hero-form{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.6rem}
+.hero-form input{flex:1;min-width:200px;padding:.72rem 1rem;border-radius:8px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);color:#fff;font-family:inherit;font-size:.92rem}
+.hero-form input::placeholder{color:rgba(255,255,255,.38)}
+.hero-form input:focus{outline:none;border-color:var(--coral)}
+.btn-primary{display:inline-flex;align-items:center;gap:6px;background:var(--coral);color:#fff;border:none;padding:.72rem 1.45rem;border-radius:8px;font-family:inherit;font-size:.92rem;font-weight:700;cursor:pointer;text-decoration:none;transition:background .15s,transform .12s;white-space:nowrap}
+.btn-primary:hover{background:#d05e0e;transform:translateY(-1px)}
+.hero-fine{color:rgba(255,255,255,.4);font-size:.78rem;margin-bottom:1.75rem}
+.hero-path-btns{display:flex;gap:.75rem;flex-wrap:wrap}
+.btn-ghost{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.09);color:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.2);padding:.72rem 1.45rem;border-radius:8px;font-family:inherit;font-size:.92rem;font-weight:600;cursor:pointer;text-decoration:none;transition:all .15s}
+.btn-ghost:hover{background:rgba(255,255,255,.16);color:#fff}
+/* Hero char — positioned right, multiply removes white bg */
+.hero-char{display:flex;align-items:flex-end;justify-content:flex-end}
+.hero-char img{width:260px;height:auto;mix-blend-mode:multiply}
 
-  /* HERO */
-  .hero {
-    background: var(--navy);
-    padding: 5rem 2rem 4rem;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 4px;
-    background: var(--coral);
-  }
-  .hero-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 3rem;
-    align-items: center;
-  }
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(235,110,20,0.15);
-    border: 1px solid rgba(235,110,20,0.4);
-    color: var(--coral);
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 0.35rem 0.85rem;
-    border-radius: 100px;
-    margin-bottom: 1.25rem;
-  }
-  .hero-badge::before { content: '+'; font-size: 0.9rem; }
-  .hero h1 {
-    font-size: clamp(2.4rem, 5vw, 3.8rem);
-    font-weight: 900;
-    line-height: 1.05;
-    color: #fff;
-    margin-bottom: 1.25rem;
-    letter-spacing: -0.03em;
-  }
-  .hero h1 em {
-    font-family: 'Lora', serif;
-    font-style: italic;
-    color: var(--coral);
-    font-weight: 600;
-  }
-  .hero-sub {
-    color: rgba(255,255,255,0.7);
-    font-size: 1.05rem;
-    line-height: 1.6;
-    margin-bottom: 2rem;
-    max-width: 480px;
-  }
-  .hero-form {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    margin-bottom: 0.75rem;
-  }
-  .hero-form input {
-    flex: 1;
-    min-width: 220px;
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
-    border: 1px solid rgba(255,255,255,0.2);
-    background: rgba(255,255,255,0.08);
-    color: #fff;
-    font-family: inherit;
-    font-size: 0.95rem;
-  }
-  .hero-form input::placeholder { color: rgba(255,255,255,0.4); }
-  .hero-form input:focus { outline: none; border-color: var(--coral); }
-  .btn-primary {
-    background: var(--coral);
-    color: #fff;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 8px;
-    font-family: inherit;
-    font-size: 0.95rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background 0.2s, transform 0.15s;
-    white-space: nowrap;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-  }
-  .btn-primary:hover { background: #d45e0a; transform: translateY(-1px); }
-  .hero-fine {
-    color: rgba(255,255,255,0.45);
-    font-size: 0.8rem;
-    margin-bottom: 2rem;
-  }
-  .hero-path-btns { display: flex; gap: 0.75rem; flex-wrap: wrap; }
-  .btn-ghost {
-    background: rgba(255,255,255,0.08);
-    color: rgba(255,255,255,0.85);
-    border: 1px solid rgba(255,255,255,0.2);
-    padding: 0.6rem 1.25rem;
-    border-radius: 8px;
-    font-family: inherit;
-    font-size: 0.9rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  .btn-ghost:hover { background: rgba(255,255,255,0.15); color: #fff; }
+/* PATH SECTION */
+.section{padding:5rem 2rem}
+.section-inner{max-width:1100px;margin:0 auto}
+.label{display:flex;align-items:center;gap:8px;color:var(--coral);font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.75rem}
+.label::before{content:'—'}
+.section h2{font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:900;letter-spacing:-.03em;margin-bottom:.75rem;line-height:1.1}
+.section h2 em{font-family:'Lora',serif;font-style:italic;color:var(--coral);font-weight:600}
+.section-intro{color:var(--text-muted);font-size:1rem;line-height:1.6;margin-bottom:3rem;max-width:520px}
 
-  /* Hero character — top-right, transparent */
-  .hero-char {
-    width: 280px;
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-end;
-    flex-shrink: 0;
-  }
-  .hero-char img {
-    width: 260px;
-    height: auto;
-    mix-blend-mode: normal;
-    /* transparency handled by PNG alpha — no white box */
-  }
+/* PATH CARDS */
+.path-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.path-card{border-radius:16px;padding:2rem;position:relative;overflow:hidden;min-height:280px;display:flex;flex-direction:column;justify-content:flex-end}
+.path-card.business{background:var(--navy)}
+.path-card.wealth{background:var(--green)}
+/* Char: top-right of card, clear of text */
+.path-card-char{position:absolute;top:0;right:0;width:130px;height:160px;display:flex;align-items:flex-start;justify-content:flex-end;padding:0.75rem}
+.path-card-char img{width:110px;height:auto;mix-blend-mode:multiply}
+.path-card-icon{font-size:1.4rem;margin-bottom:.9rem}
+.path-card h3{color:#fff;font-size:1.35rem;font-weight:800;margin-bottom:.55rem;letter-spacing:-.02em;max-width:260px}
+.path-card p{color:rgba(255,255,255,.7);font-size:.875rem;line-height:1.55;margin-bottom:1.4rem;max-width:280px}
+.btn-card{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.22);padding:.55rem 1.1rem;border-radius:8px;font-family:inherit;font-size:.85rem;font-weight:600;text-decoration:none;transition:all .15s;align-self:flex-start}
+.btn-card:hover{background:rgba(255,255,255,.22)}
 
-  /* PATH SECTION */
-  .section { padding: 5rem 2rem; }
-  .section-inner { max-width: 1100px; margin: 0 auto; }
-  .section-label {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    color: var(--coral);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 1rem;
-  }
-  .section-label::before { content: '—'; }
-  .section h2 {
-    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-    font-weight: 900;
-    line-height: 1.1;
-    letter-spacing: -0.03em;
-    margin-bottom: 0.75rem;
-  }
-  .section h2 em {
-    font-family: 'Lora', serif;
-    font-style: italic;
-    color: var(--coral);
-    font-weight: 600;
-  }
-  .section-intro {
-    color: var(--text-muted);
-    font-size: 1rem;
-    line-height: 1.6;
-    margin-bottom: 3rem;
-    max-width: 520px;
-  }
+/* NEWSLETTER STRIP */
+.newsletter-strip{background:var(--off-white);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.newsletter-strip-inner{max-width:1100px;margin:0 auto;padding:4rem 2rem;display:grid;grid-template-columns:1fr 200px;gap:3rem;align-items:center}
+.newsletter-strip h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:900;letter-spacing:-.03em;margin-bottom:.5rem;line-height:1.1}
+.newsletter-strip h2 em{font-family:'Lora',serif;font-style:italic;color:var(--coral)}
+.newsletter-strip p{color:var(--text-muted);font-size:.93rem;line-height:1.6;margin-bottom:1.5rem;max-width:500px}
+.newsletter-actions{display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
+.newsletter-actions a{color:var(--coral);font-weight:600;text-decoration:none;font-size:.9rem}
+.newsletter-actions a:hover{text-decoration:underline}
+/* Newsletter char: on white bg, pointing toward text (flipped) */
+.newsletter-char{display:flex;align-items:center;justify-content:center}
+.newsletter-char img{width:170px;height:auto;mix-blend-mode:multiply;transform:scaleX(-1)}
 
-  /* PATH CARDS */
-  .path-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-  }
-  .path-card {
-    border-radius: 16px;
-    padding: 2rem 2rem 2rem 2rem;
-    position: relative;
-    overflow: hidden;
-    min-height: 280px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-  }
-  .path-card.business { background: var(--navy); }
-  .path-card.wealth { background: var(--green); }
-  .path-card-icon {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-  }
-  .path-card h3 {
-    color: #fff;
-    font-size: 1.4rem;
-    font-weight: 800;
-    margin-bottom: 0.6rem;
-    letter-spacing: -0.02em;
-  }
-  .path-card p {
-    color: rgba(255,255,255,0.7);
-    font-size: 0.9rem;
-    line-height: 1.55;
-    margin-bottom: 1.5rem;
-    max-width: 300px;
-  }
-  .btn-card {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: rgba(255,255,255,0.12);
-    color: #fff;
-    border: 1px solid rgba(255,255,255,0.25);
-    padding: 0.6rem 1.25rem;
-    border-radius: 8px;
-    font-family: inherit;
-    font-size: 0.875rem;
-    font-weight: 600;
-    text-decoration: none;
-    transition: all 0.2s;
-    align-self: flex-start;
-  }
-  .btn-card:hover { background: rgba(255,255,255,0.22); }
+/* TRUST */
+.trust-section{background:var(--navy);padding:5rem 2rem}
+.trust-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:180px 1fr;gap:4rem;align-items:center}
+/* Trust char on dark bg: normal blend, drop shadow */
+.trust-char img{width:160px;height:auto;filter:drop-shadow(0 4px 20px rgba(0,0,0,.35))}
+.trust-label{color:rgba(255,255,255,.45);font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:1.5rem;display:flex;align-items:center;gap:.5rem}
+.trust-label::before{content:'—'}
+.trust-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-bottom:2.5rem}
+.trust-stat-num{font-size:2.4rem;font-weight:900;color:var(--coral);line-height:1;letter-spacing:-.04em;margin-bottom:.25rem}
+.trust-stat-label{color:rgba(255,255,255,.55);font-size:.82rem;line-height:1.4}
+.trust-quote{background:rgba(255,255,255,.06);border-left:3px solid var(--coral);padding:1.2rem 1.4rem;border-radius:0 10px 10px 0;color:rgba(255,255,255,.8);font-family:'Lora',serif;font-style:italic;font-size:.93rem;line-height:1.65}
+.trust-quote-author{font-style:normal;font-family:'Cabinet Grotesk',sans-serif;font-size:.8rem;color:rgba(255,255,255,.45);margin-top:.75rem}
 
-  /* Character in top-right of card, transparent, no word overlap */
-  .path-card-char {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    width: 120px;
-    height: 140px;
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-end;
-    pointer-events: none;
-  }
-  .path-card-char img {
-    width: 110px;
-    height: auto;
-    object-fit: contain;
-    /* PNG alpha = transparent background */
-  }
+/* BOTTOM CTA */
+.cta-section{padding:5rem 2rem}
+.cta-box{max-width:900px;margin:0 auto;background:var(--navy);border-radius:20px;padding:3.5rem;display:grid;grid-template-columns:170px 1fr;gap:3rem;align-items:center;position:relative;overflow:hidden}
+.cta-box::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--coral),#f59e0b)}
+/* CTA char on dark bg */
+.cta-char img{width:150px;height:auto;filter:drop-shadow(0 4px 20px rgba(0,0,0,.35))}
+.cta-box h2{color:#fff;font-size:clamp(1.4rem,2.5vw,2rem);font-weight:900;letter-spacing:-.03em;margin-bottom:.5rem}
+.cta-box h2 em{font-family:'Lora',serif;font-style:italic;color:var(--coral)}
+.cta-box p{color:rgba(255,255,255,.6);font-size:.88rem;margin-bottom:1.4rem;line-height:1.6}
+.cta-form{display:flex;gap:.5rem;flex-wrap:wrap}
+.cta-form input{flex:1;min-width:200px;padding:.7rem 1rem;border-radius:8px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);color:#fff;font-family:inherit;font-size:.9rem}
+.cta-form input::placeholder{color:rgba(255,255,255,.33)}
+.cta-form input:focus{outline:none;border-color:var(--coral)}
 
-  /* NEWSLETTER SECTION */
-  .newsletter-section {
-    background: var(--off-white);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-  }
-  .newsletter-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 4rem 2rem;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 3rem;
-    align-items: center;
-  }
-  .newsletter-label {
-    color: var(--coral);
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 0.75rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  .newsletter-label::before { content: '—'; }
-  .newsletter-inner h2 {
-    font-size: clamp(1.6rem, 3vw, 2.2rem);
-    font-weight: 900;
-    line-height: 1.1;
-    letter-spacing: -0.03em;
-    margin-bottom: 0.5rem;
-  }
-  .newsletter-inner h2 em {
-    font-family: 'Lora', serif;
-    font-style: italic;
-    color: var(--coral);
-  }
-  .newsletter-inner p {
-    color: var(--text-muted);
-    font-size: 0.95rem;
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
-    max-width: 480px;
-  }
-  .newsletter-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
-  .newsletter-actions a {
-    color: var(--coral);
-    font-weight: 600;
-    text-decoration: none;
-    font-size: 0.9rem;
-  }
-  .newsletter-actions a:hover { text-decoration: underline; }
+footer{background:#07101c;padding:2.5rem 2rem}
+.footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-logo{font-weight:800;color:rgba(255,255,255,.65);font-size:1rem;letter-spacing:-.02em}
+.footer-links{display:flex;gap:1.5rem;flex-wrap:wrap}
+.footer-links a{color:rgba(255,255,255,.38);text-decoration:none;font-size:.82rem;transition:color .15s}
+.footer-links a:hover{color:rgba(255,255,255,.75)}
+.footer-copy{color:rgba(255,255,255,.28);font-size:.78rem}
 
-  /* Newsletter char — points LEFT toward text (flip), transparent */
-  .newsletter-char {
-    width: 180px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .newsletter-char img {
-    width: 160px;
-    height: auto;
-    transform: scaleX(-1); /* flip so pointing RIGHT → toward text on left */
-  }
-
-  /* TRUST SECTION */
-  .trust-section { padding: 5rem 2rem; background: var(--navy); }
-  .trust-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 4rem;
-    align-items: center;
-  }
-  /* Trust char — transparent, aligned with content */
-  .trust-char {
-    width: 160px;
-    flex-shrink: 0;
-  }
-  .trust-char img {
-    width: 150px;
-    height: auto;
-  }
-  .trust-content {}
-  .trust-label {
-    color: rgba(255,255,255,0.5);
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  .trust-label::before { content: '—'; }
-  .trust-stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    margin-bottom: 2.5rem;
-  }
-  .trust-stat {}
-  .trust-stat-num {
-    font-size: 2.5rem;
-    font-weight: 900;
-    color: var(--coral);
-    line-height: 1;
-    letter-spacing: -0.04em;
-    margin-bottom: 0.3rem;
-  }
-  .trust-stat-label {
-    color: rgba(255,255,255,0.6);
-    font-size: 0.85rem;
-  }
-  .trust-quote {
-    background: rgba(255,255,255,0.06);
-    border-left: 3px solid var(--coral);
-    padding: 1.25rem 1.5rem;
-    border-radius: 0 10px 10px 0;
-    color: rgba(255,255,255,0.8);
-    font-family: 'Lora', serif;
-    font-style: italic;
-    font-size: 0.95rem;
-    line-height: 1.65;
-  }
-
-  /* BOTTOM CTA */
-  .cta-section { padding: 5rem 2rem; }
-  .cta-inner {
-    max-width: 900px;
-    margin: 0 auto;
-    background: var(--navy);
-    border-radius: 20px;
-    padding: 3.5rem;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 3rem;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .cta-inner::before {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--coral), #f59e0b);
-  }
-  .cta-char {
-    width: 160px;
-    flex-shrink: 0;
-  }
-  .cta-char img { width: 150px; height: auto; }
-  .cta-content {}
-  .cta-content h2 {
-    color: #fff;
-    font-size: clamp(1.4rem, 2.5vw, 2rem);
-    font-weight: 900;
-    letter-spacing: -0.03em;
-    margin-bottom: 0.5rem;
-  }
-  .cta-content h2 em {
-    font-family: 'Lora', serif;
-    font-style: italic;
-    color: var(--coral);
-  }
-  .cta-content p {
-    color: rgba(255,255,255,0.65);
-    font-size: 0.9rem;
-    margin-bottom: 1.5rem;
-    line-height: 1.6;
-  }
-  .cta-form { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-  .cta-form input {
-    flex: 1;
-    min-width: 200px;
-    padding: 0.7rem 1rem;
-    border-radius: 8px;
-    border: 1px solid rgba(255,255,255,0.2);
-    background: rgba(255,255,255,0.08);
-    color: #fff;
-    font-family: inherit;
-    font-size: 0.9rem;
-  }
-  .cta-form input::placeholder { color: rgba(255,255,255,0.35); }
-  .cta-form input:focus { outline: none; border-color: var(--coral); }
-
-  /* FOOTER */
-  footer {
-    background: #080f1c;
-    padding: 3rem 2rem;
-    color: rgba(255,255,255,0.4);
-    font-size: 0.82rem;
-  }
-  .footer-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-  .footer-logo {
-    font-weight: 800;
-    color: rgba(255,255,255,0.7);
-    font-size: 1rem;
-    letter-spacing: -0.02em;
-  }
-  .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
-  .footer-links a {
-    color: rgba(255,255,255,0.4);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-  .footer-links a:hover { color: rgba(255,255,255,0.8); }
-
-  /* RESPONSIVE */
-  @media (max-width: 700px) {
-    .hero-inner { grid-template-columns: 1fr; }
-    .hero-char { display: none; }
-    .path-grid { grid-template-columns: 1fr; }
-    .path-card-char { display: none; }
-    .newsletter-inner { grid-template-columns: 1fr; }
-    .newsletter-char { display: none; }
-    .trust-inner { grid-template-columns: 1fr; }
-    .trust-char { display: none; }
-    .trust-stats { grid-template-columns: 1fr 1fr; }
-    .cta-inner { grid-template-columns: 1fr; }
-    .cta-char { display: none; }
-  }
+@media(max-width:900px){.hero-inner{grid-template-columns:1fr}.hero-char{display:none}.path-grid{grid-template-columns:1fr}.newsletter-strip-inner{grid-template-columns:1fr}.newsletter-char{display:none}.trust-inner{grid-template-columns:1fr}.trust-char{display:none}.cta-box{grid-template-columns:1fr}.cta-char{display:none}}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <a href="index.html" class="nav-logo">
-    <div class="nav-logo-icon">
-      <img data-char="char-fist" alt="APTO">
-    </div>
+    <div class="nav-logo-icon"><img data-char="char-fist" alt="APTO"></div>
     APTO
   </a>
   <div class="nav-links">
     <a href="index.html" class="active">Home</a>
-    <a href="index.html#newsletter">Newsletter</a>
-    <a href="index.html#what-we-do">What we do</a>
+    <a href="business.html">AI for Business</a>
+    <a href="wealth.html">Personal Wealth</a>
     <a href="tools.html">Tools</a>
-    <a href="kit.html" class="nav-cta">Free kit</a>
+    <a href="kit.html" class="nav-cta">Free Kit</a>
+    <a href="newsletter/index.html">Newsletter</a>
   </div>
   <div class="nav-right">
-    <button class="theme-toggle" onclick="toggleTheme()">☾</button>
+    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
   </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-inner">
-    <div class="hero-text">
-      <div class="hero-badge">Free weekly newsletter</div>
+    <div>
+      <div class="hero-badge">+ Free Weekly Newsletter</div>
       <h1>Saving you<br><em>Time &amp; Money</em><br>with AI</h1>
       <p class="hero-sub">Plain-English AI tools and habits for small business owners and everyday people. No jargon. No hype. Just stuff that works.</p>
       <div class="hero-form">
@@ -622,38 +161,31 @@
         <a href="wealth.html" class="btn-ghost">💰 Personal Wealth</a>
       </div>
     </div>
-    <!-- Single APTO character, top-right of hero, transparent PNG -->
     <div class="hero-char">
-      <img data-char="char-flag" alt="APTO character">
+      <img data-char="char-flag" alt="APTO">
     </div>
   </div>
 </section>
 
-<!-- PATH SECTION -->
+<!-- TWO PATHS -->
 <section class="section" id="what-we-do">
   <div class="section-inner">
-    <div class="section-label">Choose your path</div>
+    <div class="label">Choose your path</div>
     <h2>Two things APTO does <em>really well.</em></h2>
     <p class="section-intro">Whether you're trying to win back hours at work or finally get on top of your finances — APTO has a clear path for you.</p>
-
     <div class="path-grid">
-      <!-- Business card -->
       <div class="path-card business">
-        <!-- Char top-right, transparent, not overlapping text -->
         <div class="path-card-char">
-          <img data-char="char-suit-point-right" alt="APTO character">
+          <img data-char="char-suit-point-right" alt="">
         </div>
         <div class="path-card-icon">💼</div>
         <h3>AI for Small Business</h3>
         <p>ChatGPT prompts that write your emails, Canva templates that design your posts, Make.com automations that run while you sleep. All free to start.</p>
         <a href="business.html" class="btn-card">Explore business tools →</a>
       </div>
-
-      <!-- Wealth card -->
       <div class="path-card wealth">
-        <!-- Char top-right, transparent, not overlapping text -->
         <div class="path-card-char">
-          <img data-char="char-standing" alt="APTO character">
+          <img data-char="char-standing" alt="">
         </div>
         <div class="path-card-icon">💰</div>
         <h3>Personal Wealth</h3>
@@ -664,11 +196,11 @@
   </div>
 </section>
 
-<!-- NEWSLETTER SECTION -->
-<section class="newsletter-section" id="newsletter">
-  <div class="newsletter-inner">
+<!-- NEWSLETTER STRIP -->
+<div class="newsletter-strip" id="newsletter">
+  <div class="newsletter-strip-inner">
     <div>
-      <div class="newsletter-label">Every Tuesday morning</div>
+      <div class="label">Every Tuesday morning</div>
       <h2>One new tool. One new habit.<br><em>Under 5 minutes.</em></h2>
       <p>The APTO newsletter covers the AI tools and business prompts that actually work — without the hype. One issue every Tuesday. Free forever.</p>
       <div class="newsletter-actions">
@@ -676,40 +208,28 @@
         <a href="newsletter/index.html">Read the archive →</a>
       </div>
     </div>
-    <!-- Char on RIGHT side, pointing LEFT toward the text -->
     <div class="newsletter-char">
-      <img data-char="char-suit-point-right" alt="APTO character" style="transform:scaleX(-1);">
+      <img data-char="char-suit-point-right" alt="">
     </div>
   </div>
-</section>
+</div>
 
-<!-- TRUST SECTION -->
+<!-- TRUST -->
 <section class="trust-section">
   <div class="trust-inner">
-    <!-- Char transparent, vertically aligned with stats -->
     <div class="trust-char">
-      <img data-char="char-suit-arms" alt="APTO character">
+      <img data-char="char-suit-arms" alt="">
     </div>
-    <div class="trust-content">
+    <div>
       <div class="trust-label">Real results</div>
       <div class="trust-stats">
-        <div class="trust-stat">
-          <div class="trust-stat-num">3hrs</div>
-          <div class="trust-stat-label">saved per week on average</div>
-        </div>
-        <div class="trust-stat">
-          <div class="trust-stat-num">£240</div>
-          <div class="trust-stat-label">average monthly saving</div>
-        </div>
-        <div class="trust-stat">
-          <div class="trust-stat-num">5min</div>
-          <div class="trust-stat-label">to implement each tool</div>
-        </div>
+        <div><div class="trust-stat-num">3hrs</div><div class="trust-stat-label">saved per week on average</div></div>
+        <div><div class="trust-stat-num">£240</div><div class="trust-stat-label">average monthly saving</div></div>
+        <div><div class="trust-stat-num">5min</div><div class="trust-stat-label">to implement each tool</div></div>
       </div>
       <div class="trust-quote">
         "The 50/30/20 prompt built me a budget in 15 minutes that I've actually stuck to for 3 months. First time in years I feel in control of my money."
-        <br><br>
-        <strong style="font-style:normal; font-family:'Cabinet Grotesk',sans-serif; font-size:0.85rem; color:rgba(255,255,255,0.5);">Marcus T. — E-commerce owner</strong>
+        <div class="trust-quote-author">Marcus T. — E-commerce owner</div>
       </div>
     </div>
   </div>
@@ -717,11 +237,11 @@
 
 <!-- BOTTOM CTA -->
 <section class="cta-section">
-  <div class="cta-inner">
+  <div class="cta-box">
     <div class="cta-char">
-      <img data-char="char-suit-flag" alt="APTO character">
+      <img data-char="char-suit-flag" alt="">
     </div>
-    <div class="cta-content">
+    <div>
       <h2>Get the 20-prompt<br><em>AI Starter Kit free.</em></h2>
       <p>Sign up and instantly get 20 AI prompts for business and personal finance. Plus the APTO newsletter every Tuesday. Free forever.</p>
       <div class="cta-form">
@@ -732,7 +252,6 @@
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
     <div class="footer-logo">APTO</div>
@@ -742,22 +261,20 @@
       <a href="wealth.html">Personal Wealth</a>
       <a href="tools.html">Tools</a>
       <a href="kit.html">Free Kit</a>
+      <a href="newsletter/index.html">Newsletter</a>
     </div>
-    <div>© 2025 APTO. All rights reserved.</div>
+    <div class="footer-copy">© 2025 APTO</div>
   </div>
 </footer>
 
 <script>
-function toggleTheme() {
-  const html = document.documentElement;
-  const isDark = html.getAttribute('data-theme') === 'dark';
-  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
-  localStorage.setItem('apto-theme', isDark ? 'light' : 'dark');
+function toggleTheme(){
+  var html=document.documentElement;
+  var dark=html.getAttribute('data-theme')==='dark';
+  html.setAttribute('data-theme',dark?'light':'dark');
+  localStorage.setItem('apto-theme',dark?'light':'dark');
+  document.querySelector('.theme-toggle').textContent=dark?'🌙':'☀️';
 }
-(function() {
-  const saved = localStorage.getItem('apto-theme');
-  if (saved) document.documentElement.setAttribute('data-theme', saved);
-})();
 </script>
 </body>
 </html>

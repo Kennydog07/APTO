@@ -2,278 +2,102 @@
 <html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>APTO — Free AI Starter Kit</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
 <script src="chars.js" defer></script>
+<script>(function(){var t=localStorage.getItem('apto-theme');if(t)document.documentElement.setAttribute('data-theme',t);})();</script>
 <style>
-  :root {
-    --navy: #0d1f35;
-    --coral: #eb6e14;
-    --green: #1a6b4a;
-    --off-white: #faf8f5;
-    --text: #1a1a1a;
-    --text-muted: #555;
-    --card-bg: #fff;
-    --border: #e5e0d8;
-  }
-  [data-theme="dark"] {
-    --off-white: #111827;
-    --text: #f0ece4;
-    --text-muted: #9ca3af;
-    --card-bg: #1e2a3a;
-    --border: #2d3f55;
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Cabinet Grotesk', sans-serif; background: var(--off-white); color: var(--text); }
-
-  nav {
-    background: var(--navy);
-    display: flex; align-items: center;
-    justify-content: space-between;
-    padding: 0 2rem; height: 60px;
-    position: sticky; top: 0; z-index: 100;
-  }
-  .nav-logo {
-    display: flex; align-items: center; gap: 10px;
-    text-decoration: none; color: #fff;
-    font-weight: 800; font-size: 1.15rem; letter-spacing: -0.02em;
-  }
-  .nav-logo-icon {
-    width: 34px; height: 34px; border-radius: 50%;
-    background: var(--coral);
-    display: flex; align-items: center; justify-content: center; overflow: hidden;
-  }
-  .nav-logo-icon img { width: 28px; height: 28px; object-fit: contain; }
-  .nav-links { display: flex; align-items: center; gap: 0.25rem; }
-  .nav-links a {
-    color: rgba(255,255,255,0.75); text-decoration: none;
-    font-size: 0.875rem; font-weight: 500;
-    padding: 0.4rem 0.85rem; border-radius: 6px;
-    transition: color 0.2s, background 0.2s;
-  }
-  .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.1); }
-  .nav-links a.active { color: #fff; background: rgba(255,255,255,0.15); font-weight: 700; }
-  .nav-links a.nav-cta { background: var(--coral); color: #fff; font-weight: 700; margin-left: 0.5rem; }
-  .nav-links a.nav-cta:hover { background: #d45e0a; }
-  .nav-right { display: flex; align-items: center; gap: 0.75rem; }
-  .theme-toggle {
-    background: none; border: 1px solid rgba(255,255,255,0.25);
-    color: rgba(255,255,255,0.75); border-radius: 6px;
-    padding: 0.3rem 0.6rem; cursor: pointer; font-size: 0.8rem;
-  }
-
-  /* HERO */
-  .hero {
-    background: var(--navy);
-    padding: 5rem 2rem 4rem;
-    position: relative; overflow: hidden;
-  }
-  .hero::after {
-    content: ''; position: absolute;
-    bottom: 0; left: 0; right: 0; height: 4px;
-    background: var(--coral);
-  }
-  .hero-inner {
-    max-width: 1000px; margin: 0 auto;
-    display: grid; grid-template-columns: 1fr auto;
-    gap: 3rem; align-items: center;
-  }
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: rgba(235,110,20,0.15);
-    border: 1px solid rgba(235,110,20,0.4);
-    color: var(--coral); font-size: 0.7rem; font-weight: 700;
-    letter-spacing: 0.1em; text-transform: uppercase;
-    padding: 0.35rem 0.85rem; border-radius: 100px;
-    margin-bottom: 1.25rem;
-  }
-  .hero h1 {
-    font-size: clamp(2.2rem, 5vw, 3.6rem);
-    font-weight: 900; line-height: 1.05;
-    color: #fff; margin-bottom: 1rem;
-    letter-spacing: -0.03em;
-  }
-  .hero h1 em { font-family: 'Lora', serif; font-style: italic; color: var(--coral); font-weight: 600; }
-  .hero-sub { color: rgba(255,255,255,0.7); font-size: 1rem; line-height: 1.6; margin-bottom: 2rem; max-width: 460px; }
-  .hero-form { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
-  .hero-form input {
-    flex: 1; min-width: 220px;
-    padding: 0.8rem 1rem; border-radius: 8px;
-    border: 1px solid rgba(255,255,255,0.2);
-    background: rgba(255,255,255,0.08);
-    color: #fff; font-family: inherit; font-size: 0.95rem;
-  }
-  .hero-form input::placeholder { color: rgba(255,255,255,0.4); }
-  .hero-form input:focus { outline: none; border-color: var(--coral); }
-  .btn-primary {
-    background: var(--coral); color: #fff; border: none;
-    padding: 0.8rem 1.6rem; border-radius: 8px;
-    font-family: inherit; font-size: 0.95rem; font-weight: 700;
-    cursor: pointer; transition: background 0.2s, transform 0.15s;
-    white-space: nowrap;
-  }
-  .btn-primary:hover { background: #d45e0a; transform: translateY(-1px); }
-  .hero-fine { color: rgba(255,255,255,0.4); font-size: 0.78rem; }
-
-  /* Hero char — transparent, level with content */
-  .hero-char {
-    width: 240px; flex-shrink: 0;
-    display: flex; align-items: center; justify-content: flex-end;
-  }
-  .hero-char img { width: 210px; height: auto; }
-
-  /* WHAT'S INSIDE */
-  .inside-section { padding: 5rem 2rem; }
-  .inside-inner { max-width: 1000px; margin: 0 auto; }
-  .section-label {
-    color: var(--coral); font-size: 0.72rem; font-weight: 700;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    margin-bottom: 0.75rem;
-    display: flex; align-items: center; gap: 0.5rem;
-  }
-  .section-label::before { content: '—'; }
-  .inside-inner h2 {
-    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-    font-weight: 900; letter-spacing: -0.03em; margin-bottom: 0.75rem;
-  }
-  .inside-inner h2 em { font-family: 'Lora', serif; font-style: italic; color: var(--coral); }
-  .inside-intro { color: var(--text-muted); font-size: 1rem; line-height: 1.6; margin-bottom: 3rem; max-width: 520px; }
-
-  .prompts-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1rem;
-    margin-bottom: 3rem;
-  }
-  .prompt-card {
-    background: var(--card-bg); border: 1px solid var(--border);
-    border-radius: 12px; padding: 1.5rem;
-    display: flex; gap: 1rem;
-  }
-  .prompt-num {
-    font-size: 1.5rem; font-weight: 900;
-    color: rgba(235,110,20,0.2);
-    min-width: 32px; line-height: 1;
-  }
-  .prompt-info {}
-  .prompt-category {
-    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em;
-    text-transform: uppercase; color: var(--coral); margin-bottom: 0.3rem;
-  }
-  .prompt-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.4rem; }
-  .prompt-desc { color: var(--text-muted); font-size: 0.82rem; line-height: 1.5; }
-
-  /* Kit contents list — transparent char, level with list */
-  .kit-contents {
-    background: var(--navy);
-    border-radius: 16px;
-    padding: 3rem;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 3rem;
-    align-items: center;
-    margin-bottom: 2rem;
-  }
-  .kit-char {
-    width: 160px; flex-shrink: 0;
-    display: flex; align-items: center;
-  }
-  .kit-char img { width: 150px; height: auto; }
-  .kit-list-title {
-    color: #fff; font-size: 1.3rem; font-weight: 800;
-    margin-bottom: 1.25rem; letter-spacing: -0.02em;
-  }
-  .kit-list { list-style: none; }
-  .kit-list li {
-    color: rgba(255,255,255,0.8);
-    font-size: 0.9rem; line-height: 1.55;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    display: flex; align-items: flex-start; gap: 0.75rem;
-  }
-  .kit-list li:last-child { border-bottom: none; }
-  .kit-list li::before {
-    content: '→';
-    color: var(--coral); font-weight: 700; flex-shrink: 0;
-  }
-  .kit-note {
-    color: rgba(255,255,255,0.45);
-    font-size: 0.8rem;
-    margin-top: 1rem;
-  }
-
-  /* SIGNUP SECTION */
-  .signup-section {
-    background: var(--off-white);
-    border-top: 1px solid var(--border);
-    padding: 5rem 2rem;
-  }
-  .signup-inner {
-    max-width: 600px; margin: 0 auto; text-align: center;
-  }
-  .signup-inner h2 {
-    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-    font-weight: 900; letter-spacing: -0.03em; margin-bottom: 0.75rem;
-  }
-  .signup-inner h2 em { font-family: 'Lora', serif; font-style: italic; color: var(--coral); }
-  .signup-inner p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 2rem; }
-  .signup-form { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; margin-bottom: 0.75rem; }
-  .signup-form input {
-    flex: 1; min-width: 240px; max-width: 340px;
-    padding: 0.8rem 1rem; border-radius: 8px;
-    border: 1px solid var(--border);
-    background: var(--card-bg); color: var(--text);
-    font-family: inherit; font-size: 0.95rem;
-  }
-  .signup-form input:focus { outline: none; border-color: var(--coral); }
-  .signup-fine { color: var(--text-muted); font-size: 0.78rem; }
-
-  footer {
-    background: #080f1c; padding: 3rem 2rem;
-    color: rgba(255,255,255,0.4); font-size: 0.82rem;
-  }
-  .footer-inner {
-    max-width: 1100px; margin: 0 auto;
-    display: flex; justify-content: space-between;
-    align-items: center; flex-wrap: wrap; gap: 1rem;
-  }
-  .footer-logo { font-weight: 800; color: rgba(255,255,255,0.7); font-size: 1rem; }
-  .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
-  .footer-links a { color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
-  .footer-links a:hover { color: rgba(255,255,255,0.8); }
-
-  @media (max-width: 700px) {
-    .hero-inner { grid-template-columns: 1fr; }
-    .hero-char { display: none; }
-    .kit-contents { grid-template-columns: 1fr; }
-    .kit-char { display: none; }
-  }
+:root{--navy:#0d1f35;--coral:#eb6e14;--green:#1a6b4a;--off-white:#faf8f5;--text:#1a1a1a;--text-muted:#5a5a5a;--card-bg:#fff;--border:#e2ddd6;--shadow:0 2px 16px rgba(0,0,0,.07)}
+[data-theme=dark]{--off-white:#0f1923;--text:#edeae4;--text-muted:#8a9ab0;--card-bg:#1a2535;--border:#253447;--shadow:0 2px 16px rgba(0,0,0,.3)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Cabinet Grotesk',sans-serif;background:var(--off-white);color:var(--text);transition:background .25s,color .25s}
+nav{background:var(--navy);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:62px;position:sticky;top:0;z-index:200}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff;font-weight:800;font-size:1.15rem;letter-spacing:-.02em}
+.nav-logo-icon{width:32px;height:32px;border-radius:50%;background:var(--coral);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
+.nav-logo-icon img{width:26px;height:26px;object-fit:contain;mix-blend-mode:multiply}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nav-links a{color:rgba(255,255,255,.72);text-decoration:none;font-size:.875rem;font-weight:500;padding:.4rem .9rem;border-radius:6px;transition:color .15s,background .15s;white-space:nowrap}
+.nav-links a:hover{color:#fff;background:rgba(255,255,255,.1)}
+.nav-links a.active{color:#fff;background:rgba(255,255,255,.14);font-weight:700}
+.nav-links a.nav-cta{background:var(--coral);color:#fff!important;font-weight:700;margin-left:4px}
+.nav-links a.nav-cta:hover{background:#d05e0e}
+.theme-toggle{background:none;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);border-radius:6px;padding:.3rem .55rem;cursor:pointer;font-size:.85rem}
+.hero{background:var(--navy);padding:5rem 2rem 4.5rem;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:var(--coral)}
+.hero-inner{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr 260px;gap:3rem;align-items:center}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(235,110,20,.15);border:1px solid rgba(235,110,20,.4);color:var(--coral);font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .85rem;border-radius:100px;margin-bottom:1.2rem}
+.hero h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:900;line-height:1.05;color:#fff;margin-bottom:1rem;letter-spacing:-.03em}
+.hero h1 em{font-family:'Lora',serif;font-style:italic;color:var(--coral);font-weight:600}
+.hero-sub{color:rgba(255,255,255,.7);font-size:1rem;line-height:1.65;margin-bottom:1.75rem;max-width:460px}
+.hero-form{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.6rem}
+.hero-form input{flex:1;min-width:220px;padding:.75rem 1rem;border-radius:8px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);color:#fff;font-family:inherit;font-size:.92rem}
+.hero-form input::placeholder{color:rgba(255,255,255,.38)}
+.hero-form input:focus{outline:none;border-color:var(--coral)}
+.btn-primary{display:inline-flex;align-items:center;gap:6px;background:var(--coral);color:#fff;border:none;padding:.75rem 1.45rem;border-radius:8px;font-family:inherit;font-size:.92rem;font-weight:700;cursor:pointer;text-decoration:none;transition:background .15s,transform .12s;white-space:nowrap}
+.btn-primary:hover{background:#d05e0e;transform:translateY(-1px)}
+.hero-fine{color:rgba(255,255,255,.38);font-size:.78rem}
+.hero-char{display:flex;align-items:flex-end;justify-content:flex-end}
+.hero-char img{width:230px;height:auto;filter:drop-shadow(0 4px 20px rgba(0,0,0,.35))}
+.section{padding:5rem 2rem}
+.section-inner{max-width:1000px;margin:0 auto}
+.label{display:flex;align-items:center;gap:8px;color:var(--coral);font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.75rem}
+.label::before{content:'—'}
+.section h2{font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:900;letter-spacing:-.03em;margin-bottom:.75rem;line-height:1.1}
+.section h2 em{font-family:'Lora',serif;font-style:italic;color:var(--coral)}
+.section-intro{color:var(--text-muted);font-size:1rem;line-height:1.6;margin-bottom:3rem;max-width:520px}
+.prompts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1rem;margin-bottom:3rem}
+.prompt-card{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:1.5rem;display:flex;gap:1rem;box-shadow:var(--shadow)}
+.prompt-num{font-size:1.5rem;font-weight:900;color:rgba(235,110,20,.2);min-width:32px;line-height:1;flex-shrink:0}
+.prompt-cat{font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--coral);margin-bottom:.3rem}
+.prompt-title{font-weight:700;font-size:.95rem;margin-bottom:.35rem}
+.prompt-desc{color:var(--text-muted);font-size:.82rem;line-height:1.5}
+/* Kit contents box: char level with list on dark bg */
+.kit-box{background:var(--navy);border-radius:16px;padding:3rem;display:grid;grid-template-columns:170px 1fr;gap:3rem;align-items:center;margin-bottom:2rem}
+.kit-char img{width:150px;height:auto;filter:drop-shadow(0 4px 16px rgba(0,0,0,.35))}
+.kit-title{color:#fff;font-size:1.3rem;font-weight:800;margin-bottom:1.25rem;letter-spacing:-.02em}
+.kit-list{list-style:none}
+.kit-list li{color:rgba(255,255,255,.78);font-size:.9rem;line-height:1.55;padding:.45rem 0;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:flex-start;gap:.75rem}
+.kit-list li:last-child{border-bottom:none}
+.kit-list li::before{content:'→';color:var(--coral);font-weight:700;flex-shrink:0}
+.kit-note{color:rgba(255,255,255,.38);font-size:.78rem;margin-top:1rem}
+.signup-section{background:var(--off-white);border-top:1px solid var(--border);padding:5rem 2rem}
+.signup-inner{max-width:580px;margin:0 auto;text-align:center}
+.signup-inner h2{font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:900;letter-spacing:-.03em;margin-bottom:.75rem}
+.signup-inner h2 em{font-family:'Lora',serif;font-style:italic;color:var(--coral)}
+.signup-inner p{color:var(--text-muted);font-size:.95rem;line-height:1.6;margin-bottom:2rem}
+.signup-form{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;margin-bottom:.75rem}
+.signup-form input{flex:1;min-width:240px;max-width:340px;padding:.75rem 1rem;border-radius:8px;border:1px solid var(--border);background:var(--card-bg);color:var(--text);font-family:inherit;font-size:.92rem}
+.signup-form input:focus{outline:none;border-color:var(--coral)}
+.signup-fine{color:var(--text-muted);font-size:.78rem}
+footer{background:#07101c;padding:2.5rem 2rem}
+.footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-logo{font-weight:800;color:rgba(255,255,255,.65);font-size:1rem}
+.footer-links{display:flex;gap:1.5rem;flex-wrap:wrap}
+.footer-links a{color:rgba(255,255,255,.38);text-decoration:none;font-size:.82rem;transition:color .15s}
+.footer-links a:hover{color:rgba(255,255,255,.75)}
+.footer-copy{color:rgba(255,255,255,.28);font-size:.78rem}
+@media(max-width:900px){.hero-inner{grid-template-columns:1fr}.hero-char{display:none}.kit-box{grid-template-columns:1fr}.kit-char{display:none}}
 </style>
 </head>
 <body>
-
 <nav>
   <a href="index.html" class="nav-logo">
-    <div class="nav-logo-icon">
-      <img data-char="char-fist" alt="APTO">
-    </div>
+    <div class="nav-logo-icon"><img data-char="char-fist" alt="APTO"></div>
     APTO
   </a>
   <div class="nav-links">
     <a href="index.html">Home</a>
-    <a href="index.html#newsletter">Newsletter</a>
-    <a href="index.html#what-we-do">What we do</a>
+    <a href="business.html">AI for Business</a>
+    <a href="wealth.html">Personal Wealth</a>
     <a href="tools.html">Tools</a>
-    <a href="kit.html" class="active nav-cta">Free kit</a>
+    <a href="kit.html" class="active nav-cta">Free Kit</a>
+    <a href="newsletter/index.html">Newsletter</a>
   </div>
-  <div class="nav-right">
-    <button class="theme-toggle" onclick="toggleTheme()">☾</button>
-  </div>
+  <div class="nav-right"><button class="theme-toggle" onclick="toggleTheme()">🌙</button></div>
 </nav>
-
 <section class="hero">
   <div class="hero-inner">
     <div>
@@ -286,62 +110,24 @@
       </div>
       <p class="hero-fine">Free forever · No spam · Unsubscribe in one click</p>
     </div>
-    <!-- Char transparent, level with content -->
-    <div class="hero-char">
-      <img data-char="char-flag" alt="APTO character">
-    </div>
+    <div class="hero-char"><img data-char="char-suit-flag" alt=""></div>
   </div>
 </section>
-
-<!-- WHAT'S INSIDE -->
-<section class="inside-section">
-  <div class="inside-inner">
-    <div class="section-label">What's in the kit</div>
+<section class="section">
+  <div class="section-inner">
+    <div class="label">What's in the kit</div>
     <h2>20 prompts. <em>Real results.</em></h2>
-    <p class="inside-intro">Every prompt in this kit is battle-tested by real small business owners and people managing their own finances. Copy, paste, and watch it work.</p>
-
+    <p class="section-intro">Every prompt in this kit is battle-tested by real small business owners and people managing their own finances. Copy, paste, and watch it work.</p>
     <div class="prompts-grid">
-      <div class="prompt-card">
-        <div class="prompt-num">01–05</div>
-        <div class="prompt-info">
-          <div class="prompt-category">📧 Email & Communication</div>
-          <div class="prompt-title">5 email writing prompts</div>
-          <div class="prompt-desc">Follow-ups, cold outreach, difficult conversations, proposals, and client updates.</div>
-        </div>
-      </div>
-      <div class="prompt-card">
-        <div class="prompt-num">06–10</div>
-        <div class="prompt-info">
-          <div class="prompt-category">📱 Social Media</div>
-          <div class="prompt-title">5 social media prompts</div>
-          <div class="prompt-desc">Instagram captions, LinkedIn posts, Twitter threads, and content calendars that actually work.</div>
-        </div>
-      </div>
-      <div class="prompt-card">
-        <div class="prompt-num">11–15</div>
-        <div class="prompt-info">
-          <div class="prompt-category">⚙️ Operations</div>
-          <div class="prompt-title">5 operations prompts</div>
-          <div class="prompt-desc">SOPs, job descriptions, meeting agendas, project briefs, and documentation.</div>
-        </div>
-      </div>
-      <div class="prompt-card">
-        <div class="prompt-num">16–20</div>
-        <div class="prompt-info">
-          <div class="prompt-category">💰 Money</div>
-          <div class="prompt-title">5 money prompts</div>
-          <div class="prompt-desc">Budget builder, investment explainer, debt payoff planner, and savings goal calculator.</div>
-        </div>
-      </div>
+      <div class="prompt-card"><div class="prompt-num">01–05</div><div><div class="prompt-cat">📧 Email</div><div class="prompt-title">5 email writing prompts</div><div class="prompt-desc">Follow-ups, cold outreach, difficult conversations, proposals, and client updates.</div></div></div>
+      <div class="prompt-card"><div class="prompt-num">06–10</div><div><div class="prompt-cat">📱 Social Media</div><div class="prompt-title">5 social media prompts</div><div class="prompt-desc">Instagram captions, LinkedIn posts, Twitter threads, and content calendars.</div></div></div>
+      <div class="prompt-card"><div class="prompt-num">11–15</div><div><div class="prompt-cat">⚙️ Operations</div><div class="prompt-title">5 operations prompts</div><div class="prompt-desc">SOPs, job descriptions, meeting agendas, project briefs, and documentation.</div></div></div>
+      <div class="prompt-card"><div class="prompt-num">16–20</div><div><div class="prompt-cat">💰 Money</div><div class="prompt-title">5 money prompts</div><div class="prompt-desc">Budget builder, investment explainer, debt payoff planner, and savings goal calculator.</div></div></div>
     </div>
-
-    <!-- Kit contents card: char transparent, level with list -->
-    <div class="kit-contents">
-      <div class="kit-char">
-        <img data-char="char-flag" alt="APTO character">
-      </div>
+    <div class="kit-box">
+      <div class="kit-char"><img data-char="char-flag" alt=""></div>
       <div>
-        <div class="kit-list-title">Everything in the free kit</div>
+        <div class="kit-title">Everything in the free kit</div>
         <ul class="kit-list">
           <li>20 copy-paste AI prompts (business + finance)</li>
           <li>5 email writing prompts with example outputs</li>
@@ -356,8 +142,6 @@
     </div>
   </div>
 </section>
-
-<!-- SIGNUP -->
 <section class="signup-section">
   <div class="signup-inner">
     <h2>Ready to save<br><em>hours every week?</em></h2>
@@ -369,32 +153,9 @@
     <p class="signup-fine">Free forever · No spam · Unsubscribe in one click</p>
   </div>
 </section>
-
-<footer>
-  <div class="footer-inner">
-    <div class="footer-logo">APTO</div>
-    <div class="footer-links">
-      <a href="index.html">Home</a>
-      <a href="business.html">AI for Business</a>
-      <a href="wealth.html">Personal Wealth</a>
-      <a href="tools.html">Tools</a>
-      <a href="kit.html">Free Kit</a>
-    </div>
-    <div>© 2025 APTO. All rights reserved.</div>
-  </div>
-</footer>
-
+<footer><div class="footer-inner"><div class="footer-logo">APTO</div><div class="footer-links"><a href="index.html">Home</a><a href="business.html">AI for Business</a><a href="wealth.html">Personal Wealth</a><a href="tools.html">Tools</a><a href="kit.html">Free Kit</a><a href="newsletter/index.html">Newsletter</a></div><div class="footer-copy">© 2025 APTO</div></div></footer>
 <script>
-function toggleTheme() {
-  const html = document.documentElement;
-  const isDark = html.getAttribute('data-theme') === 'dark';
-  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
-  localStorage.setItem('apto-theme', isDark ? 'light' : 'dark');
-}
-(function() {
-  const saved = localStorage.getItem('apto-theme');
-  if (saved) document.documentElement.setAttribute('data-theme', saved);
-})();
+function toggleTheme(){var html=document.documentElement;var dark=html.getAttribute('data-theme')==='dark';html.setAttribute('data-theme',dark?'light':'dark');localStorage.setItem('apto-theme',dark?'light':'dark');document.querySelector('.theme-toggle').textContent=dark?'🌙':'☀️';}
 </script>
 </body>
 </html>
