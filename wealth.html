@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>APTO — Personal Wealth</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<script src="chars.js" defer></script>
+<script>(function(){var t=localStorage.getItem('apto-theme');if(t)document.documentElement.setAttribute('data-theme',t);})();</script>
+<style>
+:root{--navy:#0d1f35;--coral:#eb6e14;--green:#1a6b4a;--off-white:#faf8f5;--text:#1a1a1a;--text-muted:#5a5a5a;--card-bg:#fff;--border:#e2ddd6;--shadow:0 2px 16px rgba(0,0,0,.07)}
+[data-theme=dark]{--off-white:#0f1923;--text:#edeae4;--text-muted:#8a9ab0;--card-bg:#1a2535;--border:#253447;--shadow:0 2px 16px rgba(0,0,0,.3)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Cabinet Grotesk',sans-serif;background:var(--off-white);color:var(--text);transition:background .25s,color .25s}
+nav{background:var(--navy);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:62px;position:sticky;top:0;z-index:200}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff;font-weight:800;font-size:1.15rem;letter-spacing:-.02em}
+.nav-logo-icon{width:32px;height:32px;border-radius:50%;background:var(--coral);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:900;font-size:14px;color:#fff;}
+.nav-logo-icon img{width:26px;height:26px;object-fit:contain;mix-blend-mode:multiply}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nav-links a{color:rgba(255,255,255,.72);text-decoration:none;font-size:.875rem;font-weight:500;padding:.4rem .9rem;border-radius:6px;transition:color .15s,background .15s;white-space:nowrap}
+.nav-links a:hover{color:#fff;background:rgba(255,255,255,.1)}
+.nav-links a.active{color:#fff;background:rgba(255,255,255,.14);font-weight:700}
+.nav-links a.nav-cta{background:var(--coral);color:#fff!important;font-weight:700;margin-left:4px}
+.nav-links a.nav-cta:hover{background:#d05e0e}
+.theme-toggle{background:none;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);border-radius:6px;padding:.3rem .55rem;cursor:pointer;font-size:.85rem}
+.breadcrumb{max-width:1100px;margin:0 auto;padding:.9rem 2rem;font-size:.82rem;color:var(--text-muted)}
+.breadcrumb a{color:var(--text-muted);text-decoration:none}.breadcrumb a:hover{color:var(--coral)}
+.hero{background:var(--green);padding:4.5rem 2rem 4rem;position:relative;overflow:hidden}
+.hero-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 240px;gap:3rem;align-items:center}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .85rem;border-radius:100px;margin-bottom:1.2rem}
+.hero h1{font-size:clamp(2rem,4.5vw,3.2rem);font-weight:900;line-height:1.05;color:#fff;margin-bottom:1.2rem;letter-spacing:-.03em}
+.hero h1 em{font-family:'Lora',serif;font-style:italic;color:#7ee8b0;font-weight:600}
+.hero-sub{color:rgba(255,255,255,.82);font-size:.97rem;line-height:1.65;margin-bottom:1.75rem;max-width:480px}
+.hero-btns{display:flex;gap:.75rem;flex-wrap:wrap}
+.btn-white{display:inline-flex;align-items:center;gap:6px;background:#fff;color:var(--green);border:none;padding:.72rem 1.45rem;border-radius:8px;font-family:inherit;font-size:.92rem;font-weight:700;cursor:pointer;text-decoration:none;transition:all .15s;white-space:nowrap}
+.btn-white:hover{background:#e8f5ee}
+.btn-outline{display:inline-flex;align-items:center;gap:6px;background:transparent;color:rgba(255,255,255,.9);border:1px solid rgba(255,255,255,.35);padding:.72rem 1.45rem;border-radius:8px;font-family:inherit;font-size:.92rem;font-weight:600;cursor:pointer;text-decoration:none;transition:all .15s;white-space:nowrap}
+.btn-outline:hover{background:rgba(255,255,255,.15)}
+/* Hero char: green bg — use drop-shadow not multiply */
+.hero-char{display:flex;align-items:flex-end;justify-content:flex-end}
+.hero-char img{width:200px;height:auto;filter:drop-shadow(0 4px 16px rgba(0,0,0,.2))}
+.section{padding:5rem 2rem}
+.section-inner{max-width:1100px;margin:0 auto}
+.label{display:flex;align-items:center;gap:8px;color:var(--coral);font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.75rem}
+.label::before{content:'—'}
+.section h2{font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:900;letter-spacing:-.03em;margin-bottom:.75rem;line-height:1.1}
+.section h2 em{font-family:'Lora',serif;font-style:italic;color:var(--coral)}
+.section-intro{color:var(--text-muted);font-size:1rem;line-height:1.6;margin-bottom:3rem;max-width:560px}
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem;margin-bottom:5rem}
+.tool-card{background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:1.6rem;box-shadow:var(--shadow);transition:transform .18s,box-shadow .18s}
+.tool-card:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,.1)}
+.tool-card-top{display:flex;align-items:center;gap:.75rem;margin-bottom:.9rem}
+.tool-icon{width:42px;height:42px;border-radius:10px;background:var(--off-white);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+.tool-name{font-weight:800;font-size:1rem}
+.tool-tag{margin-left:auto;font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.18rem .55rem;border-radius:100px;background:rgba(26,107,74,.1);color:var(--green);white-space:nowrap}
+.tool-desc{color:var(--text-muted);font-size:.875rem;line-height:1.6;margin-bottom:1rem}
+.tool-prompt-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin-bottom:.3rem}
+.tool-prompt{font-family:'Lora',serif;font-style:italic;font-size:.85rem;line-height:1.55;color:var(--text);margin-bottom:1rem}
+.tool-link{color:var(--coral);font-weight:700;font-size:.85rem;text-decoration:none}
+.tool-link:hover{text-decoration:underline}
+.free-pill{display:inline-flex;align-items:center;gap:3px;font-size:.68rem;font-weight:700;color:var(--green);margin-left:.6rem}
+.free-pill::before{content:'✓'}
+/* Testimonials with char level left */
+.testimonials{background:var(--off-white);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:5rem 2rem}
+.testimonials-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:180px 1fr;gap:4rem;align-items:center}
+.testimonials-char img{width:160px;height:auto;mix-blend-mode:multiply}
+.t-label{display:flex;align-items:center;gap:8px;color:var(--coral);font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.75rem}
+.t-label::before{content:'—'}
+.testimonials h2{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:900;letter-spacing:-.03em;margin-bottom:2rem;line-height:1.1}
+.testimonials h2 em{font-family:'Lora',serif;font-style:italic;color:var(--coral)}
+.t-card{background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:1.5rem;margin-bottom:1rem;box-shadow:var(--shadow)}
+.stars{color:#f59e0b;font-size:.95rem;margin-bottom:.75rem}
+.t-text{font-family:'Lora',serif;font-style:italic;font-size:.92rem;line-height:1.65;color:var(--text);margin-bottom:1rem}
+.t-author{display:flex;align-items:center;gap:.75rem}
+.t-avatar{width:36px;height:36px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700;flex-shrink:0}
+.t-name{font-weight:700;font-size:.88rem}
+.t-role{font-size:.78rem;color:var(--text-muted)}
+.cta-section{padding:5rem 2rem}
+.cta-box{max-width:900px;margin:0 auto;background:var(--navy);border-radius:20px;padding:3.5rem;display:grid;grid-template-columns:170px 1fr;gap:3rem;align-items:center;position:relative;overflow:hidden}
+.cta-box::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--coral),#f59e0b)}
+.cta-char img{width:150px;height:auto;filter:drop-shadow(0 4px 20px rgba(0,0,0,.35))}
+.cta-box h2{color:#fff;font-size:clamp(1.4rem,2.5vw,2rem);font-weight:900;letter-spacing:-.03em;margin-bottom:.5rem}
+.cta-box h2 em{font-family:'Lora',serif;font-style:italic;color:var(--coral)}
+.cta-box p{color:rgba(255,255,255,.6);font-size:.88rem;margin-bottom:1.4rem;line-height:1.6}
+.cta-form{display:flex;gap:.5rem;flex-wrap:wrap}
+.cta-form input{flex:1;min-width:200px;padding:.7rem 1rem;border-radius:8px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);color:#fff;font-family:inherit;font-size:.9rem}
+.cta-form input::placeholder{color:rgba(255,255,255,.33)}
+.cta-form input:focus{outline:none;border-color:var(--coral)}
+.btn-primary{display:inline-flex;align-items:center;gap:6px;background:var(--coral);color:#fff;border:none;padding:.72rem 1.45rem;border-radius:8px;font-family:inherit;font-size:.92rem;font-weight:700;cursor:pointer;text-decoration:none;transition:background .15s,transform .12s;white-space:nowrap}
+.btn-primary:hover{background:#d05e0e}
+footer{background:#07101c;padding:2.5rem 2rem}
+.footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-logo{font-weight:800;color:rgba(255,255,255,.65);font-size:1rem}
+.footer-links{display:flex;gap:1.5rem;flex-wrap:wrap}
+.footer-links a{color:rgba(255,255,255,.38);text-decoration:none;font-size:.82rem;transition:color .15s}
+.footer-links a:hover{color:rgba(255,255,255,.75)}
+.footer-copy{color:rgba(255,255,255,.28);font-size:.78rem}
+@media(max-width:900px){.hero-inner{grid-template-columns:1fr}.hero-char{display:none}.testimonials-inner{grid-template-columns:1fr}.testimonials-char{display:none}.cta-box{grid-template-columns:1fr}.cta-char{display:none}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon"><span>A</span></div>
+    APTO
+  </a>
+  <div class="nav-links">
+    <a href="index.html" class="">Home</a>
+    <a href="business.html" class="">AI for Business</a>
+    <a href="wealth.html" class="active">Personal Wealth</a>
+    <a href="tools.html" class="">Tools</a>
+    <a href="kit.html" class="nav-cta">Free Kit</a>
+    <a href="newsletter/index.html" class="">Newsletter</a>
+  </div>
+  <div class="nav-right">
+    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+  </div>
+</nav>
+
+<div style="background:var(--off-white);border-bottom:1px solid var(--border)">
+  <div class="breadcrumb"><a href="index.html">Home</a> / Personal Wealth</div>
+</div>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge">💰 Personal Wealth Hub</div>
+      <h1>Personal Wealth<br>with AI in <em>5 minutes a day.</em></h1>
+      <p class="hero-sub">The 50/30/20 budget that actually sticks. Commission-free investing. AI habits that make managing money feel less like homework. All free to start.</p>
+      <div class="hero-btns">
+        <a href="kit.html" class="btn-white">Get the money kit →</a>
+        <a href="tools.html" class="btn-outline">See the tools</a>
+      </div>
+    </div>
+    
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-inner">
+    <div class="label">The money stack</div>
+    <h2>Tools that actually <em>move the needle.</em></h2>
+    <p class="section-intro">Every tool here is free to start, personally tested, and chosen because it makes a measurable difference to your financial life.</p>
+    <div class="tools-grid">
+      <div class="tool-card">
+        <div class="tool-card-top"><div class="tool-icon">📈</div><div class="tool-name">Trading 212</div><span class="tool-tag">Investing</span></div>
+        <p class="tool-desc">Commission-free stocks and shares ISA. Buy fractional shares from £1. No fees to open, no trading commissions.</p>
+        <div class="tool-prompt-label">We use it for</div>
+        <div class="tool-prompt">Building a low-cost index fund portfolio inside a stocks and shares ISA — completely commission-free.</div>
+        <a href="https://sovrn.co/9o4geqx" target="_blank" rel="noopener" class="tool-link">Open a free account →</a><span class="free-pill">Free to start</span>
+      </div>
+      <div class="tool-card">
+        <div class="tool-card-top"><div class="tool-icon">💳</div><div class="tool-name">TopCashback</div><span class="tool-tag">Cashback</span></div>
+        <p class="tool-desc">Earn cashback on purchases you're already making. 5,000+ retailers including Amazon, Booking.com, and major supermarkets.</p>
+        <div class="tool-prompt-label">We use it for</div>
+        <div class="tool-prompt">Every online purchase — insurance renewals, hotel bookings, clothing. £200+ cashback last year by just clicking through first.</div>
+        <a href="https://sovrn.co/9o4geqx" target="_blank" rel="noopener" class="tool-link">Join free →</a><span class="free-pill">Free to join</span>
+      </div>
+      <div class="tool-card">
+        <div class="tool-card-top"><div class="tool-icon">📊</div><div class="tool-name">ClearScore</div><span class="tool-tag">Credit</span></div>
+        <p class="tool-desc">Monitor your credit score and report for free. Get personalised tips to improve it and see which products you're likely to be approved for.</p>
+        <div class="tool-prompt-label">We use it for</div>
+        <div class="tool-prompt">Checking our credit score monthly and tracking the impact of new accounts or applications.</div>
+        <a href="https://sovrn.co/p1e74z8" target="_blank" rel="noopener" class="tool-link">Check your score free →</a><span class="free-pill">Free forever</span>
+      </div>
+      <div class="tool-card">
+        <div class="tool-card-top"><div class="tool-icon">🤖</div><div class="tool-name">ChatGPT Budget Prompt</div><span class="tool-tag">AI Finance</span></div>
+        <p class="tool-desc">Use the APTO 50/30/20 prompt to build a personalised monthly budget in under 15 minutes. No spreadsheet skills needed.</p>
+        <div class="tool-prompt-label">The prompt</div>
+        <div class="tool-prompt">"Create a 50/30/20 budget for my monthly take-home of £[X]. My fixed costs are: [list]. Help me categorise and find savings."</div>
+        <a href="kit.html" class="tool-link">Get all 20 prompts free →</a><span class="free-pill">Free</span>
+      </div>
+      <div class="tool-card">
+        <div class="tool-card-top"><div class="tool-icon">💰</div><div class="tool-name">121 Financial</div><span class="tool-tag">Savings</span></div>
+        <p class="tool-desc">High-interest easy access savings accounts. FSCS protected up to £85,000. Consistently near the top of the best-buy tables.</p>
+        <div class="tool-prompt-label">We use it for</div>
+        <div class="tool-prompt">Emergency fund and short-term savings where we need instant access but still want a competitive rate.</div>
+        <a href="https://sovrn.co/7enchey" target="_blank" rel="noopener" class="tool-link">See current rates →</a><span class="free-pill">Free to open</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="testimonials-inner">
+    
+    <div>
+      <div class="t-label">What changed for real people</div>
+      <h2>Results from <em>real readers.</em></h2>
+      <div class="t-card">
+        <div class="stars">★★★★★</div>
+        <div class="t-text">"The 50/30/20 prompt built me a budget in 15 minutes that I've actually stuck to for 3 months. First time in years I feel in control of my money."</div>
+        <div class="t-author"><div class="t-avatar">MT</div><div><div class="t-name">Marcus T.</div><div class="t-role">E-commerce owner</div></div></div>
+      </div>
+      <div class="t-card">
+        <div class="stars">★★★★★</div>
+        <div class="t-text">"Opened a Trading 212 ISA after the APTO guide. Dead simple, no fees. Already up £340 on my first £1,000 invested."</div>
+        <div class="t-author"><div class="t-avatar">SK</div><div><div class="t-name">Sarah K.</div><div class="t-role">Freelance designer</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="cta-box">
+    
+    <div>
+      <h2>Get the 20-prompt<br><em>AI Starter Kit free.</em></h2>
+      <p>Sign up and instantly get 20 AI prompts for business and personal finance. Plus the APTO newsletter every Tuesday. Free forever.</p>
+      <div class="cta-form">
+        <input type="email" placeholder="your@email.com">
+        <button class="btn-primary">Get the free kit →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">APTO</div>
+    <div class="footer-links">
+      <a href="index.html">Home</a><a href="business.html">AI for Business</a><a href="wealth.html">Personal Wealth</a><a href="tools.html">Tools</a><a href="kit.html">Free Kit</a><a href="newsletter/index.html">Newsletter</a>
+    </div>
+    <div class="footer-copy">© 2025 APTO</div>
+  </div>
+</footer>
+
+<script>
+function toggleTheme(){var html=document.documentElement;var dark=html.getAttribute('data-theme')==='dark';html.setAttribute('data-theme',dark?'light':'dark');localStorage.setItem('apto-theme',dark?'light':'dark');document.querySelector('.theme-toggle').textContent=dark?'🌙':'☀️';}
+</script>
+</body>
+</html>
