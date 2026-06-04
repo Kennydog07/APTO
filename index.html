@@ -1,312 +1,763 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>APTO — Saving you Time & Money with AI</title>
-<meta name="description" content="APTO gives small business owners and everyday people the AI tools, prompts and habits to save time and build wealth. Free weekly newsletter.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@300;400;500;700;800&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<script src="chars.js" defer></script>
 <style>
-:root{--navy:#0d1f35;--navy-mid:#162d4a;--navy-lt:#1e3d5c;--coral:#eb6e14;--coral-dk:#c8580e;--coral-lt:#fce8e0;--coral-mid:#f0a070;--black:#0d0d0d;--off-white:#faf8f5;--stone:#f2efe8;--mist:#e8e4db;--slate:#8a8478;--ink:#3d3a35;--white:#ffffff;--green:#1a6b4a;--green-lt:#e8f5ef;--border:rgba(0,0,0,.09);--font-head:'Cabinet Grotesk',system-ui,sans-serif;--font-serif:'Lora',Georgia,serif;--bg:var(--white);--bg2:var(--off-white);--bg3:var(--stone);--text:var(--black);--text2:var(--ink);--text3:var(--slate);--card-bg:var(--white);--card-border:var(--mist);--nav-bg:var(--navy);}
-[data-theme="dark"]{--bg:#0a0a0a;--bg2:#111;--bg3:#1a1a1a;--text:#f0ede8;--text2:#b8b4ae;--text3:#6e6b65;--card-bg:#141414;--card-border:#2a2a2a;--border:rgba(255,255,255,.07);--nav-bg:#060f1a;}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{font-size:16px;scroll-behavior:smooth;}
-body{font-family:var(--font-head);background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;}
-a{color:inherit;text-decoration:none;}img{display:block;max-width:100%;}
-.nav{background:var(--nav-bg);padding:0 2rem;position:sticky;top:0;z-index:200;box-shadow:0 1px 0 rgba(255,255,255,.05);}
-.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;gap:1rem;}
-.nav-logo{display:flex;align-items:center;gap:.6rem;flex-shrink:0;}
-.nav-logo img{width:34px;height:34px;object-fit:contain;border-radius:50%;}
-.nav-logo-text{font-size:1.1rem;font-weight:800;color:var(--white);letter-spacing:-.01em;}
-.nav-links{display:flex;gap:.1rem;list-style:none;}
-.nav-links a{padding:.38rem .78rem;border-radius:6px;font-size:.82rem;font-weight:500;color:rgba(255,255,255,.5);transition:all .2s;}
-.nav-links a:hover,.nav-links a.active{color:var(--white);background:rgba(255,255,255,.09);}
-.nav-right{display:flex;align-items:center;gap:.6rem;flex-shrink:0;}
-.btn-coral{display:inline-flex;align-items:center;gap:.4rem;padding:.48rem 1.15rem;background:var(--coral);color:var(--white);border-radius:999px;font-size:.82rem;font-weight:700;transition:all .2s;border:none;cursor:pointer;white-space:nowrap;}
-.btn-coral:hover{background:var(--coral-dk);transform:translateY(-1px);}
-.theme-btn{width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.07);color:rgba(255,255,255,.7);font-size:.85rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
-.theme-btn:hover{background:rgba(255,255,255,.14);color:var(--white);}
-.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;}
-.hamburger span{display:block;width:22px;height:2px;background:rgba(255,255,255,.7);border-radius:2px;}
-.nav-mobile{display:none;position:absolute;top:64px;left:0;right:0;background:var(--nav-bg);border-bottom:1px solid rgba(255,255,255,.08);padding:.75rem 1.5rem;flex-direction:column;gap:.2rem;z-index:199;}
-.nav-mobile.open{display:flex;}
-.nav-mobile a{padding:.65rem .9rem;border-radius:8px;font-size:.9rem;color:rgba(255,255,255,.6);font-weight:500;transition:all .2s;}
-.nav-mobile a:hover{background:rgba(255,255,255,.07);color:var(--white);}
-@media(max-width:900px){.nav-links{display:none;}.hamburger{display:flex;}}
-.hero{background:var(--navy);min-height:90svh;display:flex;align-items:center;padding:5rem 2rem 4rem;position:relative;overflow:hidden;}
-.hero-dots{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,.045) 1px,transparent 1px);background-size:30px 30px;mask-image:radial-gradient(ellipse 70% 80% at 10% 50%,black 20%,transparent 75%);}
+  :root {
+    --navy: #0d1f35;
+    --coral: #eb6e14;
+    --green: #1a6b4a;
+    --off-white: #faf8f5;
+    --text: #1a1a1a;
+    --text-muted: #555;
+    --card-bg: #fff;
+    --border: #e5e0d8;
+    --nav-bg: var(--navy);
+    --nav-text: #fff;
+  }
+  [data-theme="dark"] {
+    --off-white: #111827;
+    --text: #f0ece4;
+    --text-muted: #9ca3af;
+    --card-bg: #1e2a3a;
+    --border: #2d3f55;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Cabinet Grotesk', sans-serif; background: var(--off-white); color: var(--text); transition: background 0.3s, color 0.3s; }
 
-/* CORNER FLAG CHAR */
-.hero-corner-char{position:absolute;bottom:0;left:2rem;width:180px;z-index:2;pointer-events:none;filter:drop-shadow(0 8px 24px rgba(0,0,0,.35));animation:charFloat 4s ease-in-out infinite;}
-@media(max-width:700px){.hero-corner-char{width:110px;left:1rem;}}
-.hero-glow{position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(235,110,20,.1) 0%,transparent 65%);top:-80px;right:-50px;pointer-events:none;}
-.hero-inner{position:relative;z-index:1;max-width:1200px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 420px;gap:4rem;align-items:center;}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:.45rem;background:rgba(235,110,20,.13);border:1px solid rgba(235,110,20,.25);border-radius:999px;padding:.28rem .9rem;font-size:.72rem;font-weight:700;color:rgba(235,110,20,.9);letter-spacing:.05em;text-transform:uppercase;margin-bottom:1.4rem;}
-.hero h1{font-size:clamp(2.4rem,4.8vw,4rem);font-weight:800;line-height:1.05;letter-spacing:-.025em;color:var(--white);margin-bottom:1.2rem;}
-.hero h1 em{font-style:italic;font-family:var(--font-serif);font-weight:400;color:var(--coral);}
-.hero-sub{font-size:1.05rem;color:rgba(255,255,255,.55);max-width:500px;line-height:1.75;margin-bottom:2.25rem;}
-.hero-form{display:flex;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.12);border-radius:12px;padding:.4rem;gap:.35rem;max-width:440px;transition:border-color .25s;}
-.hero-form:focus-within{border-color:rgba(235,110,20,.5);}
-.hero-form input{flex:1;border:none;outline:none;background:transparent;font-family:var(--font-head);font-size:.9rem;color:var(--white);padding:.5rem .7rem;min-width:0;}
-.hero-form input::placeholder{color:rgba(255,255,255,.3);}
-.hero-form button{padding:.6rem 1.2rem;background:var(--coral);color:var(--white);border:none;border-radius:8px;font-family:var(--font-head);font-size:.87rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .2s;}
-.hero-form button:hover{background:var(--coral-dk);}
-.hero-trust{margin-top:.75rem;font-size:.73rem;color:rgba(255,255,255,.28);}
-.hero-paths{display:flex;gap:1rem;margin-top:2rem;flex-wrap:wrap;}
-.path-btn{display:flex;align-items:center;gap:.5rem;padding:.6rem 1.1rem;border:1.5px solid rgba(255,255,255,.15);border-radius:10px;color:rgba(255,255,255,.65);font-size:.82rem;font-weight:600;transition:all .2s;}
-.path-btn:hover{border-color:rgba(235,110,20,.5);color:var(--white);background:rgba(235,110,20,.08);}
-.hero-char-area{position:relative;display:flex;justify-content:center;align-items:flex-end;}
-.hero-char{width:310px;filter:drop-shadow(0 20px 40px rgba(0,0,0,.4));animation:charFloat 4s ease-in-out infinite;}
-@keyframes charFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
-.hero-char-card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:1.3rem;position:absolute;bottom:10px;right:-10px;min-width:170px;}
-.hero-char-card-label{font-size:.62rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:rgba(235,110,20,.8);margin-bottom:.5rem;}
-.stat-row{display:flex;align-items:baseline;gap:.4rem;margin-bottom:.2rem;}
-.stat-num{font-size:1.5rem;font-weight:800;color:var(--white);}
-.stat-label{font-size:.72rem;color:rgba(255,255,255,.4);}
-.marquee-wrap{background:var(--coral);padding:.8rem 0;overflow:hidden;}
-.marquee-track{display:flex;gap:2.5rem;animation:marquee 28s linear infinite;width:max-content;}
-.marquee-item{font-size:.7rem;font-weight:600;color:rgba(255,255,255,.8);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;display:flex;align-items:center;gap:.7rem;}
-.marquee-item::after{content:'✦';color:rgba(255,255,255,.4);}
-@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.container{max-width:1200px;margin:0 auto;padding:0 2rem;}
-.section{padding:5rem 0;}
-.section-alt{background:var(--bg2);}
-.section-label{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--coral);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem;}
-.section-label::before{content:'';display:inline-block;width:18px;height:2px;background:var(--coral);border-radius:2px;}
-.section-h2{font-size:clamp(1.8rem,3.2vw,2.6rem);font-weight:800;line-height:1.1;letter-spacing:-.02em;margin-bottom:.9rem;}
-.section-h2 em{font-style:italic;font-family:var(--font-serif);font-weight:400;color:var(--coral);}
-.section-body{font-size:.97rem;color:var(--text2);line-height:1.75;max-width:560px;}
-.path-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:3rem;}
-.path-card{border-radius:24px;padding:2.5rem;position:relative;overflow:hidden;display:flex;flex-direction:column;gap:1.5rem;transition:transform .2s;}
-.path-card:hover{transform:translateY(-4px);}
-.path-card.bs{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-lt) 100%);}
-.path-card.pw{background:linear-gradient(135deg,#1a3a2a 0%,#2a5a3a 100%);}
-.path-card-icon{font-size:2.5rem;}
-.path-card-title{font-size:1.4rem;font-weight:800;color:var(--white);line-height:1.15;margin-bottom:.5rem;}
-.path-card-body{font-size:.88rem;color:rgba(255,255,255,.55);line-height:1.7;flex:1;}
-.path-card-char{position:absolute;bottom:0;right:1.5rem;width:130px;opacity:.8;pointer-events:none;}
-.path-card-btn{display:inline-flex;align-items:center;gap:.5rem;padding:.55rem 1.3rem;background:rgba(255,255,255,.12);color:var(--white);border-radius:999px;font-size:.82rem;font-weight:700;transition:all .2s;border:1.5px solid rgba(255,255,255,.2);}
-.path-card-btn:hover{background:rgba(255,255,255,.2);}
-.tools-preview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:1rem;margin-top:2.5rem;}
-.tool-mini{background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;padding:1.25rem;display:flex;flex-direction:column;gap:.6rem;transition:all .2s;}
-.tool-mini:hover{border-color:var(--coral-mid);box-shadow:0 4px 20px rgba(235,110,20,.08);}
-.tool-mini-icon{font-size:1.8rem;}
-.tool-mini-name{font-size:.9rem;font-weight:700;color:var(--text);}
-.tool-mini-desc{font-size:.78rem;color:var(--text2);line-height:1.5;flex:1;}
-.badge-free{display:inline-flex;align-items:center;gap:.3rem;background:var(--green-lt);color:var(--green);font-size:.67rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:.22rem .6rem;border-radius:999px;width:fit-content;}
-[data-theme="dark"] .badge-free{background:rgba(26,107,74,.25);color:#5fcca0;}
-.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3rem;}
-.how-step{text-align:center;padding:2rem 1.5rem;}
-.how-num{width:52px;height:52px;border-radius:50%;background:var(--coral-lt);color:var(--coral);font-size:1.1rem;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 1.2rem;}
-[data-theme="dark"] .how-num{background:rgba(235,110,20,.15);}
-.how-title{font-size:1rem;font-weight:700;color:var(--text);margin-bottom:.4rem;}
-.how-body{font-size:.84rem;color:var(--text2);line-height:1.65;}
-.char-cta{background:var(--navy);padding:5rem 2rem;overflow:hidden;}
-.char-cta-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:220px 1fr;gap:4rem;align-items:center;}
-.char-cta-char img{width:100%;filter:drop-shadow(0 10px 30px rgba(0,0,0,.4));}
-.char-cta-text h2{font-size:clamp(1.7rem,3vw,2.4rem);font-weight:800;color:var(--white);line-height:1.15;margin-bottom:.8rem;}
-.char-cta-text h2 em{font-style:italic;font-family:var(--font-serif);color:var(--coral);}
-.char-cta-text p{font-size:.95rem;color:rgba(255,255,255,.5);line-height:1.7;margin-bottom:1.75rem;max-width:480px;}
-.cta-form{display:flex;gap:.5rem;flex-wrap:wrap;}
-.cta-form input{flex:1;min-width:200px;background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.14);border-radius:10px;padding:.65rem 1rem;font-family:var(--font-head);font-size:.9rem;color:var(--white);outline:none;transition:border-color .2s;}
-.cta-form input:focus{border-color:rgba(235,110,20,.5);}
-.cta-form input::placeholder{color:rgba(255,255,255,.3);}
-.success-msg{display:none;color:#5fcca0;font-size:.85rem;font-weight:600;padding:.5rem 0;}
-.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem;}
-.testi-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:20px;padding:1.75rem;}
-.testi-stars{color:var(--coral);font-size:.95rem;margin-bottom:.8rem;letter-spacing:.05em;}
-.testi-quote{font-size:.88rem;color:var(--text2);line-height:1.7;margin-bottom:1.25rem;font-style:italic;}
-.testi-author{display:flex;align-items:center;gap:.75rem;}
-.testi-av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;color:var(--white);flex-shrink:0;}
-.testi-name{font-size:.84rem;font-weight:700;color:var(--text);}
-.testi-role{font-size:.75rem;color:var(--text3);}
-.trust-char{width:90px;margin:0 auto 1.5rem;}
-footer{background:var(--navy);padding:3rem 0 1.5rem;}
-.footer-inner{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:2.5rem;}
-.footer-brand{display:flex;align-items:center;gap:.6rem;margin-bottom:.7rem;}
-.footer-brand img{width:30px;height:30px;object-fit:contain;border-radius:50%;}
-.footer-brand-text{font-size:1rem;font-weight:800;color:var(--white);}
-.footer-tagline{font-size:.8rem;color:rgba(255,255,255,.35);line-height:1.6;max-width:220px;}
-.footer-col h4{font-size:.75rem;font-weight:700;color:rgba(255,255,255,.5);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.9rem;}
-.footer-col a{display:block;font-size:.82rem;color:rgba(255,255,255,.4);font-weight:500;margin-bottom:.45rem;transition:color .2s;}
-.footer-col a:hover{color:rgba(255,255,255,.8);}
-.footer-bottom{max-width:1200px;margin:1.5rem auto 0;padding:1rem 2rem 0;border-top:1px solid rgba(255,255,255,.07);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;}
-.footer-bottom p{font-size:.72rem;color:rgba(255,255,255,.28);}
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease;}
-.reveal.visible{opacity:1;transform:none;}
-@media(max-width:900px){.hero-inner{grid-template-columns:1fr;}.hero-char-area{display:none;}.path-grid{grid-template-columns:1fr;}.how-grid{grid-template-columns:1fr 1fr;}.testi-grid{grid-template-columns:1fr;}.char-cta-inner{grid-template-columns:1fr;}.char-cta-char{display:none;}.footer-inner{grid-template-columns:1fr 1fr;}}
-@media(max-width:540px){.how-grid{grid-template-columns:1fr;}.tools-preview-grid{grid-template-columns:1fr 1fr;}.footer-inner{grid-template-columns:1fr;}}
+  /* NAV */
+  nav {
+    background: var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    height: 60px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: #fff;
+    font-weight: 800;
+    font-size: 1.15rem;
+    letter-spacing: -0.02em;
+  }
+  .nav-logo-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--coral);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .nav-logo-icon img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+  }
+  .nav-links { display: flex; align-items: center; gap: 0.25rem; }
+  .nav-links a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.4rem 0.85rem;
+    border-radius: 6px;
+    transition: color 0.2s, background 0.2s;
+  }
+  .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.1); }
+  .nav-links a.active { color: #fff; background: rgba(255,255,255,0.15); font-weight: 700; }
+  .nav-links a.nav-cta {
+    background: var(--coral);
+    color: #fff;
+    font-weight: 700;
+    margin-left: 0.5rem;
+  }
+  .nav-links a.nav-cta:hover { background: #d45e0a; }
+  .nav-right { display: flex; align-items: center; gap: 0.75rem; }
+  .theme-toggle {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.25);
+    color: rgba(255,255,255,0.75);
+    border-radius: 6px;
+    padding: 0.3rem 0.6rem;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: all 0.2s;
+  }
+  .theme-toggle:hover { border-color: rgba(255,255,255,0.6); color: #fff; }
+
+  /* HERO */
+  .hero {
+    background: var(--navy);
+    padding: 5rem 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--coral);
+  }
+  .hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 3rem;
+    align-items: center;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(235,110,20,0.15);
+    border: 1px solid rgba(235,110,20,0.4);
+    color: var(--coral);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.85rem;
+    border-radius: 100px;
+    margin-bottom: 1.25rem;
+  }
+  .hero-badge::before { content: '+'; font-size: 0.9rem; }
+  .hero h1 {
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    font-weight: 900;
+    line-height: 1.05;
+    color: #fff;
+    margin-bottom: 1.25rem;
+    letter-spacing: -0.03em;
+  }
+  .hero h1 em {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    color: var(--coral);
+    font-weight: 600;
+  }
+  .hero-sub {
+    color: rgba(255,255,255,0.7);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    max-width: 480px;
+  }
+  .hero-form {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.75rem;
+  }
+  .hero-form input {
+    flex: 1;
+    min-width: 220px;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    font-family: inherit;
+    font-size: 0.95rem;
+  }
+  .hero-form input::placeholder { color: rgba(255,255,255,0.4); }
+  .hero-form input:focus { outline: none; border-color: var(--coral); }
+  .btn-primary {
+    background: var(--coral);
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    white-space: nowrap;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .btn-primary:hover { background: #d45e0a; transform: translateY(-1px); }
+  .hero-fine {
+    color: rgba(255,255,255,0.45);
+    font-size: 0.8rem;
+    margin-bottom: 2rem;
+  }
+  .hero-path-btns { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .btn-ghost {
+    background: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.85);
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 0.6rem 1.25rem;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .btn-ghost:hover { background: rgba(255,255,255,0.15); color: #fff; }
+
+  /* Hero character — top-right, transparent */
+  .hero-char {
+    width: 280px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    flex-shrink: 0;
+  }
+  .hero-char img {
+    width: 260px;
+    height: auto;
+    mix-blend-mode: normal;
+    /* transparency handled by PNG alpha — no white box */
+  }
+
+  /* PATH SECTION */
+  .section { padding: 5rem 2rem; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--coral);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .section-label::before { content: '—'; }
+  .section h2 {
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.75rem;
+  }
+  .section h2 em {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    color: var(--coral);
+    font-weight: 600;
+  }
+  .section-intro {
+    color: var(--text-muted);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 3rem;
+    max-width: 520px;
+  }
+
+  /* PATH CARDS */
+  .path-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  .path-card {
+    border-radius: 16px;
+    padding: 2rem 2rem 2rem 2rem;
+    position: relative;
+    overflow: hidden;
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .path-card.business { background: var(--navy); }
+  .path-card.wealth { background: var(--green); }
+  .path-card-icon {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .path-card h3 {
+    color: #fff;
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin-bottom: 0.6rem;
+    letter-spacing: -0.02em;
+  }
+  .path-card p {
+    color: rgba(255,255,255,0.7);
+    font-size: 0.9rem;
+    line-height: 1.55;
+    margin-bottom: 1.5rem;
+    max-width: 300px;
+  }
+  .btn-card {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 0.6rem 1.25rem;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+    align-self: flex-start;
+  }
+  .btn-card:hover { background: rgba(255,255,255,0.22); }
+
+  /* Character in top-right of card, transparent, no word overlap */
+  .path-card-char {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 120px;
+    height: 140px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    pointer-events: none;
+  }
+  .path-card-char img {
+    width: 110px;
+    height: auto;
+    object-fit: contain;
+    /* PNG alpha = transparent background */
+  }
+
+  /* NEWSLETTER SECTION */
+  .newsletter-section {
+    background: var(--off-white);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .newsletter-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 3rem;
+    align-items: center;
+  }
+  .newsletter-label {
+    color: var(--coral);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .newsletter-label::before { content: '—'; }
+  .newsletter-inner h2 {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.5rem;
+  }
+  .newsletter-inner h2 em {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    color: var(--coral);
+  }
+  .newsletter-inner p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    max-width: 480px;
+  }
+  .newsletter-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+  .newsletter-actions a {
+    color: var(--coral);
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+  .newsletter-actions a:hover { text-decoration: underline; }
+
+  /* Newsletter char — points LEFT toward text (flip), transparent */
+  .newsletter-char {
+    width: 180px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .newsletter-char img {
+    width: 160px;
+    height: auto;
+    transform: scaleX(-1); /* flip so pointing RIGHT → toward text on left */
+  }
+
+  /* TRUST SECTION */
+  .trust-section { padding: 5rem 2rem; background: var(--navy); }
+  .trust-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  /* Trust char — transparent, aligned with content */
+  .trust-char {
+    width: 160px;
+    flex-shrink: 0;
+  }
+  .trust-char img {
+    width: 150px;
+    height: auto;
+  }
+  .trust-content {}
+  .trust-label {
+    color: rgba(255,255,255,0.5);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .trust-label::before { content: '—'; }
+  .trust-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+  }
+  .trust-stat {}
+  .trust-stat-num {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--coral);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    margin-bottom: 0.3rem;
+  }
+  .trust-stat-label {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.85rem;
+  }
+  .trust-quote {
+    background: rgba(255,255,255,0.06);
+    border-left: 3px solid var(--coral);
+    padding: 1.25rem 1.5rem;
+    border-radius: 0 10px 10px 0;
+    color: rgba(255,255,255,0.8);
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+
+  /* BOTTOM CTA */
+  .cta-section { padding: 5rem 2rem; }
+  .cta-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    background: var(--navy);
+    border-radius: 20px;
+    padding: 3.5rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 3rem;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-inner::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--coral), #f59e0b);
+  }
+  .cta-char {
+    width: 160px;
+    flex-shrink: 0;
+  }
+  .cta-char img { width: 150px; height: auto; }
+  .cta-content {}
+  .cta-content h2 {
+    color: #fff;
+    font-size: clamp(1.4rem, 2.5vw, 2rem);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.5rem;
+  }
+  .cta-content h2 em {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    color: var(--coral);
+  }
+  .cta-content p {
+    color: rgba(255,255,255,0.65);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+  }
+  .cta-form { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .cta-form input {
+    flex: 1;
+    min-width: 200px;
+    padding: 0.7rem 1rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    font-family: inherit;
+    font-size: 0.9rem;
+  }
+  .cta-form input::placeholder { color: rgba(255,255,255,0.35); }
+  .cta-form input:focus { outline: none; border-color: var(--coral); }
+
+  /* FOOTER */
+  footer {
+    background: #080f1c;
+    padding: 3rem 2rem;
+    color: rgba(255,255,255,0.4);
+    font-size: 0.82rem;
+  }
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer-logo {
+    font-weight: 800;
+    color: rgba(255,255,255,0.7);
+    font-size: 1rem;
+    letter-spacing: -0.02em;
+  }
+  .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .footer-links a {
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: rgba(255,255,255,0.8); }
+
+  /* RESPONSIVE */
+  @media (max-width: 700px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-char { display: none; }
+    .path-grid { grid-template-columns: 1fr; }
+    .path-card-char { display: none; }
+    .newsletter-inner { grid-template-columns: 1fr; }
+    .newsletter-char { display: none; }
+    .trust-inner { grid-template-columns: 1fr; }
+    .trust-char { display: none; }
+    .trust-stats { grid-template-columns: 1fr 1fr; }
+    .cta-inner { grid-template-columns: 1fr; }
+    .cta-char { display: none; }
+  }
 </style>
 </head>
 <body>
-<nav class="nav" id="main-nav" style="position:relative;">
-  <div class="nav-inner">
-    <a href="index.html" class="nav-logo"><img src="" data-char="char-fist" alt="APTO"><span class="nav-logo-text">APTO</span></a>
-    <ul class="nav-links">
-      <li><a href="index.html" class="active">Home</a></li>
-      <li><a href="business.html">AI for Business</a></li>
-      <li><a href="wealth.html">Personal Wealth</a></li>
-      <li><a href="tools.html">Tool Directory</a></li>
-      <li><a href="kit.html">Free Kit</a></li>
-      <li><a href="newsletter/index.html">Newsletter</a></li>
-    </ul>
-    <div class="nav-right">
-      <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" title="Toggle theme">🌙</button>
-      <a href="kit.html" class="btn-coral">Get free kit →</a>
-      <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon">
+      <img data-char="char-fist" alt="APTO">
     </div>
+    APTO
+  </a>
+  <div class="nav-links">
+    <a href="index.html" class="active">Home</a>
+    <a href="index.html#newsletter">Newsletter</a>
+    <a href="index.html#what-we-do">What we do</a>
+    <a href="tools.html">Tools</a>
+    <a href="kit.html" class="nav-cta">Free kit</a>
   </div>
-  <div class="nav-mobile" id="nav-mobile">
-    <a href="index.html">Home</a><a href="business.html">AI for Business</a><a href="wealth.html">Personal Wealth</a><a href="tools.html">Tool Directory</a><a href="kit.html" style="color:var(--coral);font-weight:700">Get Free Kit →</a><a href="newsletter/index.html">Newsletter</a>
+  <div class="nav-right">
+    <button class="theme-toggle" onclick="toggleTheme()">☾</button>
   </div>
 </nav>
 
+<!-- HERO -->
 <section class="hero">
-  <div class="hero-dots"></div><div class="hero-glow"></div>
-  <img src="" data-char="char-flag" class="hero-corner-char" alt="APTO mascot with flag">
   <div class="hero-inner">
-    <div>
-      <div class="hero-eyebrow">✦ Free weekly newsletter</div>
-      <h1>Saving you<br><em>Time & Money</em><br>with AI</h1>
+    <div class="hero-text">
+      <div class="hero-badge">Free weekly newsletter</div>
+      <h1>Saving you<br><em>Time &amp; Money</em><br>with AI</h1>
       <p class="hero-sub">Plain-English AI tools and habits for small business owners and everyday people. No jargon. No hype. Just stuff that works.</p>
-      <form class="hero-form" onsubmit="subForm(event,this,'hero-ok')">
-        <input type="email" placeholder="your@email.com" required autocomplete="email">
-        <button type="submit">Get free kit →</button>
-      </form>
-      <div class="success-msg" id="hero-ok">✓ Check your inbox — your kit is on its way.</div>
-      <p class="hero-trust">Free forever · No spam · Unsubscribe in one click</p>
-      <div class="hero-paths">
-        <a href="business.html" class="path-btn"><span>💼</span> AI for Business</a>
-        <a href="wealth.html" class="path-btn"><span>💰</span> Personal Wealth</a>
+      <div class="hero-form">
+        <input type="email" placeholder="your@email.com">
+        <button class="btn-primary">Get free kit →</button>
+      </div>
+      <p class="hero-fine">Free forever · No spam · Unsubscribe in one click</p>
+      <div class="hero-path-btns">
+        <a href="business.html" class="btn-ghost">💼 AI for Business</a>
+        <a href="wealth.html" class="btn-ghost">💰 Personal Wealth</a>
       </div>
     </div>
-    <div class="hero-char-area">
-      <img src="" data-char="char-flag" class="hero-char" alt="APTO character with APTO flag">
-      <div class="hero-char-card">
-        <div class="hero-char-card-label">This week's kit</div>
-        <div class="stat-row"><span class="stat-num">20</span><span class="stat-label">AI prompts</span></div>
-        <div class="stat-row"><span class="stat-num">Free</span><span class="stat-label">forever</span></div>
-      </div>
+    <!-- Single APTO character, top-right of hero, transparent PNG -->
+    <div class="hero-char">
+      <img data-char="char-flag" alt="APTO character">
     </div>
   </div>
 </section>
 
-<div class="marquee-wrap"><div class="marquee-track"><span class="marquee-item">Save hours every week</span><span class="marquee-item">Free tool stack</span><span class="marquee-item">No jargon</span><span class="marquee-item">Plain English</span><span class="marquee-item">Real results</span><span class="marquee-item">Zero monthly fees to start</span><span class="marquee-item">AI for small business</span><span class="marquee-item">Build personal wealth</span><span class="marquee-item">Save hours every week</span><span class="marquee-item">Free tool stack</span><span class="marquee-item">No jargon</span><span class="marquee-item">Plain English</span><span class="marquee-item">Real results</span><span class="marquee-item">Zero monthly fees to start</span><span class="marquee-item">AI for small business</span><span class="marquee-item">Build personal wealth</span></div></div>
+<!-- PATH SECTION -->
+<section class="section" id="what-we-do">
+  <div class="section-inner">
+    <div class="section-label">Choose your path</div>
+    <h2>Two things APTO does <em>really well.</em></h2>
+    <p class="section-intro">Whether you're trying to win back hours at work or finally get on top of your finances — APTO has a clear path for you.</p>
 
-<section class="section">
-  <div class="container">
-    <div class="reveal">
-      <div class="section-label">Choose your path</div>
-      <h2 class="section-h2">Two things APTO does <em>really well.</em></h2>
-      <p class="section-body">Whether you're trying to win back hours at work or finally get on top of your finances — APTO has a clear path for you.</p>
-    </div>
-    <div class="path-grid reveal">
-      <div class="path-card bs">
+    <div class="path-grid">
+      <!-- Business card -->
+      <div class="path-card business">
+        <!-- Char top-right, transparent, not overlapping text -->
+        <div class="path-card-char">
+          <img data-char="char-suit-point-right" alt="APTO character">
+        </div>
         <div class="path-card-icon">💼</div>
-        <div><div class="path-card-title">AI for Small Business</div><p class="path-card-body">ChatGPT prompts that write your emails, Canva templates that design your posts, Make.com automations that run while you sleep. All free to start.</p></div>
-        <div><a href="business.html" class="path-card-btn">Explore business tools →</a></div>
-        <img src="" data-char="char-suit-point-right" class="path-card-char" alt="Suited APTO character pointing right">
+        <h3>AI for Small Business</h3>
+        <p>ChatGPT prompts that write your emails, Canva templates that design your posts, Make.com automations that run while you sleep. All free to start.</p>
+        <a href="business.html" class="btn-card">Explore business tools →</a>
       </div>
-      <div class="path-card pw">
+
+      <!-- Wealth card -->
+      <div class="path-card wealth">
+        <!-- Char top-right, transparent, not overlapping text -->
+        <div class="path-card-char">
+          <img data-char="char-standing" alt="APTO character">
+        </div>
         <div class="path-card-icon">💰</div>
-        <div><div class="path-card-title">Personal Wealth</div><p class="path-card-body">The 50/30/20 budget that actually sticks, Trading 212 for commission-free investing, and AI money habits that take 5 minutes a day.</p></div>
-        <div><a href="wealth.html" class="path-card-btn">Explore wealth tools →</a></div>
-        <img src="" data-char="char-standing" class="path-card-char" alt="Casual APTO character standing">
+        <h3>Personal Wealth</h3>
+        <p>The 50/30/20 budget that actually sticks, Trading 212 for commission-free investing, and AI money habits that take 5 minutes a day.</p>
+        <a href="wealth.html" class="btn-card">Explore wealth tools →</a>
       </div>
     </div>
   </div>
 </section>
 
-<section class="section section-alt">
-  <div class="container">
-    <div class="reveal" style="display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:start;flex-wrap:wrap;">
-      <div>
-        <div class="section-label">Every tool. Tested. Free tier confirmed.</div>
-        <h2 class="section-h2">The tools we <em>actually use.</em></h2>
-        <p class="section-body">No recommendations without testing. Every tool in the APTO directory has a free tier. Our reviews stay honest because nobody pays to be here.</p>
+<!-- NEWSLETTER SECTION -->
+<section class="newsletter-section" id="newsletter">
+  <div class="newsletter-inner">
+    <div>
+      <div class="newsletter-label">Every Tuesday morning</div>
+      <h2>One new tool. One new habit.<br><em>Under 5 minutes.</em></h2>
+      <p>The APTO newsletter covers the AI tools and business prompts that actually work — without the hype. One issue every Tuesday. Free forever.</p>
+      <div class="newsletter-actions">
+        <button class="btn-primary">Get the newsletter →</button>
+        <a href="newsletter/index.html">Read the archive →</a>
       </div>
-      <div style="display:flex;align-items:center;gap:1rem;margin-top:1rem;">
-        <img src="" data-char="char-suit-arms" alt="Confident APTO character" style="width:85px;flex-shrink:0;">
-        <div style="font-size:.8rem;color:var(--text2);line-height:1.5;max-width:155px;"><strong style="color:var(--text);">No paid placements.</strong><br>Ever. Tools earn their spot by being genuinely useful.</div>
+    </div>
+    <!-- Char on RIGHT side, pointing LEFT toward the text -->
+    <div class="newsletter-char">
+      <img data-char="char-suit-point-right" alt="APTO character" style="transform:scaleX(-1);">
+    </div>
+  </div>
+</section>
+
+<!-- TRUST SECTION -->
+<section class="trust-section">
+  <div class="trust-inner">
+    <!-- Char transparent, vertically aligned with stats -->
+    <div class="trust-char">
+      <img data-char="char-suit-arms" alt="APTO character">
+    </div>
+    <div class="trust-content">
+      <div class="trust-label">Real results</div>
+      <div class="trust-stats">
+        <div class="trust-stat">
+          <div class="trust-stat-num">3hrs</div>
+          <div class="trust-stat-label">saved per week on average</div>
+        </div>
+        <div class="trust-stat">
+          <div class="trust-stat-num">£240</div>
+          <div class="trust-stat-label">average monthly saving</div>
+        </div>
+        <div class="trust-stat">
+          <div class="trust-stat-num">5min</div>
+          <div class="trust-stat-label">to implement each tool</div>
+        </div>
+      </div>
+      <div class="trust-quote">
+        "The 50/30/20 prompt built me a budget in 15 minutes that I've actually stuck to for 3 months. First time in years I feel in control of my money."
+        <br><br>
+        <strong style="font-style:normal; font-family:'Cabinet Grotesk',sans-serif; font-size:0.85rem; color:rgba(255,255,255,0.5);">Marcus T. — E-commerce owner</strong>
       </div>
     </div>
-    <div class="tools-preview-grid reveal">
-      <a href="tools.html#chatgpt" class="tool-mini"><div class="tool-mini-icon">🤖</div><div class="tool-mini-name">ChatGPT</div><div class="tool-mini-desc">Write emails, proposals and social posts in seconds.</div><span class="badge-free">✓ Free tier</span></a>
-      <a href="tools.html#canva" class="tool-mini"><div class="tool-mini-icon">🎨</div><div class="tool-mini-name">Canva</div><div class="tool-mini-desc">Professional designs without hiring a designer.</div><span class="badge-free">✓ Free tier</span></a>
-      <a href="tools.html#make" class="tool-mini"><div class="tool-mini-icon">⚡</div><div class="tool-mini-name">Make.com</div><div class="tool-mini-desc">Automate repetitive tasks so you can focus on what matters.</div><span class="badge-free">✓ Free tier</span></a>
-      <a href="tools.html#trading212" class="tool-mini"><div class="tool-mini-icon">📈</div><div class="tool-mini-name">Trading 212</div><div class="tool-mini-desc">Commission-free stocks and shares ISA for beginners.</div><span class="badge-free">✓ Free</span></a>
-      <a href="tools.html#monzo" class="tool-mini"><div class="tool-mini-icon">🏦</div><div class="tool-mini-name">Monzo</div><div class="tool-mini-desc">Smart budgeting built directly into your bank account.</div><span class="badge-free">✓ Free tier</span></a>
-      <a href="tools.html" class="tool-mini" style="justify-content:center;align-items:center;text-align:center;border-style:dashed;"><div style="font-size:1.5rem;margin-bottom:.4rem;">+</div><div class="tool-mini-name" style="color:var(--coral);">View all tools</div><div class="tool-mini-desc">Full directory with honest reviews</div></a>
+  </div>
+</section>
+
+<!-- BOTTOM CTA -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <div class="cta-char">
+      <img data-char="char-suit-flag" alt="APTO character">
+    </div>
+    <div class="cta-content">
+      <h2>Get the 20-prompt<br><em>AI Starter Kit free.</em></h2>
+      <p>Sign up and instantly get 20 AI prompts for business and personal finance. Plus the APTO newsletter every Tuesday. Free forever.</p>
+      <div class="cta-form">
+        <input type="email" placeholder="your@email.com">
+        <button class="btn-primary">Get the free kit →</button>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="section">
-  <div class="container">
-    <div class="reveal" style="text-align:center;max-width:560px;margin:0 auto;">
-      <div class="section-label" style="justify-content:center;">How it works</div>
-      <h2 class="section-h2">Simple. Free. <em>No catch.</em></h2>
-      <p class="section-body" style="margin:0 auto;">Three steps to start saving time and building wealth with AI this week.</p>
-    </div>
-    <div class="how-grid reveal">
-      <div class="how-step"><div class="how-num">1</div><div class="how-title">Grab the free kit</div><p class="how-body">Sign up and get 20 ready-to-use AI prompts instantly. No credit card. Works with ChatGPT's free tier.</p></div>
-      <div class="how-step"><div class="how-num">2</div><div class="how-title">Pick your tools</div><p class="how-body">Browse the APTO tool directory. Every recommendation has a free tier — we test them all ourselves first.</p></div>
-      <div class="how-step"><div class="how-num">3</div><div class="how-title">Tuesday newsletter</div><p class="how-body">One new AI tool or money habit every Tuesday. Plain English. Under 5 minutes to read and apply.</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="section section-alt">
-  <div class="container">
-    <div class="reveal" style="text-align:center;max-width:500px;margin:0 auto 0;">
-      <img src="" data-char="char-suit-arms" class="trust-char" alt="APTO trustworthy character">
-      <div class="section-label" style="justify-content:center;">Real people, real results</div>
-      <h2 class="section-h2">What people <em>actually say.</em></h2>
-    </div>
-    <div class="testi-grid reveal">
-      <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-quote">"I spent 3 hours a week writing emails. Two APTO prompts cut that to 40 minutes. Nothing has saved me that much time that fast."</p><div class="testi-author"><div class="testi-av" style="background:var(--coral)">SJ</div><div><div class="testi-name">Sarah J.</div><div class="testi-role">Freelance photographer, Brighton</div></div></div></div>
-      <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-quote">"The 50/30/20 prompt built me a budget in 15 minutes that I've actually stuck to for 3 months. First time in years I feel in control."</p><div class="testi-author"><div class="testi-av" style="background:var(--navy-lt)">MT</div><div><div class="testi-name">Marcus T.</div><div class="testi-role">E-commerce owner &amp; first-time investor</div></div></div></div>
-      <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-quote">"Downloaded the kit Friday. By Monday three automations were running AND I'd finally opened my Lifetime ISA. Changed my week."</p><div class="testi-author"><div class="testi-av" style="background:var(--green)">LK</div><div><div class="testi-name">Laura K.</div><div class="testi-role">VA &amp; building personal wealth</div></div></div></div>
-    </div>
-  </div>
-</section>
-
-<section class="char-cta">
-  <div class="char-cta-inner">
-    <div class="char-cta-char"><img src="" data-char="char-suit-flag" alt="APTO character with APTO flag"></div>
-    <div class="char-cta-text">
-      <h2>Start saving time<br>and <em>building wealth.</em></h2>
-      <p>Get the free APTO AI Starter Kit — 20 prompts for your business and your wallet — then one new tool every Tuesday morning. Free forever.</p>
-      <form class="cta-form" onsubmit="subForm(event,this,'cta-ok')">
-        <input type="email" placeholder="your@email.com" required autocomplete="email">
-        <button type="submit" class="btn-coral">Get the free kit →</button>
-      </form>
-      <div class="success-msg" id="cta-ok">✓ On its way — check your inbox.</div>
-      <p style="margin-top:.75rem;font-size:.73rem;color:rgba(255,255,255,.3);">No spam · No credit card · Cancel any time</p>
-    </div>
-  </div>
-</section>
-
+<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
-    <div><div class="footer-brand"><img src="" data-char="char-fist" alt="APTO"><span class="footer-brand-text">APTO</span></div><p class="footer-tagline">AI tools for small business and personal wealth. Plain English. Free to start.</p></div>
-    <div class="footer-col"><h4>Pages</h4><a href="index.html">Home</a><a href="business.html">AI for Business</a><a href="wealth.html">Personal Wealth</a><a href="tools.html">Tool Directory</a><a href="kit.html">Free Kit</a></div>
-    <div class="footer-col"><h4>Newsletter</h4><a href="https://apto.beehiiv.com" target="_blank" rel="noopener">Read on Beehiiv</a><a href="newsletter/index.html">Archive</a></div>
-    <div class="footer-col"><h4>Affiliate</h4><a href="https://www.beehiiv.com?via=apto" target="_blank" rel="noopener">Beehiiv</a><a href="https://www.canva.com/join/affiliate" target="_blank" rel="noopener">Canva Pro</a><a href="https://sovrn.co/9o4geqx" target="_blank" rel="noopener">Trading 212</a><a href="https://sovrn.co/p1e74z8" target="_blank" rel="noopener">ClearScore</a></div>
+    <div class="footer-logo">APTO</div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="business.html">AI for Business</a>
+      <a href="wealth.html">Personal Wealth</a>
+      <a href="tools.html">Tools</a>
+      <a href="kit.html">Free Kit</a>
+    </div>
+    <div>© 2025 APTO. All rights reserved.</div>
   </div>
-  <div class="footer-bottom"><p>© 2025 APTO. Some links are affiliate links — we only recommend tools we use ourselves.</p><p>aptotools.netlify.app</p></div>
 </footer>
 
 <script>
-function toggleTheme(){var d=document.documentElement,t=d.getAttribute('data-theme')==='dark';d.setAttribute('data-theme',t?'light':'dark');document.getElementById('theme-btn').textContent=t?'🌙':'☀️';try{localStorage.setItem('apto-theme',t?'light':'dark');}catch(e){}}
-(function(){try{var t=localStorage.getItem('apto-theme');if(t==='dark'){document.documentElement.setAttribute('data-theme','dark');var b=document.getElementById('theme-btn');if(b)b.textContent='☀️';}}catch(e){}})();
-document.getElementById('hamburger').addEventListener('click',function(){document.getElementById('nav-mobile').classList.toggle('open');});
-document.addEventListener('click',function(e){var nav=document.getElementById('main-nav');if(nav&&!nav.contains(e.target))document.getElementById('nav-mobile').classList.remove('open');});
-var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.07,rootMargin:'0px 0px -30px 0px'});
-document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
-function subForm(e,form,okId){e.preventDefault();form.style.display='none';var ok=document.getElementById(okId);if(ok)ok.style.display='block';}
+function toggleTheme() {
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  localStorage.setItem('apto-theme', isDark ? 'light' : 'dark');
+}
+(function() {
+  const saved = localStorage.getItem('apto-theme');
+  if (saved) document.documentElement.setAttribute('data-theme', saved);
+})();
 </script>
-<script src="chars.js"></script>
 </body>
 </html>
