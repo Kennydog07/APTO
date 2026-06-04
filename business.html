@@ -17,7 +17,7 @@ html{scroll-behavior:smooth}
 body{font-family:'Cabinet Grotesk',sans-serif;background:var(--off-white);color:var(--text);transition:background .25s,color .25s}
 nav{background:var(--navy);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:62px;position:sticky;top:0;z-index:200}
 .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff;font-weight:800;font-size:1.15rem;letter-spacing:-.02em}
-.nav-logo-icon{width:32px;height:32px;border-radius:50%;background:var(--coral);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
+.nav-logo-icon{width:32px;height:32px;border-radius:50%;background:var(--coral);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:900;font-size:14px;color:#fff;}
 .nav-logo-icon img{width:26px;height:26px;object-fit:contain;mix-blend-mode:multiply}
 .nav-links{display:flex;align-items:center;gap:2px}
 .nav-links a{color:rgba(255,255,255,.72);text-decoration:none;font-size:.875rem;font-weight:500;padding:.4rem .9rem;border-radius:6px;transition:color .15s,background .15s;white-space:nowrap}
@@ -106,16 +106,16 @@ footer{background:#07101c;padding:2.5rem 2rem}
 
 <nav>
   <a href="index.html" class="nav-logo">
-    <div class="nav-logo-icon"><img data-char="char-fist" alt="APTO"></div>
+    <div class="nav-logo-icon"><span>A</span></div>
     APTO
   </a>
   <div class="nav-links">
-    <a href="index.html">Home</a>
+    <a href="index.html" class="">Home</a>
     <a href="business.html" class="active">AI for Business</a>
-    <a href="wealth.html">Personal Wealth</a>
-    <a href="tools.html">Tools</a>
+    <a href="wealth.html" class="">Personal Wealth</a>
+    <a href="tools.html" class="">Tools</a>
     <a href="kit.html" class="nav-cta">Free Kit</a>
-    <a href="newsletter/index.html">Newsletter</a>
+    <a href="newsletter/index.html" class="">Newsletter</a>
   </div>
   <div class="nav-right">
     <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
@@ -142,7 +142,7 @@ footer{background:#07101c;padding:2.5rem 2rem}
         <div class="num">3hrs</div>
         <div class="lbl">saved per week on average</div>
       </div>
-      <img data-char="char-suit-point-up" alt="">
+      
     </div>
   </div>
 </section>
@@ -204,15 +204,13 @@ footer{background:#07101c;padding:2.5rem 2rem}
         <button class="btn-primary">Get the newsletter →</button>
       </div>
     </div>
-    <div class="nl-char">
-      <img data-char="char-suit-point-right" alt="">
-    </div>
+    
   </div>
 </div>
 
 <section class="cta-section">
   <div class="cta-box">
-    <div class="cta-char"><img data-char="char-suit-flag" alt=""></div>
+    
     <div>
       <h2>Get the 20-prompt<br><em>AI Starter Kit free.</em></h2>
       <p>Sign up and instantly get 20 AI prompts for business and personal finance. Plus the APTO newsletter every Tuesday. Free forever.</p>
