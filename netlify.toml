@@ -1,0 +1,20 @@
+[[redirects]]
+  from = "/business.html"
+  to = "/business"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/personal.html"
+  to = "/wealth"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/personal"
+  to = "/wealth"
+  status = 301
+  force = true
+
+[build]
+  publish = "."
