@@ -24,6 +24,11 @@ nav{background:var(--navy);display:flex;align-items:center;justify-content:space
 .nav-links a.active{color:#fff;background:rgba(255,255,255,.14);font-weight:700}
 .nav-links a.nav-cta{background:var(--coral);color:#fff!important;font-weight:700;margin-left:4px}
 .nav-links a.nav-cta:hover{background:#d05e0e}
+.nav-dropdown{position:relative}
+.nav-dropdown-menu{position:absolute;top:100%;left:0;background:var(--navy);border:1px solid rgba(255,255,255,.12);border-radius:8px;min-width:200px;padding:.4rem;display:none;flex-direction:column;gap:2px;box-shadow:0 12px 28px rgba(0,0,0,.35);z-index:300}
+.nav-dropdown:hover .nav-dropdown-menu,.nav-dropdown:focus-within .nav-dropdown-menu{display:flex}
+.nav-dropdown-menu a{color:rgba(255,255,255,.78);padding:.55rem .8rem;border-radius:6px;font-size:.85rem;font-weight:500;white-space:nowrap}
+.nav-dropdown-menu a:hover{background:rgba(255,255,255,.12);color:#fff}
 .theme-toggle{background:none;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);border-radius:6px;padding:.3rem .55rem;cursor:pointer;font-size:.85rem;transition:all .15s}
 .theme-toggle:hover{border-color:rgba(255,255,255,.5);color:#fff}
 
@@ -135,6 +140,13 @@ footer{background:#07101c;padding:2.5rem 2rem}
     <a href="business.html" class="">AI for Business</a>
     <a href="wealth.html" class="">Personal Wealth</a>
     <a href="tools.html" class="">Tools</a>
+    <div class="nav-dropdown">
+      <a href="#" onclick="return false;">Apps ▾</a>
+      <div class="nav-dropdown-menu">
+        <a href="apto-retirement-planner.html">📈 Retirement Planner</a>
+        <a href="solar.html">☀️ Solar Calculator</a>
+      </div>
+    </div>
     <a href="kit.html" class="nav-cta">Free Kit</a>
     <a href="newsletter/" class="">Newsletter</a>
   </div>
