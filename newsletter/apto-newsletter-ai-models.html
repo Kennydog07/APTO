@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APTO Newsletter — The AI Model Guide, June 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+  :root {
+    --navy: #0D1B2A;
+    --orange: #FF6B2B;
+    --orange-light: #FF8F5C;
+    --orange-dim: rgba(255,107,43,0.12);
+    --white: #FFFFFF;
+    --off-white: #F5F4F0;
+    --mid-grey: #8A8A8A;
+    --border: rgba(255,255,255,0.08);
+    --card-bg: #16243A;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── EMAIL WRAPPER ── */
+  .email-wrap {
+    max-width: 620px;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--navy);
+    padding: 28px 40px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo-mark {
+    width: 36px;
+    height: 36px;
+    background: var(--orange);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--white);
+    letter-spacing: -0.5px;
+  }
+
+  .logo-text {
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 2px;
+    color: var(--white);
+  }
+
+  .issue-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--mid-grey);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(160deg, #132035 0%, var(--navy) 70%);
+    padding: 52px 40px 44px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 280px;
+    height: 280px;
+    background: radial-gradient(circle, rgba(255,107,43,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 16px;
+  }
+
+  .hero h1 {
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    margin-bottom: 18px;
+    max-width: 480px;
+  }
+
+  .hero h1 span {
+    color: var(--orange);
+  }
+
+  .hero-intro {
+    font-size: 15px;
+    color: rgba(255,255,255,0.72);
+    max-width: 500px;
+    line-height: 1.7;
+    margin-bottom: 28px;
+  }
+
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .hero-date {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--mid-grey);
+    letter-spacing: 1px;
+  }
+
+  .hero-pill {
+    background: var(--orange-dim);
+    border: 1px solid rgba(255,107,43,0.3);
+    color: var(--orange-light);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+
+  /* ── INTRO TEXT ── */
+  .intro-section {
+    padding: 36px 40px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .intro-section p {
+    color: rgba(255,255,255,0.78);
+    font-size: 15px;
+    line-height: 1.75;
+    margin-bottom: 12px;
+  }
+
+  .intro-section p:last-child { margin-bottom: 0; }
+
+  .highlight-text {
+    color: var(--orange-light);
+    font-weight: 600;
+  }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    padding: 32px 40px 8px;
+  }
+
+  .section-label h2 {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--mid-grey);
+  }
+
+  /* ── MODEL CARDS ── */
+  .models-section {
+    padding: 8px 24px 12px;
+  }
+
+  .model-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 28px 24px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .model-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    border-radius: 3px 0 0 3px;
+  }
+
+  .card-1::before { background: #00B4D8; }
+  .card-2::before { background: #FF6B2B; }
+  .card-3::before { background: #9747FF; }
+  .card-4::before { background: #00C16E; }
+  .card-5::before { background: #FFD60A; }
+
+  .model-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    gap: 12px;
+  }
+
+  .model-identity {
+    flex: 1;
+  }
+
+  .model-rank {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--mid-grey);
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+  }
+
+  .model-name {
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    line-height: 1.2;
+  }
+
+  .model-maker {
+    font-size: 12px;
+    color: var(--mid-grey);
+    margin-top: 3px;
+    font-weight: 500;
+  }
+
+  .model-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .badge-blue   { background: rgba(0,180,216,0.15); color: #00B4D8; border: 1px solid rgba(0,180,216,0.25); }
+  .badge-orange { background: rgba(255,107,43,0.15); color: #FF8F5C; border: 1px solid rgba(255,107,43,0.25); }
+  .badge-purple { background: rgba(151,71,255,0.15); color: #B57BFF; border: 1px solid rgba(151,71,255,0.25); }
+  .badge-green  { background: rgba(0,193,110,0.15); color: #00C16E; border: 1px solid rgba(0,193,110,0.25); }
+  .badge-yellow { background: rgba(255,214,10,0.15); color: #FFD60A; border: 1px solid rgba(255,214,10,0.25); }
+
+  .model-summary {
+    font-size: 14px;
+    color: rgba(255,255,255,0.72);
+    line-height: 1.65;
+    margin-bottom: 18px;
+  }
+
+  .benefits-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--mid-grey);
+    margin-bottom: 10px;
+  }
+
+  .benefits-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .benefits-list li {
+    font-size: 13.5px;
+    color: rgba(255,255,255,0.82);
+    padding-left: 18px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .benefits-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    font-size: 12px;
+    color: var(--orange);
+    font-weight: 700;
+  }
+
+  .model-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .best-for {
+    font-size: 12px;
+    color: var(--mid-grey);
+  }
+
+  .best-for strong {
+    color: rgba(255,255,255,0.7);
+    font-weight: 600;
+  }
+
+  .model-link {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--orange);
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    font-weight: 700;
+  }
+
+  /* ── QUICK PICK TABLE ── */
+  .quick-pick {
+    margin: 8px 24px 24px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .quick-pick-header {
+    background: rgba(255,107,43,0.1);
+    padding: 14px 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .quick-pick-header h3 {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--orange-light);
+  }
+
+  .quick-pick table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .quick-pick td {
+    padding: 12px 24px;
+    font-size: 13.5px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+
+  .quick-pick tr:last-child td { border-bottom: none; }
+
+  .qp-task {
+    color: rgba(255,255,255,0.6);
+    font-size: 12.5px;
+    width: 40%;
+  }
+
+  .qp-model {
+    font-weight: 600;
+    color: var(--white);
+    width: 30%;
+  }
+
+  .qp-why {
+    color: rgba(255,255,255,0.55);
+    font-size: 12px;
+    text-align: right;
+  }
+
+  /* ── CTA ── */
+  .cta-section {
+    margin: 8px 24px 32px;
+    background: linear-gradient(135deg, var(--orange) 0%, #E05020 100%);
+    border-radius: 12px;
+    padding: 32px 32px;
+    text-align: center;
+  }
+
+  .cta-section h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: -0.3px;
+  }
+
+  .cta-section p {
+    font-size: 14px;
+    opacity: 0.88;
+    margin-bottom: 22px;
+    line-height: 1.6;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    background: var(--white);
+    color: var(--navy);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 13px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    letter-spacing: 0.3px;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    padding: 28px 40px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .footer p {
+    font-size: 12px;
+    color: var(--mid-grey);
+    line-height: 1.7;
+    margin-bottom: 6px;
+  }
+
+  .footer a {
+    color: var(--orange);
+    text-decoration: none;
+  }
+
+  .footer-logo {
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 480px) {
+    .header, .hero, .intro-section { padding-left: 20px; padding-right: 20px; }
+    .hero h1 { font-size: 26px; }
+    .models-section { padding-left: 12px; padding-right: 12px; }
+    .quick-pick, .cta-section { margin-left: 12px; margin-right: 12px; }
+    .section-label { padding-left: 20px; padding-right: 20px; }
+    .model-header { flex-direction: column; }
+    .qp-why { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="email-wrap">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="logo">
+      <div class="logo-mark">AP</div>
+      <div class="logo-text">APTO</div>
+    </div>
+    <div class="issue-tag">June 2026 · Issue #12</div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">AI Tools &amp; Money · Monthly Briefing</div>
+    <h1>The Top 5 AI Models<br><span>Right Now</span> — and<br>What Each Does Best</h1>
+    <p class="hero-intro">The AI race has never been tighter. Five frontier models now compete within a handful of benchmark points of each other — but they are not interchangeable. Here is your plain-English guide to who wins at what, and which one to actually open.</p>
+    <div class="hero-meta">
+      <span class="hero-date">June 23, 2026</span>
+      <span class="hero-pill">5 min read</span>
+    </div>
+  </div>
+
+  <!-- INTRO -->
+  <div class="intro-section">
+    <p>The honest answer to <em>"which AI is best?"</em> in 2026 is: <span class="highlight-text">it depends on the task.</span> The gap between the top models has narrowed dramatically. What has widened is the gap between using the right model and the wrong one for a specific job.</p>
+    <p>We have pulled the latest benchmark data, cut through the marketing, and distilled it into five clear profiles — plus a quick-reference cheat sheet at the bottom.</p>
+  </div>
+
+  <!-- MODELS SECTION LABEL -->
+  <div class="section-label">
+    <h2>The Contenders — June 2026</h2>
+  </div>
+
+  <div class="models-section">
+
+    <!-- CARD 1: Claude -->
+    <div class="model-card card-2">
+      <div class="model-header">
+        <div class="model-identity">
+          <div class="model-rank">Rank #1 Overall</div>
+          <div class="model-name">Claude Opus 4.8</div>
+          <div class="model-maker">Anthropic</div>
+        </div>
+        <div class="model-badge badge-orange">Best Overall</div>
+      </div>
+      <p class="model-summary">Claude Opus 4.8 currently leads the Artificial Analysis Intelligence Index, topping the charts on reasoning, coding quality, and long-form writing. Its 1 million token context window means it can digest an entire book, codebase, or year of financial statements in one go. The model is specifically designed to work autonomously for extended periods — useful when you want AI to handle multi-step tasks without constant prompting.</p>
+      <div class="benefits-label">Key Benefits</div>
+      <ul class="benefits-list">
+        <li>Leads on complex reasoning and coding tasks — preferred by developers using Cursor and Claude Code</li>
+        <li>Best-in-class long-form writing and document analysis — outputs up to 128,000 tokens in a single pass</li>
+        <li>Strongest safety profile and most consistent instruction-following of any frontier model</li>
+        <li>1 million token context — process entire contracts, reports, or codebases at once</li>
+        <li>Extended thinking mode allocates more compute to genuinely hard problems</li>
+      </ul>
+      <div class="model-footer">
+        <span class="best-for"><strong>Best for:</strong> Writing, coding, complex analysis, agentic tasks</span>
+        <a class="model-link" href="https://claude.ai">Try Claude →</a>
+      </div>
+    </div>
+
+    <!-- CARD 2: GPT-5.5 -->
+    <div class="model-card card-1">
+      <div class="model-header">
+        <div class="model-identity">
+          <div class="model-rank">Rank #2</div>
+          <div class="model-name">GPT-5.5</div>
+          <div class="model-maker">OpenAI</div>
+        </div>
+        <div class="model-badge badge-blue">Best Ecosystem</div>
+      </div>
+      <p class="model-summary">OpenAI's current flagship is the broadest all-purpose model on the market. It uses an internal routing system that picks the right sub-model for your request in real time — making it remarkably consistent across wildly different task types. If you live inside the ChatGPT interface, GPT-5.5's Canvas editing environment is the gold standard for collaborative document work. Hallucinations are down 52% on its predecessor.</p>
+      <div class="benefits-label">Key Benefits</div>
+      <ul class="benefits-list">
+        <li>Widest ecosystem — integrates with the most third-party tools, plugins, and workflows</li>
+        <li>Canvas editing environment is the best AI-assisted document editor available</li>
+        <li>Leads agentic and terminal-heavy coding workflows (Terminal-Bench 2.0: 82.7%)</li>
+        <li>Intelligent internal routing picks the most efficient sub-model per task</li>
+        <li>ChatGPT is still the world's most-used AI interface — huge community and prompt libraries</li>
+      </ul>
+      <div class="model-footer">
+        <span class="best-for"><strong>Best for:</strong> All-purpose work, document editing, developer workflows</span>
+        <a class="model-link" href="https://chatgpt.com">Try GPT-5.5 →</a>
+      </div>
+    </div>
+
+    <!-- CARD 3: Gemini 3.1 Pro -->
+    <div class="model-card card-3">
+      <div class="model-header">
+        <div class="model-identity">
+          <div class="model-rank">Rank #3</div>
+          <div class="model-name">Gemini 3.1 Pro</div>
+          <div class="model-maker">Google DeepMind</div>
+        </div>
+        <div class="model-badge badge-purple">Best for Research</div>
+      </div>
+      <p class="model-summary">Google's reasoning powerhouse leads on scientific and academic benchmarks — 94.3% on GPQA Diamond (graduate-level science), ahead of both Claude and GPT. It is the only top model that is natively multimodal across text, audio, images, video, PDFs, and code repositories. If you do research, data analysis, or need to extract intelligence from mixed-media documents, Gemini 3.1 Pro is the strongest pick. Its price-to-capability ratio is also the best of the four flagships.</p>
+      <div class="benefits-label">Key Benefits</div>
+      <ul class="benefits-list">
+        <li>Leads scientific reasoning benchmarks — 94.3% GPQA Diamond, ahead of all rivals</li>
+        <li>Native multimodal reasoning across text, images, video, audio, and PDFs in one session</li>
+        <li>1 million token context with Deep Think mode for the hardest problems</li>
+        <li>Best API price-performance ratio of the four flagship models</li>
+        <li>Deep Google Workspace integration — works natively inside Docs, Sheets, Gmail</li>
+      </ul>
+      <div class="model-footer">
+        <span class="best-for"><strong>Best for:</strong> Research, data analysis, multimodal tasks, Google users</span>
+        <a class="model-link" href="https://gemini.google.com">Try Gemini →</a>
+      </div>
+    </div>
+
+    <!-- CARD 4: Grok 4.3 -->
+    <div class="model-card card-4">
+      <div class="model-header">
+        <div class="model-identity">
+          <div class="model-rank">Rank #4</div>
+          <div class="model-name">Grok 4.3</div>
+          <div class="model-maker">xAI</div>
+        </div>
+        <div class="model-badge badge-green">Best for Real-Time</div>
+      </div>
+      <p class="model-summary">Grok is the only frontier model that truly lives in the present. Direct access to live X/Twitter data and a weekly model update cycle means it is the go-to for anything time-sensitive — market sentiment, breaking news, trending discussions. It also holds the largest context window of any released model (2 million tokens) and configurable reasoning levels let you dial up or down depending on how hard a question actually is.</p>
+      <div class="benefits-label">Key Benefits</div>
+      <ul class="benefits-list">
+        <li>Live X/Twitter data access — the only model with genuine real-time information</li>
+        <li>2 million token context window — largest of any publicly available model</li>
+        <li>Configurable reasoning effort (none/low/medium/high) — saves cost on simple tasks</li>
+        <li>Most aggressive pricing of the four flagships — strong value for high-volume use</li>
+        <li>Ranks #1 on legal reasoning benchmarks (CaseLaw) — useful for regulatory and compliance work</li>
+      </ul>
+      <div class="model-footer">
+        <span class="best-for"><strong>Best for:</strong> Real-time data, legal tasks, high-volume, social listening</span>
+        <a class="model-link" href="https://grok.com">Try Grok →</a>
+      </div>
+    </div>
+
+    <!-- CARD 5: Kimi K2 / DeepSeek (open-source pick) -->
+    <div class="model-card card-5">
+      <div class="model-header">
+        <div class="model-identity">
+          <div class="model-rank">Rank #5 (Open Source)</div>
+          <div class="model-name">Kimi K2.6</div>
+          <div class="model-maker">Moonshot AI</div>
+        </div>
+        <div class="model-badge badge-yellow">Best Free Option</div>
+      </div>
+      <p class="model-summary">If you are budget-conscious or privacy-focused, the open-source tier has levelled up dramatically. Kimi K2.6 from China's Moonshot AI is the strongest open-weights model available — 57.3 overall score and 90.5% GPQA Diamond, not far behind the closed-source flagships at a fraction of the cost. Downloadable and self-hostable, it is the smart choice for anyone who cannot send sensitive data to external APIs or simply does not want another monthly subscription.</p>
+      <div class="benefits-label">Key Benefits</div>
+      <ul class="benefits-list">
+        <li>Best open-source model available — deploy locally, no subscription fees or data sharing</li>
+        <li>90.5% GPQA Diamond score — near-frontier reasoning at open-source cost</li>
+        <li>Privacy-first: run on your own hardware, no data leaves your environment</li>
+        <li>Trillion-parameter mixture-of-experts architecture — efficient for the capability level</li>
+        <li>Strong fallback for tasks where GPT or Claude are overkill or too expensive</li>
+      </ul>
+      <div class="model-footer">
+        <span class="best-for"><strong>Best for:</strong> Privacy, budget work, self-hosting, experimentation</span>
+        <a class="model-link" href="https://kimi.ai">Try Kimi →</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- QUICK PICK -->
+  <div class="section-label">
+    <h2>Quick Reference — Which Model to Open</h2>
+  </div>
+
+  <div class="quick-pick">
+    <div class="quick-pick-header">
+      <h3>Task → Best Model</h3>
+    </div>
+    <table>
+      <tr>
+        <td class="qp-task">Writing a long document or report</td>
+        <td class="qp-model">Claude Opus 4.8</td>
+        <td class="qp-why">128K token output, best prose</td>
+      </tr>
+      <tr>
+        <td class="qp-task">Coding and software engineering</td>
+        <td class="qp-model">Claude / GPT-5.5</td>
+        <td class="qp-why">Claude for quality, GPT for terminal</td>
+      </tr>
+      <tr>
+        <td class="qp-task">Research and data analysis</td>
+        <td class="qp-model">Gemini 3.1 Pro</td>
+        <td class="qp-why">Best reasoning benchmarks</td>
+      </tr>
+      <tr>
+        <td class="qp-task">Real-time news and social trends</td>
+        <td class="qp-model">Grok 4.3</td>
+        <td class="qp-why">Live X/Twitter data access</td>
+      </tr>
+      <tr>
+        <td class="qp-task">All-purpose everyday tasks</td>
+        <td class="qp-model">GPT-5.5</td>
+        <td class="qp-why">Broadest ecosystem, most consistent</td>
+      </tr>
+      <tr>
+        <td class="qp-task">Budget or privacy-sensitive work</td>
+        <td class="qp-model">Kimi K2.6</td>
+        <td class="qp-why">Open-source, self-hostable</td>
+      </tr>
+      <tr>
+        <td class="qp-task">Processing massive documents</td>
+        <td class="qp-model">Grok 4.3</td>
+        <td class="qp-why">2M token context window</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <h3>Managing your AI subscriptions?</h3>
+    <p>APTO's free AI Subscription Scanner helps you see exactly what you are paying across all your AI tools — and whether you are actually getting value for money.</p>
+    <a class="cta-btn" href="https://aptotools.netlify.app">Scan Your Subscriptions — Free</a>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <span class="footer-logo">APTO</span>
+    <p>AI Tools &amp; Personal Finance for the UK — <a href="https://aptotools.netlify.app">aptotools.netlify.app</a></p>
+    <p>You're receiving this because you subscribed to the APTO newsletter.<br>
+    <a href="#">Unsubscribe</a> · <a href="#">View in browser</a> · <a href="#">Privacy Policy</a></p>
+    <p style="margin-top: 10px; font-size: 11px;">Benchmark data sourced from Artificial Analysis, LLM Stats, and LogRocket AI Power Rankings — June 2026.</p>
+  </div>
+
+</div>
+</body>
+</html>
