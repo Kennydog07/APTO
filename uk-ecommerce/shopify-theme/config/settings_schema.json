@@ -1,0 +1,38 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Nook & Order",
+    "theme_version": "1.0.0",
+    "theme_author": "Store owner",
+    "theme_documentation_url": "https://shopify.dev/docs/storefronts/themes",
+    "theme_support_url": "https://help.shopify.com"
+  },
+  {
+    "name": "Colours",
+    "settings": [
+      { "type": "color", "id": "color_background", "label": "Background", "default": "#F7F4EE" },
+      { "type": "color", "id": "color_surface", "label": "Surface (tinted sections)", "default": "#ECE6DA" },
+      { "type": "color", "id": "color_text", "label": "Text", "default": "#1F2421" },
+      { "type": "color", "id": "color_muted", "label": "Muted text", "default": "#5B6560" },
+      { "type": "color", "id": "color_accent", "label": "Accent (buttons, links)", "default": "#2F5D50" },
+      { "type": "color", "id": "color_accent_contrast", "label": "Text on accent", "default": "#FFFFFF" },
+      { "type": "color", "id": "color_highlight", "label": "Highlight", "default": "#C8664A" },
+      { "type": "color", "id": "color_border", "label": "Borders", "default": "#DDD6C8" }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      { "type": "font_picker", "id": "type_heading_font", "label": "Headings", "default": "assistant_n7" },
+      { "type": "font_picker", "id": "type_body_font", "label": "Body", "default": "assistant_n4" }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      { "type": "range", "id": "page_width", "label": "Page width", "min": 1000, "max": 1600, "step": 20, "unit": "px", "default": 1280 },
+      { "type": "range", "id": "corner_radius", "label": "Corner radius", "min": 0, "max": 20, "step": 1, "unit": "px", "default": 10 },
+      { "type": "image_picker", "id": "favicon", "label": "Favicon" }
+    ]
+  }
+]

@@ -1,0 +1,8 @@
+{
+  "name": "theme-preview",
+  "private": true,
+  "type": "module",
+  "description": "Local preview harness: renders the Shopify theme's Liquid with sample data (approximation of Shopify), then screenshots it with Playwright.",
+  "scripts": { "test": "node render.js && node screenshot.js" },
+  "devDependencies": { "liquidjs": "10.29.0", "playwright": "1.63.0" }
+}

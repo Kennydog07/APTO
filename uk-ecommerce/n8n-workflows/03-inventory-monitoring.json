@@ -1,0 +1,170 @@
+{
+  "id": "NoWf03Inventory0",
+  "name": "03 — Inventory monitoring (every 6 hours)",
+  "active": false,
+  "nodes": [
+    {
+      "id": "c0d1a4d1-9b86-4d55-a062-47da21286436",
+      "position": [
+        260,
+        300
+      ],
+      "name": "Every 6 hours",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 6
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "ba3e4368-e068-4365-9224-29da27ccb4e6",
+      "position": [
+        520,
+        300
+      ],
+      "name": "Config",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "parameters": {
+        "jsCode": "// Edit n8n-workflows/config.json and rebuild, or change here.\nconst _cfg = {\"opsBaseUrl\":\"http://ops-service:8080\",\"ownerEmail\":\"owner@example.com\",\"storeEmail\":\"hello@example.co.uk\",\"storeName\":\"Nook & Order\",\"testMode\":true};\nconst items = $input.all();\nreturn (items.length ? items : [{ json: {} }]).map((i) => ({ json: { ...i.json, _cfg } }));"
+      }
+    },
+    {
+      "id": "86e382f0-889a-4751-92bc-dc1baab3d32c",
+      "position": [
+        780,
+        300
+      ],
+      "name": "Sync supplier stock",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json._cfg.opsBaseUrl }}/api/inventory/sync",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_OPS_API_CRED",
+          "name": "Ops service API (Bearer)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "02765167-227f-4bc3-95a5-3190e305158a",
+      "position": [
+        1040,
+        300
+      ],
+      "name": "Log run",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json._cfg.opsBaseUrl }}/api/logs",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ workflow: \"wf03\", level: 'info', message: \"Inventory sync complete\", data: { checked: $json.checked, paused: $json.paused, restored: $json.restored, mismatches: $json.mismatches } }) }}",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_OPS_API_CRED",
+          "name": "Ops service API (Bearer)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "continueOnFail": true
+    },
+    {
+      "id": "ecb9f622-4a5a-4d1f-aadf-5e2d7058afb9",
+      "name": "Manual test run",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        260,
+        460
+      ],
+      "parameters": {}
+    }
+  ],
+  "connections": {
+    "Every 6 hours": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Sync supplier stock",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sync supplier stock": {
+      "main": [
+        [
+          {
+            "node": "Log run",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual test run": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "timezone": "Europe/London",
+    "errorWorkflow": "NoWf12Errors0000"
+  },
+  "pinData": {},
+  "tags": [],
+  "meta": {
+    "templateCredsSetupCompleted": false
+  }
+}

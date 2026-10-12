@@ -1,0 +1,13 @@
+<article class="section"><div class="page-width page-content">
+  <p class="eyebrow">{{ blog.title | escape }}</p>
+  <h1>{{ article.title | escape }}</h1>
+  <p class="muted">{{ article.published_at | time_tag: format: 'date' }}{% if article.author != blank %} · {{ article.author | escape }}{% endif %}</p>
+  {%- if article.image -%}<div style="margin:24px 0;border-radius:var(--radius);overflow:hidden">{{ article.image | image_url: width: 1400 | image_tag: loading: 'eager', alt: article.image.alt | default: article.title }}</div>{%- endif -%}
+  <div class="rte">{{ article.content }}</div>
+</div></article>
+<script type="application/ld+json">
+  { "@context": "https://schema.org", "@type": "Article", "headline": {{ article.title | json }}, "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }}, "author": { "@type": "Organization", "name": {{ shop.name | json }} } }
+</script>
+{% schema %}
+{ "name": "Article" }
+{% endschema %}

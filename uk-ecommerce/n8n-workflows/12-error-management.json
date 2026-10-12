@@ -1,0 +1,320 @@
+{
+  "id": "NoWf12Errors0000",
+  "name": "12 — Error management",
+  "active": false,
+  "nodes": [
+    {
+      "id": "e2a5b5ab-7f25-4b24-8c37-71e8f38a836a",
+      "position": [
+        260,
+        200
+      ],
+      "name": "Workflow failed",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "parameters": {}
+    },
+    {
+      "id": "6dd1f673-c0e3-431d-b460-3fdd5ea2e7c6",
+      "position": [
+        520,
+        200
+      ],
+      "name": "Config",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "parameters": {
+        "jsCode": "// Edit n8n-workflows/config.json and rebuild, or change here.\nconst _cfg = {\"opsBaseUrl\":\"http://ops-service:8080\",\"ownerEmail\":\"owner@example.com\",\"storeEmail\":\"hello@example.co.uk\",\"storeName\":\"Nook & Order\",\"testMode\":true};\nconst items = $input.all();\nreturn (items.length ? items : [{ json: {} }]).map((i) => ({ json: { ...i.json, _cfg } }));"
+      }
+    },
+    {
+      "id": "9126acc3-2dc2-403f-816f-e9aac2b8d948",
+      "position": [
+        780,
+        200
+      ],
+      "name": "Record error",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json._cfg.opsBaseUrl }}/api/errors",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ workflow: $('Workflow failed').first().json.workflow?.name, executionId: $('Workflow failed').first().json.execution?.id, node: $('Workflow failed').first().json.execution?.lastNodeExecuted, message: $('Workflow failed').first().json.execution?.error?.message ?? 'Unknown error', url: $('Workflow failed').first().json.execution?.url, severity: 'error' }) }}",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_OPS_API_CRED",
+          "name": "Ops service API (Bearer)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "continueOnFail": true
+    },
+    {
+      "id": "0c7ac4b1-8545-4a88-8b32-b9810d576157",
+      "position": [
+        260,
+        420
+      ],
+      "name": "Every 30 minutes",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 30
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "a46aa5ad-e383-4cb4-ae06-87a1c376b954",
+      "position": [
+        520,
+        420
+      ],
+      "name": "Config (poll)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "parameters": {
+        "jsCode": "// Edit n8n-workflows/config.json and rebuild, or change here.\nconst _cfg = {\"opsBaseUrl\":\"http://ops-service:8080\",\"ownerEmail\":\"owner@example.com\",\"storeEmail\":\"hello@example.co.uk\",\"storeName\":\"Nook & Order\",\"testMode\":true};\nconst items = $input.all();\nreturn (items.length ? items : [{ json: {} }]).map((i) => ({ json: { ...i.json, _cfg } }));"
+      }
+    },
+    {
+      "id": "05f6eadb-1234-4d0a-800a-a7224074504e",
+      "position": [
+        1040,
+        300
+      ],
+      "name": "Unnotified critical alerts",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $('Config (poll)').first().json._cfg.opsBaseUrl }}/api/alerts/pending",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_OPS_API_CRED",
+          "name": "Ops service API (Bearer)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "20d164f4-8889-41b7-af8b-af77d173a330",
+      "position": [
+        1300,
+        300
+      ],
+      "name": "Anything to tell the owner?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "528c02fe-47b9-416f-bec2-d0945ac5b2d6",
+              "leftValue": "={{ ($json.alerts ?? []).length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "837f44e6-68c7-41b5-8f53-e2872b58b20b",
+      "position": [
+        1560,
+        200
+      ],
+      "name": "Format alert",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "parameters": {
+        "jsCode": "const a = $input.first().json.alerts;\nreturn [{ json: { subject: `${a.length} issue(s) need your attention`, text: a.map((x) => `[${x.severity.toUpperCase()}] ${x.message} (seen ${x.occurrences}×)`).join('\\n') + '\\n\\nDetails: dashboard → Alerts.' } }];"
+      }
+    },
+    {
+      "id": "15b380fe-b996-4255-b3a9-102f73dadf11",
+      "position": [
+        1820,
+        200
+      ],
+      "name": "Alert owner",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "parameters": {
+        "fromEmail": "={{ $('Config (poll)').isExecuted ? $('Config (poll)').first().json._cfg.storeEmail : $('Config').first().json._cfg.storeEmail }}",
+        "toEmail": "={{ $('Config (poll)').isExecuted ? $('Config (poll)').first().json._cfg.ownerEmail : $('Config').first().json._cfg.ownerEmail }}",
+        "subject": "={{ $json.subject }}",
+        "emailFormat": "text",
+        "text": "={{ $json.text }}",
+        "options": {}
+      },
+      "credentials": {
+        "smtp": {
+          "id": "REPLACE_SMTP_CRED",
+          "name": "Store SMTP"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 10000
+    },
+    {
+      "id": "723e606b-b770-4e30-8b8c-1a488fbdfea7",
+      "name": "Manual test run",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        260,
+        580
+      ],
+      "parameters": {}
+    }
+  ],
+  "connections": {
+    "Workflow failed": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Record error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Every 30 minutes": {
+      "main": [
+        [
+          {
+            "node": "Config (poll)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Record error": {
+      "main": [
+        [
+          {
+            "node": "Unnotified critical alerts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config (poll)": {
+      "main": [
+        [
+          {
+            "node": "Unnotified critical alerts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Unnotified critical alerts": {
+      "main": [
+        [
+          {
+            "node": "Anything to tell the owner?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anything to tell the owner?": {
+      "main": [
+        [
+          {
+            "node": "Format alert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format alert": {
+      "main": [
+        [
+          {
+            "node": "Alert owner",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual test run": {
+      "main": [
+        [
+          {
+            "node": "Config (poll)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "timezone": "Europe/London"
+  },
+  "pinData": {},
+  "tags": [],
+  "meta": {
+    "templateCredsSetupCompleted": false
+  }
+}

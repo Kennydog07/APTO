@@ -1,0 +1,205 @@
+{
+  "id": "NoWf11Report0000",
+  "name": "11 — Daily business report",
+  "active": false,
+  "nodes": [
+    {
+      "id": "bce7d703-0cc9-45ea-847d-eacd3f499086",
+      "position": [
+        260,
+        300
+      ],
+      "name": "Daily 07:30",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "30 7 * * *"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "c9af38e5-6a9e-4804-ad97-b6f24ed2e715",
+      "position": [
+        520,
+        300
+      ],
+      "name": "Config",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "parameters": {
+        "jsCode": "// Edit n8n-workflows/config.json and rebuild, or change here.\nconst _cfg = {\"opsBaseUrl\":\"http://ops-service:8080\",\"ownerEmail\":\"owner@example.com\",\"storeEmail\":\"hello@example.co.uk\",\"storeName\":\"Nook & Order\",\"testMode\":true};\nconst items = $input.all();\nreturn (items.length ? items : [{ json: {} }]).map((i) => ({ json: { ...i.json, _cfg } }));"
+      }
+    },
+    {
+      "id": "c8152389-35ae-4b37-9126-9044e7b9ff58",
+      "position": [
+        780,
+        300
+      ],
+      "name": "Data retention purge",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json._cfg.opsBaseUrl }}/api/maintenance/purge",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_OPS_API_CRED",
+          "name": "Ops service API (Bearer)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "continueOnFail": true
+    },
+    {
+      "id": "61815a89-1795-4b82-85b6-a19fcaaaac4c",
+      "position": [
+        1040,
+        300
+      ],
+      "name": "Build report",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $('Config').first().json._cfg.opsBaseUrl }}/api/reports/daily",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_OPS_API_CRED",
+          "name": "Ops service API (Bearer)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "e1e38928-14bb-4272-9a04-9b96f5db9b22",
+      "position": [
+        1300,
+        300
+      ],
+      "name": "Email owner",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "parameters": {
+        "fromEmail": "={{ $('Config').first().json._cfg.storeEmail }}",
+        "toEmail": "={{ $('Config').first().json._cfg.ownerEmail }}",
+        "subject": "={{ $('Config').first().json._cfg.testMode ? '[TEST] ' : '' }}Daily report — {{ $json.sales.orders }} orders, {{ $json.tasksRequiringAttention.length }} need attention",
+        "emailFormat": "text",
+        "text": "={{ $json.text }}\n\nDashboard: open your ops dashboard for detail.",
+        "options": {}
+      },
+      "credentials": {
+        "smtp": {
+          "id": "REPLACE_SMTP_CRED",
+          "name": "Store SMTP"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 10000
+    },
+    {
+      "id": "66ae9eb1-5a12-46b9-9860-3300da5b905c",
+      "name": "Manual test run",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        260,
+        460
+      ],
+      "parameters": {}
+    }
+  ],
+  "connections": {
+    "Daily 07:30": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Data retention purge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data retention purge": {
+      "main": [
+        [
+          {
+            "node": "Build report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build report": {
+      "main": [
+        [
+          {
+            "node": "Email owner",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual test run": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "timezone": "Europe/London",
+    "errorWorkflow": "NoWf12Errors0000"
+  },
+  "pinData": {},
+  "tags": [],
+  "meta": {
+    "templateCredsSetupCompleted": false
+  }
+}

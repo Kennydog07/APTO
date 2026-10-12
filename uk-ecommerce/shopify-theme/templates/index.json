@@ -1,0 +1,169 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "blocks": {
+        "f1": {
+          "type": "fact",
+          "settings": {
+            "text": "Ships from UK stock"
+          }
+        },
+        "f2": {
+          "type": "fact",
+          "settings": {
+            "text": "No-drill options"
+          }
+        },
+        "f3": {
+          "type": "fact",
+          "settings": {
+            "text": "14-day cancellation rights"
+          }
+        }
+      },
+      "block_order": [
+        "f1",
+        "f2",
+        "f3"
+      ],
+      "settings": {
+        "button2_link": "/policies/shipping-policy"
+      }
+    },
+    "featured": {
+      "type": "featured-collection",
+      "settings": {
+        "collection": "all"
+      }
+    },
+    "collections": {
+      "type": "collection-list",
+      "blocks": {
+        "c1": {
+          "type": "collection",
+          "settings": {
+            "title": "Kitchen cupboards",
+            "text": "Shelf risers, turntables and drawer dividers."
+          }
+        },
+        "c2": {
+          "type": "collection",
+          "settings": {
+            "title": "Wardrobes & bedrooms",
+            "text": "Hangers, under-bed and over-door storage."
+          }
+        },
+        "c3": {
+          "type": "collection",
+          "settings": {
+            "title": "Bathrooms & hallways",
+            "text": "No-drill caddies, hooks and organisers."
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "settings": {}
+    },
+    "benefits": {
+      "type": "benefits",
+      "blocks": {
+        "b1": {
+          "type": "benefit",
+          "settings": {
+            "icon": "truck",
+            "title": "Shipped from UK stock",
+            "text": "We only list products held in UK warehouses, with tracked delivery. Estimates are shown on every product page."
+          }
+        },
+        "b2": {
+          "type": "benefit",
+          "settings": {
+            "icon": "ruler",
+            "title": "Real measurements",
+            "text": "Every listing shows the supplier's dimensions and materials so you can check it fits before you buy."
+          }
+        },
+        "b3": {
+          "type": "benefit",
+          "settings": {
+            "icon": "return",
+            "title": "Your rights, clearly explained",
+            "text": "Change your mind within 14 days of delivery. Faulty items are covered by the Consumer Rights Act."
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3"
+      ],
+      "settings": {}
+    },
+    "delivery": {
+      "type": "rich-text",
+      "settings": {
+        "heading": "How delivery works",
+        "surface": true,
+        "text": "<p>When you order, we pass your order to our UK-based supplier \u2014 normally within one working day. Your parcel is sent from a UK warehouse with a tracked service, and we email the tracking number as soon as the supplier dispatches it.</p><p><a href=\"/policies/shipping-policy\">Read our delivery policy</a></p>"
+      }
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "question": "Where do you deliver?",
+            "answer": "<p>We currently deliver to addresses in Great Britain. Delivery estimates from our UK suppliers are shown on each product page and at checkout.</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "question": "Will I get tracking?",
+            "answer": "<p>Yes. As soon as the supplier dispatches your order we email you the carrier and tracking number.</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "question": "Can I return something if I change my mind?",
+            "answer": "<p>Yes. You can cancel within 14 days of receiving your item. Contact us first and we will send the correct returns address. See our <a href=\"/policies/refund-policy\">returns policy</a>.</p>"
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "question": "Do the products need drilling?",
+            "answer": "<p>Most of our range is chosen to be renter-friendly. Each product page says clearly how it fits.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "settings": {}
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {}
+    }
+  },
+  "order": [
+    "hero",
+    "featured",
+    "collections",
+    "benefits",
+    "delivery",
+    "faq",
+    "newsletter"
+  ]
+}

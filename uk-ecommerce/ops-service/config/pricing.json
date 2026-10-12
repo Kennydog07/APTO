@@ -1,0 +1,19 @@
+{
+  "_comment": "All rates are PROVISIONAL planning assumptions. Verify every fee against your live provider contracts before launch (see OPERATING-COSTS.md).",
+  "vatRegistered": true,
+  "vatRate": 0.20,
+  "paymentFeePct": 0.044,
+  "paymentFeeFixedGbp": 0.30,
+  "platformTxnFeePct": 0.02,
+  "fxFeePct": 0.03,
+  "returnsAllowancePct": 0.06,
+  "cacPerOrderGbp": 1.50,
+  "otherVariablePerOrderGbp": 0.20,
+  "targetGrossMarginPct": 0.40,
+  "minContributionPct": 0.12,
+  "minContributionGbp": 2.50,
+  "maxShippingShareOfNet": 0.25,
+  "maxAutoPriceChangePct": 0.10,
+  "uncompetitiveTolerancePct": 0.15,
+  "lowStockThreshold": 5
+}

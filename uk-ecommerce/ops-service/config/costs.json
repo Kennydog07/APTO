@@ -1,0 +1,16 @@
+{
+  "_comment": "Monthly recurring software/hosting costs in GBP. 'verified' must only be set true after checking the provider's live pricing page. Annual commitments are listed separately.",
+  "monthly": [
+    { "item": "Shopify Basic (monthly billing)", "gbp": 25.00, "verified": false, "source": "Third-party 2026 guides quote £25/month monthly or £19/month annual" },
+    { "item": "VPS (Hetzner CX23 or similar, 4GB RAM)", "gbp": 5.50, "verified": false, "source": "Third-party trackers quote €3.99–€5.49 + IPv4; prices rose April 2026" },
+    { "item": "AI API (hard cap set by AI_MONTHLY_BUDGET_GBP)", "gbp": 15.00, "verified": false, "source": "Cap, not a forecast" },
+    { "item": "Domain (annual cost / 12)", "gbp": 1.50, "verified": false, "source": "Typical .co.uk / .com registrar pricing" },
+    { "item": "Email (Zoho Mail free tier or registrar mailbox)", "gbp": 0.00, "verified": false, "source": "To confirm" },
+    { "item": "Off-site backup storage (e.g. Backblaze B2, <10GB)", "gbp": 0.50, "verified": false, "source": "To confirm" },
+    { "item": "Supplier integration app (free tier initially)", "gbp": 0.00, "verified": false, "source": "Avasam/DSers/CJ free tiers vary — confirm" }
+  ],
+  "annual": [
+    { "item": "Domain registration", "gbp": 18.00, "verified": false }
+  ],
+  "contingencyGbp": 10.00
+}

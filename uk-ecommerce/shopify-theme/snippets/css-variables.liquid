@@ -1,0 +1,22 @@
+{%- liquid
+  assign body_bold = settings.type_body_font | font_modify: 'weight', 'bold'
+-%}
+<style>
+  {{ body_bold | font_face: font_display: 'swap' }}
+  :root {
+    --font-body: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
+    --font-body-weight: {{ settings.type_body_font.weight }};
+    --font-heading: {{ settings.type_heading_font.family }}, {{ settings.type_heading_font.fallback_families }};
+    --font-heading-weight: {{ settings.type_heading_font.weight }};
+    --color-bg: {{ settings.color_background }};
+    --color-surface: {{ settings.color_surface }};
+    --color-text: {{ settings.color_text }};
+    --color-muted: {{ settings.color_muted }};
+    --color-accent: {{ settings.color_accent }};
+    --color-accent-contrast: {{ settings.color_accent_contrast }};
+    --color-highlight: {{ settings.color_highlight }};
+    --color-border: {{ settings.color_border }};
+    --page-width: {{ settings.page_width }}px;
+    --radius: {{ settings.corner_radius }}px;
+  }
+</style>

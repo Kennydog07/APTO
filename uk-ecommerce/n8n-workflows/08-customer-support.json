@@ -1,0 +1,289 @@
+{
+  "id": "NoWf08Support000",
+  "name": "08 — Customer support (email)",
+  "active": false,
+  "nodes": [
+    {
+      "id": "0bcbed89-7463-4b88-aa44-52baa7122f4b",
+      "position": [
+        260,
+        300
+      ],
+      "name": "New support email",
+      "type": "n8n-nodes-base.emailReadImap",
+      "typeVersion": 2,
+      "parameters": {
+        "mailbox": "INBOX",
+        "postProcessAction": "read",
+        "format": "simple",
+        "options": {
+          "customEmailConfig": "[\"UNSEEN\"]"
+        }
+      },
+      "credentials": {
+        "imap": {
+          "id": "REPLACE_IMAP_CRED",
+          "name": "Support mailbox IMAP"
+        }
+      }
+    },
+    {
+      "id": "646a215f-bc0d-48c5-b000-f7b4c5c7d16d",
+      "position": [
+        520,
+        300
+      ],
+      "name": "Config",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "parameters": {
+        "jsCode": "// Edit n8n-workflows/config.json and rebuild, or change here.\nconst _cfg = {\"opsBaseUrl\":\"http://ops-service:8080\",\"ownerEmail\":\"owner@example.com\",\"storeEmail\":\"hello@example.co.uk\",\"storeName\":\"Nook & Order\",\"testMode\":true};\nconst items = $input.all();\nreturn (items.length ? items : [{ json: {} }]).map((i) => ({ json: { ...i.json, _cfg } }));"
+      }
+    },
+    {
+      "id": "36928d81-679d-4d16-8ba5-e10b7102e3d2",
+      "position": [
+        780,
+        300
+      ],
+      "name": "Normalise message",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "parameters": {
+        "jsCode": "return $input.all().map((i) => { const j = i.json; const from = String(j.from ?? '').match(/<([^>]+)>/)?.[1] ?? String(j.from ?? '').trim();\n  return { json: { ...j, enquiry: { messageId: j.messageId ?? j.headers?.['message-id'] ?? null, channel: 'email', fromEmail: from, subject: j.subject ?? '', body: String(j.textPlain ?? j.text ?? '').slice(0, 5000) } } }; });"
+      }
+    },
+    {
+      "id": "56fb3568-2b3d-43de-906e-07b674200fa9",
+      "position": [
+        1040,
+        300
+      ],
+      "name": "Classify & draft reply",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json._cfg.opsBaseUrl }}/api/support/enquiry",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.enquiry) }}",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_OPS_API_CRED",
+          "name": "Ops service API (Bearer)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "95e21d18-0097-49f1-843c-e832bc362f3b",
+      "position": [
+        1300,
+        300
+      ],
+      "name": "Safe to auto-reply?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "81b87849-6794-4277-a8d8-f86531f6d3b7",
+              "leftValue": "={{ $json.action }}",
+              "rightValue": "auto_reply",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "e7897e77-a9d2-4fb0-813b-447cbb0d049d",
+      "position": [
+        1560,
+        200
+      ],
+      "name": "Send verified reply",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "parameters": {
+        "fromEmail": "={{ $('Config').first().json._cfg.storeEmail }}",
+        "toEmail": "={{ $('Config').first().json._cfg.testMode ? $('Config').first().json._cfg.ownerEmail : $('Normalise message').item.json.enquiry.fromEmail }}",
+        "subject": "={{ $('Config').first().json._cfg.testMode ? '[TEST] ' : '' }}Re: {{ $('Normalise message').item.json.enquiry.subject }}",
+        "emailFormat": "text",
+        "text": "={{ $json.reply }}",
+        "options": {}
+      },
+      "credentials": {
+        "smtp": {
+          "id": "REPLACE_SMTP_CRED",
+          "name": "Store SMTP"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 10000
+    },
+    {
+      "id": "fe2e4c27-3fa2-4098-9a80-1df0738294fa",
+      "position": [
+        1560,
+        420
+      ],
+      "name": "Send acknowledgement",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "parameters": {
+        "fromEmail": "={{ $('Config').first().json._cfg.storeEmail }}",
+        "toEmail": "={{ $('Config').first().json._cfg.testMode ? $('Config').first().json._cfg.ownerEmail : $('Normalise message').item.json.enquiry.fromEmail }}",
+        "subject": "={{ $('Config').first().json._cfg.testMode ? '[TEST] ' : '' }}Re: {{ $('Normalise message').item.json.enquiry.subject }}",
+        "emailFormat": "text",
+        "text": "={{ $json.acknowledgement }}",
+        "options": {}
+      },
+      "credentials": {
+        "smtp": {
+          "id": "REPLACE_SMTP_CRED",
+          "name": "Store SMTP"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 10000
+    },
+    {
+      "id": "085c2177-0051-4fc1-9bb4-d95366e8c872",
+      "position": [
+        1820,
+        420
+      ],
+      "name": "Escalate to owner",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "parameters": {
+        "fromEmail": "={{ $('Config').first().json._cfg.storeEmail }}",
+        "toEmail": "={{ $('Config').first().json._cfg.ownerEmail }}",
+        "subject": "=[ESCALATION: {{ $('Classify & draft reply').item.json.category }}] {{ $('Normalise message').item.json.enquiry.subject }}",
+        "emailFormat": "text",
+        "text": "=From: {{ $('Normalise message').item.json.enquiry.fromEmail }}\nCategory: {{ $('Classify & draft reply').item.json.category }}\nVerified order owner: {{ $('Classify & draft reply').item.json.verified }}\nTicket: #{{ $('Classify & draft reply').item.json.ticketId }}\n\n{{ $('Normalise message').item.json.enquiry.body }}\n\nReply personally. Refunds, disputes and safety issues must never be answered automatically.",
+        "options": {}
+      },
+      "credentials": {
+        "smtp": {
+          "id": "REPLACE_SMTP_CRED",
+          "name": "Store SMTP"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 10000
+    }
+  ],
+  "connections": {
+    "New support email": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Normalise message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalise message": {
+      "main": [
+        [
+          {
+            "node": "Classify & draft reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Classify & draft reply": {
+      "main": [
+        [
+          {
+            "node": "Safe to auto-reply?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Safe to auto-reply?": {
+      "main": [
+        [
+          {
+            "node": "Send verified reply",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send acknowledgement",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send acknowledgement": {
+      "main": [
+        [
+          {
+            "node": "Escalate to owner",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "timezone": "Europe/London",
+    "errorWorkflow": "NoWf12Errors0000"
+  },
+  "pinData": {},
+  "tags": [],
+  "meta": {
+    "templateCredsSetupCompleted": false
+  }
+}

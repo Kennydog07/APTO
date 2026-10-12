@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+    <title>{{ 'gift_card.title' | t }} &ndash; {{ shop.name }}</title>
+    {% render 'css-variables' %}
+    <link rel="stylesheet" href="{{ 'base.css' | asset_url }}">
+    {{ content_for_header }}
+  </head>
+  <body>
+    <main class="section"><div class="page-width page-content" style="text-align:center">
+      <h1>{{ shop.name }}</h1>
+      <p>{{ 'gift_card.balance' | t }}: <strong>{{ gift_card.balance | money }}</strong></p>
+      <p><code>{{ gift_card.code | format_code }}</code></p>
+      {%- if gift_card.expired -%}<p>{{ 'gift_card.expired' | t }}</p>{%- endif -%}
+      <a class="button" href="{{ shop.url }}">{{ 'cart.continue' | t }}</a>
+    </div></main>
+  </body>
+</html>

@@ -1,0 +1,211 @@
+{
+  "id": "NoWf02Approval00",
+  "name": "02 — Product approval (draft listing)",
+  "active": false,
+  "nodes": [
+    {
+      "id": "191d93a2-1896-4dfd-b151-60a24f17b48b",
+      "position": [
+        260,
+        300
+      ],
+      "name": "New candidate (webhook)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "webhookId": "c2db76b4-0ca8-42a9-918a-0bf14c3c1724",
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ops-new-candidate",
+        "authentication": "headerAuth",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_INBOUND_CRED",
+          "name": "Inbound webhook secret (X-Ops-Token)"
+        }
+      }
+    },
+    {
+      "id": "95a3e891-e4c8-470b-8461-a99a34abcbe1",
+      "position": [
+        520,
+        300
+      ],
+      "name": "Config",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "parameters": {
+        "jsCode": "// Edit n8n-workflows/config.json and rebuild, or change here.\nconst _cfg = {\"opsBaseUrl\":\"http://ops-service:8080\",\"ownerEmail\":\"owner@example.com\",\"storeEmail\":\"hello@example.co.uk\",\"storeName\":\"Nook & Order\",\"testMode\":true};\nconst items = $input.all();\nreturn (items.length ? items : [{ json: {} }]).map((i) => ({ json: { ...i.json, _cfg } }));"
+      }
+    },
+    {
+      "id": "01b4a620-724f-409f-bc53-4908e340a588",
+      "position": [
+        780,
+        300
+      ],
+      "name": "Validate & create Shopify draft",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json._cfg.opsBaseUrl }}/api/products/candidates",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ rows: $('New candidate (webhook)').first().json.body.rows ?? [$('New candidate (webhook)').first().json.body] }) }}",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_OPS_API_CRED",
+          "name": "Ops service API (Bearer)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "ab3225dd-3288-41e3-8ec1-e3fcdbb1a429",
+      "position": [
+        1040,
+        300
+      ],
+      "name": "Summarise",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "parameters": {
+        "jsCode": "const r = $input.first().json.results ?? [];\nconst ok = r.filter((x) => x.ok);\nconst text = r.map((x) => `${x.ok ? 'DRAFT CREATED — awaiting your approval in the dashboard' : 'NOT ELIGIBLE'}: ${x.score?.name} (score ${x.score?.score})${x.ok ? '' : '\\n   ' + (x.score?.reasons ?? []).join('; ')}`).join('\\n');\nreturn [{ json: { text, drafts: ok.length, total: r.length } }];"
+      }
+    },
+    {
+      "id": "4b7574cb-a6ae-4e52-a8c1-d7f4459f16ee",
+      "position": [
+        1300,
+        300
+      ],
+      "name": "Email owner",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "parameters": {
+        "fromEmail": "={{ $('Config').first().json._cfg.storeEmail }}",
+        "toEmail": "={{ $('Config').first().json._cfg.ownerEmail }}",
+        "subject": "={{ $('Config').first().json._cfg.testMode ? '[TEST] ' : '' }}{{ $json.drafts }} product draft(s) awaiting approval",
+        "emailFormat": "text",
+        "text": "={{ $json.text }}\n\nApprove or reject in the dashboard → Approvals. Nothing is published until you approve.",
+        "options": {}
+      },
+      "credentials": {
+        "smtp": {
+          "id": "REPLACE_SMTP_CRED",
+          "name": "Store SMTP"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 10000
+    },
+    {
+      "id": "72c6ea93-9264-4005-bf1e-854c427db7c0",
+      "position": [
+        1560,
+        300
+      ],
+      "name": "Log run",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json._cfg.opsBaseUrl }}/api/logs",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ workflow: \"wf02\", level: 'info', message: \"Candidates processed\", data: { drafts: $json.drafts, total: $json.total } }) }}",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_OPS_API_CRED",
+          "name": "Ops service API (Bearer)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "continueOnFail": true
+    }
+  ],
+  "connections": {
+    "New candidate (webhook)": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Validate & create Shopify draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate & create Shopify draft": {
+      "main": [
+        [
+          {
+            "node": "Summarise",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summarise": {
+      "main": [
+        [
+          {
+            "node": "Email owner",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Log run",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "timezone": "Europe/London",
+    "errorWorkflow": "NoWf12Errors0000"
+  },
+  "pinData": {},
+  "tags": [],
+  "meta": {
+    "templateCredsSetupCompleted": false
+  }
+}

@@ -1,0 +1,53 @@
+<header class="site-header">
+  <div class="page-width site-header__inner">
+    <button type="button" class="icon-button menu-toggle" aria-controls="MobileMenu" aria-expanded="false" data-menu-toggle>
+      <span class="visually-hidden">{{ 'sections.header.menu' | t }}</span>
+      {% render 'icon', name: 'menu' %}
+    </button>
+    <a href="{{ routes.root_url }}" class="site-header__logo">
+      {%- if section.settings.logo != blank -%}
+        {{ section.settings.logo | image_url: width: 400 | image_tag: alt: shop.name, height: 40, loading: 'eager' }}
+      {%- else -%}
+        {{ shop.name }}
+      {%- endif -%}
+    </a>
+    <nav class="site-nav" aria-label="{{ 'sections.header.main_navigation' | t }}">
+      <ul>
+        {%- for link in section.settings.menu.links -%}
+          <li><a href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title | escape }}</a></li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+    <div class="header-icons">
+      <a href="{{ routes.search_url }}" class="icon-button"><span class="visually-hidden">{{ 'general.search' | t }}</span>{% render 'icon', name: 'search' %}</a>
+      {%- if shop.customer_accounts_enabled -%}
+        <a href="{{ routes.account_url }}" class="icon-button"><span class="visually-hidden">{{ 'customer.account' | t }}</span>{% render 'icon', name: 'account' %}</a>
+      {%- endif -%}
+      <a href="{{ routes.cart_url }}" class="icon-button" id="CartLink">
+        <span class="visually-hidden">{{ 'cart.title' | t }}</span>
+        {% render 'icon', name: 'cart' %}
+        <span class="cart-count" data-cart-count>{% if cart.item_count > 0 %}{{ cart.item_count }}{% endif %}</span>
+      </a>
+    </div>
+  </div>
+  <div class="page-width mobile-menu" id="MobileMenu" hidden>
+    <nav aria-label="{{ 'sections.header.mobile_navigation' | t }}">
+      <ul>
+        {%- for link in section.settings.menu.links -%}
+          <li><a href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title | escape }}</a></li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "class": "header-section",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo" },
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" }
+  ]
+}
+{% endschema %}

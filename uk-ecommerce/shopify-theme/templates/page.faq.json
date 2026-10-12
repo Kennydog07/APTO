@@ -1,0 +1,70 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {}
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "question": "How long does delivery take?",
+            "answer": "<p>Each product page shows the delivery estimate provided by our UK supplier. Your confirmation email repeats it, and tracking follows when your order is dispatched.</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "question": "How do I track my order?",
+            "answer": "<p>Use the tracking link in your dispatch email, or reply to any of our emails with your order number.</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "question": "Can I change my delivery address?",
+            "answer": "<p>Contact us as soon as possible. If your order has not yet been passed to the supplier we can usually update it.</p>"
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "question": "How do I cancel or return an item?",
+            "answer": "<p>You can cancel within 14 days of receiving your order. Contact us first so we can send you the right returns address \u2014 items ship from different UK warehouses.</p>"
+          }
+        },
+        "q5": {
+          "type": "question",
+          "settings": {
+            "question": "What if my item arrives damaged or faulty?",
+            "answer": "<p>Contact us with your order number and a photo. Faulty goods are covered by your rights under the Consumer Rights Act 2015.</p>"
+          }
+        },
+        "q6": {
+          "type": "question",
+          "settings": {
+            "question": "Which payment methods do you accept?",
+            "answer": "<p>The payment methods available are shown at checkout. Payments are handled securely by Shopify's checkout \u2014 we never see or store your card details.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5",
+        "q6"
+      ],
+      "settings": {
+        "heading": "Frequently asked questions"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "faq"
+  ]
+}

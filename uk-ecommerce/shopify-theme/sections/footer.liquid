@@ -1,0 +1,53 @@
+<footer class="site-footer">
+  <div class="page-width">
+    <div class="footer-grid">
+      <div>
+        <h2>{{ shop.name }}</h2>
+        {%- if section.settings.about != blank -%}<div class="footer-legal">{{ section.settings.about }}</div>{%- endif -%}
+      </div>
+      {%- if section.settings.menu_shop.links.size > 0 -%}
+      <nav aria-label="{{ 'sections.footer.shop' | t }}">
+        <h2>{{ 'sections.footer.shop' | t }}</h2>
+        <ul>{%- for link in section.settings.menu_shop.links -%}<li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>{%- endfor -%}</ul>
+      </nav>
+      {%- endif -%}
+      {%- if section.settings.menu_help.links.size > 0 -%}
+      <nav aria-label="{{ 'sections.footer.help' | t }}">
+        <h2>{{ 'sections.footer.help' | t }}</h2>
+        <ul>{%- for link in section.settings.menu_help.links -%}<li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>{%- endfor -%}</ul>
+      </nav>
+      {%- endif -%}
+      <nav aria-label="{{ 'sections.footer.legal' | t }}">
+        <h2>{{ 'sections.footer.legal' | t }}</h2>
+        <ul>
+          {%- for policy in shop.policies -%}
+            <li><a href="{{ policy.url }}">{{ policy.title | escape }}</a></li>
+          {%- endfor -%}
+          {%- if section.settings.cookie_page != blank -%}<li><a href="{{ section.settings.cookie_page.url }}">{{ section.settings.cookie_page.title | escape }}</a></li>{%- endif -%}
+        </ul>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-legal">
+        &copy; {{ 'now' | date: '%Y' }} {{ section.settings.legal_name | default: shop.name | escape }}.
+        {%- if section.settings.legal_details != blank %} {{ section.settings.legal_details | escape }}{% endif %}
+      </div>
+      <div class="footer-legal">{{ 'sections.footer.contact' | t }}: <a href="mailto:{{ shop.email }}">{{ shop.email }}</a></div>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "class": "footer-section",
+  "settings": [
+    { "type": "richtext", "id": "about", "label": "About text", "default": "<p>Practical, renter-friendly storage for small UK homes. Every product ships from UK stock.</p>" },
+    { "type": "link_list", "id": "menu_shop", "label": "Shop menu", "default": "footer" },
+    { "type": "link_list", "id": "menu_help", "label": "Help menu" },
+    { "type": "page", "id": "cookie_page", "label": "Cookie policy page" },
+    { "type": "text", "id": "legal_name", "label": "Trader legal name", "info": "Your full name as a sole trader, optionally 'trading as' the brand. Required by the Electronic Commerce Regulations 2002." },
+    { "type": "text", "id": "legal_details", "label": "Geographic address / VAT number", "info": "A geographic (not PO box) address where you can be contacted, and your VAT number once registered. Confirm with your adviser what address is appropriate." }
+  ]
+}
+{% endschema %}

@@ -1,3 +1,10 @@
+# Keep the private e-commerce project folder off the public APTO site.
+[[redirects]]
+  from = "/uk-ecommerce/*"
+  to = "/uk-ecommerce-not-public"
+  status = 404
+  force = true
+
 [[redirects]]
   from = "/business.html"
   to = "/business"

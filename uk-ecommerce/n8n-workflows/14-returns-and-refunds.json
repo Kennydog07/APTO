@@ -1,0 +1,188 @@
+{
+  "id": "NoWf14Returns000",
+  "name": "14 — Returns and refunds",
+  "active": false,
+  "nodes": [
+    {
+      "id": "b95a0fcd-8408-46f8-8411-b76913474b8a",
+      "position": [
+        260,
+        300
+      ],
+      "name": "Return request (webhook)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "webhookId": "8051b812-0a45-4ca7-869b-269449d22b6c",
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ops-return-request",
+        "authentication": "headerAuth",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_INBOUND_CRED",
+          "name": "Inbound webhook secret (X-Ops-Token)"
+        }
+      }
+    },
+    {
+      "id": "3f5dc942-d7fd-454d-a877-a63b1d57ade2",
+      "position": [
+        520,
+        300
+      ],
+      "name": "Config",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "parameters": {
+        "jsCode": "// Edit n8n-workflows/config.json and rebuild, or change here.\nconst _cfg = {\"opsBaseUrl\":\"http://ops-service:8080\",\"ownerEmail\":\"owner@example.com\",\"storeEmail\":\"hello@example.co.uk\",\"storeName\":\"Nook & Order\",\"testMode\":true};\nconst items = $input.all();\nreturn (items.length ? items : [{ json: {} }]).map((i) => ({ json: { ...i.json, _cfg } }));"
+      }
+    },
+    {
+      "id": "7c41ef49-5aa6-4093-9bc1-55fbb873c774",
+      "position": [
+        780,
+        300
+      ],
+      "name": "Create return case",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json._cfg.opsBaseUrl }}/api/returns",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ orderName: $('Return request (webhook)').first().json.body.orderName, fromEmail: $('Return request (webhook)').first().json.body.email, reason: $('Return request (webhook)').first().json.body.reason }) }}",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_OPS_API_CRED",
+          "name": "Ops service API (Bearer)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "a999b8e8-6666-41c6-a3b2-aa37dc91f73e",
+      "position": [
+        1040,
+        300
+      ],
+      "name": "Reply to customer",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "parameters": {
+        "fromEmail": "={{ $('Config').first().json._cfg.storeEmail }}",
+        "toEmail": "={{ $('Config').first().json._cfg.testMode ? $('Config').first().json._cfg.ownerEmail : $('Return request (webhook)').first().json.body.email }}",
+        "subject": "={{ $('Config').first().json._cfg.testMode ? '[TEST] ' : '' }}Your return request",
+        "emailFormat": "text",
+        "text": "={{ $json.reply }}",
+        "options": {}
+      },
+      "credentials": {
+        "smtp": {
+          "id": "REPLACE_SMTP_CRED",
+          "name": "Store SMTP"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 10000
+    },
+    {
+      "id": "4b06ce58-1d47-4642-a314-15bf65baaf8f",
+      "position": [
+        1300,
+        300
+      ],
+      "name": "Notify owner",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "parameters": {
+        "fromEmail": "={{ $('Config').first().json._cfg.storeEmail }}",
+        "toEmail": "={{ $('Config').first().json._cfg.ownerEmail }}",
+        "subject": "={{ $('Config').first().json._cfg.testMode ? '[TEST] ' : '' }}Return case {{ $('Create return case').item.json.caseId ? '#' + $('Create return case').item.json.caseId : '(unverified request)' }} needs a decision",
+        "emailFormat": "text",
+        "text": "={{ JSON.stringify($('Create return case').item.json.assessment ?? $('Create return case').item.json, null, 2) }}\n\nRefunds are never issued automatically. Decide in dashboard → Approvals, then issue any refund in Shopify admin.",
+        "options": {}
+      },
+      "credentials": {
+        "smtp": {
+          "id": "REPLACE_SMTP_CRED",
+          "name": "Store SMTP"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 10000
+    }
+  ],
+  "connections": {
+    "Return request (webhook)": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Create return case",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create return case": {
+      "main": [
+        [
+          {
+            "node": "Reply to customer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reply to customer": {
+      "main": [
+        [
+          {
+            "node": "Notify owner",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "timezone": "Europe/London",
+    "errorWorkflow": "NoWf12Errors0000"
+  },
+  "pinData": {},
+  "tags": [],
+  "meta": {
+    "templateCredsSetupCompleted": false
+  }
+}

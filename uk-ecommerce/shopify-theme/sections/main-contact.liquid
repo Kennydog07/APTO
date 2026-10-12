@@ -1,0 +1,37 @@
+<section class="section">
+  <div class="page-width contact-grid">
+    <div class="page-content">
+      <h1>{{ page.title | escape }}</h1>
+      <div class="rte">{{ page.content }}</div>
+      <ul class="info-list">
+        <li>{% render 'icon', name: 'chat' %}<span>{{ 'contact.email' | t }}: <a href="mailto:{{ shop.email }}">{{ shop.email }}</a></span></li>
+        <li>{% render 'icon', name: 'shield' %}<span>{{ section.settings.response_time | escape }}</span></li>
+        {%- if section.settings.address != blank -%}<li>{% render 'icon', name: 'home' %}<span>{{ section.settings.address | escape }}</span></li>{%- endif -%}
+      </ul>
+    </div>
+    <div>
+      {%- form 'contact', id: 'ContactForm' -%}
+        {%- if form.posted_successfully? -%}
+          <p class="form-message" role="status" tabindex="-1" autofocus>{{ 'contact.success' | t }}</p>
+        {%- elsif form.errors -%}
+          <p class="form-message form-message--error" role="alert">{{ form.errors | default_errors }}</p>
+        {%- endif -%}
+        <div class="field"><label for="ContactName">{{ 'contact.name' | t }}</label><input id="ContactName" name="contact[name]" autocomplete="name" required value="{{ form.name }}"></div>
+        <div class="field" style="margin-top:12px"><label for="ContactEmail">{{ 'contact.email' | t }}</label><input id="ContactEmail" type="email" name="contact[email]" autocomplete="email" required value="{{ form.email }}"></div>
+        <div class="field" style="margin-top:12px"><label for="ContactOrder">{{ 'contact.order_number' | t }}</label><input id="ContactOrder" name="contact[order_number]" placeholder="#1001" value="{{ form.order_number }}"></div>
+        <div class="field" style="margin-top:12px"><label for="ContactBody">{{ 'contact.message' | t }}</label><textarea id="ContactBody" name="contact[body]" required>{{ form.body }}</textarea></div>
+        <p class="muted" style="font-size:.85rem;margin-top:12px">{{ 'contact.privacy_note' | t }} <a href="{{ routes.root_url }}policies/privacy-policy">{{ 'newsletter.privacy' | t }}</a>.</p>
+        <button type="submit" class="button">{{ 'contact.send' | t }}</button>
+      {%- endform -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Contact form",
+  "settings": [
+    { "type": "text", "id": "response_time", "label": "Response time statement", "default": "We aim to reply within 2 working days." },
+    { "type": "text", "id": "address", "label": "Geographic address", "info": "Required trader information. Confirm with your adviser which address to publish." }
+  ]
+}
+{% endschema %}

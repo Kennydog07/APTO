@@ -1,0 +1,288 @@
+{
+  "id": "NoWf01Research00",
+  "name": "01 — Weekly product research",
+  "active": false,
+  "nodes": [
+    {
+      "id": "b9685911-8539-45cb-a84f-fe4df98104ef",
+      "position": [
+        260,
+        300
+      ],
+      "name": "Every Monday 06:00",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 6 * * 1"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "fedc27c6-c42e-4540-95a6-f5d718ff7573",
+      "position": [
+        520,
+        300
+      ],
+      "name": "Config",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "parameters": {
+        "jsCode": "// Edit n8n-workflows/config.json and rebuild, or change here.\nconst _cfg = {\"opsBaseUrl\":\"http://ops-service:8080\",\"ownerEmail\":\"owner@example.com\",\"storeEmail\":\"hello@example.co.uk\",\"storeName\":\"Nook & Order\",\"testMode\":true};\nconst items = $input.all();\nreturn (items.length ? items : [{ json: {} }]).map((i) => ({ json: { ...i.json, _cfg } }));"
+      }
+    },
+    {
+      "id": "4b52a120-9752-4bc9-b18e-38ea694d6466",
+      "position": [
+        780,
+        300
+      ],
+      "name": "Fetch candidate feed (CSV)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "parameters": {
+        "url": "https://example.com/REPLACE-with-supplier-catalogue-export.csv",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "text"
+            }
+          },
+          "timeout": 60000
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 10000
+    },
+    {
+      "id": "7be04fce-5d7c-46de-86d6-b2a8efa192f5",
+      "position": [
+        1040,
+        300
+      ],
+      "name": "Parse CSV",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "parameters": {
+        "jsCode": "// Feed = an export from an AUTHORISED source (your supplier's catalogue export / API,\n// or your own research sheet published as CSV). Never scrape sites that forbid it.\nconst text = $input.first().json.data ?? '';\nconst lines = text.split(/\\r?\\n/).filter(Boolean);\nif (lines.length < 2) return [{ json: { rows: [] } }];\nconst parse = (l) => { const out = []; let f = '', q = false; for (let i = 0; i < l.length; i++) { const ch = l[i]; if (q) { if (ch === '\"' && l[i+1] === '\"') { f += '\"'; i++; } else if (ch === '\"') q = false; else f += ch; } else if (ch === '\"') q = true; else if (ch === ',') { out.push(f); f = ''; } else f += ch; } out.push(f); return out; };\nconst head = parse(lines[0]).map((h) => h.trim());\nconst rows = lines.slice(1).map((l) => { const v = parse(l); return Object.fromEntries(head.map((h, i) => [h, (v[i] ?? '').trim()])); });\nreturn [{ json: { rows } }];"
+      }
+    },
+    {
+      "id": "fddd4a27-675c-4a4d-bc12-35d174a4d16b",
+      "position": [
+        1300,
+        300
+      ],
+      "name": "Score candidates",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json._cfg.opsBaseUrl }}/api/research/score",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ rows: $json.rows }) }}",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_OPS_API_CRED",
+          "name": "Ops service API (Bearer)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "59a7dd6c-455c-494c-8f8d-d1221e0dda32",
+      "position": [
+        1560,
+        300
+      ],
+      "name": "Build recommendations",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "parameters": {
+        "jsCode": "const s = $input.first().json.scored ?? [];\nconst ready = s.filter((x) => x.status === 'ready_for_approval').slice(0, 5);\nconst verify = s.filter((x) => x.status === 'needs_verification').slice(0, 10);\nconst fmt = (x) => `- ${x.score} ${x.sku} ${x.name}${x.provisional ? ' [PROVISIONAL]' : ''}\\n    ${(x.reasons ?? []).join('; ')}`;\nconst text = ['WEEKLY PRODUCT RESEARCH', '', 'Ready for your approval (send to Workflow 02):', ...ready.map(fmt), '', 'Need verification first:', ...verify.map(fmt), '', `Rejected: ${s.filter((x) => x.status === 'reject').length}`, '', 'These are recommendations only. Nothing has been listed or purchased.'].join('\\n');\nreturn [{ json: { text, ready: ready.length, total: s.length } }];"
+      }
+    },
+    {
+      "id": "c8414ffb-25f6-478b-8cfe-b4a98d7b5d80",
+      "position": [
+        1820,
+        300
+      ],
+      "name": "Email owner",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "parameters": {
+        "fromEmail": "={{ $('Config').first().json._cfg.storeEmail }}",
+        "toEmail": "={{ $('Config').first().json._cfg.ownerEmail }}",
+        "subject": "={{ $('Config').first().json._cfg.testMode ? '[TEST] ' : '' }}Weekly product research: {{ $json.ready }} ready for review",
+        "emailFormat": "text",
+        "text": "={{ $json.text }}",
+        "options": {}
+      },
+      "credentials": {
+        "smtp": {
+          "id": "REPLACE_SMTP_CRED",
+          "name": "Store SMTP"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 10000
+    },
+    {
+      "id": "2f24043b-bf56-40ea-a9a9-78c103c76153",
+      "position": [
+        2080,
+        300
+      ],
+      "name": "Log run",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json._cfg.opsBaseUrl }}/api/logs",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ workflow: \"wf01\", level: 'info', message: \"Research scored\", data: { total: $json.total, ready: $json.ready } }) }}",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_OPS_API_CRED",
+          "name": "Ops service API (Bearer)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "continueOnFail": true
+    },
+    {
+      "id": "ecec59b7-d983-4aa8-8941-ca2e7a9301bf",
+      "name": "Manual test run",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        260,
+        460
+      ],
+      "parameters": {}
+    }
+  ],
+  "connections": {
+    "Every Monday 06:00": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Fetch candidate feed (CSV)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch candidate feed (CSV)": {
+      "main": [
+        [
+          {
+            "node": "Parse CSV",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse CSV": {
+      "main": [
+        [
+          {
+            "node": "Score candidates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Score candidates": {
+      "main": [
+        [
+          {
+            "node": "Build recommendations",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build recommendations": {
+      "main": [
+        [
+          {
+            "node": "Email owner",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Log run",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual test run": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "timezone": "Europe/London",
+    "errorWorkflow": "NoWf12Errors0000"
+  },
+  "pinData": {},
+  "tags": [],
+  "meta": {
+    "templateCredsSetupCompleted": false
+  }
+}

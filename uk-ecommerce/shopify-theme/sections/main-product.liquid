@@ -1,0 +1,137 @@
+{%- liquid
+  assign current = product.selected_or_first_available_variant
+  assign benefits = product.metafields.custom.benefits.value
+  assign specs = product.metafields.custom.specifications
+  assign delivery = product.metafields.custom.delivery_estimate
+  assign fitting = product.metafields.custom.fitting
+  assign low = section.settings.low_stock_threshold
+-%}
+<section class="section" aria-labelledby="ProductTitle-{{ section.id }}">
+  <div class="page-width">
+    <nav class="breadcrumbs" aria-label="{{ 'general.breadcrumbs' | t }}">
+      <ol>
+        <li><a href="{{ routes.root_url }}">{{ 'general.home' | t }}</a></li>
+        {%- if collection -%}<li><a href="{{ collection.url }}">{{ collection.title | escape }}</a></li>{%- endif -%}
+        <li aria-current="page">{{ product.title | escape }}</li>
+      </ol>
+    </nav>
+    <div class="product" data-product-section data-section-id="{{ section.id }}">
+      <div class="product__gallery">
+        <div class="product__main-image" data-main-image>
+          {%- if product.featured_media -%}
+            {{ product.featured_media | image_url: width: 1200 | image_tag: loading: 'eager', fetchpriority: 'high', sizes: '(min-width: 990px) 55vw, 100vw', widths: '400, 600, 800, 1000, 1200', alt: product.featured_media.alt | default: product.title }}
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+        </div>
+        {%- if product.media.size > 1 -%}
+          <div class="product__thumbs" role="list" aria-label="{{ 'products.gallery' | t }}">
+            {%- for media in product.media -%}
+              {%- if media.media_type == 'image' -%}
+                <button type="button" role="listitem" data-thumb data-src="{{ media | image_url: width: 1200 }}" data-alt="{{ media.alt | default: product.title | escape }}" {% if forloop.first %}aria-current="true"{% endif %}>
+                  <span class="visually-hidden">{{ 'products.show_image' | t: number: forloop.index }}</span>
+                  {{ media | image_url: width: 160 | image_tag: loading: 'lazy', alt: '' }}
+                </button>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="product__info">
+        {%- if section.settings.show_vendor -%}<p class="product__vendor">{{ product.vendor | escape }}</p>{%- endif -%}
+        <h1 class="product__title" id="ProductTitle-{{ section.id }}">{{ product.title | escape }}</h1>
+        <div data-price-wrapper>{% render 'price', product: product, variant: current, large: true %}</div>
+
+        {%- form 'product', product, id: 'ProductForm', novalidate: 'novalidate', data-product-form: '' -%}
+          <input type="hidden" name="id" value="{{ current.id }}" data-variant-id>
+          {%- unless product.has_only_default_variant -%}
+            {%- for option in product.options_with_values -%}
+              <fieldset class="option">
+                <legend>{{ option.name | escape }}</legend>
+                <div class="option__values">
+                  {%- for value in option.values -%}
+                    <input type="radio" id="Option-{{ section.id }}-{{ forloop.parentloop.index0 }}-{{ forloop.index0 }}" name="option-{{ forloop.parentloop.index0 }}" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %} data-option-index="{{ forloop.parentloop.index0 }}">
+                    <label for="Option-{{ section.id }}-{{ forloop.parentloop.index0 }}-{{ forloop.index0 }}">{{ value | escape }}</label>
+                  {%- endfor -%}
+                </div>
+              </fieldset>
+            {%- endfor -%}
+          {%- endunless -%}
+
+          <p class="stock {% unless current.available %}stock--out{% endunless %}" data-stock aria-live="polite">
+            {%- if current.available -%}
+              {%- if current.inventory_management == 'shopify' and current.inventory_quantity <= low and current.inventory_quantity > 0 -%}
+                {{ 'products.low_stock' | t: count: current.inventory_quantity }}
+              {%- else -%}
+                {{ 'products.in_stock' | t }}
+              {%- endif -%}
+            {%- else -%}
+              {{ 'products.sold_out' | t }}
+            {%- endif -%}
+          </p>
+
+          <div class="product-form__row">
+            <div class="qty">
+              <button type="button" data-qty="-1" aria-label="{{ 'products.decrease_quantity' | t }}">−</button>
+              <label for="Quantity-{{ section.id }}" class="visually-hidden">{{ 'products.quantity' | t }}</label>
+              <input id="Quantity-{{ section.id }}" type="number" name="quantity" value="1" min="1" max="10" inputmode="numeric">
+              <button type="button" data-qty="1" aria-label="{{ 'products.increase_quantity' | t }}">+</button>
+            </div>
+            <button type="submit" name="add" class="button" data-add-button {% unless current.available %}disabled{% endunless %}>
+              {%- if current.available -%}{{ 'products.add_to_cart' | t }}{%- else -%}{{ 'products.sold_out' | t }}{%- endif -%}
+            </button>
+          </div>
+          <div class="product-form__error" role="alert" data-form-error hidden></div>
+          <p class="form-message" data-added hidden>{{ 'cart.added' | t }} <a href="{{ routes.cart_url }}">{{ 'cart.view' | t }}</a></p>
+        {%- endform -%}
+
+        {%- if benefits != blank -%}
+          <ul class="benefit-list">{%- for b in benefits -%}<li>{{ b | escape }}</li>{%- endfor -%}</ul>
+        {%- endif -%}
+
+        <ul class="info-list">
+          <li>{% render 'icon', name: 'truck' %}<span>
+            {%- if delivery != blank -%}<strong>{{ 'products.delivery' | t }}:</strong> {{ delivery | escape }}
+            {%- else -%}{{ 'products.delivery_at_checkout' | t }}{%- endif -%}
+          </span></li>
+          {%- if fitting != blank -%}<li>{% render 'icon', name: 'home' %}<span>{{ fitting | escape }}</span></li>{%- endif -%}
+          <li>{% render 'icon', name: 'return' %}<span>{{ section.settings.returns_text | escape }} <a href="{{ routes.root_url }}policies/refund-policy">{{ 'products.returns_link' | t }}</a></span></li>
+        </ul>
+
+        {%- if product.description != blank -%}
+          <details class="accordion" open><summary>{{ 'products.description' | t }}</summary><div class="accordion__content rte">{{ product.description }}</div></details>
+        {%- endif -%}
+        {%- if specs != blank -%}
+          <details class="accordion"><summary>{{ 'products.specifications' | t }}</summary><div class="accordion__content rte">{{ specs | metafield_tag }}</div></details>
+        {%- endif -%}
+        <details class="accordion"><summary>{{ 'products.delivery_returns' | t }}</summary><div class="accordion__content rte">{{ section.settings.delivery_details }}</div></details>
+      </div>
+    </div>
+  </div>
+  <script type="application/json" data-product-json>
+    {
+      "variants": [
+        {%- for v in product.variants -%}
+          { "id": {{ v.id }}, "options": {{ v.options | json }}, "available": {{ v.available | json }}, "price": {{ v.price | money | json }}, "compare": {% if v.compare_at_price > v.price %}{{ v.compare_at_price | money | json }}{% else %}null{% endif %},
+            "low": {% if v.inventory_management == 'shopify' and v.inventory_quantity <= low and v.inventory_quantity > 0 %}{{ v.inventory_quantity }}{% else %}null{% endif %},
+            "image": {% if v.featured_media %}{{ v.featured_media | image_url: width: 1200 | json }}{% else %}null{% endif %} }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ],
+      "strings": { "inStock": {{ 'products.in_stock' | t | json }}, "soldOut": {{ 'products.sold_out' | t | json }}, "unavailable": {{ 'products.unavailable' | t | json }}, "add": {{ 'products.add_to_cart' | t | json }}, "low": {{ 'products.low_stock' | t: count: '__n__' | json }}, "vat": {{ 'products.vat_included' | t | json }} }
+    }
+  </script>
+  {% render 'product-structured-data', product: product %}
+</section>
+
+{% schema %}
+{
+  "name": "Product information",
+  "settings": [
+    { "type": "checkbox", "id": "show_vendor", "label": "Show vendor", "default": false },
+    { "type": "range", "id": "low_stock_threshold", "label": "Show 'only X left' at or below", "min": 1, "max": 10, "step": 1, "default": 3, "info": "Uses real Shopify inventory only. Never shows invented scarcity." },
+    { "type": "text", "id": "returns_text", "label": "Returns summary", "default": "14-day cancellation from delivery." },
+    { "type": "richtext", "id": "delivery_details", "label": "Delivery & returns details", "default": "<p>We deliver to addresses in Great Britain from UK warehouses with tracked services. You will receive tracking by email when your order is dispatched.</p><p>You can cancel within 14 days of receiving your order. Please contact us before returning anything so we can give you the right returns address.</p>" }
+  ]
+}
+{% endschema %}

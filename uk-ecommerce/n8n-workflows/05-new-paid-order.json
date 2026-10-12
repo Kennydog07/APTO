@@ -1,0 +1,404 @@
+{
+  "id": "NoWf05NewOrder00",
+  "name": "05 — New paid order (verified webhook)",
+  "active": false,
+  "nodes": [
+    {
+      "id": "ff590fb0-16a6-40eb-9590-82f7409a8cdd",
+      "position": [
+        260,
+        200
+      ],
+      "name": "Verified order from ops-service",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "webhookId": "b1d8c361-d176-4744-8a45-e7620de1bed9",
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ops-new-paid-order",
+        "authentication": "headerAuth",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_INBOUND_CRED",
+          "name": "Inbound webhook secret (X-Ops-Token)"
+        }
+      }
+    },
+    {
+      "id": "d1222e27-b1ea-459e-ad78-a67947a276c5",
+      "position": [
+        520,
+        200
+      ],
+      "name": "To order item",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "parameters": {
+        "jsCode": "// ops-service has already verified the Shopify HMAC and de-duplicated the webhook.\nreturn [{ json: { orderId: String($input.first().json.body.orderId) } }];"
+      }
+    },
+    {
+      "id": "fd9c23f9-331d-4982-a10b-af999da65910",
+      "position": [
+        260,
+        420
+      ],
+      "name": "Fallback every 15 min",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 15
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "45358601-d60e-44ad-bac1-1648b82e2c25",
+      "position": [
+        520,
+        420
+      ],
+      "name": "Config (fallback)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "parameters": {
+        "jsCode": "// Edit n8n-workflows/config.json and rebuild, or change here.\nconst _cfg = {\"opsBaseUrl\":\"http://ops-service:8080\",\"ownerEmail\":\"owner@example.com\",\"storeEmail\":\"hello@example.co.uk\",\"storeName\":\"Nook & Order\",\"testMode\":true};\nconst items = $input.all();\nreturn (items.length ? items : [{ json: {} }]).map((i) => ({ json: { ...i.json, _cfg } }));"
+      }
+    },
+    {
+      "id": "f4b7a6ed-e2aa-4d32-9370-98795c25d5a3",
+      "position": [
+        780,
+        420
+      ],
+      "name": "Orders missed by webhook",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $('Config (fallback)').first().json._cfg.opsBaseUrl }}/api/orders/pending-evaluation",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_OPS_API_CRED",
+          "name": "Ops service API (Bearer)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "6f42b7b5-3c14-4164-9db9-0ce7164c809e",
+      "position": [
+        1040,
+        420
+      ],
+      "name": "One item per order",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "parameters": {
+        "jsCode": "return ($input.first().json.orders ?? []).map((o) => ({ json: { orderId: String(o.id) } }));"
+      }
+    },
+    {
+      "id": "10254268-2a4d-49d7-97eb-dc749d085518",
+      "position": [
+        1040,
+        200
+      ],
+      "name": "Config",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "parameters": {
+        "jsCode": "// Edit n8n-workflows/config.json and rebuild, or change here.\nconst _cfg = {\"opsBaseUrl\":\"http://ops-service:8080\",\"ownerEmail\":\"owner@example.com\",\"storeEmail\":\"hello@example.co.uk\",\"storeName\":\"Nook & Order\",\"testMode\":true};\nconst items = $input.all();\nreturn (items.length ? items : [{ json: {} }]).map((i) => ({ json: { ...i.json, _cfg } }));"
+      }
+    },
+    {
+      "id": "eb370490-61bd-4d17-ac5f-34ae4da354d9",
+      "position": [
+        1300,
+        300
+      ],
+      "name": "Validate order",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json._cfg.opsBaseUrl }}/api/orders/{{ $('Config').item.json.orderId }}/evaluate",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_OPS_API_CRED",
+          "name": "Ops service API (Bearer)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "22fef748-447b-4b83-a49c-0e1cb258aff6",
+      "position": [
+        1560,
+        300
+      ],
+      "name": "Eligible for automatic submission?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "c8e1021d-8db2-4a24-9404-d0b607c6e1cd",
+              "leftValue": "={{ $json.decision }}",
+              "rightValue": "auto_submit",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "643acd2e-0eab-44a6-8d71-0c74736f46a3",
+      "position": [
+        1820,
+        200
+      ],
+      "name": "Run 06 Supplier fulfilment",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "NoWf06Fulfil0000",
+          "mode": "id"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "orderId": "={{ $('Config').item.json.orderId }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "orderId",
+              "displayName": "orderId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            }
+          ]
+        },
+        "options": {
+          "waitForSubWorkflow": true
+        }
+      }
+    },
+    {
+      "id": "7db0f0f3-7169-4bbe-bb2e-569133485da9",
+      "position": [
+        1820,
+        420
+      ],
+      "name": "Log decision",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json._cfg.opsBaseUrl }}/api/logs",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ workflow: \"wf05\", level: 'info', message: \"Order evaluated (not auto-submitted)\", data: { orderId: $('Config').item.json.orderId, decision: $json.decision, reasons: $json.reasons } }) }}",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_OPS_API_CRED",
+          "name": "Ops service API (Bearer)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "continueOnFail": true
+    },
+    {
+      "id": "3dcfb374-6e8d-4d8a-b57c-97e0d39be504",
+      "name": "Manual test run",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        260,
+        580
+      ],
+      "parameters": {}
+    }
+  ],
+  "connections": {
+    "Verified order from ops-service": {
+      "main": [
+        [
+          {
+            "node": "To order item",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fallback every 15 min": {
+      "main": [
+        [
+          {
+            "node": "Config (fallback)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config (fallback)": {
+      "main": [
+        [
+          {
+            "node": "Orders missed by webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Orders missed by webhook": {
+      "main": [
+        [
+          {
+            "node": "One item per order",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "To order item": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "One item per order": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Validate order",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate order": {
+      "main": [
+        [
+          {
+            "node": "Eligible for automatic submission?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Eligible for automatic submission?": {
+      "main": [
+        [
+          {
+            "node": "Run 06 Supplier fulfilment",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Log decision",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual test run": {
+      "main": [
+        [
+          {
+            "node": "Config (fallback)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "timezone": "Europe/London",
+    "errorWorkflow": "NoWf12Errors0000"
+  },
+  "pinData": {},
+  "tags": [],
+  "meta": {
+    "templateCredsSetupCompleted": false
+  }
+}

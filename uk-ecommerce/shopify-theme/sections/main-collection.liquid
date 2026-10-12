@@ -1,0 +1,37 @@
+<section class="section" aria-labelledby="CollectionTitle">
+  <div class="page-width">
+    <nav class="breadcrumbs" aria-label="{{ 'general.breadcrumbs' | t }}"><ol><li><a href="{{ routes.root_url }}">{{ 'general.home' | t }}</a></li><li aria-current="page">{{ collection.title | escape }}</li></ol></nav>
+    <h1 id="CollectionTitle">{{ collection.title | escape }}</h1>
+    {%- if collection.description != blank -%}<div class="rte page-content muted">{{ collection.description }}</div>{%- endif -%}
+    {%- paginate collection.products by section.settings.per_page -%}
+      <div class="collection-toolbar">
+        <p class="muted" role="status">{{ 'collections.count' | t: count: collection.products_count }}</p>
+        <form method="get" data-sort-form>
+          <label for="SortBy" class="visually-hidden">{{ 'collections.sort_by' | t }}</label>
+          {%- assign sort_current = collection.sort_by | default: collection.default_sort_by -%}
+          <select id="SortBy" name="sort_by" data-sort>
+            {%- for option in collection.sort_options -%}
+              <option value="{{ option.value | escape }}"{% if option.value == sort_current %} selected{% endif %}>{{ option.name | escape }}</option>
+            {%- endfor -%}
+          </select>
+          <noscript><button class="button button--secondary" type="submit">{{ 'collections.apply' | t }}</button></noscript>
+        </form>
+      </div>
+      {%- if collection.products.size > 0 -%}
+        <div class="grid grid--4">
+          {%- for product in collection.products -%}{% render 'product-card', product: product, heading_level: 'h2' %}{%- endfor -%}
+        </div>
+      {%- else -%}
+        <p>{{ 'collections.empty' | t }}</p>
+      {%- endif -%}
+      {% render 'pagination', paginate: paginate %}
+    {%- endpaginate -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection products",
+  "settings": [ { "type": "range", "id": "per_page", "label": "Products per page", "min": 8, "max": 48, "step": 4, "default": 24 } ]
+}
+{% endschema %}

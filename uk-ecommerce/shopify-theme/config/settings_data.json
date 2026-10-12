@@ -1,0 +1,19 @@
+{
+  "current": "Default",
+  "presets": {
+    "Default": {
+      "color_background": "#F7F4EE",
+      "color_surface": "#ECE6DA",
+      "color_text": "#1F2421",
+      "color_muted": "#5B6560",
+      "color_accent": "#2F5D50",
+      "color_accent_contrast": "#FFFFFF",
+      "color_highlight": "#C8664A",
+      "color_border": "#DDD6C8",
+      "type_heading_font": "assistant_n7",
+      "type_body_font": "assistant_n4",
+      "page_width": 1280,
+      "corner_radius": 10
+    }
+  }
+}

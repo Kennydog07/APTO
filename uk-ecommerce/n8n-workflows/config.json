@@ -1,0 +1,9 @@
+{
+  "ownerEmail": "owner@example.com",
+  "storeEmail": "hello@example.co.uk",
+  "storeName": "Nook & Order",
+  "opsBaseUrl": "http://ops-service:8080",
+  "testMode": true,
+  "researchFeedUrl": "",
+  "pinterestBoardId": ""
+}

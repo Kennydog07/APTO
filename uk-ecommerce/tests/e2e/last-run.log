@@ -1,0 +1,58 @@
+Successfully imported 14 workflows.
+n8n webhook ready (probe: 403)
+webhook 1 -> 200
+webhook 2 (duplicate delivery, same id) -> 200
+webhook 3 (same order, new id) -> 200
+forged webhook -> 401
+unauthenticated n8n webhook -> 403
+--- executing scheduled workflows once (email nodes are expected to fail: no SMTP in test) ---
+NoWf03Inventory0: SUCCESS
+NoWf04Pricing000: SUCCESS
+NoWf07Tracking00: SUCCESS
+NoWf09Content000: SUCCESS
+NoWf10Publish000: SUCCESS
+NoWf11Report0000: Failed to start Python task runner in internal mode. because its virtual environment is missing from this system. Launching a Python runner in internal mode is intended only for debugging and is not recommended for production. Users are encouraged to deploy in external mode. See: https://docs.n8n.io/hosting/configuration/task-runners/#setting-up-external-mode Execution error: 
+NoWf13Optimise00: Failed to start Python task runner in internal mode. because its virtual environment is missing from this system. Launching a Python runner in internal mode is intended only for debugging and is not recommended for production. Users are encouraged to deploy in external mode. See: https://docs.n8n.io/hosting/configuration/task-runners/#setting-up-external-mode Execution error: 
+ops-service logs written by n8n: [{"source":"n8n:wf03","n":1},{"source":"n8n:wf04","n":1},{"source":"n8n:wf05","n":1},{"source":"n8n:wf06","n":1},{"source":"n8n:wf07","n":1},{"source":"n8n:wf09","n":1}]
+exceptions recorded from n8n failures: [{"source":"n8n:11 — Daily business report","message":"Credential with ID \"REPLACE_SMTP_CRED\" does not exist for type \"smtp\"."},{"source":"n8n:13 — Weekly optimisation","message":"Credential with ID \"REPLACE_SMTP_CRED\" does not exist for type \"smtp\"."}]
+content items queued for approval: 5
+{
+ "order": {
+  "state": "submitted"
+ },
+ "supplierOrders": [
+  {
+   "supplier": "MOCK",
+   "status": "confirmed",
+   "external_id": "MOCK-1000",
+   "attempts": 1
+  }
+ ],
+ "n8nLogs": [
+  {
+   "source": "n8n:wf06",
+   "message": "Supplier order recorded"
+  },
+  {
+   "source": "n8n:wf05",
+   "message": "Order evaluated (not auto-submitted)"
+  },
+  {
+   "source": "n8n:wf03",
+   "message": "Inventory sync complete"
+  },
+  {
+   "source": "n8n:wf04",
+   "message": "Pricing monitor complete"
+  },
+  {
+   "source": "n8n:wf07",
+   "message": "Tracking sync complete"
+  },
+  {
+   "source": "n8n:wf09",
+   "message": "Content generated for approval"
+  }
+ ]
+}
+E2E RESULT: PASS

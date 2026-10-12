@@ -1,0 +1,9 @@
+{
+  "_comment": "Supplier integration modes: mock (test only), app_managed (a Shopify supplier app such as Avasam/DSers places the order itself — this service only monitors), manual (owner places order from the approval queue), api (this service submits via the supplier's API). Never configure the same supplier as both app_managed and api — that would double-order.",
+  "suppliers": {
+    "MOCK": { "mode": "mock", "label": "Test supplier (simulation only)", "ukWarehouse": true },
+    "AVASAM": { "mode": "app_managed", "label": "Avasam UK marketplace (Shopify app)", "ukWarehouse": true },
+    "CJ": { "mode": "api", "label": "CJdropshipping (UK warehouse stock only)", "ukWarehouse": true, "apiBase": "https://developers.cjdropshipping.com/api2.0/v1", "logisticName": "", "verified": false },
+    "MANUAL": { "mode": "manual", "label": "Manual purchase by owner", "ukWarehouse": true }
+  }
+}

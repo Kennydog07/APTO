@@ -1,0 +1,14 @@
+{%- comment -%} Renders a product card. Params: product, heading_level (optional) {%- endcomment -%}
+{%- assign tag = heading_level | default: 'h3' -%}
+<div class="card">
+  {%- unless product.available -%}<span class="badge badge--sold-out">{{ 'products.sold_out' | t }}</span>{%- endunless -%}
+  <div class="card__media">
+    {%- if product.featured_media -%}
+      {{ product.featured_media | image_url: width: 720 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 25vw, 50vw', widths: '240, 360, 480, 720', alt: product.featured_media.alt | default: product.title }}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+    {%- endif -%}
+  </div>
+  <{{ tag }} class="card__title"><a href="{{ product.url }}">{{ product.title | escape }}</a></{{ tag }}>
+  {% render 'price', product: product %}
+</div>

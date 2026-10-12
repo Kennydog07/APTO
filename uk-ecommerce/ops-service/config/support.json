@@ -1,0 +1,12 @@
+{
+  "_comment": "Approved facts the support assistant may state. Keep consistent with your published policies. Placeholders in [SQUARE BRACKETS] must be completed before launch.",
+  "storeName": "[STORE NAME]",
+  "supportEmail": "[SUPPORT EMAIL]",
+  "deliveryPolicyUrl": "/policies/shipping-policy",
+  "returnsPolicyUrl": "/policies/refund-policy",
+  "cancellationDays": 14,
+  "returnsAddressNote": "We will email the correct returns address for your item — please do not send items back without contacting us first, as items ship from different UK warehouses.",
+  "dispatchStatement": "Orders are normally passed to our UK-based supplier within 1 working day. Delivery estimates are shown on each product page and in your confirmation email.",
+  "autoReplyCategories": ["order_status", "delivery_time", "return_howto", "product_info"],
+  "escalateCategories": ["refund_request", "damaged_missing", "chargeback", "legal", "safety", "fraud", "change_address", "cancel_order", "complaint", "other"]
+}

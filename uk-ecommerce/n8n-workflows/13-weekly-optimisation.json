@@ -1,0 +1,189 @@
+{
+  "id": "NoWf13Optimise00",
+  "name": "13 — Weekly optimisation",
+  "active": false,
+  "nodes": [
+    {
+      "id": "d0dbf538-73c4-4293-a16c-c75ec766b76f",
+      "position": [
+        260,
+        300
+      ],
+      "name": "Mondays 08:00",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 8 * * 1"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "16ae7e70-0b7c-42ad-905b-0a3b7d28fa1a",
+      "position": [
+        520,
+        300
+      ],
+      "name": "Config",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "parameters": {
+        "jsCode": "// Edit n8n-workflows/config.json and rebuild, or change here.\nconst _cfg = {\"opsBaseUrl\":\"http://ops-service:8080\",\"ownerEmail\":\"owner@example.com\",\"storeEmail\":\"hello@example.co.uk\",\"storeName\":\"Nook & Order\",\"testMode\":true};\nconst items = $input.all();\nreturn (items.length ? items : [{ json: {} }]).map((i) => ({ json: { ...i.json, _cfg } }));"
+      }
+    },
+    {
+      "id": "32929a98-628a-472e-8140-89a37f28ff29",
+      "position": [
+        780,
+        300
+      ],
+      "name": "Analyse the week",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $('Config').first().json._cfg.opsBaseUrl }}/api/reports/weekly",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_OPS_API_CRED",
+          "name": "Ops service API (Bearer)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "e1fa1f4d-32ff-447c-9d35-be361589855f",
+      "position": [
+        1040,
+        300
+      ],
+      "name": "Format",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "parameters": {
+        "jsCode": "const w = $input.first().json;\nconst text = ['WEEKLY OPTIMISATION', '', `Orders: ${w.sales.orders} · Revenue £${w.sales.revenue} · Est. contribution £${w.sales.estimatedContribution}`, `Return rate: ${(w.returnRate * 100).toFixed(1)}% · Conversion: ${w.conversionRate === null ? 'no traffic data' : (w.conversionRate * 100).toFixed(2) + '%'}`, '', 'Top products:', ...(w.productPerformance ?? []).slice(0, 5).map((p) => `- ${p.title ?? p.sku}: ${p.units} units, £${(p.revenue ?? 0).toFixed(2)}`), '', 'Recommendations:', ...w.recommendations.map((r) => '- ' + r), '', w.note].join('\\n');\nreturn [{ json: { text } }];"
+      }
+    },
+    {
+      "id": "e29f838a-c5c6-40d7-9a2d-63be03cfd946",
+      "position": [
+        1300,
+        300
+      ],
+      "name": "Email owner",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "parameters": {
+        "fromEmail": "={{ $('Config').first().json._cfg.storeEmail }}",
+        "toEmail": "={{ $('Config').first().json._cfg.ownerEmail }}",
+        "subject": "={{ $('Config').first().json._cfg.testMode ? '[TEST] ' : '' }}Weekly optimisation report",
+        "emailFormat": "text",
+        "text": "={{ $json.text }}",
+        "options": {}
+      },
+      "credentials": {
+        "smtp": {
+          "id": "REPLACE_SMTP_CRED",
+          "name": "Store SMTP"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 10000
+    },
+    {
+      "id": "72ba2902-3813-4253-aa48-d6cdbfc1a0f3",
+      "name": "Manual test run",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        260,
+        460
+      ],
+      "parameters": {}
+    }
+  ],
+  "connections": {
+    "Mondays 08:00": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Analyse the week",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyse the week": {
+      "main": [
+        [
+          {
+            "node": "Format",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format": {
+      "main": [
+        [
+          {
+            "node": "Email owner",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual test run": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "timezone": "Europe/London",
+    "errorWorkflow": "NoWf12Errors0000"
+  },
+  "pinData": {},
+  "tags": [],
+  "meta": {
+    "templateCredsSetupCompleted": false
+  }
+}

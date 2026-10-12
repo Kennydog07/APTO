@@ -1,0 +1,318 @@
+{
+  "id": "NoWf10Publish000",
+  "name": "10 — Social publishing (approved content only)",
+  "active": false,
+  "nodes": [
+    {
+      "id": "a5567915-56c4-441f-9a2f-5a9552995921",
+      "position": [
+        260,
+        300
+      ],
+      "name": "Hourly 09:00–20:00",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "5 9-20 * * *"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "91fec804-7cca-4e1a-b686-1f66b97534da",
+      "position": [
+        520,
+        300
+      ],
+      "name": "Config",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "parameters": {
+        "jsCode": "// Edit n8n-workflows/config.json and rebuild, or change here.\nconst _cfg = {\"opsBaseUrl\":\"http://ops-service:8080\",\"ownerEmail\":\"owner@example.com\",\"storeEmail\":\"hello@example.co.uk\",\"storeName\":\"Nook & Order\",\"testMode\":true};\nconst items = $input.all();\nreturn (items.length ? items : [{ json: {} }]).map((i) => ({ json: { ...i.json, _cfg } }));"
+      }
+    },
+    {
+      "id": "a7fa2afc-f29b-44aa-8b75-1fa08cf14d54",
+      "position": [
+        780,
+        300
+      ],
+      "name": "Get approved, due Pinterest pins",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $('Config').first().json._cfg.opsBaseUrl }}/api/marketing/due?channel=pinterest",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_OPS_API_CRED",
+          "name": "Ops service API (Bearer)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "769c7ab2-3a86-48be-9b70-cf20b097673d",
+      "position": [
+        1040,
+        300
+      ],
+      "name": "One item per pin",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "parameters": {
+        "jsCode": "const r = $input.first().json;\nif (r.paused) return [];\nreturn (r.items ?? []).filter((i) => i.status === 'approved').map((i) => ({ json: i }));"
+      }
+    },
+    {
+      "id": "b12d9546-56be-48e9-8c31-f750ffca8d8c",
+      "position": [
+        1300,
+        300
+      ],
+      "name": "Test mode?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "1d51e968-7d0e-4728-ae7c-031cf4f3c922",
+              "leftValue": "={{ $('Config').first().json._cfg.testMode }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "1a62d496-3bdb-4a35-9ddc-e857a2f1f381",
+      "position": [
+        1560,
+        300
+      ],
+      "name": "Log (test mode — not published)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json._cfg.opsBaseUrl }}/api/logs",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ workflow: \"wf10\", level: 'info', message: \"Would publish pin (test mode)\", data: { id: $json.id, title: $json.title } }) }}",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_OPS_API_CRED",
+          "name": "Ops service API (Bearer)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "continueOnFail": true
+    },
+    {
+      "id": "9f31b925-4412-4410-85bd-62f7cfd2f17d",
+      "position": [
+        1820,
+        300
+      ],
+      "name": "Create Pinterest pin",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.pinterest.com/v5/pins",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ board_id: \"REPLACE_BOARD_ID\", title: $json.title, description: $json.body, link: $json.meta.link, media_source: { source_type: 'image_url', url: $json.meta.imageUrl } }) }}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_PINTEREST_CRED",
+          "name": "Pinterest API (Bearer)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 30000
+    },
+    {
+      "id": "b7cc2fec-91e6-4607-ba24-9c15156620e4",
+      "position": [
+        2080,
+        300
+      ],
+      "name": "Mark as published",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json._cfg.opsBaseUrl }}/api/marketing/{{ $('One item per pin').item.json.id }}/published",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ externalId: $json.id }) }}",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_OPS_API_CRED",
+          "name": "Ops service API (Bearer)"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "0dcc98c8-78fa-42d0-a27f-7c22bd4db374",
+      "name": "Manual test run",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        260,
+        460
+      ],
+      "parameters": {}
+    }
+  ],
+  "connections": {
+    "Hourly 09:00–20:00": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Get approved, due Pinterest pins",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get approved, due Pinterest pins": {
+      "main": [
+        [
+          {
+            "node": "One item per pin",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "One item per pin": {
+      "main": [
+        [
+          {
+            "node": "Test mode?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Test mode?": {
+      "main": [
+        [
+          {
+            "node": "Log (test mode — not published)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create Pinterest pin",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Pinterest pin": {
+      "main": [
+        [
+          {
+            "node": "Mark as published",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual test run": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "timezone": "Europe/London",
+    "errorWorkflow": "NoWf12Errors0000"
+  },
+  "pinData": {},
+  "tags": [],
+  "meta": {
+    "templateCredsSetupCompleted": false
+  }
+}

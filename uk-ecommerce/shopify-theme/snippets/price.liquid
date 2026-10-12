@@ -1,0 +1,14 @@
+{%- comment -%} Params: product, variant (optional), large (optional) {%- endcomment -%}
+{%- liquid
+  assign target = variant | default: product.selected_or_first_available_variant
+  if variant == blank and product.price_varies
+    assign from = true
+  endif
+-%}
+<div class="price{% if large %} price--large{% endif %}" data-price>
+  {%- if from -%}{{ 'products.from_price' | t: price: product.price_min | money }}{%- else -%}{{ target.price | money }}{%- endif -%}
+  {%- if target.compare_at_price > target.price -%}
+    <s class="price__compare"><span class="visually-hidden">{{ 'products.regular_price' | t }}</span>{{ target.compare_at_price | money }}</s>
+  {%- endif -%}
+  {%- if large -%}<span class="price__note">{{ 'products.vat_included' | t }}</span>{%- endif -%}
+</div>

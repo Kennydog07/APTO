@@ -1,0 +1,49 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {}
+    },
+    "benefits": {
+      "type": "benefits",
+      "blocks": {
+        "b1": {
+          "type": "benefit",
+          "settings": {
+            "icon": "home",
+            "title": "Made for small UK homes",
+            "text": "We choose products that solve real small-space problems \u2014 and that renters can use without drilling."
+          }
+        },
+        "b2": {
+          "type": "benefit",
+          "settings": {
+            "icon": "shield",
+            "title": "Checked before listing",
+            "text": "We only list products where the supplier provides specifications, UK stock and tracked delivery."
+          }
+        },
+        "b3": {
+          "type": "benefit",
+          "settings": {
+            "icon": "chat",
+            "title": "Real people",
+            "text": "Questions go to a real inbox and complex issues are always handled personally."
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3"
+      ],
+      "settings": {
+        "heading": "What we stand for"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "benefits"
+  ]
+}
