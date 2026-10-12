@@ -2,14 +2,16 @@
 // unit-testable. All money is GBP. Retail prices are VAT-inclusive (UK B2C).
 
 const r2 = (n) => Math.round(n * 100) / 100;
+const r4 = (n) => Math.round(n * 10000) / 10000;
 
+// Defaults: UK-resident sole trader, Shopify Payments (Basic), not VAT-registered.
 export const DEFAULT_ASSUMPTIONS = {
-  vatRegistered: true,
+  vatRegistered: false,
   vatRate: 0.2,
-  paymentFeePct: 0.044,
-  paymentFeeFixedGbp: 0.3,
-  platformTxnFeePct: 0.02,
-  fxFeePct: 0.03,
+  paymentFeePct: 0.02,
+  paymentFeeFixedGbp: 0.25,
+  platformTxnFeePct: 0,
+  fxFeePct: 0,
   returnsAllowancePct: 0.06,
   cacPerOrderGbp: 1.5,
   otherVariablePerOrderGbp: 0.2,
@@ -70,7 +72,7 @@ export function calculate(p, assumptions = {}) {
     shippingCost: r2(ship),
     landedCost: r2(landedCost),
     grossProfit: r2(grossProfit),
-    grossMarginPct: r2(grossMarginPct * 100) / 100,
+    grossMarginPct: r4(grossMarginPct),
     paymentFees: r2(paymentFees),
     platformFees: r2(platformFees),
     fxFees: r2(fxFees),
@@ -78,7 +80,7 @@ export function calculate(p, assumptions = {}) {
     acquisitionCost: r2(a.cacPerOrderGbp),
     otherVariable: r2(a.otherVariablePerOrderGbp),
     contribution: r2(contribution),
-    contributionPct: r2(contributionPct * 100) / 100,
+    contributionPct: r4(contributionPct),
     flags,
     acceptable: !flags.some((f) => ['negative_margin', 'below_target_gross_margin', 'poor_contribution', 'excessive_shipping'].includes(f)),
   };

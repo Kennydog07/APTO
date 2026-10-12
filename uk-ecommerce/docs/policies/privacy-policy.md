@@ -23,7 +23,7 @@ Only what is needed:
 - professional advisers and authorities where the law requires.
 
 ## International transfers
-Some providers process data outside the UK (for example in the USA or EU). We rely on UK adequacy regulations or approved safeguards such as the International Data Transfer Agreement or the UK Addendum. [OWNER: our business is managed from Qatar — ask your adviser what to state about access from outside the UK.]
+Some providers process data outside the UK (for example in the USA or EU). We rely on UK adequacy regulations or approved safeguards such as the International Data Transfer Agreement or the UK Addendum.
 
 ## Automated decisions
 We use automated tools to sort enquiries and route orders to suppliers. They do not make decisions with legal or similarly significant effects about you. Refunds, disputes and complaints are always handled by a person.

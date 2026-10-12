@@ -3,15 +3,15 @@
 Honest list of what is **not** done, **not** verified, or **cannot** be automated.
 
 ## Blocked by external accounts or decisions
-- **Live payments:** no compatible provider verified (Shopify Payments likely unavailable to a Qatar-resident sole trader; Stripe not available in Qatar; PayPal is promising but unconfirmed).
-- **Legal/tax:** VAT (NETP), UK income tax and the Qatar e-commerce licence need professional advice. The system cannot resolve these.
+- **Live payments:** Shopify Payments not yet activated (needs your ID and bank details).
+- **Tax set-up:** Self Assessment registration, ICO fee and the VAT decision are yours to complete. The system monitors the VAT threshold but doesn't file anything.
 - **Shopify store, domain, supplier accounts, email, Pinterest API:** not created. Nothing was purchased.
 
 ## Not verified against live services
 - **Shopify Admin GraphQL calls** (order status, product status, price, inventory, fulfilment, draft product) were written for API version 2026-07 and tested only against a mock. Run `npm run shopify-smoke` and a Bogus Gateway order before relying on them. `inventorySetQuantities` input fields in particular change between API versions.
 - **CJdropshipping adapter:** endpoint paths and fields come from general knowledge of CJ's API v2 and could not be checked against current docs. It creates orders **unpaid** by default for safety.
 - **Avasam:** pricing and whether the free tier routes orders are unconfirmed.
-- **Fees:** all PayPal, FX and Shopify percentages are pessimistic placeholders.
+- **Fees:** the 2% + 25p Shopify Payments rate comes from 2026 third-party guides; confirm it in your Shopify admin. International/Amex cards and PayPal cost more.
 
 ## Research quality
 - Niche scores and product demand scores are **judgement-based and provisional**. No keyword-volume, marketplace sales or Pinterest Trends data could be accessed from this environment.

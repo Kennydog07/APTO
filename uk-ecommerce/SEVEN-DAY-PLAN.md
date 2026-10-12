@@ -10,10 +10,10 @@ Legend: ✅ done in this build · 🟡 done in test mode, needs owner accounts �
 | **4 — Automation** | n8n, order/inventory/tracking workflows, monitoring, failure tests | ✅ / 🟡 | 14 workflows; e2e PASS in n8n 2.42.6; deploy to VPS pending |
 | **5 — Marketing** | Calendar, Pinterest workflow, SEO, email sequences, publishing queue | ✅ / 🟡 | `MARKETING-PLAN.md`; publishing waits for Pinterest API access |
 | **6 — Testing** | Sandbox checkout, routing, stock, failures, duplicates, tracking, refunds, backups, security, compliance | 🟡 | All test-mode checks done (`TEST-RESULTS.md`); live sandbox checks need the store |
-| **7 — Controlled launch** | Payments, legal/tax, approvals, live tests, publish, monitor, marketing | 🔴 | Blocked: payments, VAT, Qatar licence. See `LAUNCH-CHECKLIST.md` |
+| **7 — Controlled launch** | Payments, legal/tax, approvals, live tests, publish, monitor, marketing | 🟡 | Needs your accounts and approvals: Shopify Payments, policies, ICO fee. See `LAUNCH-CHECKLIST.md` |
 
 ## Owner's next 7 days (suggested)
-1. **Day 1:** book an accountant (non-resident UK VAT/tax) and a Qatar lawyer. Message Shopify and PayPal support with the questions in the legal checklist §6.
+1. **Day 1:** register as self-employed (Self Assessment), open a separate business bank account, pay the ICO fee, get liability-insurance quotes. Optionally book an hour with an accountant (questions in the legal checklist §7).
 2. **Day 2:** create the Shopify trial store; upload the theme; create pages and menus (`SHOPIFY-SETUP.md`).
 3. **Day 3:** open a supplier account (Avasam). Fill in real data for 10–15 shortlisted products. Run the scorer.
 4. **Day 4:** with approval, rent the VPS. Deploy (`N8N-SETUP.md`). Connect the Shopify app. Run `shopify-smoke`.

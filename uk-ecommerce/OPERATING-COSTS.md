@@ -25,12 +25,11 @@ Target: **£50–£100/month** recurring software and hosting. **All prices are 
 Built into the pricing engine (`ops-service/config/pricing.json`). Replace these with your real rates:
 | Cost | Assumption |
 |---|---|
-| PayPal (cross-border, provisional) | 4.4% + £0.30 |
-| Currency conversion (GBP → USD/QAR) | 3% |
-| Shopify third-party gateway fee (Basic) | 2% |
+| Shopify Payments, UK online cards (Basic) | 2% + £0.25 (higher for international/Amex) |
+| Shopify transaction fee with Shopify Payments | £0 (a third-party gateway would add 2% on Basic) |
 | Returns allowance | 6% of net revenue |
 | Organic acquisition allowance | £1.50 per order |
-| UK VAT (if registered) | 1/6 of VAT-inclusive price |
+| UK VAT | £0 while not registered (below £90,000); 1/6 of price if you register |
 
 ## Controls in the system
 - **AI spend cap:** every Claude call is checked against the remaining monthly budget *before* it is made; actual token cost is recorded. Default model `claude-opus-5-5` ($4/$20 per million tokens). A support draft costs roughly £0.01–£0.02, so £15 covers ~1,000 drafts. Set `AI_MODEL=claude-haiku-5-5` (much cheaper) if you prefer.
@@ -38,4 +37,4 @@ Built into the pricing engine (`ops-service/config/pricing.json`). Replace these
 - **Supplier exposure:** `AUTO_ORDER_MAX_GBP` (£75 per order) and `DAILY_AUTO_ORDER_CAP_GBP` (£300 per day). Above these, orders wait for approval.
 
 ## Not included in the software budget
-Working capital and supplier payments (keep a **£300–£500 supplier-payment reserve**), VAT and tax, refunds and chargebacks, advertising, business registration, accountant and legal fees (budget several hundred pounds for initial advice given the cross-border position), and an ICO fee if applicable.
+Working capital and supplier payments (keep a **£300–£500 supplier-payment reserve**), income tax and NI, refunds and chargebacks, advertising, an optional accountant session (~£100–£250), the ICO fee (£52/year tier 1) and liability insurance.

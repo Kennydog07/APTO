@@ -1,40 +1,118 @@
 {
   "general": {
-    "search": "Search", "home": "Home", "breadcrumbs": "Breadcrumbs", "view_all": "View all", "pagination": "Pagination",
-    "previous": "Previous page", "next": "Next page", "page": "Page {{ page }}", "tagged_with": "Tagged \"{{ tags }}\"",
-    "not_found": "Page not found", "not_found_text": "Sorry, we couldn't find that page. It may have moved."
+    "search": "Search",
+    "home": "Home",
+    "breadcrumbs": "Breadcrumbs",
+    "view_all": "View all",
+    "pagination": "Pagination",
+    "previous": "Previous page",
+    "next": "Next page",
+    "page": "Page {{ page }}",
+    "tagged_with": "Tagged \"{{ tags }}\"",
+    "not_found": "Page not found",
+    "not_found_text": "Sorry, we couldn't find that page. It may have moved."
   },
-  "accessibility": { "skip_to_content": "Skip to content" },
+  "accessibility": {
+    "skip_to_content": "Skip to content"
+  },
   "sections": {
-    "announcement": { "label": "Announcement" },
-    "header": { "menu": "Menu", "main_navigation": "Main navigation", "mobile_navigation": "Mobile navigation" },
-    "footer": { "shop": "Shop", "help": "Help", "legal": "Legal", "contact": "Contact" }
+    "announcement": {
+      "label": "Announcement"
+    },
+    "header": {
+      "menu": "Menu",
+      "main_navigation": "Main navigation",
+      "mobile_navigation": "Mobile navigation"
+    },
+    "footer": {
+      "shop": "Shop",
+      "help": "Help",
+      "legal": "Legal",
+      "contact": "Contact"
+    }
   },
-  "onboarding": { "product_title": "Example product" },
+  "onboarding": {
+    "product_title": "Example product"
+  },
   "products": {
-    "add_to_cart": "Add to basket", "sold_out": "Out of stock", "unavailable": "Unavailable", "in_stock": "In stock at our UK supplier",
-    "low_stock": "Only {{ count }} left in stock", "from_price": "From {{ price }}", "regular_price": "Regular price", "vat_included": "Price includes VAT where applicable",
-    "quantity": "Quantity", "increase_quantity": "Increase quantity", "decrease_quantity": "Decrease quantity",
-    "delivery": "Estimated delivery", "delivery_at_checkout": "Delivery options and costs are shown at checkout.",
-    "returns_link": "Returns policy", "description": "Description", "specifications": "Specifications & materials", "delivery_returns": "Delivery & returns",
-    "gallery": "Product images", "show_image": "Show image {{ number }}"
+    "add_to_cart": "Add to basket",
+    "sold_out": "Out of stock",
+    "unavailable": "Unavailable",
+    "in_stock": "In stock at our UK supplier",
+    "low_stock": "Only {{ count }} left in stock",
+    "from_price": "From {{ price }}",
+    "regular_price": "Regular price",
+    "vat_included": "Delivery cost shown at checkout",
+    "quantity": "Quantity",
+    "increase_quantity": "Increase quantity",
+    "decrease_quantity": "Decrease quantity",
+    "delivery": "Estimated delivery",
+    "delivery_at_checkout": "Delivery options and costs are shown at checkout.",
+    "returns_link": "Returns policy",
+    "description": "Description",
+    "specifications": "Specifications & materials",
+    "delivery_returns": "Delivery & returns",
+    "gallery": "Product images",
+    "show_image": "Show image {{ number }}"
   },
   "collections": {
-    "count": { "one": "{{ count }} product", "other": "{{ count }} products" },
-    "sort_by": "Sort by", "apply": "Apply", "empty": "No products in this collection yet.", "all_collections": "All collections"
+    "count": {
+      "one": "{{ count }} product",
+      "other": "{{ count }} products"
+    },
+    "sort_by": "Sort by",
+    "apply": "Apply",
+    "empty": "No products in this collection yet.",
+    "all_collections": "All collections"
   },
   "cart": {
-    "title": "Your basket", "empty": "Your basket is empty.", "continue": "Continue shopping", "remove": "Remove", "update": "Update basket",
-    "subtotal": "Subtotal", "summary": "Order summary", "checkout": "Check out securely", "taxes_shipping": "Prices include VAT where applicable. Delivery is calculated at checkout.",
-    "rights": "You can cancel within 14 days of delivery. See our returns policy.", "added": "Added to your basket.", "view": "View basket"
+    "title": "Your basket",
+    "empty": "Your basket is empty.",
+    "continue": "Continue shopping",
+    "remove": "Remove",
+    "update": "Update basket",
+    "subtotal": "Subtotal",
+    "summary": "Order summary",
+    "checkout": "Check out securely",
+    "taxes_shipping": "Delivery is calculated at checkout.",
+    "rights": "You can cancel within 14 days of delivery. See our returns policy.",
+    "added": "Added to your basket.",
+    "view": "View basket"
   },
-  "customer": { "account": "Account" },
-  "newsletter": { "label": "Email address", "button": "Subscribe", "success": "Thanks — you're subscribed. You can unsubscribe at any time.", "privacy": "privacy policy" },
+  "customer": {
+    "account": "Account"
+  },
+  "newsletter": {
+    "label": "Email address",
+    "button": "Subscribe",
+    "success": "Thanks — you're subscribed. You can unsubscribe at any time.",
+    "privacy": "privacy policy"
+  },
   "contact": {
-    "name": "Name", "email": "Email", "order_number": "Order number (optional)", "message": "Message", "send": "Send message",
-    "success": "Thanks for getting in touch. We'll reply within 2 working days.", "privacy_note": "We use your details only to answer your enquiry. See our"
+    "name": "Name",
+    "email": "Email",
+    "order_number": "Order number (optional)",
+    "message": "Message",
+    "send": "Send message",
+    "success": "Thanks for getting in touch. We'll reply within 2 working days.",
+    "privacy_note": "We use your details only to answer your enquiry. See our"
   },
-  "search": { "placeholder": "Search products", "results_count": { "one": "{{ count }} result for \"{{ terms }}\"", "other": "{{ count }} results for \"{{ terms }}\"" } },
-  "password": { "coming_soon": "Opening soon", "coming_soon_text": "We're getting ready to open. Please check back soon.", "label": "Password", "enter": "Enter" },
-  "gift_card": { "title": "Gift card", "balance": "Balance", "expired": "This gift card has expired." }
+  "search": {
+    "placeholder": "Search products",
+    "results_count": {
+      "one": "{{ count }} result for \"{{ terms }}\"",
+      "other": "{{ count }} results for \"{{ terms }}\""
+    }
+  },
+  "password": {
+    "coming_soon": "Opening soon",
+    "coming_soon_text": "We're getting ready to open. Please check back soon.",
+    "label": "Password",
+    "enter": "Enter"
+  },
+  "gift_card": {
+    "title": "Gift card",
+    "balance": "Balance",
+    "expired": "This gift card has expired."
+  }
 }

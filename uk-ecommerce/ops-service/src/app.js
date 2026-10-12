@@ -12,7 +12,7 @@ import { syncInventory, runPricingMonitor, prepareCandidate } from './catalogue.
 import { syncTracking, recordTracking } from './tracking.js';
 import { handleEnquiry } from './support.js';
 import { generateDailyContent, approveContent, rejectContent, dueForPublishing, markPublished } from './marketing.js';
-import { dailyReport, weeklyReport, costProjection } from './reports.js';
+import { dailyReport, weeklyReport, costProjection, vatThresholdCheck } from './reports.js';
 import { createReturnCase } from './returns.js';
 import { calculate, recommendPrice } from './pricing.js';
 import { scoreProduct } from './scoring.js';
@@ -111,6 +111,7 @@ export function dashboardData(ctx, csrf) {
     content: Object.fromEntries(db.prepare('SELECT status, COUNT(*) AS n FROM content GROUP BY status').all().map((r) => [r.status, r.n])),
     refunds: db.prepare("SELECT COALESCE(SUM(refund_amount_gbp),0) AS s FROM return_cases WHERE status = 'refund_approved_issue_in_shopify' AND updated_at >= ?").get(startMonth).s,
     costs: costProjection(ctx, d),
+    vat: vatThresholdCheck(ctx, d),
     alerts: openExceptions(db),
     approvals: listApprovals(db).length,
   };

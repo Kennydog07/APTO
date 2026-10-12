@@ -3,7 +3,7 @@
 _Last updated: [DATE]_
 
 ## 1. About us
-This website is operated by [TRADER LEGAL NAME], a sole trader trading as [TRADING NAME] ("we", "us"). Address: [GEOGRAPHIC ADDRESS]. Email: [EMAIL]. VAT number: [VAT NUMBER].
+This website is operated by [TRADER LEGAL NAME], a sole trader trading as [TRADING NAME] ("we", "us"). Address: [GEOGRAPHIC ADDRESS]. Email: [EMAIL]. [VAT number: [VAT NUMBER] — only once VAT-registered.]
 
 These terms apply to sales to consumers in Great Britain. Please read them before ordering. They do not affect your statutory rights.
 
@@ -13,7 +13,7 @@ These terms apply to sales to consumers in Great Britain. Please read them befor
 - Products are for domestic use only.
 
 ## 3. Prices and payment
-- Prices are in pounds sterling (GBP) and include VAT where applicable. Delivery charges are shown at checkout before you pay.
+- Prices are in pounds sterling (GBP). [OWNER: while you are not VAT-registered, do not mention VAT. If you register, change this to "Prices include VAT."] Delivery charges are shown at checkout before you pay.
 - Payment is taken at checkout by our payment providers. We never see or store your full card details.
 - If we have made an obvious pricing error, we will contact you before dispatch and you may cancel for a full refund.
 

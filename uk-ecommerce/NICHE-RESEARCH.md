@@ -44,16 +44,16 @@ Niches 1 and 2 overlap heavily, so the store combines them: **home organisation,
 **Excluded at launch** (brief, section 5): food and food-contact, supplements, cosmetics, medicines, electrical items, baby and child products, toys, glass and ceramics, replicas. The scoring engine rejects these automatically.
 
 ## Key economic finding
-With the cautious fee assumptions this owner faces (PayPal + currency conversion + Shopify third-party fee ≈ 9.4% of the price + 30p), plus a £1.50 organic acquisition allowance and a 6% returns allowance:
+For a UK sole trader using Shopify Payments (2% + 25p), not VAT-registered, with a £1.50 organic acquisition allowance, a 6% returns allowance and the 40% gross-margin target:
 
-| Retail price (inc. VAT) | Maximum supplier cost + shipping that is still viable |
-|---|---|
-| £12.99 | £4.45 |
-| £14.99 | £5.83 |
-| £19.99 | £9.27 |
-| £24.99 | £12.49 |
+| Retail price | Max supplier cost + shipping (not VAT-registered) | If VAT-registered |
+|---|---|---|
+| £12.99 | £7.50 | £5.46 |
+| £14.99 | £8.99 | £6.99 |
+| £19.99 | £11.99 | £9.99 |
+| £24.99 | £14.99 | £12.49 |
 
-Low-priced single items are hard to make work. **Favour products and bundles at £18 or more.** These figures come from `npm run pricing-report`. See `product-data/pricing-dashboard.html`.
+The 40% gross-margin rule sets the limit, and £3–£4 of fixed costs per order (card fee, acquisition, returns) eat a bigger share of cheap items. **Prefer products and bundles at £15 or more.** Remember that your margin shrinks by 1/6 if you register for VAT. These figures come from `npm run pricing-report`. See `product-data/pricing-dashboard.html`.
 
 ## Initial catalogue
 See `PRODUCT-SHORTLIST.csv` (14 candidates). Supplier name, SKU, cost, stock, delivery estimate and image rights are **deliberately blank or "TO VERIFY"**. They must come from real supplier listings. The scoring engine marks all 14 as `needs_verification`. None can be published until verified and approved by you.

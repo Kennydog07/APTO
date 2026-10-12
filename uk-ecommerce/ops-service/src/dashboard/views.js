@@ -66,7 +66,8 @@ ${d.products.best.length ? `<p class="muted">Best sellers (30 days): ${d.product
 <tr><td>Revenue</td><td>${gbp(s.month.revenue)}</td></tr><tr><td>Supplier costs</td><td>${gbp(s.month.supplierCosts)}</td></tr>
 <tr><td>Payment fees (est.)</td><td>${gbp(s.month.paymentFees)}</td></tr><tr><td>Refunds approved</td><td>${gbp(d.refunds)}</td></tr>
 <tr><td>Software (projected)</td><td>${gbp(d.costs.projectedMonthlyGbp)}${d.costs.overThreshold ? ' <span class="badge error">over £' + esc(d.costs.alertThresholdGbp) + '</span>' : ''}</td></tr>
-<tr><td>AI spend</td><td>${gbp(d.costs.aiMonthToDateGbp)}</td></tr><tr><td><b>Estimated operating result</b></td><td><b>${gbp(s.month.contribution - d.costs.projectedMonthlyGbp)}</b></td></tr></table>
+<tr><td>AI spend</td><td>${gbp(d.costs.aiMonthToDateGbp)}</td></tr>
+${d.vat?.applies ? `<tr><td>VAT threshold (rolling 12 months)</td><td>${gbp(d.vat.rolling12mTurnoverGbp)} of ${gbp(d.vat.threshold)} <span class="badge ${d.vat.level === 'ok' ? 'ok' : d.vat.level === 'warning' ? 'warning' : 'critical'}">${esc(d.vat.percentOfThreshold)}%</span></td></tr>` : ''}<tr><td><b>Estimated operating result</b></td><td><b>${gbp(s.month.contribution - d.costs.projectedMonthlyGbp)}</b></td></tr></table>
 <p class="muted">Estimates only — Shopify and your bookkeeping are the source of truth.</p></section>
 <section class="card"><h2>Alerts</h2>${d.alerts.length ? d.alerts.slice(0, 8).map((a) => `<div class="row"><span><span class="badge ${esc(a.severity)}">${esc(a.severity)}</span> ${esc(a.message)}</span></div>`).join('') : '<p class="ok">No open alerts.</p>'}
 <p><a href="/dashboard/alerts">All alerts</a> · <a href="/dashboard/approvals">${d.approvals} awaiting approval</a></p></section>

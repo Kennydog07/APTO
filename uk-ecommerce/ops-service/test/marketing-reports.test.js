@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { generateDailyContent, dueForPublishing, approveContent, markPublished, rejectContent, PUBLISH_LIMITS } from '../src/marketing.js';
-import { dailyReport, weeklyReport, costProjection } from '../src/reports.js';
+import { dailyReport, weeklyReport, costProjection, vatThresholdCheck } from '../src/reports.js';
 import { ingestWebhook, evaluateOrder, submitSupplierOrders } from '../src/orders.js';
 import { setControl } from '../src/lib/controls.js';
 import { raiseException } from '../src/lib/exceptions.js';
@@ -102,4 +102,19 @@ test('AI budget cap: calls stop when the monthly cap would be exceeded; usage is
   const refusing = { beta: { messages: { create: async () => ({ model: 'claude-opus-5-5', stop_reason: 'refusal', usage: { input_tokens: 10, output_tokens: 0 }, content: [] }) } } };
   const { ctx: c2 } = testCtx();
   assert.equal((await createAi(c2, { client: refusing }).draft({ system: 's', prompt: 'p', purpose: 't' })).skipped, 'refusal');
+});
+
+test('VAT threshold monitor warns at 75% and 90% of £90k rolling turnover', () => {
+  const { ctx } = testCtx();
+  const add = (id, total, daysAgo) => ctx.db.prepare(`INSERT INTO orders (id, name, created_at, financial_status, total_gbp, state, updated_at)
+    VALUES (?,?,?,?,?,?,?)`).run(id, '#' + id, new Date(Date.now() - daysAgo * 86_400_000).toISOString(), 'paid', total, 'shipped', new Date().toISOString());
+  assert.equal(vatThresholdCheck(ctx).level, 'ok');
+  add('a', 70000, 200);
+  assert.equal(vatThresholdCheck(ctx).level, 'warning');
+  add('b', 12000, 10);
+  const v = vatThresholdCheck(ctx);
+  assert.equal(v.level, 'critical');
+  assert.ok(dailyReport(ctx).tasksRequiringAttention.some((t) => t.startsWith('[VAT]')));
+  add('old', 50000, 400); // outside the 12-month window
+  assert.equal(vatThresholdCheck(ctx).rolling12mTurnoverGbp, 82000);
 });

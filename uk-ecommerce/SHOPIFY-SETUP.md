@@ -3,7 +3,7 @@
 All steps are in Shopify admin. Nothing here charges you until you choose a paid plan. **Get approval before choosing a plan, connecting payments or removing the store password.**
 
 ## 1. Create the store
-1. Start a Shopify trial. Store details: business location **United Kingdom** is where you trade, but enter your **real** personal details wherever Shopify asks for them, including residence. Currency: **GBP**. Time zone: Europe/London.
+1. Start a Shopify trial. Store details: business location **United Kingdom**, your own name and address. Currency: **GBP**. Time zone: Europe/London.
 2. Plan: **Basic** is enough (around £25/month monthly, or about £19/month billed annually — verify current pricing; annual billing is a 12-month commitment).
 3. Keep the **store password ON** (Online Store → Preferences) until launch.
 
@@ -38,13 +38,13 @@ Create these definitions so the theme can show verified information:
 
 ## 5. Shipping, tax and checkout
 - Settings → Shipping: one zone, **United Kingdom** (exclude Northern Ireland postcodes or confirm with your adviser), with rates that cover supplier shipping.
-- Settings → Taxes: prices **include tax**. Enable VAT collection only once registered (follow your accountant).
+- Settings → Taxes: **do not collect VAT** while you're not VAT-registered (below £90,000). If you register later, turn on UK VAT with prices including tax and set `vatRegistered: true` in ops-service.
 - Settings → Checkout: require phone only if suppliers need it; turn on email marketing opt-in at checkout (unticked by default).
 - Settings → Customer privacy: **turn on the cookie banner** for the UK.
 - Settings → Notifications: edit the wording as described in `marketing/email/EMAIL-SEQUENCES.md`.
 
-## 6. Payments — 🔴 blocked pending checks
-See `LEGAL-AND-PAYMENTS-CHECKLIST.md` §2. Do not activate Shopify Payments using a UK address that isn't your residence. The likely route is PayPal Business (Qatar), with your approval.
+## 6. Payments (approval required before activating)
+Settings → Payments → **Activate Shopify Payments**: business type *Sole proprietorship*, your personal details and ID, and a UK bank account in your name (preferably a separate business account). Enable Shop Pay, Apple Pay and Google Pay. Optionally add PayPal. Fees are in `LEGAL-AND-PAYMENTS-CHECKLIST.md` §2.
 
 ## 7. Connect ops-service (Dev Dashboard app)
 Since 1 January 2026, new "legacy custom apps" cannot be created in the admin. Use the Shopify **Dev Dashboard**:

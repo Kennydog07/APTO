@@ -37,13 +37,13 @@ test('restock does not republish while product publication is paused', async () 
 test('pricing monitor: small cost rise auto-adjusts within limit; big rise needs approval; approval applies', async () => {
   const { ctx, supplier, shopify } = testCtx();
   seedProduct(ctx, { price_gbp: 19.99, cost_gbp: 6.5, shipping_gbp: 2.5 });
-  supplier.setStock('SUP-1', 20, 7.2, 2.5); // modest rise
+  supplier.setStock('SUP-1', 20, 10, 2.5); // modest rise
   await runPricingMonitor(ctx);
   const p1 = product(ctx);
   assert.ok(p1.price_gbp > 19.99 && p1.price_gbp <= 19.99 * 1.1 + 0.01, `price ${p1.price_gbp}`);
   assert.ok(shopify.calls.some((c) => c.op === 'setVariantPrice'));
 
-  supplier.setStock('SUP-1', 20, 12, 2.5); // large rise
+  supplier.setStock('SUP-1', 20, 13, 2.5); // large rise
   await runPricingMonitor(ctx);
   const a = listApprovals(ctx.db).find((x) => x.type === 'price_change');
   assert.ok(a, 'approval expected');
@@ -56,7 +56,7 @@ test('pricing monitor never changes price while price changes are paused', async
   const { ctx, supplier, shopify } = testCtx();
   seedProduct(ctx, { price_gbp: 19.99, cost_gbp: 6.5 });
   setControl(ctx.db, 'pause_price_changes', true, 't');
-  supplier.setStock('SUP-1', 20, 7.2, 2.5);
+  supplier.setStock('SUP-1', 20, 10, 2.5);
   await runPricingMonitor(ctx);
   assert.equal(product(ctx).price_gbp, 19.99);
   assert.ok(!shopify.calls.some((c) => c.op === 'setVariantPrice'));

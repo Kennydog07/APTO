@@ -27,6 +27,29 @@ export function costProjection(ctx, at = new Date()) {
   };
 }
 
+/**
+ * UK VAT registration threshold monitor (for traders not yet VAT-registered).
+ * Compulsory registration applies if taxable turnover in the last 12 months
+ * exceeds the threshold, or is expected to in the next 30 days alone.
+ * Uses paid order totals as a proxy for taxable turnover (confirm with your accountant).
+ */
+export function vatThresholdCheck(ctx, at = new Date()) {
+  const { db, cfg } = ctx;
+  const threshold = Number(process.env.VAT_THRESHOLD_GBP ?? 90000);
+  const sum = (days) => db.prepare("SELECT COALESCE(SUM(total_gbp),0) AS s FROM orders WHERE financial_status = 'paid' AND created_at >= ? AND created_at <= ?")
+    .get(new Date(at.getTime() - days * 86_400_000).toISOString(), at.toISOString()).s;
+  const rolling12m = r2(sum(365));
+  const last30 = r2(sum(30));
+  const pct = rolling12m / threshold;
+  let level = 'ok';
+  if (pct >= 0.9 || last30 >= threshold) level = 'critical';
+  else if (pct >= 0.75) level = 'warning';
+  return {
+    applies: !cfg.pricing.vatRegistered, threshold, rolling12mTurnoverGbp: rolling12m, last30DaysGbp: last30, percentOfThreshold: Math.round(pct * 1000) / 10, level,
+    message: level === 'ok' ? null : `Rolling 12-month turnover £${rolling12m} is ${Math.round(pct * 100)}% of the £${threshold} VAT threshold — speak to your accountant about registering (you must notify HMRC within 30 days of exceeding it).`,
+  };
+}
+
 function orderEconomics(ctx, orders) {
   const a = withDefaults(ctx.cfg.pricing);
   let revenue = 0, net = 0, supplier = 0, fees = 0;
@@ -60,10 +83,12 @@ export function dailyReport(ctx, { date = new Date() } = {}) {
   const support = db.prepare("SELECT status, COUNT(*) AS n FROM support_tickets WHERE created_at >= ? GROUP BY status").all(since);
   const costs = costProjection(ctx, date);
   const controls = getControls(db);
+  const vat = vatThresholdCheck(ctx, date);
 
   const attention = [
     ...critical.map((e) => `[${e.severity.toUpperCase()}] ${e.message}`),
     ...approvals.map((a) => `[APPROVAL] ${a.summary}`),
+    ...(vat.applies && vat.message ? [`[VAT] ${vat.message}`] : []),
     ...(costs.overThreshold ? [`[BUDGET] Projected monthly software cost £${costs.projectedMonthlyGbp} exceeds £${costs.alertThresholdGbp}`] : []),
     ...Object.values(controls).filter((c) => c.paused).map((c) => `[PAUSED] ${c.label}`),
   ];
@@ -72,7 +97,7 @@ export function dailyReport(ctx, { date = new Date() } = {}) {
     generatedAt: now(), period: { from: since, to: date.toISOString() }, testMode: cfg.testMode,
     sales: { orders: orders.length, ...econ, averageOrderValue: orders.length ? r2(econ.revenue / orders.length) : 0 },
     unfulfilledOrders: unfulfilled, supplierLiabilities: liabilities, returnsAndRefunds: returns, lowStockProducts: lowStock,
-    workflowFailures: failures, marketing: { content, publishedLast24h: published, metrics }, support, costs, tasksRequiringAttention: attention,
+    workflowFailures: failures, marketing: { content, publishedLast24h: published, metrics }, support, costs, vatThreshold: vat, tasksRequiringAttention: attention,
   };
   report.text = renderText(report);
   return report;
@@ -85,6 +110,7 @@ function renderText(r) {
   L.push(`Unfulfilled orders: ${r.unfulfilledOrders.length} | Supplier liabilities: £${r2(r.supplierLiabilities.reduce((s, x) => s + x.gbp, 0))}`);
   L.push(`Low-stock/paused products: ${r.lowStockProducts.length} | Failures (24h): ${r.workflowFailures.length}`);
   L.push(`Content awaiting approval: ${r.marketing.content.pending_approval ?? 0} | Published (24h): ${r.marketing.publishedLast24h.reduce((s, x) => s + x.n, 0)}`);
+  if (r.vatThreshold.applies) L.push(`VAT threshold: rolling 12-month turnover £${r.vatThreshold.rolling12mTurnoverGbp} (${r.vatThreshold.percentOfThreshold}% of £${r.vatThreshold.threshold})`);
   L.push(`Projected monthly software cost: £${r.costs.projectedMonthlyGbp} (alert at £${r.costs.alertThresholdGbp})`);
   L.push('');
   L.push(r.tasksRequiringAttention.length ? 'NEEDS YOUR ATTENTION:' : 'Nothing needs your attention today.');

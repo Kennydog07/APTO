@@ -2,7 +2,7 @@
 
 Plain-English, step-by-step. Allow 3–4 hours in total, spread over a few days. You will never need to paste a password into a chat. Secrets go into files on your server or into the n8n credentials screen.
 
-> **Before spending money:** read `LEGAL-AND-PAYMENTS-CHECKLIST.md`. Live selling is blocked until payments, VAT and Qatar-side questions are answered. You can still do Parts 1–4 using free trials and test mode.
+> **Before spending money:** read `LEGAL-AND-PAYMENTS-CHECKLIST.md`. Before going live you'll activate Shopify Payments, register as self-employed, pay the ICO fee and finish the policies. Parts 1–4 work with free trials and test mode.
 
 ## Part 1 — Tools on your laptop (20 min)
 1. Install **Node.js 22 LTS** from nodejs.org (Windows installer, defaults).
@@ -15,7 +15,7 @@ Plain-English, step-by-step. Allow 3–4 hours in total, spread over a few days.
    npm install
    npm test
    ```
-   You should see `# pass 65` and `# fail 0`.
+   You should see `# pass 67` and `# fail 0`.
 
 ## Part 2 — Try the system locally in test mode (15 min)
 1. In `ops-service`, copy `.env.example` to `.env`.

@@ -1,14 +1,15 @@
 # Launch checklist
 
-**Current status: 🔴 NOT READY: live checkout BLOCKED.** The technical system is built and tested in test mode. Launch needs the owner's accounts, approvals and professional advice. Tick every 🔴 item before turning test mode off.
+**Current status: 🟠 NOT YET LIVE.** No eligibility blockers. The technical system is built and tested in test mode. Launch needs your accounts, approvals and the set-up items below. Tick every 🔴 item before turning test mode off.
 
 ## A. Legal, tax, payments (owner + advisers)
-- [ ] 🔴 Payment provider approved **with your real residence** (likely PayPal Business, Qatar) and connected to Shopify
-- [ ] 🔴 Written accountant advice on VAT (NETP?) and income tax; VAT registered before first sale if advised
-- [ ] 🔴 Qatar advice: e-commerce licence (Decision 25/2026) and residence-permit permission
-- [ ] 🔴 Policies completed, reviewed and published; trader name, geographic address and email shown
-- [ ] Cookie banner on; ICO fee checked
-- [ ] Self Assessment registration (if advised)
+- [ ] 🔴 Shopify Payments activated (ID verified, UK business bank account connected)
+- [ ] 🔴 Policies completed and published; trader name, geographic address and email shown
+- [ ] 🔴 ICO data-protection fee paid (or exemption confirmed)
+- [ ] 🔴 Cookie banner on
+- [ ] Self Assessment registration done (or reminder set for the 5 October deadline)
+- [ ] VAT decision recorded (default: not registered; threshold monitor on)
+- [ ] Public/product liability insurance (recommended)
 
 ## B. Brand and domain (approval required)
 - [ ] Brand chosen after UK IPO / Companies House / social-handle checks (`docs/brand/BRAND-CONCEPTS.md`)

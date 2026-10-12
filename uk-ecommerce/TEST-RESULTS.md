@@ -2,6 +2,8 @@
 
 Run on **12 October 2026** in the build environment: Linux, Node 22.22.0, n8n 2.42.6 on Node 24.21.0, Chromium via Playwright 1.63.0. No Docker daemon was available. There are no Shopify, supplier, payment, email or Pinterest credentials.
 
+> **Update:** pricing now uses UK sole-trader defaults (Shopify Payments, not VAT-registered), with a rolling £90k VAT-threshold monitor added. All suites were re-run after the change: 67/67 unit tests, 104/104 browser checks, Theme Check 0 offences.
+
 > **Mock ≠ production.** "Test-mode result" means the behaviour was verified against simulated Shopify and suppliers. **Nothing here proves a live integration works.** The "Live result" column stays BLOCKED or NOT TESTED until the owner supplies accounts and the launch checks are run.
 
 ## Acceptance criteria (brief, section 18)
@@ -16,7 +18,7 @@ Run on **12 October 2026** in the build environment: Linux, Node 22.22.0, n8n 2.
 | 6 | Duplicate webhooks don't duplicate orders | **PASS** | BLOCKED | Same webhook ID ignored; same order with new ID → still one order and one supplier order (unit + e2e) |
 | 7 | Supplier integration in test mode | **PASS** (simulator) | **NOT TESTED** (CJ adapter unverified); BLOCKED (Avasam account) | Idempotent submit, concurrent submits → 1 order, definite failure → retry limit, timeout → "unknown", never auto-retried |
 | 8 | Stock changes update listings | **PASS** (mock Shopify) | BLOCKED | Out-of-stock → paused (DRAFT); restock → restored; not re-published while publication paused |
-| 9 | Pricing rules prevent unacceptable margins | **PASS** | n/a (pure logic) | Hand-checked contribution maths; negative/poor margin flagged; >10% change needs approval; below break-even rejected even for owner |
+| 9 | Pricing rules prevent unacceptable margins | **PASS** | n/a (pure logic) | Hand-checked contribution maths for the UK sole-trader defaults (Shopify Payments 2% + 25p, not VAT-registered) and a VAT-registered case; VAT-threshold monitor warns at 75%/90% of £90k; negative/poor margin flagged; >10% change needs approval; below break-even rejected even for owner |
 | 10 | Tracking updates correctly | **PASS** (mock) | BLOCKED | Supplier tracking → one Shopify fulfilment; nothing invented when tracking absent; invalid numbers rejected |
 | 11 | Customer notifications in test mode | **PARTIAL**: reply content PASS; sending NOT TESTED | BLOCKED | Verified-email WISMO reply PASS; non-owner gets no order data; escalations get neutral ack. SMTP sending not run (no mailbox) |
 | 12 | Marketing content enters approval queue | **PASS** | n/a | Unit tests + n8n Workflow 09 run queued 5 items as `pending_approval` |
@@ -31,7 +33,7 @@ Run on **12 October 2026** in the build environment: Linux, Node 22.22.0, n8n 2.
 
 ## How to re-run
 ```bash
-cd ops-service && npm install && npm test                 # 65 unit/integration tests
+cd ops-service && npm install && npm test                 # 67 unit/integration tests
 cd ../tests/theme-preview && npm install && npm test      # Liquid render + 104 browser checks (needs Chromium)
 # Shopify Theme Check:  npx @shopify/cli theme check --path ../../shopify-theme
 # End-to-end with real n8n (needs n8n + Node 24 installed locally):
@@ -54,7 +56,7 @@ See `tests/e2e/last-run.log`:
 6. **n8n Config node:** passed only the first item, which would drop orders in the fallback batch. Fixed.
 7. **Test harness:** stray n8n processes survived between runs (n8n renames its process). Harness now uses process groups and checks for port conflicts.
 
-## Unit and integration tests (ops-service, 65/65)
+## Unit and integration tests (ops-service, 67/67)
 - ✅ classification: escalation keywords beat routine categories
 - ✅ WISMO from the order email gets real status and supplier tracking
 - ✅ WISMO from a different email reveals nothing about the order
@@ -78,6 +80,7 @@ See `tests/e2e/last-run.log`:
 - ✅ weekly report recommends but never authorises spending
 - ✅ cost projection alerts above £80
 - ✅ AI budget cap: calls stop when the monthly cap would be exceeded; usage is recorded; refusals handled
+- ✅ VAT threshold monitor warns at 75% and 90% of £90k rolling turnover
 - ✅ stock drops to zero -> product paused in Shopify; stock returns -> restored
 - ✅ restock does not republish while product publication is paused
 - ✅ pricing monitor: small cost rise auto-adjusts within limit; big rise needs approval; approval applies
@@ -100,8 +103,9 @@ See `tests/e2e/last-run.log`:
 - ✅ manual supplier creates a purchase task for the owner
 - ✅ GDPR customers/redact purges stored personal data
 - ✅ GDPR data request raises an owner alert
-- ✅ contribution maths matches a hand calculation (VAT-registered)
-- ✅ not VAT-registered: no VAT deducted from revenue
+- ✅ contribution maths matches a hand calculation (defaults: not VAT-registered, Shopify Payments)
+- ✅ contribution maths matches a hand calculation (VAT-registered, high-fee case)
+- ✅ becoming VAT-registered removes 1/6 of the VAT-inclusive price from revenue
 - ✅ negative margin and excessive shipping are flagged and rejected
 - ✅ uncompetitive price flagged against competitor reference
 - ✅ recommended price meets every rule and ends in .99
