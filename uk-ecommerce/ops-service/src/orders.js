@@ -102,6 +102,10 @@ export function ingestWebhook(ctx, meta, payload) {
       raiseException(db, { source: 'refunds', ref: id, severity: 'warning', message: `Refund issued in Shopify for order ${id} — check whether the supplier order needs cancelling` });
       return { duplicate: false, orderId: id, topic, forward: false };
     }
+    if (topic === 'customers/data_request') {
+      raiseException(db, { source: 'privacy', ref: String(payload?.customer?.id ?? ''), severity: 'error', message: 'Customer data access request received via Shopify — respond within one month (UK GDPR). Export their data from Shopify admin.' });
+      return { duplicate: false, topic, forward: false };
+    }
     if (topic === 'customers/redact') {
       const ids = (payload.orders_to_redact ?? []).map(String);
       for (const oid of ids) purgeOrderPii(db, oid);

@@ -7,3 +7,6 @@ node_modules/
 .env.*
 !.env.example
 tests/theme-preview/out/
+deploy/ops.env
+deploy/backups/*
+!deploy/backups/.gitkeep

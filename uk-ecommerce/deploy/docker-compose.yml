@@ -1,0 +1,65 @@
+# Production stack for a single low-cost VPS (2 vCPU / 4 GB RAM is plenty).
+# All images are version-pinned. Update deliberately: change the tag, run
+# `docker compose pull && docker compose up -d`, then run the smoke checks
+# in N8N-SETUP.md.
+name: shop-ops
+
+services:
+  caddy:
+    image: caddy:2.10.0-alpine
+    restart: unless-stopped
+    ports: ["80:80", "443:443"]
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    environment:
+      N8N_DOMAIN: ${N8N_DOMAIN:?set N8N_DOMAIN}
+      OPS_DOMAIN: ${OPS_DOMAIN:?set OPS_DOMAIN}
+      ACME_EMAIL: ${ACME_EMAIL:?set ACME_EMAIL}
+    depends_on: [n8n, ops-service]
+
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:2.42.6
+    restart: unless-stopped
+    environment:
+      N8N_HOST: ${N8N_DOMAIN}
+      N8N_PROTOCOL: https
+      N8N_PORT: 5678
+      WEBHOOK_URL: https://${N8N_DOMAIN}/
+      N8N_ENCRYPTION_KEY: ${N8N_ENCRYPTION_KEY:?set N8N_ENCRYPTION_KEY}
+      GENERIC_TIMEZONE: Europe/London
+      TZ: Europe/London
+      N8N_SECURE_COOKIE: "true"
+      N8N_BLOCK_ENV_ACCESS_IN_NODE: "true"
+      N8N_DIAGNOSTICS_ENABLED: "false"
+      N8N_PERSONALIZATION_ENABLED: "false"
+      N8N_RUNNERS_ENABLED: "true"
+      N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS: "true"
+      EXECUTIONS_DATA_PRUNE: "true"
+      EXECUTIONS_DATA_MAX_AGE: "336"
+      N8N_LOG_LEVEL: info
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - ./backups/n8n:/backups
+    networks: [default]
+
+  ops-service:
+    build: ../ops-service
+    image: shop-ops-service:1.0.0
+    restart: unless-stopped
+    env_file: ./ops.env
+    environment:
+      DB_PATH: /data/ops.sqlite
+      PORT: 8080
+      N8N_ORDER_WEBHOOK_URL: http://n8n:5678/webhook/ops-new-paid-order
+    volumes:
+      - ops_data:/data
+      - ./backups/ops:/backups
+    networks: [default]
+
+volumes:
+  caddy_data:
+  caddy_config:
+  n8n_data:
+  ops_data:

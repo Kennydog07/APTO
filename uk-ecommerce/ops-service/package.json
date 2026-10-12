@@ -4,7 +4,9 @@
   "private": true,
   "description": "Integration service for the UK store: verified Shopify webhooks, order routing, pricing, inventory, support, marketing queue, reports and owner dashboard.",
   "type": "module",
-  "engines": { "node": ">=22.13" },
+  "engines": {
+    "node": ">=22.13"
+  },
   "scripts": {
     "start": "node --disable-warning=ExperimentalWarning src/server.js",
     "test": "node --disable-warning=ExperimentalWarning --test \"test/**/*.test.js\"",
@@ -12,7 +14,8 @@
     "pricing-report": "node --disable-warning=ExperimentalWarning scripts/pricing-report.js",
     "hash-password": "node scripts/hash-password.js",
     "backup": "node --disable-warning=ExperimentalWarning scripts/backup.js",
-    "restore": "node --disable-warning=ExperimentalWarning scripts/restore.js"
+    "restore": "node --disable-warning=ExperimentalWarning scripts/restore.js",
+    "shopify-smoke": "node --disable-warning=ExperimentalWarning --env-file-if-exists=.env scripts/shopify-smoke.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "0.129.0"

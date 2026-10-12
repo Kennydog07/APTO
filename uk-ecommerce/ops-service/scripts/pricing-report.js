@@ -1,12 +1,12 @@
 // Pricing dashboard (terminal + HTML). Shows, for each candidate, the
 // maximum landed cost that still meets the margin rules at the target price.
-// Usage: npm run pricing-report -- ../product-data/PRODUCT-SHORTLIST.csv [out.html]
+// Usage: npm run pricing-report -- ../PRODUCT-SHORTLIST.csv [out.html]
 import { readFileSync, writeFileSync } from 'node:fs';
 import { loadConfig } from '../src/config.js';
 import { parseCsv } from '../src/scoring.js';
 import { calculate, breakEvenPrice } from '../src/pricing.js';
 
-const [file = '../product-data/PRODUCT-SHORTLIST.csv', out] = process.argv.slice(2);
+const [file = '../PRODUCT-SHORTLIST.csv', out] = process.argv.slice(2);
 const cfg = loadConfig();
 const rows = parseCsv(readFileSync(file, 'utf8'));
 

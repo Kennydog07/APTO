@@ -1,0 +1,33 @@
+{
+	email {$ACME_EMAIL}
+}
+
+# n8n editor + webhooks (n8n has its own owner login; enable MFA in n8n settings)
+{$N8N_DOMAIN} {
+	encode gzip
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options nosniff
+		Referrer-Policy no-referrer
+		-Server
+	}
+	reverse_proxy n8n:5678
+}
+
+# ops-service: public paths are ONLY the Shopify webhook receiver, the owner
+# dashboard and a health check. The n8n-facing /api is reachable only on the
+# internal Docker network.
+{$OPS_DOMAIN} {
+	encode gzip
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		-Server
+	}
+	@public path /webhooks/shopify /dashboard /dashboard/* /healthz
+	handle @public {
+		reverse_proxy ops-service:8080
+	}
+	handle {
+		respond "Not found" 404
+	}
+}

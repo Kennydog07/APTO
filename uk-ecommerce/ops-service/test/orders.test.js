@@ -199,3 +199,9 @@ test('GDPR customers/redact purges stored personal data', () => {
   assert.equal(o.ship_address, null);
   assert.equal(o.pii_purged, 1);
 });
+
+test('GDPR data request raises an owner alert', () => {
+  const { ctx } = testCtx();
+  receive(ctx, { customer: { id: 77 } }, 'customers/data_request');
+  assert.ok(openExceptions(ctx.db).some((e) => e.source === 'privacy'));
+});

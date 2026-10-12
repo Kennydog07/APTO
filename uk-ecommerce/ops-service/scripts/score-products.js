@@ -1,10 +1,10 @@
 // Product scoring engine CLI.
-// Usage: npm run score-products -- ../product-data/PRODUCT-SHORTLIST.csv [--json]
+// Usage: npm run score-products -- ../PRODUCT-SHORTLIST.csv [--json]
 import { readFileSync } from 'node:fs';
 import { loadConfig } from '../src/config.js';
 import { parseCsv, scoreProduct } from '../src/scoring.js';
 
-const file = process.argv[2] ?? '../product-data/PRODUCT-SHORTLIST.csv';
+const file = process.argv[2] ?? '../PRODUCT-SHORTLIST.csv';
 const cfg = loadConfig();
 const rows = parseCsv(readFileSync(file, 'utf8'));
 const scored = rows.map((r) => scoreProduct(r, cfg.pricing)).sort((a, b) => b.score - a.score);
