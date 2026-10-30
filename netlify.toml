@@ -42,6 +42,113 @@
   status = 301
   force = true
 
+# ---------- legacy apto-pro.com root paths -> /pro (apto-pro.com becomes the main domain) ----------
+[[redirects]]
+  from = "/trades"
+  to = "/pro/trades"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/about"
+  to = "/pro/about"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/contact"
+  to = "/pro/contact"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/privacy"
+  to = "/pro/privacy"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/terms"
+  to = "/pro/terms"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/cookies"
+  to = "/pro/cookies"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/privacy-policy"
+  to = "/pro/privacy-policy"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/gdpr"
+  to = "/pro/gdpr"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/ai-engine"
+  to = "/pro/ai-engine"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/ai-engine.html"
+  to = "/pro/ai-engine.html"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/trades.html"
+  to = "/pro/trades.html"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/about.html"
+  to = "/pro/about.html"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/contact.html"
+  to = "/pro/contact.html"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/privacy.html"
+  to = "/pro/privacy.html"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/terms.html"
+  to = "/pro/terms.html"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/cookies.html"
+  to = "/pro/cookies.html"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/app"
+  to = "/pro/app"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/app.html"
+  to = "/pro/app.html"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/app/*"
+  to = "/pro/app/:splat"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/images/*"
+  to = "/pro/images/:splat"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/site.webmanifest"
+  to = "/pro/site.webmanifest"
+  status = 301
+  force = true
+
 # ---------- APTO Pro (/pro) ----------
 [[redirects]]
   from = "/pro/index.html"

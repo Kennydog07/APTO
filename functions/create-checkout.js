@@ -32,8 +32,8 @@ exports.handler = async (event) => {
       customer_email: email,
       line_items: [{ price: priceId, quantity: 1 }],
       subscription_data: { trial_period_days: 14 },
-      success_url: successUrl || `${process.env.ALLOWED_ORIGIN}/app.html?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url:  cancelUrl  || `${process.env.ALLOWED_ORIGIN}/#pricing`,
+      success_url: successUrl || `${process.env.ALLOWED_ORIGIN}/pro/app.html?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url:  cancelUrl  || `${process.env.ALLOWED_ORIGIN}/pro/#pricing`,
       allow_promotion_codes: true,
     });
 
