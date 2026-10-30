@@ -57,7 +57,7 @@
         <li>
           On the free Gemini service, Google may use submitted content to
           improve its products. See our
-          <a href="/privacy" data-link>privacy information</a>.
+          <a href="/solve/privacy" data-link>privacy information</a>.
         </li>
         <li>
           <strong
@@ -160,10 +160,10 @@
       or guarantee any work.
     </p>
     <div class="btn-row no-print">
-      <a class="btn btn-primary" href="/" data-link
+      <a class="btn btn-primary" href="/solve/" data-link
         >${f("arrowLeft")} Learn something else</a
       >
-      <a class="btn" href="/safety" data-link>Read our safety information</a>
+      <a class="btn" href="/solve/safety" data-link>Read our safety information</a>
     </div>
   </article>`}function dt(e,a,{max:t=H.MAX_IMAGES_PER_REQUEST,label:s="Add photos (optional)",hint:o="",onChange:n=()=>{}}={}){const l=`photo-${Math.random().toString(36).slice(2,8)}`;let c=-1,i="",d=!1;const p=()=>{j(e,r` <div class="field">
           <span class="label" id="${l}-label">${s}</span>
@@ -243,7 +243,7 @@
       <p class="mb-0">
         You’ve used all ${G} free AI requests. They reset at
         <strong>${Je()}</strong
-        >.${e?"":r` Everything you’ve saved still works – steps, lessons and quizzes you already have don’t use requests. <a href="/saved" data-link>Go to My learning</a>.`}
+        >.${e?"":r` Everything you’ve saved still works – steps, lessons and quizzes you already have don’t use requests. <a href="/solve/saved" data-link>Go to My learning</a>.`}
       </p>
     </div>
   </div>`}function Ba(e){j(e,r` <div class="narrow">
@@ -440,7 +440,7 @@
           is free. The service is not unlimited.
         </p>
       </section>
-      <a class="btn btn-primary" href="/" data-link>Start learning</a>
+      <a class="btn btn-primary" href="/solve/" data-link>Start learning</a>
     </div>`)}function fe(e){j(e,r` <div class="not-found narrow">
       <img
         class="nf-mascot"
@@ -456,11 +456,11 @@
         created it.
       </p>
       <div class="btn-row" style="justify-content:center">
-        <a class="btn btn-primary" href="/" data-link>Go to the homepage</a>
-        <a class="btn" href="/saved" data-link>View my learning</a>
+        <a class="btn btn-primary" href="/solve/" data-link>Go to the homepage</a>
+        <a class="btn" href="/solve/saved" data-link>View my learning</a>
       </div>
     </div>`)}const ze=e=>{const a=R.getItem(e);return a&&a.kind==="course"?a:null};async function Ft(e){e instanceof K&&e.code.startsWith("DAILY_LIMIT")?W(e.message,"info",8e3):W(e.message||"Something went wrong.","error")}function Ga(e,{id:a}){const t=ze(a);if(!t)return fe(e);me(t.title);const s=new AbortController;let o=null;const n=()=>{var u,v,$,b,h,w,A;const l=Re(t),c=t.lessons.filter(k=>{var S,q;return(q=(S=t.lessonState)==null?void 0:S[k.id])==null?void 0:q.completed}).length,i=_t(t),d=t.lessons.findIndex(k=>{var S,q;return!((q=(S=t.lessonState)==null?void 0:S[k.id])!=null&&q.completed)}),p=t.lessons.reduce((k,S)=>k+(S.minutes||0),0);j(e,r` <nav class="breadcrumb" aria-label="Breadcrumb">
-          <a href="/saved" data-link
+          <a href="/solve/saved" data-link
             >${f("arrowLeft","icon-inline")} My learning</a
           >
         </nav>
@@ -478,7 +478,7 @@
         </header>
 
         <div class="btn-row mb-2">
-          ${d>=0?r`<a class="btn btn-primary btn-lg" href="/course/${t.id}/lesson/${d+1}" data-link>${f("play")} ${c?"Continue":"Start"}: lesson ${d+1}</a>`:r`<a class="btn btn-primary btn-lg" href="/course/${t.id}/final" data-link>${f("target")} ${(v=t.final)!=null&&v.passed?"Review final assessment":"Take the final assessment"}</a>`}
+          ${d>=0?r`<a class="btn btn-primary btn-lg" href="/solve/course/${t.id}/lesson/${d+1}" data-link>${f("play")} ${c?"Continue":"Start"}: lesson ${d+1}</a>`:r`<a class="btn btn-primary btn-lg" href="/solve/course/${t.id}/final" data-link>${f("target")} ${(v=t.final)!=null&&v.passed?"Review final assessment":"Take the final assessment"}</a>`}
         </div>
 
         <div class="grid grid-2">
@@ -488,7 +488,7 @@
               ${t.lessons.map((k,S)=>{var de;const q=(de=t.lessonState)==null?void 0:de[k.id],B=q!=null&&q.completed&&k.quiz.length?ce(k.quiz,q.answers).pct:null;return r`<li>
                   <a
                     class="lesson-link ${q!=null&&q.completed?"done":""}"
-                    href="/course/${t.id}/lesson/${S+1}"
+                    href="/solve/course/${t.id}/lesson/${S+1}"
                     data-link
                   >
                     <span class="num" aria-hidden="true"
@@ -506,8 +506,8 @@
                 </li>`})}
             </ol>
             <div class="mt-2">
-              ${i?r`<a class="btn ${($=t.final)!=null&&$.passed?"":"btn-accent"} btn-block" href="/course/${t.id}/final" data-link>${f("target")} Final assessment${((b=t.final)==null?void 0:b.score)!==null&&((h=t.final)==null?void 0:h.score)!==void 0?` · best ${t.final.score}%`:""}</a>`:r`<p class="small muted mb-0">${f("lock","icon-inline")} The final assessment unlocks when you finish the core lessons.</p>`}
-              ${(w=t.final)!=null&&w.passed?r`<a class="btn btn-primary btn-block mt-1" href="/course/${t.id}/certificate" data-link>${f("award")} View certificate</a>`:""}
+              ${i?r`<a class="btn ${($=t.final)!=null&&$.passed?"":"btn-accent"} btn-block" href="/solve/course/${t.id}/final" data-link>${f("target")} Final assessment${((b=t.final)==null?void 0:b.score)!==null&&((h=t.final)==null?void 0:h.score)!==void 0?` · best ${t.final.score}%`:""}</a>`:r`<p class="small muted mb-0">${f("lock","icon-inline")} The final assessment unlocks when you finish the core lessons.</p>`}
+              ${(w=t.final)!=null&&w.passed?r`<a class="btn btn-primary btn-block mt-1" href="/solve/course/${t.id}/certificate" data-link>${f("award")} View certificate</a>`:""}
             </div>
           </section>
 
@@ -562,11 +562,11 @@
               Pass the final assessment (${se}% or more) to unlock your
               certificate.
             </p>
-            <a class="btn btn-primary" href="/course/${t.id}" data-link
+            <a class="btn btn-primary" href="/solve/course/${t.id}" data-link
               >Back to the course</a
             >
           </div>`);return}const n=R.state.learnerName;j(e,r` <nav class="breadcrumb no-print" aria-label="Breadcrumb">
-            <a href="/course/${t.id}" data-link
+            <a href="/solve/course/${t.id}" data-link
               >${f("arrowLeft","icon-inline")} ${t.title}</a
             >
           </nav>
@@ -739,18 +739,18 @@ ${(a==null?void 0:a.given)||""}</textarea>
             </button>
           </div>`}
   </div>`}function Ke(e,a,t,s){const o=e.target.closest("[data-quiz-check]"),n=e.target.closest("[data-self-mark]");if(o&&o.closest(`[id^="${s}-"]`)){const l=Number(o.dataset.quizCheck),c=a[l],i=`${s}-${l}`;if(c.type==="mcq"){const d=document.querySelector(`input[name="${i}"]:checked`);if(!d)return{handled:!0,error:"Please choose an answer first."};const p=Number(d.value);t[l]={given:p,checked:!0,correct:p===c.answerIndex}}else{const d=document.getElementById(`${i}-text`).value.trim();if(!d)return{handled:!0,error:"Please type an answer first."};t[l]={given:d,checked:!0,correct:null,hint:wa(d,c.acceptableKeywords)}}return{handled:!0,focus:`#${i}`}}if(n&&n.closest(`[id^="${s}-"]`)){const l=Number(n.dataset.selfMark);return t[l]&&(t[l].correct=n.dataset.value==="yes"),{handled:!0,focus:`#${s}-${l}`}}return{handled:!1}}function Ya(e,a){const t=ce(e,a);return{...t,text:`${t.correct} of ${t.total} correct (${t.pct}%)`}}function Xa(e,{id:a}){const t=ze(a);if(!t)return fe(e);me(`Final assessment – ${t.title}`);const s=new AbortController,o=t.plan.finalAssessment||[];t.final=t.final||{answers:{},score:null,passed:!1};const n=()=>R.saveItem(t),l=()=>{if(!_t(t)){j(e,r` <nav class="breadcrumb" aria-label="Breadcrumb">
-              <a href="/course/${t.id}" data-link
+              <a href="/solve/course/${t.id}" data-link
                 >${f("arrowLeft","icon-inline")} ${t.title}</a
               >
             </nav>
             <div class="narrow card">
               <h1>Final assessment</h1>
               ${U("info","Not unlocked yet",r`<p class="mb-0">Finish all the core lessons first, then come back to take the final assessment.</p>`,"lock")}
-              <a class="btn btn-primary" href="/course/${t.id}" data-link
+              <a class="btn btn-primary" href="/solve/course/${t.id}" data-link
                 >Back to the course</a
               >
             </div>`);return}const c=ce(o,t.final.answers),i=c.complete,d=zt(t);j(e,r` <nav class="breadcrumb" aria-label="Breadcrumb">
-            <a href="/course/${t.id}" data-link
+            <a href="/solve/course/${t.id}" data-link
               >${f("arrowLeft","icon-inline")} ${t.title}</a
             >
           </nav>
@@ -781,7 +781,7 @@ ${(a==null?void 0:a.given)||""}</textarea>
                       correct.${c.pct>=se?"":` You need ${se}% to pass. Review your weak areas and try again – retakes are free.`}
                     </p>
                     <div class="btn-row" style="justify-content:center">
-                      ${t.final.passed?r`<a class="btn btn-primary" href="/course/${t.id}/certificate" data-link>${f("award")} View your certificate</a>`:""}
+                      ${t.final.passed?r`<a class="btn btn-primary" href="/solve/course/${t.id}/certificate" data-link>${f("award")} View your certificate</a>`:""}
                       <button type="button" class="btn" data-retake>
                         ${f("refresh")} Retake assessment
                       </button>
@@ -911,7 +911,7 @@ ${O.homeRequest}</textarea>
                     ${l.map(i=>{const d=i.kind==="task"?et(i):tt(i);return r`<li class="item-card">
                         <div class="head">
                           <h3>
-                            <a href="/${i.kind}/${i.id}" data-link
+                            <a href="/solve/${i.kind}/${i.id}" data-link
                               >${i.title}</a
                             >
                           </h3>
@@ -987,7 +987,7 @@ ${O.homeRequest}</textarea>
                 It will not guide gas work, mains electrics, structural changes,
                 asbestos, work at height, high-risk vehicle repairs or medical
                 treatment.
-                <a href="/safety" data-link>Read our safety information</a>.
+                <a href="/solve/safety" data-link>Read our safety information</a>.
               </p>
             </div>
             <div class="card soft">
@@ -1001,7 +1001,7 @@ ${O.homeRequest}</textarea>
                 for analysis; photos are not kept by APTO Solve.
               </p>
               <p class="mb-0">
-                <a href="/privacy" data-link>Read the privacy information</a>.
+                <a href="/solve/privacy" data-link>Read the privacy information</a>.
               </p>
             </div>
           </section>`),dt(e.querySelector("#home-photos"),O.photos,{label:"Photos (optional)"})},n=async()=>{var p,u;const l=e.querySelector("#request-form"),c=l.request.value.trim();if(O.homeRequest=l.request.value,O.homeMode=l.mode.value||"auto",s=null,c.length<3){t=c?"Please describe what you want to learn in a few more words.":"Please tell us what you would like to learn or do.",o(),e.querySelector("#request").focus();return}if(c.length>H.MAX_REQUEST_CHARS){t=`Please shorten your request to ${H.MAX_REQUEST_CHARS} characters or fewer.`,o(),e.querySelector("#request").focus();return}if(te()<=0){o(),(p=e.querySelector("#out-of-requests"))==null||p.focus();return}if(t="",O.photos.length&&!await it()){s={message:"Your photos were not sent. Remove them, or start again and accept the photo notice."},o();return}const i=new AbortController,d=Bt(e,"assess",()=>i.abort());try{const v=await we("assess",{request:c,mode:O.homeMode,images:nt(O.photos)},{signal:i.signal});if(v.refused){R.setDraft({refusal:v.data,createdAt:Date.now()}),oe("/refused");return}R.setDraft({request:c,mode:O.homeMode,assessment:v.data,createdAt:Date.now(),hadPhotos:O.photos.length>0}),oe("/start")}catch(v){if(v instanceof K&&v.code==="CANCELLED"){o();return}if(v instanceof K&&v.code.startsWith("DAILY_LIMIT")){s=null,o(),(u=e.querySelector("#out-of-requests"))==null||u.focus();return}s=v,o()}finally{d()}};return e.addEventListener("submit",l=>{l.target.id==="request-form"&&(l.preventDefault(),n())},{signal:a.signal}),e.addEventListener("input",l=>{if(l.target.id==="request"){O.homeRequest=l.target.value;const c=e.querySelector("#request-count");c.textContent=`${l.target.value.length} / ${H.MAX_REQUEST_CHARS}`,c.classList.toggle("over",l.target.value.length>H.MAX_REQUEST_CHARS)}},{signal:a.signal}),e.addEventListener("change",l=>{l.target.name==="mode"&&(O.homeMode=l.target.value)},{signal:a.signal}),e.addEventListener("click",l=>{const c=l.target.closest("[data-example]");if(!c)return;const i=Mt[Number(c.dataset.example)];O.homeRequest=i.text,O.homeMode=i.mode,t="",o();const d=e.querySelector("#request");d.focus(),d.scrollIntoView({block:"center"})},{signal:a.signal}),o(),()=>a.abort()}const Ja=[{kind:"another_way",label:"Explain it another way",icon:"refresh"},{kind:"practical_example",label:"Give me a practical example",icon:"lightbulb"},{kind:"test_me",label:"Test me",icon:"target"}],Za={another_way:"Another way to think about it",practical_example:"A practical example",test_me:"Extra practice questions"};function es(e,{id:a,n:t}){var $;const s=ze(a),o=Number(t)-1,n=($=s==null?void 0:s.lessons)==null?void 0:$[o];if(!s||!n)return fe(e);me(`${n.title} – ${s.title}`);const l=new AbortController,c=$a(s,n.id),i=()=>R.saveItem(s);let d="";const p=(b,h)=>{var w,A;return r` <article class="card help-response" aria-labelledby="extra-${h}">
@@ -1013,7 +1013,7 @@ ${O.homeRequest}</textarea>
               </ul>`:""}
         ${(A=b.data.quiz)!=null&&A.length?r`<div>${Xe(b.data.quiz,b.answers||(b.answers={}),`x-${n.id}-${h}`)}</div>`:""}
       </article>`},u=()=>{var w,A,k;const b=Ya(n.quiz,c.answers),h=o+1<s.lessons.length?o+2:null;j(e,r` <nav class="breadcrumb" aria-label="Breadcrumb">
-            <a href="/course/${s.id}" data-link
+            <a href="/solve/course/${s.id}" data-link
               >${f("arrowLeft","icon-inline")} ${s.title}</a
             >
           </nav>
@@ -1096,8 +1096,8 @@ ${O.homeRequest}</textarea>
             </section>
 
             <div class="btn-row between">
-              ${o>0?r`<a class="btn" href="/course/${s.id}/lesson/${o}" data-link>${f("arrowLeft")} Previous lesson</a>`:r`<a class="btn" href="/course/${s.id}" data-link>${f("arrowLeft")} Course overview</a>`}
-              ${c.completed?h?r`<a class="btn btn-primary" href="/course/${s.id}/lesson/${h}" data-link>Next lesson ${f("arrowRight")}</a>`:r`<a class="btn btn-primary" href="/course/${s.id}" data-link>Back to course ${f("arrowRight")}</a>`:r`<button type="button" class="btn btn-primary" data-complete-lesson data-focus="complete-lesson">${f("check")} Complete lesson</button>`}
+              ${o>0?r`<a class="btn" href="/solve/course/${s.id}/lesson/${o}" data-link>${f("arrowLeft")} Previous lesson</a>`:r`<a class="btn" href="/solve/course/${s.id}" data-link>${f("arrowLeft")} Course overview</a>`}
+              ${c.completed?h?r`<a class="btn btn-primary" href="/solve/course/${s.id}/lesson/${h}" data-link>Next lesson ${f("arrowRight")}</a>`:r`<a class="btn btn-primary" href="/solve/course/${s.id}" data-link>Back to course ${f("arrowRight")}</a>`:r`<button type="button" class="btn btn-primary" data-complete-lesson data-focus="complete-lesson">${f("check")} Complete lesson</button>`}
             </div>
           </div>`)},v=()=>{var h,w;const b=ce(n.quiz,c.answers);if(!b.complete){d=`Please answer all ${b.total} questions first (${b.answered} done).`,ae(e,u),(h=e.querySelector("#quiz-title"))==null||h.scrollIntoView({block:"start"});return}c.completed=!0,c.score=b.pct,i(),u(),W(b.pct>=60?`Lesson complete – ${b.pct}%. Great work!`:`Lesson complete – ${b.pct}%. We have noted the topics to revisit.`),(w=e.querySelector("h1"))==null||w.focus()};return e.addEventListener("click",async b=>{var A,k;let h=Ke(b,n.quiz,c.answers,`q-${n.id}`);if(!h.handled){for(const[S,q]of(c.extras||[]).entries())if((A=q.data.quiz)!=null&&A.length&&(q.answers=q.answers||{},h=Ke(b,q.data.quiz,q.answers,`x-${n.id}-${S}`),h.handled))break}if(h.handled){if(d=h.error||"",h.error&&W(h.error),i(),ae(e,u),h.focus&&!h.error){const S=e.querySelector(h.focus),q=(S==null?void 0:S.querySelector("[data-self-mark], .feedback"))||S;q&&!e.contains(document.activeElement)&&((k=q.focus)==null||k.call(q))}return}if(b.target.closest("[data-complete-lesson]"))return v();const w=b.target.closest("[data-extra]");if(w&&!be()){const S=w.dataset.extra,q=lt(w,"Thinking…");e.querySelectorAll("[data-extra]").forEach(B=>{B!==w&&(B.disabled=!0)});try{const B=[n.title,...n.sections.map(m=>`${m.heading}: ${m.body}`),...n.keyPoints||[]].join(`
 `).slice(0,H.MAX_CONTEXT_CHARS),de=await we("course_help",{mode:"course",context:{kind:S,courseTitle:s.title,level:s.plan.level,lessonTitle:n.title,lessonSummary:B,weakTopics:Re(s)}});c.extras=c.extras||[],c.extras.push({kind:S,data:de.data,answers:{},at:Date.now()}),i(),u();const y=e.querySelector(`#extra-${c.extras.length-1}`);y==null||y.focus(),y==null||y.scrollIntoView({block:"center"})}catch(B){q(),u(),Ft(B)}}},{signal:l.signal}),u(),()=>l.abort()}const ts=e=>e.kind==="task"?et(e):tt(e);function Gt(e,{actions:a=!0}={}){var o;const t=ts(e),s=`/${e.kind}/${e.id}`;return r` <li class="item-card">
@@ -1124,7 +1124,7 @@ ${O.homeRequest}</textarea>
                 ${e.title}</span
               ></a
             >
-            ${e.kind==="course"&&((o=e.final)!=null&&o.passed)?r`<a class="btn btn-sm" href="/course/${e.id}/certificate" data-link>${f("award")} Certificate</a>`:""}
+            ${e.kind==="course"&&((o=e.final)!=null&&o.passed)?r`<a class="btn btn-sm" href="/solve/course/${e.id}/certificate" data-link>${f("award")} Certificate</a>`:""}
             <button
               type="button"
               class="btn btn-danger btn-sm"
@@ -1159,7 +1159,7 @@ ${O.homeRequest}</textarea>
                 <p>
                   ${o.length?"Try a different filter.":"Your drawer is empty for now. When you start a practical task or a course, it will be filed here so you can pick up where you left off."}
                 </p>
-                <a class="btn btn-primary" href="/" data-link>Start learning</a>
+                <a class="btn btn-primary" href="/solve/" data-link>Start learning</a>
               </div>`}
         ${o.length?r` <section
                 class="card soft mt-3"
@@ -1231,7 +1231,7 @@ ${O.homeRequest}</textarea>
         ${d.length?r`<ul class="item-list">
                 ${d.map(({c:u,weak:v})=>r` <li>
                       <strong
-                        ><a href="/course/${u.id}" data-link>${u.title}</a
+                        ><a href="/solve/course/${u.id}" data-link>${u.title}</a
                         >:</strong
                       >
                       <span class="flex mt-1"
@@ -1254,7 +1254,7 @@ ${O.homeRequest}</textarea>
                 </div>
                 <p>
                   Nothing in progress – a blank sheet, ready for your next plan.
-                  <a href="/" data-link>Start learning something new</a>.
+                  <a href="/solve/" data-link>Start learning something new</a>.
                 </p>
               </div>`}
       </section>`)}function os(e){const a=R.getDraft();if(!(a!=null&&a.refusal)){oe("/",{replace:!0});return}j(e,r`<div class="narrow">
@@ -1262,7 +1262,7 @@ ${O.homeRequest}</textarea>
       ${ja(a.refusal)}
     </div>`)}function ns(e,a){return{id:R.newId(),kind:"task",createdAt:Date.now(),request:e,title:a.title,rating:a.rating,plan:a,stage:"overview",checks:{safety:a.safetyChecklist.map(()=>!1),tools:a.tools.map(()=>!1),materials:a.materials.map(()=>!1),prep:a.preparation.map(()=>!1),completion:a.completionChecklist.map(()=>!1)},amberAck:!1,stepIndex:0,stepsDone:a.steps.map(()=>!1),help:{},status:"active"}}function rs(e,a){const t=a.lessons.map((s,o)=>({...s,id:`l${o+1}`,adapted:!1}));return{id:R.newId(),kind:"course",createdAt:Date.now(),request:e,title:a.title,plan:{title:a.title,objective:a.objective,level:a.level,roadmap:a.roadmap,finalAssessment:a.finalAssessment},lessons:t,lessonState:{},final:{answers:{},score:null,passed:!1,completedAt:null},adaptNotes:[],status:"active"}}function is(e){const a=R.getDraft();if(!(a!=null&&a.assessment)){oe("/",{replace:!0});return}const t=new AbortController,s=a.assessment,o=s.type==="practical",n=a.answers||{};let l=null;const c=()=>{j(e,r` <div class="narrow">
           <nav class="breadcrumb" aria-label="Breadcrumb">
-            <a href="/" data-link
+            <a href="/solve/" data-link
               >${f("arrowLeft","icon-inline")} Change my request</a
             >
           </nav>
@@ -1423,7 +1423,7 @@ ${n.__extra||""}</textarea>
         <button type="button" class="btn" data-print>
           ${f("printer")} Print summary
         </button>
-        <a class="btn" href="/" data-link>Learn something else</a>
+        <a class="btn" href="/solve/" data-link>Learn something else</a>
       </div>
     </section>
   </section>`}const us=[{id:"overview",label:"Safety"},{id:"tools",label:"Tools"},{id:"prep",label:"Prepare"},{id:"steps",label:"Steps"},{id:"finish",label:"Test & finish"}],Et=[{kind:"simpler",label:"Explain more simply",icon:"lightbulb"},{kind:"example",label:"Show another example",icon:"sparkle"},{kind:"stuck",label:"I’m stuck",icon:"help",note:!0},{kind:"different",label:"Something looks different",icon:"eye",note:!0}],ps={simpler:"Explained more simply",example:"Another example",stuck:"Help when stuck",different:"When something looks different",photo:"Progress photo feedback",checkpoint_no:"Checkpoint not confirmed"},At=e=>`${e.safetyDone?"":"Complete the safety checklist first. "}${e.prepDone?"":"Tick every preparation item to unlock the steps."}`;function hs(e,{id:a}){const t=R.getItem(a);if(!t||t.kind!=="task")return fe(e);me(t.title);const s=new AbortController,o=[];let n=!1,l=null;const c={},i=()=>R.saveItem(t),d=(y,m,E)=>r` <ul class="checklist">
@@ -1736,7 +1736,7 @@ ${n.__extra||""}</textarea>
               </button>
             </div>
           </section>`,A=y=>r` <nav class="breadcrumb no-print" aria-label="Breadcrumb">
-          <a href="/saved" data-link
+          <a href="/solve/saved" data-link
             >${f("arrowLeft","icon-inline")} My learning</a
           >
         </nav>
