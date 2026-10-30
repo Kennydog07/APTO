@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Empty home checks in Brighton &amp; Hove | APTO</title>
+<meta name="description" content="Insurer-ready checks of empty homes in Brighton &amp; Hove, with a dated photo report emailed the same day. For executors, landlords and owners abroad. From &pound;35.">
+<meta name="theme-color" content="#1f2d5c">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'none'; form-action 'self'; base-uri 'self'; object-src 'none'">
+<link rel="canonical" href="https://apto-home-checks.netlify.app/">
+<link rel="icon" type="image/png" sizes="128x128" href="assets/apto-mascot-128.png">
+<link rel="apple-touch-icon" href="assets/apto-mascot-128.png">
+
+<!-- Open Graph / social sharing. NOTE: change these image/URL values to
+     ABSOLUTE URLs (https://your-domain/...) once the domain is known. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="APTO">
+<meta property="og:locale" content="en_GB">
+<meta property="og:title" content="APTO | Empty home checks in Brighton &amp; Hove">
+<meta property="og:description" content="Regular, dated inspections of empty homes for executors and absent owners, with a same-day photo report ready for your insurer.">
+<meta property="og:url" content="https://apto-home-checks.netlify.app/">
+<meta property="og:image" content="https://apto-home-checks.netlify.app/assets/apto-mascot-800.png">
+<meta property="og:image:width" content="800">
+<meta property="og:image:height" content="800">
+<meta property="og:image:alt" content="The APTO mascot in a yellow hard hat and hi-vis vest">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="APTO | Empty home checks in Brighton &amp; Hove">
+<meta name="twitter:description" content="Regular, dated inspections of empty homes for executors and absent owners, with a same-day photo report ready for your insurer.">
+<meta name="twitter:image" content="https://apto-home-checks.netlify.app/assets/apto-mascot-800.png">
+<meta name="twitter:image:alt" content="The APTO mascot in a yellow hard hat and hi-vis vest">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "APTO",
+  "description": "Insurer-ready inspections of empty and unoccupied homes, with a dated photo report emailed the same day. For executors, probate solicitors, landlords and owners abroad.",
+  "areaServed": [
+    {"@type": "City", "name": "Brighton & Hove"},
+    {"@type": "City", "name": "Hove"},
+    {"@type": "City", "name": "Shoreham-by-Sea"},
+    {"@type": "City", "name": "Worthing"},
+    {"@type": "City", "name": "Lewes"},
+    {"@type": "City", "name": "Peacehaven"}
+  ],
+  "email": "apto.tools@gmail.com",
+  "priceRange": "From £35"
+}
+</script>
+<style>
+  :root{
+    --navy:#1f2d5c;
+    --navy-dark:#151f42;
+    --yellow:#f5d33f;
+    --yellow-soft:#fdf3c4;
+    --orange:#b94a17; /* darkened slightly from #c8501a for WCAG AA text contrast on cream */
+    --orange-soft:#fbe9df;
+    --grey:#b9bec7;
+    --ink:#1b2340;
+    --muted:#5b6380;
+    --line:#e3e1d8;
+    --bg:#faf8f3;
+    --white:#fff;
+    --radius:16px;
+    --max:1120px;
+    --stripe:repeating-linear-gradient(90deg,var(--yellow) 0 22px,var(--grey) 22px 30px);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;color:var(--ink);background:var(--white);line-height:1.6;font-size:17px;-webkit-font-smoothing:antialiased}
+  img,svg{display:block;max-width:100%}
+  a{color:var(--orange)}
+  h1,h2,h3{line-height:1.2;color:var(--navy);margin:0 0 .5em}
+  h1{font-size:clamp(2.1rem,4.6vw,3.25rem);letter-spacing:-.02em}
+  h2{font-size:clamp(1.6rem,3vw,2.2rem);letter-spacing:-.01em}
+  h3{font-size:1.15rem}
+  p{margin:0 0 1em}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 22px}
+  section{padding:80px 0}
+  .alt{background:var(--bg)}
+  .eyebrow{display:inline-block;font-size:.8rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);margin-bottom:.8em}
+  .lead{font-size:1.15rem;color:var(--muted);max-width:680px}
+  .center{text-align:center}
+  .center .lead{margin-left:auto;margin-right:auto}
+
+  /* Accessibility: skip link + visible keyboard focus */
+  .skip{position:absolute;left:-9999px;top:10px;z-index:100;background:var(--navy);color:#fff;padding:10px 18px;border-radius:999px;font-weight:800;text-decoration:none}
+  .skip:focus{left:12px}
+  a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--navy);outline-offset:3px;border-radius:6px}
+  .btn:focus-visible{border-radius:999px}
+  footer a:focus-visible,.trust a:focus-visible{outline-color:var(--yellow)}
+
+  /* Buttons */
+  .btn{display:inline-block;font-family:inherit;padding:14px 26px;border-radius:999px;font-weight:800;text-decoration:none;font-size:1rem;border:2px solid transparent;cursor:pointer;transition:transform .15s,background .15s}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-primary{background:var(--yellow);color:var(--navy);box-shadow:0 3px 0 #d9b51f}
+  .btn-primary:hover{background:#f8dc5f}
+  .btn-outline{border-color:var(--navy);color:var(--navy);background:transparent}
+  .btn-outline:hover{background:rgba(31,45,92,.06)}
+  .btn-dark{background:var(--navy);color:#fff}
+  .btn-dark:hover{background:var(--navy-dark)}
+
+  /* Brand */
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+  .brand img{width:44px;height:44px}
+  .wordmark{display:flex;flex-direction:column;line-height:1}
+  .wordmark b{font-size:1.65rem;font-weight:900;letter-spacing:.06em;color:var(--navy)}
+  .wordmark b::after{content:"";display:block;height:4px;margin-top:3px;border-radius:2px;background:var(--stripe)}
+  .wordmark small{font-size:.66rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);margin-top:4px}
+
+  /* Header */
+  header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line);backdrop-filter:saturate(1.2) blur(6px)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:72px;gap:16px}
+  .nav-links{display:flex;align-items:center;gap:24px}
+  .nav-links a{color:var(--navy);text-decoration:none;font-size:.95rem;font-weight:700}
+  .nav-links a:hover{color:var(--orange)}
+  .nav-links .btn{padding:10px 20px}
+
+  /* Hero */
+  .hero{background:var(--bg);padding:64px 0 0;overflow:hidden;position:relative}
+  .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:10px;background:var(--stripe)}
+  .hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:32px;align-items:center}
+  .hero-copy{padding-bottom:70px}
+  .hero h1 em{font-style:normal;color:var(--orange)}
+  .hero-ctas{display:flex;flex-wrap:wrap;gap:14px;margin:28px 0 26px}
+  .ticks{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:10px 22px;font-size:.95rem;color:var(--navy);font-weight:600}
+  .ticks li{display:flex;align-items:center;gap:8px}
+  .ticks li::before{content:"";width:20px;height:20px;border-radius:50%;background:var(--navy) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5 8.5 14 15 6.5' fill='none' stroke='%23f5d33f' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat;flex:none}
+  .mascot-stage{position:relative;align-self:end;display:flex;justify-content:center}
+  .mascot-stage picture{position:relative;display:block;width:min(100%,520px);margin:0 auto}
+  .mascot-stage picture::before{content:"";position:absolute;width:88%;aspect-ratio:1;border-radius:50%;background:var(--yellow);bottom:6%;left:50%;transform:translateX(-50%);z-index:0}
+  .mascot-stage img{position:relative;z-index:1;display:block;width:100%;height:auto;filter:drop-shadow(0 18px 22px rgba(31,45,92,.22));margin-bottom:-4px}
+  .bubble{position:absolute;top:10%;right:-2%;background:#fff;color:var(--navy);font-weight:800;font-size:.9rem;padding:10px 16px;border-radius:14px;box-shadow:0 10px 24px rgba(31,45,92,.15);z-index:2;white-space:nowrap}
+  .bubble::after{content:"";position:absolute;left:18px;bottom:-8px;border:8px solid transparent;border-top-color:#fff;border-bottom:0}
+  .bubble span{color:var(--orange)}
+
+  /* Problem */
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+  .callout{background:var(--yellow-soft);border-left:6px solid var(--yellow);border-radius:var(--radius);padding:26px 28px}
+  .callout ul{margin:0;padding-left:1.2em}
+  .callout li{margin-bottom:.5em}
+  .callout li::marker{color:var(--orange)}
+
+  /* Steps */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px;counter-reset:step}
+  .card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:28px}
+  .step::before{counter-increment:step;content:counter(step);display:flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:50%;background:var(--yellow);color:var(--navy);font-weight:900;font-size:1.25rem;margin-bottom:16px;box-shadow:inset 0 -3px 0 #d9b51f}
+  .step p{color:var(--muted);margin:0}
+
+  /* Each visit */
+  .visit-grid{display:grid;grid-template-columns:1.35fr .9fr;gap:40px;margin-top:40px;align-items:start}
+  .includes{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .inc{display:flex;gap:14px;align-items:flex-start;padding:20px;border-radius:var(--radius);background:#fff;border:1px solid var(--line)}
+  .inc.wide{grid-column:1/-1}
+  .icon{flex:none;width:42px;height:42px;border-radius:12px;background:var(--orange-soft);display:flex;align-items:center;justify-content:center}
+  .icon svg{width:22px;height:22px;stroke:var(--orange);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .inc h3{margin-bottom:.25em;font-size:1.05rem}
+  .inc p{margin:0;color:var(--muted);font-size:.94rem}
+
+  /* Report card mock */
+  .report{background:#fff;border-radius:var(--radius);box-shadow:0 20px 50px rgba(31,45,92,.14);border:1px solid var(--line);font-size:.92rem;overflow:hidden;position:sticky;top:96px}
+  .report-top{height:8px;background:var(--stripe)}
+  .report-body{padding:20px 22px 18px}
+  .report-head{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:10px;gap:10px}
+  .report-head strong{color:var(--navy);display:block;font-size:1rem}
+  .report-head span{color:var(--muted);font-size:.82rem}
+  .report-head .pill{background:#e3f3e6;color:#1d6b35;font-weight:800;font-size:.75rem;padding:4px 10px;border-radius:999px;white-space:nowrap}
+  .report ul{list-style:none;margin:0;padding:0}
+  .report li{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed var(--line);gap:12px}
+  .report li:last-child{border-bottom:0}
+  .report li b{color:var(--navy)}
+  .photos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+  .photos div{aspect-ratio:4/3;border-radius:8px;background:linear-gradient(135deg,#e9e6dc,#d6d2c4);position:relative}
+  .photos div::after{content:attr(data-t);position:absolute;left:6px;bottom:5px;font-size:.62rem;color:#fff;background:rgba(21,31,66,.75);padding:1px 5px;border-radius:4px}
+  .report-note{font-size:.74rem;color:var(--muted);margin:12px 0 0;text-align:center}
+
+  /* Pricing */
+  .pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px;align-items:stretch}
+  .price{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:32px 28px;position:relative}
+  .price.featured{border:3px solid var(--navy);box-shadow:0 18px 40px rgba(31,45,92,.14)}
+  .badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--yellow);color:var(--navy);font-size:.74rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase;padding:5px 14px;border-radius:999px;white-space:nowrap}
+  .price .from{font-size:.85rem;color:var(--muted);font-weight:600}
+  .amount{font-size:2.7rem;font-weight:900;color:var(--navy);line-height:1;margin:4px 0}
+  .amount span{font-size:1rem;font-weight:600;color:var(--muted)}
+  .per{color:var(--orange);font-weight:800;font-size:.92rem;margin-bottom:18px}
+  .price ul{list-style:none;padding:0;margin:0 0 26px;flex:1}
+  .price li{padding:8px 0 8px 28px;border-top:1px solid var(--line);position:relative;font-size:.95rem}
+  .price li::before{content:"";position:absolute;left:0;top:12px;width:17px;height:17px;border-radius:50%;background:var(--navy) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5 8.5 14 15 6.5' fill='none' stroke='%23f5d33f' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat}
+  .price .btn{text-align:center}
+  .small-print{font-size:.88rem;color:var(--muted);margin-top:24px;text-align:center}
+  .addons{margin:28px auto 0;max-width:820px;background:#fff;border:2px dashed var(--grey);border-radius:var(--radius);padding:18px 24px;font-size:.95rem;text-align:center}
+  .addons strong{color:var(--navy)}
+
+  /* Guide download */
+  .guide{padding:72px 0 0}
+  .guide-card{display:grid;grid-template-columns:180px 1fr;gap:40px;align-items:center;background:var(--yellow-soft);border-left:6px solid var(--yellow);border-radius:var(--radius);padding:30px 36px}
+  .guide-thumb{display:block;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 14px 30px rgba(31,45,92,.18);transform:rotate(-2deg);transition:transform .15s}
+  .guide-thumb:hover{transform:rotate(0)}
+  .guide-thumb img{width:100%;height:auto}
+  .guide-card h2{margin-bottom:.35em}
+  .guide-card p{color:var(--muted);max-width:620px}
+  .guide-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;margin-top:20px}
+  .file-meta{font-size:.85rem;color:var(--muted);font-weight:600}
+
+  /* Audience */
+  .audience{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:40px}
+  .aud{background:#fff;border:1px solid var(--line);border-top:5px solid var(--orange);border-radius:var(--radius);padding:24px}
+  .aud p{color:var(--muted);margin:0;font-size:.95rem}
+
+  /* Trust */
+  .trust{background:var(--navy);color:#fff;position:relative}
+  .trust h2{color:#fff}
+  .trust .lead{color:#c9cfe4}
+  .trust .eyebrow{color:var(--yellow)}
+  .trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:40px}
+  .tcard{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:var(--radius);padding:24px;border-top:5px solid var(--yellow)}
+  .tcard h3{color:#fff;font-size:1.05rem}
+  .tcard p{color:#c9cfe4;margin:0;font-size:.93rem}
+  .tcard a{color:#ffe27a}
+  .ph{background:rgba(245,211,63,.2);color:#ffe27a;padding:1px 6px;border-radius:5px;font-weight:700;white-space:nowrap}
+  .ph-dark{background:var(--yellow-soft);color:#7a4a00}
+  .honest{margin-top:28px;font-size:.92rem;color:#aab3d3;max-width:820px}
+
+  /* FAQ */
+  .faq{max-width:820px;margin:36px auto 0}
+  details{background:#fff;border:1px solid var(--line);border-radius:12px;margin-bottom:12px;padding:0 22px}
+  summary{cursor:pointer;font-weight:800;color:var(--navy);padding:18px 32px 18px 0;list-style:none;position:relative}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";position:absolute;right:0;top:50%;transform:translateY(-50%);font-size:1.5rem;color:var(--orange);font-weight:500}
+  details[open] summary::after{content:"\2013"}
+  details p{color:var(--muted);margin:0 0 18px}
+
+  /* Contact */
+  .contact-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:48px;align-items:start}
+  .contact-head{display:flex;align-items:center;gap:16px;margin-bottom:6px}
+  .contact-head img{width:96px;height:96px;flex:none;background:var(--yellow);border-radius:50%;padding:6px}
+  .contact-head h2{margin:0}
+  .contact-list{list-style:none;padding:0;margin:24px 0 0}
+  .contact-list li{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+  .contact-list .icon{width:38px;height:38px}
+  .contact-list b{display:block;color:var(--navy);font-size:.85rem}
+  form{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:30px;box-shadow:0 10px 30px rgba(31,45,92,.07);border-top:6px solid var(--yellow)}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  label{display:block;font-weight:700;font-size:.9rem;color:var(--navy);margin-bottom:6px}
+  input,select,textarea{width:100%;font:inherit;font-size:1rem;padding:12px 14px;border:1px solid #cfd2dc;border-radius:10px;background:#fcfcfa;color:var(--ink);margin-bottom:16px}
+  input:focus,select:focus,textarea:focus{outline:3px solid rgba(245,211,63,.6);border-color:var(--navy)}
+  textarea{min-height:110px;resize:vertical}
+  form .btn{width:100%;font-size:1.05rem}
+  .form-note{font-size:.82rem;color:var(--muted);margin:12px 0 0;text-align:center}
+  .hp{display:none}
+
+  /* Footer */
+  footer{background:var(--navy-dark);color:#aab3d3;padding:0 0 30px;font-size:.9rem}
+  footer::before{content:"";display:block;height:8px;background:var(--stripe);margin-bottom:48px}
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:32px}
+  footer .wordmark b{color:#fff}
+  footer h4{color:#fff;margin:0 0 10px;font-size:.95rem}
+  footer a{color:#dfe3f1;text-decoration:none}
+  footer a:hover{text-decoration:underline}
+  footer p{margin:0 0 .5em}
+  .foot-brand{margin-bottom:14px}
+  .foot-bottom{border-top:1px solid rgba(255,255,255,.12);margin-top:32px;padding-top:20px;font-size:.8rem;color:#8790b3}
+
+  /* Responsive */
+  @media (max-width:960px){
+    .hero-grid,.two-col,.contact-grid,.visit-grid{grid-template-columns:1fr;gap:36px}
+    .hero-copy{padding-bottom:0}
+    .mascot-stage picture{width:min(80%,380px)}
+    .bubble{right:6%}
+    .report{position:static;max-width:460px;margin:0 auto}
+    .audience,.trust-grid{grid-template-columns:1fr 1fr}
+    .pricing{grid-template-columns:1fr;max-width:460px;margin-left:auto;margin-right:auto}
+    .price.featured{margin-top:10px}
+    .nav-links a:not(.btn){display:none}
+    .guide-card{grid-template-columns:160px 1fr;gap:28px}
+  }
+  @media (max-width:640px){
+    body{font-size:16px}
+    section{padding:60px 0}
+    .hero{padding-top:40px}
+    .steps,.includes,.audience,.trust-grid,.foot-grid,.row{grid-template-columns:1fr}
+    .row{gap:0}
+    .includes{gap:12px}
+    .inc{padding:18px}
+    .hero-ctas .btn{flex:1 1 100%;text-align:center}
+    .nav{height:64px}
+    .brand img{width:38px;height:38px}
+    .wordmark b{font-size:1.4rem}
+    .nav-links .btn{padding:9px 16px;font-size:.9rem}
+    .mascot-stage picture{width:min(86%,340px)}
+    .bubble{top:4%;right:2%;font-size:.82rem}
+    form{padding:22px}
+    .contact-head img{width:72px;height:72px}
+    .ph{white-space:normal}
+    .guide{padding-top:56px}
+    .guide-card{grid-template-columns:1fr;gap:24px;padding:26px 22px;text-align:center}
+    .guide-thumb{width:170px;margin:0 auto}
+    .guide-card p{margin-left:auto;margin-right:auto}
+    .guide-actions{justify-content:center}
+    .guide-actions .btn{flex:1 1 100%;text-align:center}
+  }
+</style>
+</head>
+<body><div class="apto-tools-bar" style="background:#0d1f35;color:#cfd8e3;font:600 13px/1.2 system-ui,sans-serif;padding:7px 14px;display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center;position:relative;z-index:9999"><a href="/" style="color:#fff;text-decoration:none;font-weight:900">APTO <span style="color:#eb6e14">TOOLS</span></a><a href="/money" style="color:#cfd8e3;text-decoration:none">Money &amp; AI</a><a href="/pro/" style="color:#cfd8e3;text-decoration:none">APTO Pro</a><a href="/web/" style="color:#cfd8e3;text-decoration:none">Websites</a><a href="/solve/" style="color:#cfd8e3;text-decoration:none">APTO Solve</a><a href="/home-checks/" style="color:#cfd8e3;text-decoration:none">Home Checks</a><a href="/portfolio/" style="color:#cfd8e3;text-decoration:none">Portfolio</a></div>
+
+<!-- ============================================================
+     BUSINESS DETAILS: email, SIA key-holding licence and insurance
+     are confirmed (licence/insurance details "on request" only).
+     Phone, address, legal name, DBS and ICO claims are still left
+     out until confirmed. See README.md before adding them.
+     ============================================================ -->
+
+<a class="skip" href="#top">Skip to main content</a>
+
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="brand" aria-label="APTO Empty home checks, home">
+      <img src="assets/apto-mascot-128.webp" width="44" height="44" alt="">
+      <span class="wordmark"><b>APTO</b><small>Empty home checks</small></span>
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#how">How it works</a>
+      <a href="#visit">Each visit</a>
+      <a href="#pricing">Prices</a>
+      <a href="#guide">Free guide</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact" class="btn btn-primary">Get a quote</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow">Empty home checks &middot; Brighton &amp; Hove and surrounding areas</span>
+      <h1>We check the empty home, <em>so you don&rsquo;t have to make the trip.</em></h1>
+      <p class="lead">Regular, dated inspections of unoccupied homes for executors and absent owners, with a timestamped photo report in your inbox the same day, ready to show your insurer.</p>
+      <div class="hero-ctas">
+        <a href="#contact" class="btn btn-primary">Book a check</a>
+        <a href="#pricing" class="btn btn-outline">See prices</a>
+      </div>
+      <ul class="ticks">
+        <li>Weekly or fortnightly visits</li>
+        <li>Same-day photo report</li>
+        <li>SIA-licensed key holding</li>
+      </ul>
+    </div>
+    <div class="mascot-stage">
+      <div class="bubble">Checked <span>&amp;</span> reported!</div>
+      <picture>
+        <source srcset="assets/apto-mascot-800.webp" type="image/webp">
+        <img src="assets/apto-mascot-800.png" width="800" height="800" alt="The APTO mascot: a friendly, fluffy orange character in a yellow hard hat and hi-vis vest, arms folded">
+      </picture>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="wrap two-col">
+    <div>
+      <span class="eyebrow">The problem</span>
+      <h2>Empty homes come with strict insurance conditions</h2>
+      <p>When someone dies, moves into care, or a house sits empty between tenants or during a sale, normal home insurance usually stops covering it fully. Specialist unoccupied-property cover takes over, and it almost always comes with an inspection condition.</p>
+      <p>That usually means someone has to visit every <strong>7 or 14 days</strong>, check the property inside and out, and keep a dated record. If you live hours away, work full time, or are abroad, that&rsquo;s very hard to keep up, and a missed visit could affect a claim.</p>
+    </div>
+    <div class="callout">
+      <h3>Sound familiar?</h3>
+      <ul>
+        <li>You&rsquo;re the executor, but you live a long way from the house.</li>
+        <li>The insurer wants weekly or fortnightly inspections &ldquo;by a responsible person&rdquo;.</li>
+        <li>Neighbours are kind, but you don&rsquo;t want to keep asking.</li>
+        <li>Winter is coming and you&rsquo;re worried about burst pipes.</li>
+        <li>Probate could take months, and the house can&rsquo;t just be left.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" class="alt">
+  <div class="wrap">
+    <div class="center">
+      <span class="eyebrow">How it works</span>
+      <h2>Three simple steps</h2>
+      <p class="lead">No long contracts. We fit around your policy, not the other way round.</p>
+    </div>
+    <div class="steps">
+      <div class="card step">
+        <h3>Tell us about the property</h3>
+        <p>Send us the address, how often your insurer needs it checked (usually every 7 or 14 days), and anything specific the policy asks for.</p>
+      </div>
+      <div class="card step">
+        <h3>Hand over a key, securely</h3>
+        <p>Post or drop off a key. It&rsquo;s stored in a locked cabinet with a coded tag, so the address is never on the key itself.</p>
+      </div>
+      <div class="card step">
+        <h3>We visit, you get the report</h3>
+        <p>We check the home on schedule and email you a timestamped photo report the same day. Any problem, we call you straight away.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT EACH VISIT INCLUDES -->
+<section id="visit">
+  <div class="wrap">
+    <div class="center">
+      <span class="eyebrow">Every visit</span>
+      <h2>What each visit includes</h2>
+      <p class="lead">A thorough, consistent check every time, written up so it makes sense to you and to your insurer.</p>
+    </div>
+    <div class="visit-grid">
+      <div class="includes">
+        <div class="inc">
+          <div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 11 12 4l9 7v9H3z"/><path d="M9 20v-6h6v6"/></svg></div>
+          <div><h3>Exterior check</h3><p>Doors, windows, locks, roof line, gutters and garden, looking for damage or break-ins.</p></div>
+        </div>
+        <div class="inc">
+          <div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 12h.01"/><path d="M4 8h16"/></svg></div>
+          <div><h3>Interior walk-round</h3><p>Every room checked for leaks, damp, pests, smells and anything out of place.</p></div>
+        </div>
+        <div class="inc">
+          <div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></svg></div>
+          <div><h3>Heating &amp; water</h3><p>Boiler and frost setting checked, taps run, stopcock and visible pipework looked over.</p></div>
+        </div>
+        <div class="inc">
+          <div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="13" r="7"/><path d="M12 13l3-3"/><path d="M9 3h6"/></svg></div>
+          <div><h3>Meter readings</h3><p>Gas, electricity and water readings recorded and photographed for your utility accounts.</p></div>
+        </div>
+        <div class="inc">
+          <div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="m3 8 9 6 9-6"/></svg></div>
+          <div><h3>Post collection</h3><p>Post picked up so it doesn&rsquo;t pile up behind the door. We can list, scan or forward it.</p></div>
+        </div>
+        <div class="inc">
+          <div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg></div>
+          <div><h3>Same-day photo report</h3><p>Timestamped photos and notes emailed to you the same day as the visit.</p></div>
+        </div>
+        <div class="inc wide">
+          <div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="m9 15 2 2 4-4"/></svg></div>
+          <div><h3>Insurer-ready visit log</h3><p>A running, dated log of every visit (date, time, who visited and what was found) that you can send to your insurer or solicitor whenever it&rsquo;s needed.</p></div>
+        </div>
+      </div>
+
+      <div class="report" role="figure" aria-label="Example of a visit report">
+        <div class="report-top"></div>
+        <div class="report-body">
+          <div class="report-head">
+            <div>
+              <strong>Visit report: 14 Example Road</strong>
+              <span>Example only &middot; Tue 6 Oct 2026, 10:42</span>
+            </div>
+            <span class="pill">All clear</span>
+          </div>
+          <ul>
+            <li>Exterior, doors &amp; windows <b>Secure</b></li>
+            <li>Interior walk-round <b>No issues</b></li>
+            <li>Water: no leaks, taps run <b>Checked</b></li>
+            <li>Heating / frost setting <b>12&deg;C</b></li>
+            <li>Meter readings <b>Recorded</b></li>
+            <li>Post collected <b>3 items</b></li>
+          </ul>
+          <div class="photos">
+            <div data-t="10:43 Front"></div>
+            <div data-t="10:47 Kitchen"></div>
+            <div data-t="10:52 Boiler"></div>
+          </div>
+          <p class="report-note">Illustration of the report format. Next visit due: Tue 13 Oct.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="alt">
+  <div class="wrap">
+    <div class="center">
+      <span class="eyebrow">Prices</span>
+      <h2>Simple, honest pricing</h2>
+      <p class="lead">Pay per visit or choose a regular plan. No set-up fee, and you can stop whenever the house is sold or occupied.</p>
+    </div>
+    <div class="pricing">
+      <div class="price">
+        <h3>Single visit</h3>
+        <div class="from">from</div>
+        <div class="amount">&pound;35</div>
+        <div class="per">one-off check</div>
+        <ul>
+          <li>Full inside &amp; outside check</li>
+          <li>Same-day photo report</li>
+          <li>Post collected</li>
+          <li>Ideal after a storm or a cold snap</li>
+        </ul>
+        <a href="#contact" class="btn btn-dark">Book a check</a>
+      </div>
+      <div class="price featured">
+        <span class="badge">Suits 14-day policies</span>
+        <h3>Fortnightly plan</h3>
+        <div class="from">from</div>
+        <div class="amount">&pound;32<span> / visit</span></div>
+        <div class="per">every 14 days &middot; about &pound;70 a month</div>
+        <ul>
+          <li>Everything in a single visit</li>
+          <li>Meets typical 14-day conditions</li>
+          <li>Ongoing insurer-ready log</li>
+          <li>Meter readings every visit</li>
+        </ul>
+        <a href="#contact" class="btn btn-primary">Get a quote</a>
+      </div>
+      <div class="price">
+        <h3>Weekly plan</h3>
+        <div class="from">from</div>
+        <div class="amount">&pound;30<span> / visit</span></div>
+        <div class="per">every 7 days &middot; about &pound;130 a month</div>
+        <ul>
+          <li>Everything in the fortnightly plan</li>
+          <li>Meets typical 7-day conditions</li>
+          <li>Winter frost checks included</li>
+          <li>Priority call if anything&rsquo;s wrong</li>
+        </ul>
+        <a href="#contact" class="btn btn-dark">Get a quote</a>
+      </div>
+    </div>
+    <div class="addons">
+      <strong>Optional extras:</strong> letting in house-clearance firms, trades or estate agents (from &pound;20 per access) &middot; post forwarding &middot; garden tidy (arranged with a local gardener).
+    </div>
+    <p class="small-print">Prices shown are illustrative &ldquo;from&rdquo; prices. Your exact quote depends on location and what your policy asks for. Visits further out may carry a small travel charge.</p>
+  </div>
+</section>
+
+<!-- FREE GUIDE DOWNLOAD -->
+<section id="guide" class="guide" aria-labelledby="guide-title">
+  <div class="wrap">
+    <div class="guide-card">
+      <a class="guide-thumb" href="assets/apto-guide.pdf" tabindex="-1" aria-hidden="true">
+        <img src="assets/apto-guide-preview.webp" width="600" height="849" loading="lazy" decoding="async" alt="">
+      </a>
+      <div>
+        <span class="eyebrow">Free download</span>
+        <h2 id="guide-title">Free guide: looking after an empty home</h2>
+        <p>A simple one-page guide for executors and families: why insurers add conditions when a home is empty, a checklist you can work through yourself, and how APTO can help. Handy to print, keep with the paperwork or share with family.</p>
+        <div class="guide-actions">
+          <a href="assets/apto-guide.pdf" class="btn btn-dark" download>Download the free guide</a>
+          <span class="file-meta">PDF &middot; 1 page &middot; 893&nbsp;KB</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO IT'S FOR -->
+<section id="who">
+  <div class="wrap">
+    <div class="center">
+      <span class="eyebrow">Who it&rsquo;s for</span>
+      <h2>For anyone responsible for an empty home</h2>
+    </div>
+    <div class="audience">
+      <div class="aud">
+        <h3>Executors &amp; families</h3>
+        <p>Looking after a late parent&rsquo;s or relative&rsquo;s home during probate, especially if you live far away. Also families whose relative has moved into care.</p>
+      </div>
+      <div class="aud">
+        <h3>Probate solicitors</h3>
+        <p>A reliable local partner for your executor clients, with clear records you can put on file.</p>
+      </div>
+      <div class="aud">
+        <h3>Landlords between tenants</h3>
+        <p>Keep void periods covered while the property is empty, being refurbished or on the market.</p>
+      </div>
+      <div class="aud">
+        <h3>Owners abroad</h3>
+        <p>UK homeowners living or working overseas, and second-home owners who can&rsquo;t pop round.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section id="trust" class="trust">
+  <div class="wrap">
+    <span class="eyebrow">Why trust APTO</span>
+    <h2>Your keys, handled properly</h2>
+    <p class="lead">Looking after someone else&rsquo;s keys is a responsibility we take seriously. Every key is logged, coded and kept locked away, never labelled with the address.</p>
+    <div class="trust-grid">
+      <div class="tcard">
+        <h3>SIA-licensed key holding</h3>
+        <p>Licensed by the Security Industry Authority for key holding. Licence details available on request.</p>
+      </div>
+      <div class="tcard">
+        <h3>Fully insured</h3>
+        <p>Public liability insurance and cover for keys. Details available on request.</p>
+      </div>
+      <div class="tcard">
+        <h3>Fully documented visits</h3>
+        <p>Each visit is dated, timed and photographed, building a clear record you can share with your insurer or solicitor.</p>
+      </div>
+      <div class="tcard">
+        <h3>Kept in the loop</h3>
+        <p>A photo report the same day as every visit, and a phone call straight away if anything needs your attention.</p>
+      </div>
+    </div>
+    <p class="honest">We&rsquo;re a new, local business, so you won&rsquo;t find a wall of reviews here yet. Ask us for a sample report and we&rsquo;ll happily talk you through exactly how we work.</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="alt">
+  <div class="wrap">
+    <div class="center">
+      <span class="eyebrow">FAQ</span>
+      <h2>Common questions</h2>
+    </div>
+    <div class="faq">
+      <details open>
+        <summary>Will your reports satisfy my insurer?</summary>
+        <p>Our reports are designed around typical unoccupied-home conditions: a dated record of each inside-and-outside inspection, with photos. Every policy is a little different, so send us your policy wording and we&rsquo;ll match our checks to it. You stay responsible for your policy, so it&rsquo;s always worth confirming with your insurer that a professional inspector is acceptable.</p>
+      </details>
+      <details>
+        <summary>How do I get a key to you if I live far away?</summary>
+        <p>Most people post a key by tracked, signed-for delivery, or ask the solicitor, estate agent or a family member to drop one off. We log it, give it a code tag, and keep it in a locked key cabinet.</p>
+      </details>
+      <details>
+        <summary>What happens if you find a problem?</summary>
+        <p>If we find something urgent, like a leak, a break-in or no heating in freezing weather, we&rsquo;ll call you straight away and agree the next step. With your permission, we can turn off the water at the stopcock or let in a tradesperson you choose.</p>
+      </details>
+      <details>
+        <summary>Can you let in clearance firms, trades or estate agents?</summary>
+        <p>Yes. We can meet house-clearance firms, tradespeople, valuers and estate agents at the property and lock up afterwards, charged as an extra per visit.</p>
+      </details>
+      <details>
+        <summary>Do I have to sign up for a long contract?</summary>
+        <p>No. Plans run visit by visit, and you can cancel any time with notice, for example when the house is sold, let or occupied again.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap contact-grid">
+    <div>
+      <span class="eyebrow">Get in touch</span>
+      <div class="contact-head">
+        <img src="assets/apto-mascot-128.webp" width="96" height="96" alt="">
+        <h2>Book a check or get a quote</h2>
+      </div>
+      <p class="lead">Tell us a little about the property and how often it needs checking. We&rsquo;ll reply within one working day.</p>
+      <ul class="contact-list">
+        <li>
+          <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 13h8"/><path d="M8 17h5"/></svg></span>
+          <span><b>Enquiries</b>Use the form and we&rsquo;ll reply within one working day</span>
+        </li>
+        <li>
+          <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+          <span><b>Email</b>Or email us at <a href="mailto:apto.tools@gmail.com">apto.tools@gmail.com</a></span>
+        </li>
+        <li>
+          <span class="icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
+          <span><b>Area covered</b>Brighton &amp; Hove and surrounding areas</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Netlify Forms: submissions appear in the Netlify dashboard (Forms > contact).
+         Set up email notifications there. -->
+    <form action='/home-checks/thanks' method='POST' name='home-checks-contact' data-netlify='true' netlify-honeypot='bot-field'>
+      <input type="hidden" name="form-name" value="home-checks-contact">
+      <p class="hp"><label>Don&rsquo;t fill this out if you&rsquo;re human: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+      <div class="row">
+        <div>
+          <label for="name">Your name</label>
+          <input id="name" name="name" type="text" autocomplete="name" required>
+        </div>
+        <div>
+          <label for="phone">Phone (optional)</label>
+          <input id="phone" name="phone" type="tel" autocomplete="tel">
+        </div>
+      </div>
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" autocomplete="email" required>
+      <div class="row">
+        <div>
+          <label for="postcode">Property postcode</label>
+          <input id="postcode" name="postcode" type="text" placeholder="e.g. BN3 1AB" autocomplete="postal-code">
+        </div>
+        <div>
+          <label for="freq">How often?</label>
+          <select id="freq" name="frequency">
+            <option>Every 7 days (weekly)</option>
+            <option>Every 14 days (fortnightly)</option>
+            <option>One-off visit</option>
+            <option>Not sure yet</option>
+          </select>
+        </div>
+      </div>
+      <label for="msg">Anything we should know?</label>
+      <textarea id="msg" name="message" placeholder="e.g. what your insurer requires, when you need us to start, access arrangements"></textarea>
+      <button type="submit" class="btn btn-primary">Send my enquiry</button>
+      <p class="form-note">We only use your details to reply to your enquiry. See our <a href='/home-checks/privacy'>privacy policy</a>.</p>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a href="#top" class="brand foot-brand" aria-label="APTO, back to top">
+          <img src="assets/apto-mascot-128.webp" width="44" height="44" alt="">
+          <span class="wordmark"><b>APTO</b><small>Empty home checks</small></span>
+        </a>
+        <p>Insurer-ready inspections for empty and unoccupied homes.</p>
+        <p>Serving Brighton &amp; Hove and surrounding areas.</p>
+        <p>SIA-licensed and fully insured &mdash; details on request.</p>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <p><a href='/home-checks/#contact'>Use our contact form</a></p>
+        <p><a href="mailto:apto.tools@gmail.com">apto.tools@gmail.com</a></p>
+        <p>We reply within one working day.</p>
+      </div>
+      <div>
+        <h4>Areas covered</h4>
+        <p>Brighton &amp; Hove, Hove, Shoreham-by-Sea, Worthing, Lewes and Peacehaven</p>
+        <p><a href='/home-checks/#guide'>Free guide (PDF)</a></p>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      &copy; 2026 APTO. We carry out and report on property inspections; we don&rsquo;t provide legal, probate or insurance advice, alarm response or security guarding. Policyholders remain responsible for meeting their insurance conditions.
+      &nbsp;&middot;&nbsp; <a href='/home-checks/privacy'>Privacy policy</a> &middot; <a href='/home-checks/terms'>Terms of service</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

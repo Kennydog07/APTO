@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://aptotools.netlify.app/sitemap.xml
+Sitemap: https://apto-pro.com/sitemap.xml

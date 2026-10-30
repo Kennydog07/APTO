@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- TODO: replace https://apto-home-checks.netlify.app with the real domain once known -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://apto-home-checks.netlify.app/</loc>
+    <lastmod>2026-10-03</lastmod>
+  </url>
+  <url>
+    <loc>https://apto-home-checks.netlify.app/privacy.html</loc>
+    <lastmod>2026-10-03</lastmod>
+  </url>
+  <url>
+    <loc>https://apto-home-checks.netlify.app/terms.html</loc>
+    <lastmod>2026-10-03</lastmod>
+  </url>
+</urlset>

@@ -1,21 +1,303 @@
+# APTO TOOLS combined site (aptotools). Sections:
+#   /            new APTO TOOLS hub          (new)
+#   /money + root pages (business, wealth, tools, kit, solar, apps, guides, newsletter, retirement planner)  (from aptotools / Kennydog07/APTO)
+#   /pro/        APTO Pro                    (from aptopro / Kennydog07/APTOPro, public/)
+#   /web/        APTO websites               (from apto-web, deployed files)
+#   /solve/      APTO Solve SPA              (from apto-solve, deployed build)
+#   /home-checks/ APTO Empty Home Checks     (from apto-home-checks, deployed files)
+#   /product-assets/ product asset files     (from apto-product-assets, deployed files; not linked in nav)
+#   /portfolio/  client demo portfolio       (new; links out to apto-demo-* sites)
+
+[build]
+  publish = "."
+  functions = "functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+# APTO Pro hourly lead scanner (from APTOPro). Scheduled functions only run on the published production deploy.
+[functions.scheduled-scan]
+  schedule = "0 * * * *"
+
+# ---------- original aptotools redirects ----------
 [[redirects]]
   from = "/business.html"
   to = "/business"
   status = 301
   force = true
-
 [[redirects]]
   from = "/personal.html"
   to = "/wealth"
   status = 301
   force = true
-
 [[redirects]]
   from = "/personal"
   to = "/wealth"
   status = 301
   force = true
+# old aptotools homepage now lives at /money
+[[redirects]]
+  from = "/money.html"
+  to = "/money"
+  status = 301
+  force = true
 
-[build]
-  publish = "."
-  functions = "functions"
+# ---------- legacy apto-pro.com root paths -> /pro (apto-pro.com becomes the main domain) ----------
+[[redirects]]
+  from = "/trades"
+  to = "/pro/trades"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/about"
+  to = "/pro/about"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/contact"
+  to = "/pro/contact"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/privacy"
+  to = "/pro/privacy"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/terms"
+  to = "/pro/terms"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/cookies"
+  to = "/pro/cookies"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/privacy-policy"
+  to = "/pro/privacy-policy"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/gdpr"
+  to = "/pro/gdpr"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/ai-engine"
+  to = "/pro/ai-engine"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/ai-engine.html"
+  to = "/pro/ai-engine.html"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/trades.html"
+  to = "/pro/trades.html"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/about.html"
+  to = "/pro/about.html"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/contact.html"
+  to = "/pro/contact.html"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/privacy.html"
+  to = "/pro/privacy.html"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/terms.html"
+  to = "/pro/terms.html"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/cookies.html"
+  to = "/pro/cookies.html"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/app"
+  to = "/pro/app"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/app.html"
+  to = "/pro/app.html"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/app/*"
+  to = "/pro/app/:splat"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/images/*"
+  to = "/pro/images/:splat"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/site.webmanifest"
+  to = "/pro/site.webmanifest"
+  status = 301
+  force = true
+
+# ---------- APTO Pro (/pro) ----------
+[[redirects]]
+  from = "/pro/index.html"
+  to = "/pro/"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pro"
+  to = "/pro/"
+  status = 301
+[[redirects]]
+  from = "/pro/trades.html"
+  to = "/pro/trades"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pro/about.html"
+  to = "/pro/about"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pro/contact.html"
+  to = "/pro/contact"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pro/privacy.html"
+  to = "/pro/privacy"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pro/terms.html"
+  to = "/pro/terms"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pro/cookies.html"
+  to = "/pro/cookies"
+  status = 301
+  force = true
+[[redirects]]
+  from = "/pro/privacy-policy"
+  to = "/pro/privacy"
+  status = 301
+[[redirects]]
+  from = "/pro/gdpr"
+  to = "/pro/privacy#your-rights"
+  status = 301
+[[redirects]]
+  from = "/pro/app"
+  to = "/pro/app.html"
+  status = 200
+[[redirects]]
+  from = "/pro/app/*"
+  to = "/pro/app.html"
+  status = 200
+# APTO Pro serverless API (app.html calls /api/*)
+[[redirects]]
+  from = "/api/stripe-webhook"
+  to = "/.netlify/functions/stripe-webhook"
+  status = 200
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+[[redirects]]
+  from = "/pro/trades"
+  to = "/pro/trades.html"
+  status = 200
+[[redirects]]
+  from = "/pro/about"
+  to = "/pro/about.html"
+  status = 200
+[[redirects]]
+  from = "/pro/contact"
+  to = "/pro/contact.html"
+  status = 200
+[[redirects]]
+  from = "/pro/privacy"
+  to = "/pro/privacy.html"
+  status = 200
+[[redirects]]
+  from = "/pro/terms"
+  to = "/pro/terms.html"
+  status = 200
+[[redirects]]
+  from = "/pro/cookies"
+  to = "/pro/cookies.html"
+  status = 200
+[[redirects]]
+  from = "/pro/*"
+  to = "/pro/404.html"
+  status = 404
+
+# ---------- APTO websites (/web) ----------
+[[redirects]]
+  from = "/web"
+  to = "/web/"
+  status = 301
+[[redirects]]
+  from = "/web/*"
+  to = "/web/404.html"
+  status = 404
+
+# ---------- APTO Solve (/solve) ----------
+# The AI endpoint is an edge function on the original apto-solve site; its source is not in any repo,
+# so it is proxied rather than copied.
+[[redirects]]
+  from = "/solve/api/*"
+  to = "https://apto-solve.netlify.app/api/:splat"
+  status = 200
+  force = true
+[[redirects]]
+  from = "/solve"
+  to = "/solve/"
+  status = 301
+[[redirects]]
+  from = "/solve/*"
+  to = "/solve/index.html"
+  status = 200
+
+# ---------- APTO Empty Home Checks (/home-checks) ----------
+[[redirects]]
+  from = "/home-checks"
+  to = "/home-checks/"
+  status = 301
+[[redirects]]
+  from = "/home-checks/*"
+  to = "/home-checks/404.html"
+  status = 404
+
+# ---------- headers ----------
+[[headers]]
+  for = "/pro/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://nominatim.openstreetmap.org; frame-src https://www.openstreetmap.org; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests"
+[[headers]]
+  for = "/pro/app*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+[[headers]]
+  for = "/pro/ai-engine*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+[[headers]]
+  for = "/product-assets/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"

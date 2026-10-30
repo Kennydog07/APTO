@@ -1,0 +1,15 @@
+{
+  "name": "apto-tools",
+  "version": "1.0.0",
+  "description": "APTO TOOLS combined site",
+  "private": true,
+  "scripts": {
+    "dev": "netlify dev",
+    "deploy": "netlify deploy"
+  },
+  "dependencies": {
+    "stripe": "^14.0.0",
+    "node-fetch": "^3.3.2"
+  },
+  "engines": { "node": ">=18.0.0" }
+}
