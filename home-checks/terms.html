@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Terms of service | APTO</title>
+<meta name="description" content="The terms that apply when you book empty home inspections and key holding with APTO in Brighton &amp; Hove.">
+<meta name="theme-color" content="#1f2d5c">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'none'; form-action 'self'; base-uri 'self'; object-src 'none'">
+<link rel="icon" type="image/png" sizes="128x128" href="assets/apto-mascot-128.png">
+<link rel="apple-touch-icon" href="assets/apto-mascot-128.png">
+<style>
+:root{
+    --navy:#1f2d5c;
+    --navy-dark:#151f42;
+    --yellow:#f5d33f;
+    --yellow-soft:#fdf3c4;
+    --orange:#b94a17; /* darkened slightly from #c8501a for WCAG AA text contrast on cream */
+    --orange-soft:#fbe9df;
+    --grey:#b9bec7;
+    --ink:#1b2340;
+    --muted:#5b6380;
+    --line:#e3e1d8;
+    --bg:#faf8f3;
+    --white:#fff;
+    --radius:16px;
+    --max:1120px;
+    --stripe:repeating-linear-gradient(90deg,var(--yellow) 0 22px,var(--grey) 22px 30px);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;color:var(--ink);background:var(--white);line-height:1.6;font-size:17px;-webkit-font-smoothing:antialiased}
+  img,svg{display:block;max-width:100%}
+  a{color:var(--orange)}
+  h1,h2,h3{line-height:1.2;color:var(--navy);margin:0 0 .5em}
+  h1{font-size:clamp(2.1rem,4.6vw,3.25rem);letter-spacing:-.02em}
+  h2{font-size:clamp(1.6rem,3vw,2.2rem);letter-spacing:-.01em}
+  h3{font-size:1.15rem}
+  p{margin:0 0 1em}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 22px}
+  section{padding:80px 0}
+  .alt{background:var(--bg)}
+  .eyebrow{display:inline-block;font-size:.8rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);margin-bottom:.8em}
+  .lead{font-size:1.15rem;color:var(--muted);max-width:680px}
+  .center{text-align:center}
+  .center .lead{margin-left:auto;margin-right:auto}
+
+  /* Accessibility: skip link + visible keyboard focus */
+  .skip{position:absolute;left:-9999px;top:10px;z-index:100;background:var(--navy);color:#fff;padding:10px 18px;border-radius:999px;font-weight:800;text-decoration:none}
+  .skip:focus{left:12px}
+  a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--navy);outline-offset:3px;border-radius:6px}
+  .btn:focus-visible{border-radius:999px}
+  footer a:focus-visible,.trust a:focus-visible{outline-color:var(--yellow)}
+
+  /* Buttons */
+  .btn{display:inline-block;font-family:inherit;padding:14px 26px;border-radius:999px;font-weight:800;text-decoration:none;font-size:1rem;border:2px solid transparent;cursor:pointer;transition:transform .15s,background .15s}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-primary{background:var(--yellow);color:var(--navy);box-shadow:0 3px 0 #d9b51f}
+  .btn-primary:hover{background:#f8dc5f}
+  .btn-outline{border-color:var(--navy);color:var(--navy);background:transparent}
+  .btn-outline:hover{background:rgba(31,45,92,.06)}
+  .btn-dark{background:var(--navy);color:#fff}
+  .btn-dark:hover{background:var(--navy-dark)}
+
+  /* Brand */
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+  .brand img{width:44px;height:44px}
+  .wordmark{display:flex;flex-direction:column;line-height:1}
+  .wordmark b{font-size:1.65rem;font-weight:900;letter-spacing:.06em;color:var(--navy)}
+  .wordmark b::after{content:"";display:block;height:4px;margin-top:3px;border-radius:2px;background:var(--stripe)}
+  .wordmark small{font-size:.66rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);margin-top:4px}
+
+  /* Header */
+  header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line);backdrop-filter:saturate(1.2) blur(6px)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:72px;gap:16px}
+  .nav-links{display:flex;align-items:center;gap:24px}
+  .nav-links a{color:var(--navy);text-decoration:none;font-size:.95rem;font-weight:700}
+  .nav-links a:hover{color:var(--orange)}
+  .nav-links .btn{padding:10px 20px}
+
+  .mascot-stage{position:relative;display:flex;justify-content:center}
+  .mascot-stage picture{position:relative;display:block;width:min(100%,300px);margin:0 auto}
+  .mascot-stage picture::before{content:"";position:absolute;width:88%;aspect-ratio:1;border-radius:50%;background:var(--yellow);bottom:6%;left:50%;transform:translateX(-50%);z-index:0}
+  .mascot-stage img{position:relative;z-index:1;display:block;width:100%;height:auto;filter:drop-shadow(0 18px 22px rgba(31,45,92,.22))}
+  /* Footer */
+  footer{background:var(--navy-dark);color:#aab3d3;padding:0 0 30px;font-size:.9rem}
+  footer::before{content:"";display:block;height:8px;background:var(--stripe);margin-bottom:48px}
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:32px}
+  footer .wordmark b{color:#fff}
+  footer h4{color:#fff;margin:0 0 10px;font-size:.95rem}
+  footer a{color:#dfe3f1;text-decoration:none}
+  footer a:hover{text-decoration:underline}
+  footer p{margin:0 0 .5em}
+  .foot-brand{margin-bottom:14px}
+  .foot-bottom{border-top:1px solid rgba(255,255,255,.12);margin-top:32px;padding-top:20px;font-size:.8rem;color:#8790b3}
+
+
+  /* Sub-pages */
+  .page-hero{background:var(--bg);padding:56px 0 46px;position:relative}
+  .page-hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:10px;background:var(--stripe)}
+  .page-hero .lead{margin:0}
+  .narrow{max-width:780px}
+  .legal{max-width:780px;padding:56px 22px 80px}
+  .legal h2{font-size:1.45rem;margin-top:1.8em}
+  .legal h3{margin-top:1.4em}
+  .legal ul{padding-left:1.2em;margin:0 0 1em}
+  .legal li{margin-bottom:.45em}
+  .legal li::marker{color:var(--orange)}
+  .template-note{background:var(--yellow-soft);border-left:6px solid var(--yellow);border-radius:var(--radius);padding:18px 22px;margin:0 0 28px;color:var(--ink)}
+  .template-note strong{color:var(--navy)}
+  .updated{color:var(--muted);font-size:.92rem}
+  .ph-dark{background:var(--yellow-soft);color:#7a4a00;padding:1px 6px;border-radius:5px;font-weight:700}
+  .message{padding:64px 0 84px;background:var(--bg);position:relative}
+  .message-grid{display:grid;grid-template-columns:300px 1fr;gap:48px;align-items:center;max-width:900px;margin:0 auto}
+  .message .lead{margin-bottom:1.4em}
+  .message-ctas{display:flex;flex-wrap:wrap;gap:14px}
+
+  @media (max-width:960px){
+    .nav-links a:not(.btn){display:none}
+  }
+  @media (max-width:640px){
+    body{font-size:16px}
+    .foot-grid{grid-template-columns:1fr}
+    .nav{height:64px}
+    .brand img{width:38px;height:38px}
+    .wordmark b{font-size:1.4rem}
+    .nav-links .btn{padding:9px 16px;font-size:.9rem}
+    .page-hero{padding:40px 0 36px}
+    .legal{padding:40px 22px 60px}
+    .message{padding:40px 0 64px}
+    .message-grid{grid-template-columns:1fr;gap:24px;text-align:center}
+    .mascot-stage picture{width:min(70%,240px)}
+    .message .lead{margin-left:auto;margin-right:auto}
+    .message-ctas .btn{flex:1 1 100%;text-align:center}
+  }
+</style>
+</head>
+<body><div class="apto-tools-bar" style="background:#0d1f35;color:#cfd8e3;font:600 13px/1.2 system-ui,sans-serif;padding:7px 14px;display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center;position:relative;z-index:9999"><a href="/" style="color:#fff;text-decoration:none;font-weight:900">APTO <span style="color:#eb6e14">TOOLS</span></a><a href="/money" style="color:#cfd8e3;text-decoration:none">Money &amp; AI</a><a href="/pro/" style="color:#cfd8e3;text-decoration:none">APTO Pro</a><a href="/web/" style="color:#cfd8e3;text-decoration:none">Websites</a><a href="/solve/" style="color:#cfd8e3;text-decoration:none">APTO Solve</a><a href="/home-checks/" style="color:#cfd8e3;text-decoration:none">Home Checks</a><a href="/portfolio/" style="color:#cfd8e3;text-decoration:none">Portfolio</a></div>
+
+<a class="skip" href="#main">Skip to main content</a>
+
+<header>
+  <div class="wrap nav">
+    <a aria-label='APTO Empty home checks, home' class='brand' href='/home-checks/'>
+      <img src="assets/apto-mascot-128.webp" width="44" height="44" alt="">
+      <span class="wordmark"><b>APTO</b><small>Empty home checks</small></span>
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href='/home-checks/#how'>How it works</a>
+      <a href='/home-checks/#pricing'>Prices</a>
+      <a href='/home-checks/#faq'>FAQ</a>
+      <a class='btn btn-primary' href='/home-checks/#contact'>Get a quote</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<section class="page-hero">
+  <div class="wrap narrow">
+    <span class="eyebrow">Legal</span>
+    <h1>Terms of service</h1>
+    <p class="lead">The terms that apply when you book empty home checks or key holding with APTO.</p>
+  </div>
+</section>
+<div class="wrap legal">
+    <div class="template-note" role="note">
+      <strong>Template &mdash; have this checked before relying on it.</strong>
+      This is a plain-English starting point, not legal advice. Have it checked, and make sure it matches how you really work, before relying on it.
+    </div>
+    <p class="updated">Last updated: 3 October 2026</p>
+
+    <h2>1. About us</h2>
+    <p>APTO provides empty home checks and key holding in Brighton &amp; Hove and surrounding areas. You can contact us by email at <a href="mailto:apto.tools@gmail.com">apto.tools@gmail.com</a> or using the <a href='/home-checks/#contact'>contact form</a> on our website, and we will reply within one working day.</p>
+    <p>These terms apply when you book visits, key holding or any other service from us. Please read them before booking. If anything here differs from what we agree in writing for your property, the written agreement wins.</p>
+
+    <h2>2. What we do</h2>
+    <ul>
+      <li>Scheduled inside-and-outside inspections of empty or unoccupied homes</li>
+      <li>Secure key holding, under our Security Industry Authority (SIA) key-holding licence</li>
+      <li>A dated photo report after each visit, and a running visit log</li>
+      <li>Optional extras such as letting in trades, clearance firms or estate agents, and post forwarding</li>
+    </ul>
+    <h3>What we don&rsquo;t do</h3>
+    <p>We don&rsquo;t provide legal, probate or insurance advice, alarm response or security guarding, building surveys, or repairs. Our checks are visual and non-intrusive: we can&rsquo;t see inside walls, under floors or in locked areas we haven&rsquo;t been given access to.</p>
+
+    <h2>3. Your responsibilities</h2>
+    <ul>
+      <li><strong>You stay responsible for your insurance.</strong> Please check with your insurer that inspections by a professional company like us meet your policy conditions, and tell us exactly what the policy requires (for example how often, and what must be checked).</li>
+      <li>Make sure you have the right to give us access to the property (for example as the owner, executor or their representative).</li>
+      <li>Tell us about anything that affects our visits, such as alarms, utilities being turned off, the property being sold or let, or other people holding keys.</li>
+    </ul>
+
+    <h2>4. Quotes, prices and payment</h2>
+    <p>Prices on our website are illustrative &ldquo;from&rdquo; prices. Your written quote confirms the price for your property. Your quote will also set out when and how to pay.</p>
+    <p>If an invoice isn&rsquo;t paid on time, we may pause visits after letting you know. We&rsquo;ll always tell you before a missed visit could affect your insurance.</p>
+
+    <h2>5. Visits and scheduling</h2>
+    <p>We visit within the interval we have agreed with you (for example every 7 or 14 days). If something outside our control, such as severe weather or illness, stops a visit going ahead, we will tell you as soon as possible and rearrange it promptly.</p>
+
+    <h2>6. Keys</h2>
+    <p>Keys are logged, given a coded tag and kept in a locked key cabinet. They are never labelled with the address. When the service ends we will return keys in the way we agree with you, or hand them to someone you nominate in writing.</p>
+
+    <h2>7. Problems and emergencies</h2>
+    <p>If we find something urgent, such as a leak, a break-in or no heating in freezing weather, we will call you straight away and agree what to do. With your permission we can turn off the water at the stopcock or let in a tradesperson you choose. We won&rsquo;t arrange or pay for repairs without your agreement.</p>
+
+    <h2>8. Cancelling</h2>
+    <p>There is no long contract. You can cancel any time with notice, for example when the house is sold, let or occupied again.</p>
+    <p>If you are a consumer and book without meeting us in person, you have the legal right to cancel within 14 days of booking. If you ask us to start visits within those 14 days, you will pay for any visits already carried out.</p>
+
+    <h2>9. Our liability</h2>
+    <p>We will carry out our services with reasonable care and skill. We hold an SIA key-holding licence and public liability insurance, including cover for keys. Details of both are available on request.</p>
+    <p>We are not responsible for loss or damage that we did not cause, that happens between visits, or that could not reasonably have been spotted during a visual inspection.</p>
+    <p>Nothing in these terms limits our liability for death or personal injury caused by our negligence, for fraud, or for anything else that cannot be limited by law. If you are a consumer, nothing here affects your legal rights, including under the Consumer Rights Act 2015.</p>
+
+    <h2>10. Complaints</h2>
+    <p>If you&rsquo;re unhappy with our service, please email us at <a href="mailto:apto.tools@gmail.com">apto.tools@gmail.com</a> or use the <a href='/home-checks/#contact'>contact form</a> on our website and we will do our best to put things right quickly.</p>
+
+    <h2>11. The law that applies</h2>
+    <p>These terms are governed by the law of England and Wales, and the courts of England and Wales can deal with any dispute.</p>
+</div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a aria-label='APTO, home' class='brand foot-brand' href='/home-checks/'>
+          <img src="assets/apto-mascot-128.webp" width="44" height="44" alt="">
+          <span class="wordmark"><b>APTO</b><small>Empty home checks</small></span>
+        </a>
+        <p>Insurer-ready inspections for empty and unoccupied homes.</p>
+        <p>Serving Brighton &amp; Hove and surrounding areas.</p>
+        <p>SIA-licensed and fully insured &mdash; details on request.</p>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <p><a href='/home-checks/#contact'>Use our contact form</a></p>
+        <p><a href="mailto:apto.tools@gmail.com">apto.tools@gmail.com</a></p>
+        <p>We reply within one working day.</p>
+      </div>
+      <div>
+        <h4>Areas covered</h4>
+        <p>Brighton &amp; Hove, Hove, Shoreham-by-Sea, Worthing, Lewes and Peacehaven</p>
+        <p><a href='/home-checks/#guide'>Free guide (PDF)</a></p>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      &copy; 2026 APTO. We carry out and report on property inspections; we don&rsquo;t provide legal, probate or insurance advice, alarm response or security guarding. Policyholders remain responsible for meeting their insurance conditions.
+      &nbsp;&middot;&nbsp; <a href='/home-checks/privacy'>Privacy policy</a> &middot; <a href='/home-checks/terms'>Terms of service</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,9 @@
+<!doctype html><meta charset="utf-8"><title>relay</title><body>relay
+<script>
+(async()=>{const q=new URLSearchParams(location.search);const files=q.getAll('f');const out=[];
+for(const f of files){const r=await fetch(f);const b=await r.arrayBuffer();out.push({name:f.split('/').pop(),type:r.headers.get('content-type'),buf:b});}
+document.body.textContent='fetched '+out.length;
+const send=()=>{const t=window.opener||(window.parent!==window?window.parent:null);if(t){t.postMessage({relay:true,files:out},'*');document.body.textContent+=' sent';}};
+send();window.addEventListener('message',e=>{if(e.data==='again')send();});
+})();
+</script>

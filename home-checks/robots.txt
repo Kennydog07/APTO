@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /thanks.html
+
+# TODO: replace example.netlify.app with the real domain once known
+Sitemap: https://apto-home-checks.netlify.app/sitemap.xml
