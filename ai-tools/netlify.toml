@@ -1,0 +1,43 @@
+# Netlify config for the AI tools site.
+# In the Netlify UI set "Base directory" to `ai-tools` (this folder) so this file is used.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+  functions = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[functions]
+  node_bundler = "esbuild"
+
+# Client-only pages (the "done" page) are served from an empty app shell.
+[[redirects]]
+  from = "/t/*"
+  to = "/app-shell.html"
+  status = 200
+
+# Everything else that is not a real file is a 404 (pre-rendered 404 page).
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    X-Frame-Options = "DENY"
+
+[[headers]]
+  for = "/t/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
