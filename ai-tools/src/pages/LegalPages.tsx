@@ -106,6 +106,11 @@ export function PrivacyPage() {
           and addresses you include in a letter).
         </li>
         <li>
+          <strong>For the bedtime story tool, a child’s first name</strong> (never a surname or
+          photo), an age band and favourite things. These are used only to write that story and are
+          deleted with the order after 30 days.
+        </li>
+        <li>
           <strong>Your email address</strong>, collected at checkout by Stripe, so we can send your
           download link.
         </li>

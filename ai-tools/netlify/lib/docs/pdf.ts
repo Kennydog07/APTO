@@ -16,14 +16,39 @@ export function toWinAnsi(text: string, font: PDFFont): string {
     .replace(/\t/g, '    ');
   let out = '';
   for (const ch of replaced) {
-    try {
-      font.encodeText(ch);
-      out += ch;
-    } catch {
-      out += '';
-    }
+    const candidates = [ch, FALLBACK_LETTERS[ch], ch.normalize('NFD')[0]];
+    const ok = candidates.find((c) => c !== undefined && canEncode(font, c));
+    out += ok ?? '';
   }
   return out;
+}
+
+/** Letters with no WinAnsi glyph and no accent-stripped form. */
+const FALLBACK_LETTERS: Record<string, string> = {
+  Ł: 'L',
+  ł: 'l',
+  Đ: 'D',
+  đ: 'd',
+  ı: 'i',
+  Ħ: 'H',
+  ħ: 'h',
+  Ŧ: 'T',
+  ŧ: 't',
+  Ŋ: 'N',
+  ŋ: 'n',
+  ș: 's',
+  Ș: 'S',
+  ț: 't',
+  Ț: 'T',
+};
+
+function canEncode(font: PDFFont, ch: string): boolean {
+  try {
+    font.encodeText(ch);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 /** Greedy word wrap using real font metrics. */
@@ -112,7 +137,12 @@ export class FlowWriter {
 
   text(
     text: string,
-    o: { size?: number; bold?: boolean; align?: 'left' | 'right'; lineGap?: number } = {},
+    o: {
+      size?: number;
+      bold?: boolean;
+      align?: 'left' | 'right' | 'center';
+      lineGap?: number;
+    } = {},
   ) {
     const size = o.size ?? 11;
     const font = o.bold ? this.fonts.bold : this.fonts.regular;
@@ -120,10 +150,13 @@ export class FlowWriter {
     for (const line of wrapText(toWinAnsi(text, font), font, size, this.width)) {
       if (this.y - lineHeight < this.floor) this.newPage();
       this.y -= lineHeight;
+      const w = font.widthOfTextAtSize(line, size);
       const x =
         o.align === 'right'
-          ? this.opts.margin + this.width - font.widthOfTextAtSize(line, size)
-          : this.opts.margin;
+          ? this.opts.margin + this.width - w
+          : o.align === 'center'
+            ? this.opts.margin + (this.width - w) / 2
+            : this.opts.margin;
       this.page.drawText(line, { x, y: this.y, size, font, color: rgb(0.08, 0.08, 0.08) });
     }
   }

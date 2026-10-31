@@ -18,8 +18,11 @@ export interface PromptModule<TInputs, TOutput> {
     inputs: TInputs,
     regen?: RegenContext<TOutput>,
   ): string | Anthropic.ContentBlockParam[];
-  /** Throws OutputParseError if the model output is not valid. */
-  parseOutput(raw: string): TOutput;
+  /**
+   * Throws OutputParseError if the model output is not valid. `inputs` is passed so a tool
+   * can run input-dependent checks (e.g. the speech is roughly the requested length).
+   */
+  parseOutput(raw: string, inputs?: TInputs): TOutput;
 }
 
 export class OutputParseError extends Error {

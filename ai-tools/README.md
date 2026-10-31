@@ -2,7 +2,13 @@
 
 This folder holds five small AI tools. Each one works the same way: the visitor fills in a form, pays once with Stripe Checkout, the AI writes the result, and the visitor downloads it. There are no accounts.
 
-> **Status: Phase 1 is done.** The core flow works and Tool 1 (Parking Appeal) is complete. Tools 2–5 are set up in `shared/tools.ts` with `live: false`, so they are hidden until they are built.
+> **Status: Phases 1 and 2 are done.** Live tools: Parking Appeal (£3.99), Bedtime Story (£2.99) and Speech Writer (£4.99). Tools 4 and 5 are set up in `shared/tools.ts` with `live: false`, so they are hidden until they are built.
+>
+> | Tool           | Route             | Output                                                         |
+> | -------------- | ----------------- | -------------------------------------------------------------- |
+> | Parking Appeal | `/parking-appeal` | Letter as PDF + DOCX, evidence list, next steps                |
+> | Bedtime Story  | `/bedtime-story`  | A5 PDF: cover, large-type pages, vector borders, "The End"     |
+> | Speech Writer  | `/speech-writer`  | Large-print PDF + DOCX, printable cue cards, `[pause]` markers |
 
 This project is separate from the existing apto-pro.com static site in the repo root. It deploys as its **own Netlify site** with base directory `ai-tools`, so it can't clash with that site's `/api/stripe-webhook`, `/privacy` and similar paths. You can point a subdomain at it later (for example `tools.apto-pro.com`).
 
@@ -77,7 +83,7 @@ Use **Stripe test keys** (`sk_test_…`). Set `SITE_URL=http://localhost:8888`. 
 ### 3. Automated checks (no keys needed)
 
 ```bash
-npm test            # 37 unit tests: prompt builder, parser, prices, kill switch, PDF/DOCX, markdown
+npm test            # 70 unit tests: prompt builders, parsers, prices, kill switch, PDF/DOCX, markdown
 npm run typecheck
 npm run lint
 npm run build       # client build + pre-render + sitemap/robots into dist/
@@ -90,7 +96,9 @@ npm run build       # client build + pre-render + sitemap/robots into dist/
 npx netlify dev
 
 # Terminal 2
-npm run e2e
+npm run e2e                              # parking appeal
+npm run e2e -- --tool=bedtime-story
+npm run e2e -- --tool=speech-writer
 ```
 
 The script uses your `.env` and **refuses to run with a live Stripe key**. It does the following:
@@ -121,12 +129,12 @@ You can also run `npm run e2e -- --manual`, which prints a Checkout URL and then
 
 ### 6. Test the guards
 
-| What          | How                                                                                                                                                  |
-| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Kill switch   | Set `DAILY_AI_BUDGET_GBP=0` and restart. The form shows "Back shortly" and `create-job` returns 503                                                  |
-| Rate limit    | Submit the form 11 times within an hour. The 11th gets 429                                                                                           |
-| Stats         | `curl "http://localhost:8888/api/stats?key=$STATS_API_KEY" \| jq`                                                                                    |
-| Sample output | `npm run seed` calls Claude once (about 1p) and rewrites `src/samples/parking-appeal.json` from real output. The PDF and DOCX go to `sample-output/` |
+| What          | How                                                                                                                                                                                                               |
+| ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Kill switch   | Set `DAILY_AI_BUDGET_GBP=0` and restart. The form shows "Back shortly" and `create-job` returns 503                                                                                                               |
+| Rate limit    | Submit the form 11 times within an hour. The 11th gets 429                                                                                                                                                        |
+| Stats         | `curl "http://localhost:8888/api/stats?key=$STATS_API_KEY" \| jq`                                                                                                                                                 |
+| Sample output | `npm run seed` calls Claude once per live tool (a few pence in total) and rewrites `src/samples/<tool>.json` from real output. The files go to `sample-output/`. Use `npm run seed -- speech-writer` for one tool |
 
 ### 7. Deploy (short version; the full guide comes in Phase 5)
 

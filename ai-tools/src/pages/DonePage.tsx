@@ -9,9 +9,13 @@ import { Link, useLocation } from '../lib/router';
 import { Seo } from '../lib/seo';
 import { Button, Notice } from '../components/ui';
 import { ParkingAppealResult, type ParkingAppealDisplay } from '../tools/parking-appeal/Result';
+import { BedtimeStoryResult, type BedtimeStoryDisplay } from '../tools/bedtime-story/Result';
+import { SpeechResult, type SpeechDisplay } from '../tools/speech-writer/Result';
 
 const RESULT_VIEWS: Partial<Record<ToolId, (r: unknown) => ReactNode>> = {
   'parking-appeal': (r) => <ParkingAppealResult r={r as ParkingAppealDisplay} />,
+  'bedtime-story': (r) => <BedtimeStoryResult r={r as BedtimeStoryDisplay} />,
+  'speech-writer': (r) => <SpeechResult r={r as SpeechDisplay} />,
 };
 
 interface Status {
@@ -205,7 +209,7 @@ function Regenerate({ jobId, onQueued }: { jobId: string; onQueued: () => void }
         rows={3}
         onChange={(e) => setNote(e.target.value)}
         className="w-full rounded-md border border-stone-400 px-3 py-2 focus:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700/30"
-        placeholder="e.g. make it shorter, or put more emphasis on the broken machine"
+        placeholder="e.g. make it shorter, warmer, or put more emphasis on one part"
       />
       <p className="text-sm text-stone-600">
         You can regenerate once. The new version replaces this one.

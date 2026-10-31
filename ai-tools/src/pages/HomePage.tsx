@@ -9,7 +9,7 @@ export function HomePage() {
       <Seo
         title={`${BRAND.name} – ${BRAND.tagline}`}
         path="/"
-        description="Small, useful AI tools for everyday jobs: appeal a parking ticket and more. Pay once, download instantly, no account needed."
+        description="Small AI tools for everyday jobs: appeal a parking ticket, write a wedding or eulogy speech, or create a personalised bedtime story. Pay once, no account."
       />
       <section className="mx-auto max-w-5xl px-4 py-10 sm:py-14">
         <h1 className="text-3xl font-extrabold tracking-tight sm:text-5xl">{BRAND.tagline}</h1>

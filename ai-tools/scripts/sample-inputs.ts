@@ -14,4 +14,25 @@ export const SAMPLE_INPUTS = {
     appellantName: 'Alex Example',
     appellantAddress: '12 Sample Street\nExampletown\nEX1 2MP',
   },
+  'bedtime-story': {
+    childName: 'Maya',
+    ageBand: '5-7',
+    favourites: ['rockets', 'the moon', 'her dog Biscuit'],
+    theme: 'kindness',
+    length: 'short',
+  },
+  'speech-writer': {
+    speechType: 'best_man',
+    speakerName: 'Jordan',
+    relationship: "Groom's best friend since school",
+    subjectNames: 'Sam and Priya',
+    anecdotes: [
+      'Sam and I met on the first day of secondary school when he walked into the wrong classroom and stayed for the whole lesson.',
+      'Their first date was a walk along the river that was supposed to take an hour and took five.',
+      "When Sam's dad was unwell last year, Priya was there every weekend without being asked.",
+    ],
+    tone: 'balanced',
+    minutes: 3,
+    avoid: 'No jokes about exes or drinking.',
+  },
 } as const;

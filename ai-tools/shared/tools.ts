@@ -14,6 +14,8 @@ export interface ToolConfig {
   /** Public route of the landing page, e.g. "/parking-appeal". */
   route: string;
   name: string;
+  /** Short label for the header navigation. */
+  shortName: string;
   /** Text shown on the Stripe Checkout page. */
   stripeProductName: string;
   pricePence: number;
@@ -31,6 +33,7 @@ export const TOOLS: Record<ToolId, ToolConfig> = {
     id: 'parking-appeal',
     route: '/parking-appeal',
     name: 'Parking Ticket Appeal Letter',
+    shortName: 'Parking appeal',
     stripeProductName: 'Parking ticket appeal letter (PDF + Word)',
     pricePence: 399,
     maxTokens: 2000,
@@ -45,10 +48,11 @@ export const TOOLS: Record<ToolId, ToolConfig> = {
     id: 'bedtime-story',
     route: '/bedtime-story',
     name: 'Personalised Bedtime Story',
+    shortName: 'Bedtime story',
     stripeProductName: 'Personalised bedtime story (A5 PDF)',
     pricePence: 299,
     maxTokens: 3000,
-    live: false,
+    live: true,
     tagline: 'A gentle, calming story starring your child, as a beautiful printable PDF.',
     metaTitle: 'Personalised Bedtime Story PDF for Your Child | £2.99',
     metaDescription:
@@ -58,10 +62,11 @@ export const TOOLS: Record<ToolId, ToolConfig> = {
     id: 'speech-writer',
     route: '/speech-writer',
     name: 'Speech Writer',
+    shortName: 'Speech writer',
     stripeProductName: 'Speech (PDF + Word + cue cards)',
     pricePence: 499,
     maxTokens: 3500,
-    live: false,
+    live: true,
     tagline: 'Best man, wedding, eulogy or leaving-do speech built around your own stories.',
     metaTitle: 'Speech Writer – Best Man, Wedding, Eulogy & Retirement Speeches | £4.99',
     metaDescription:
@@ -71,6 +76,7 @@ export const TOOLS: Record<ToolId, ToolConfig> = {
     id: 'listing-writer',
     route: '/listing-writer',
     name: 'eBay & Vinted Listing Writer',
+    shortName: 'Listing writer',
     stripeProductName: '10 eBay/Vinted listings',
     pricePence: 199,
     maxTokens: 1200,
@@ -84,6 +90,7 @@ export const TOOLS: Record<ToolId, ToolConfig> = {
     id: 'cv-tailor',
     route: '/cv-tailor',
     name: 'Tailored CV & Cover Letter',
+    shortName: 'CV tailor',
     stripeProductName: 'Tailored CV + cover letter (PDF + Word)',
     pricePence: 499,
     maxTokens: 5000,

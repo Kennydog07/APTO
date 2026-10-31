@@ -25,7 +25,7 @@ export function Layout({ children }: { children: ReactNode }) {
                 href={t.route}
                 className="text-stone-700 hover:text-blue-700 hover:underline"
               >
-                {t.name}
+                {t.shortName}
               </Link>
             ))}
           </nav>

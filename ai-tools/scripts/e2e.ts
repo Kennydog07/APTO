@@ -4,6 +4,7 @@
  *   Terminal 1:  npx netlify dev                         (serves http://localhost:8888)
  *   Terminal 2:  npm run e2e                             (automated, see below)
  *            or  npm run e2e -- --manual                 (real Checkout page in your browser)
+ *            or  npm run e2e -- --tool=speech-writer     (any live tool; default parking-appeal)
  *
  * Automated mode creates a real test-mode PaymentIntent (card pm_card_visa), then sends a
  * correctly signed checkout.session.completed webhook to the site. This exercises the real
@@ -18,13 +19,20 @@
  */
 import Stripe from 'stripe';
 import { SAMPLE_INPUTS } from './sample-inputs.ts';
+import { TOOLS, isToolId } from '../shared/tools.ts';
 
 const BASE = (process.env.E2E_BASE_URL || 'http://localhost:8888').replace(/\/+$/, '');
 const KEY = process.env.STRIPE_SECRET_KEY || '';
 const WHSEC = process.env.STRIPE_WEBHOOK_SECRET || '';
 const EMAIL = process.env.E2E_EMAIL || 'e2e-test@example.com';
 const MANUAL = process.argv.includes('--manual');
-const TOOL = 'parking-appeal';
+const toolArg = process.argv.find((a) => a.startsWith('--tool='))?.slice(7) ?? 'parking-appeal';
+if (!isToolId(toolArg) || !(toolArg in SAMPLE_INPUTS)) {
+  console.error(`Unknown tool or no sample inputs: ${toolArg}`);
+  process.exit(1);
+}
+const TOOL = toolArg as keyof typeof SAMPLE_INPUTS;
+const PRICE = TOOLS[TOOL].pricePence;
 
 if (!KEY.startsWith('sk_test_')) {
   console.error('Refusing to run: STRIPE_SECRET_KEY must be a TEST key (sk_test_...).');
@@ -55,7 +63,7 @@ interface JobStatus {
   refunded?: boolean;
   downloads?: { url: string; filename: string }[];
   canRegenerate?: boolean;
-  result?: { letterText?: string };
+  result?: unknown;
 }
 
 async function waitFor(
@@ -97,7 +105,7 @@ async function simulatePayment(jobId: string) {
   check(Boolean(session), 'Stripe Checkout Session exists for the job');
 
   const pi = await stripe.paymentIntents.create({
-    amount: session?.amount_total ?? 399,
+    amount: session?.amount_total ?? PRICE,
     currency: 'gbp',
     payment_method: 'pm_card_visa',
     automatic_payment_methods: { enabled: true, allow_redirects: 'never' },
@@ -155,7 +163,7 @@ async function checkDownloads(s: JobStatus) {
   }
 }
 
-console.log(`E2E against ${BASE}\n`);
+console.log(`E2E for ${TOOL} against ${BASE}\n`);
 const site = await api<{ accepting: boolean }>('/api/site-status');
 check(site.json.accepting === true, 'site is accepting orders (budget not exceeded)');
 
@@ -172,7 +180,7 @@ const done = await waitFor(
   MANUAL ? 600_000 : 240_000,
 );
 check(done.status === 'done', `job finished as done (got ${done.status})`);
-check(done.result?.letterText?.includes('Dear Sir or Madam'), 'inline letter text returned');
+check(done.result != null && typeof done.result === 'object', 'inline result returned');
 check(done.canRegenerate === true, 'free regeneration offered');
 await checkDownloads(done);
 
@@ -199,7 +207,7 @@ if (!MANUAL) {
   check(failed.refunded === true, 'job marked refunded');
   const refunds = await stripe.refunds.list({ payment_intent: piId });
   check(
-    refunds.data.length === 1 && refunds.data[0]?.amount === 399,
+    refunds.data.length === 1 && refunds.data[0]?.amount === PRICE,
     'exactly one full refund in Stripe',
   );
 }

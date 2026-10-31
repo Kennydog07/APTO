@@ -17,6 +17,7 @@ import {
   useAcceptingOrders,
 } from '../../components/ui';
 import { useCheckout } from '../useCheckout';
+import { CheckoutSmallPrint, issuesToFieldErrors } from '../../components/ToolLanding';
 
 const tool = TOOLS['parking-appeal'];
 
@@ -52,12 +53,7 @@ export function ParkingAppealForm() {
         e.preventDefault();
         const parsed = parkingAppealSchema.safeParse(v);
         if (!parsed.success) {
-          const errs: Record<string, string[]> = {};
-          for (const issue of parsed.error.issues) {
-            const key = String(issue.path[0] ?? 'form');
-            (errs[key] ??= []).push(issue.message);
-          }
-          setFieldErrors(errs);
+          setFieldErrors(issuesToFieldErrors(parsed.error.issues));
           return;
         }
         void submit(parsed.data);
@@ -181,19 +177,7 @@ export function ParkingAppealForm() {
           ? 'Taking you to secure checkout…'
           : `Continue to payment – ${formatPrice(tool.pricePence)}`}
       </Button>
-      <p className="text-xs text-stone-600">
-        Secure payment by Stripe. Your letter is ready about a minute after payment, with one free
-        regeneration. By paying you agree to our{' '}
-        <a href="/terms" className="underline">
-          terms
-        </a>{' '}
-        and to your letter being supplied straight away, so the 14-day cancellation right no longer
-        applies (
-        <a href="/refunds" className="underline">
-          refund policy
-        </a>
-        ).
-      </p>
+      <CheckoutSmallPrint what="letter" />
     </form>
   );
 }

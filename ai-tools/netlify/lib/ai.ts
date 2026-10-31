@@ -92,7 +92,7 @@ export async function generateStructured<TIn, TOut>(
     total.tokensOut += usage.tokensOut;
     total.costGbp += usage.costGbp;
     try {
-      return { output: module.parseOutput(text), usage: total };
+      return { output: module.parseOutput(text, inputs), usage: total };
     } catch (e) {
       if (!(e instanceof OutputParseError)) throw e;
       console.warn(`model output failed to parse (attempt ${attempt + 1})`, e.message);

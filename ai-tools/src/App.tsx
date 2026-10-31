@@ -6,11 +6,15 @@ import { NotFoundPage } from './pages/NotFoundPage';
 import { ContactPage, PrivacyPage, RefundsPage, TermsPage } from './pages/LegalPages';
 import { BlogIndexPage, BlogPostPage } from './pages/BlogPages';
 import { ParkingAppealPage } from './tools/parking-appeal/Page';
+import { BedtimeStoryPage } from './tools/bedtime-story/Page';
+import { SpeechWriterPage } from './tools/speech-writer/Page';
 
 /** Static routes. Each one is pre-rendered to HTML at build time. */
 export const STATIC_ROUTES: Record<string, () => React.ReactElement> = {
   '/': () => <HomePage />,
   '/parking-appeal': () => <ParkingAppealPage />,
+  '/bedtime-story': () => <BedtimeStoryPage />,
+  '/speech-writer': () => <SpeechWriterPage />,
   '/terms': () => <TermsPage />,
   '/privacy': () => <PrivacyPage />,
   '/refunds': () => <RefundsPage />,
