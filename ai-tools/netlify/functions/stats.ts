@@ -21,6 +21,7 @@ interface Row {
   refunded: number;
   revenue_pence: number;
   refunded_pence: number;
+  usage_done?: number;
 }
 
 function keyMatches(given: string | null): boolean {
@@ -52,6 +53,7 @@ async function windowStats(since: Date) {
           refunded_gbp: Number(r?.refunded_pence ?? 0) / 100,
           net_revenue_gbp: (Number(r?.revenue_pence ?? 0) - Number(r?.refunded_pence ?? 0)) / 100,
           conversion_rate_pct: pct(paid, created),
+          ...(TOOLS[id].credits ? { uses_completed: Number(r?.usage_done ?? 0) } : {}),
         },
       ];
     }),

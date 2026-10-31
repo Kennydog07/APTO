@@ -8,6 +8,7 @@ import { getJob, isUuid } from '../lib/db.ts';
 import { errorJson, json } from '../lib/http.ts';
 import { signedDownloads } from '../lib/storage.ts';
 import type { StoredResult } from '../lib/generators/types.ts';
+import { TOOLS } from '../../shared/tools.ts';
 
 export const config: Config = { path: '/api/job-status', method: 'GET' };
 
@@ -34,7 +35,8 @@ export default async (req: Request) => {
     ...base,
     result: (job.result as StoredResult).display,
     downloads,
-    canRegenerate: job.regenerations_used < 1,
+    canRegenerate:
+      job.regenerations_used < 1 && job.kind === 'purchase' && !TOOLS[job.tool].credits,
     regenFailed: job.regen_failed,
   });
 };

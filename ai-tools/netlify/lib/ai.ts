@@ -16,6 +16,14 @@ export interface AiUsage {
   costGbp: number;
 }
 
+/** Not enough time left before the caller's deadline. */
+export class DeadlineError extends Error {
+  constructor() {
+    super('Deadline reached');
+    this.name = 'DeadlineError';
+  }
+}
+
 export class AiRefusalError extends Error {
   constructor() {
     super('The model declined this request');
@@ -36,26 +44,35 @@ export async function callClaude(opts: {
   user: string | Anthropic.ContentBlockParam[];
   maxTokens: number;
   model?: string;
+  /** Per-request overrides, used by the synchronous listing writer. */
+  timeoutMs?: number;
+  maxRetries?: number;
 }): Promise<{ text: string; usage: AiUsage; stopReason: string | null }> {
   const model = opts.model ?? anthropicModel();
   const isSonnet55 = model === 'claude-sonnet-5-5';
 
-  const response = await anthropic().beta.messages.create({
-    model,
-    max_tokens: opts.maxTokens,
-    system: opts.system,
-    messages: [
-      { role: 'user', content: opts.user as Anthropic.Beta.BetaContentBlockParam[] | string },
-    ],
-    ...(isSonnet55
-      ? {
-          thinking: { type: 'between_tools' as const },
-          output_config: { effort: 'medium' as const },
-          betas: ['server-side-fallback-2026-07-01'],
-          fallbacks: 'default' as const,
-        }
-      : { output_config: { effort: 'low' as const } }),
-  });
+  const response = await anthropic().beta.messages.create(
+    {
+      model,
+      max_tokens: opts.maxTokens,
+      system: opts.system,
+      messages: [
+        { role: 'user', content: opts.user as Anthropic.Beta.BetaContentBlockParam[] | string },
+      ],
+      ...(isSonnet55
+        ? {
+            thinking: { type: 'between_tools' as const },
+            output_config: { effort: 'medium' as const },
+            betas: ['server-side-fallback-2026-07-01'],
+            fallbacks: 'default' as const,
+          }
+        : { output_config: { effort: 'low' as const } }),
+    },
+    {
+      ...(opts.timeoutMs !== undefined ? { timeout: opts.timeoutMs } : {}),
+      ...(opts.maxRetries !== undefined ? { maxRetries: opts.maxRetries } : {}),
+    },
+  );
 
   const tokensIn = response.usage.input_tokens ?? 0;
   const tokensOut = response.usage.output_tokens ?? 0;
@@ -79,14 +96,19 @@ export async function generateStructured<TIn, TOut>(
   module: PromptModule<TIn, TOut>,
   inputs: TIn,
   regen?: RegenContext<TOut>,
+  /** Absolute time (ms since epoch) by which we must be finished. No SDK retries when set. */
+  deadline?: number,
 ): Promise<{ output: TOut; usage: AiUsage }> {
   const total: AiUsage = { tokensIn: 0, tokensOut: 0, costGbp: 0 };
   let lastError: unknown;
   for (let attempt = 0; attempt < 2; attempt++) {
+    const timeLeft = deadline === undefined ? undefined : deadline - Date.now();
+    if (timeLeft !== undefined && timeLeft < 1500) throw new DeadlineError();
     const { text, usage } = await callClaude({
       system: module.buildSystemPrompt(),
       user: module.buildUserPrompt(inputs, regen),
       maxTokens: module.max_tokens,
+      ...(timeLeft !== undefined ? { timeoutMs: timeLeft, maxRetries: 0 } : {}),
     });
     total.tokensIn += usage.tokensIn;
     total.tokensOut += usage.tokensOut;

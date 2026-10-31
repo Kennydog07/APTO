@@ -6,6 +6,10 @@ import type { Config } from '@netlify/functions';
 import { db, isUuid } from '../lib/db.ts';
 import { errorJson, json, readJson } from '../lib/http.ts';
 import { triggerGeneration } from '../lib/pipeline.ts';
+import { TOOL_IDS, TOOLS } from '../../shared/tools.ts';
+
+/** Credit-pack tools have no free regeneration (each use costs a credit). */
+const CREDIT_TOOLS = TOOL_IDS.filter((id) => TOOLS[id].credits);
 
 export const config: Config = { path: '/api/regenerate', method: 'POST' };
 
@@ -30,6 +34,8 @@ export default async (req: Request) => {
     .eq('id', body.job)
     .eq('status', 'done')
     .eq('regenerations_used', 0)
+    .eq('kind', 'purchase')
+    .not('tool', 'in', `(${CREDIT_TOOLS.join(',')})`)
     .not('result', 'is', null)
     .select('id');
   if (error) return errorJson(500, 'Something went wrong');

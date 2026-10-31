@@ -16,6 +16,7 @@ import { uploadOutputs, signedDownloads } from './storage.ts';
 import { refundPayment } from './stripe.ts';
 import { button, emailLayout, escapeHtml, sendEmail } from './email.ts';
 import { GENERATORS } from './generators/index.ts';
+import { addCredits, fulfilCreditPack, withoutImages } from './credits.ts';
 import type { StoredResult } from './generators/types.ts';
 import { TOOLS, donePath, formatPrice } from '../../shared/tools.ts';
 
@@ -75,6 +76,21 @@ export async function runGeneration(jobId: string): Promise<void> {
     return;
   }
   const job = claimed as JobRow;
+
+  // Credit pack purchase: no AI call, just create/top up the credits.
+  if (TOOLS[job.tool].credits && job.kind === 'purchase') {
+    try {
+      if (isStripeTestMode() && job.inputs?._test_force_fail === true) {
+        throw new Error('Forced failure (test mode)');
+      }
+      await fulfilCreditPack(job);
+    } catch (e) {
+      console.error(`credit pack fulfilment failed for ${job.id}`, e);
+      await handleFailure(job, String(e), false);
+    }
+    return;
+  }
+
   const isRegen = job.regenerations_used > 0 && job.result != null;
   const generator = GENERATORS[job.tool];
 
@@ -106,6 +122,8 @@ export async function runGeneration(jobId: string): Promise<void> {
       await updateJob(job.id, {
         status: 'done',
         result,
+        // Usage jobs (listing photos): drop the images as soon as we're done with them.
+        ...(job.kind === 'usage' ? { inputs: withoutImages(job.inputs) } : {}),
         output_paths: paths,
         completed_at: new Date().toISOString(),
         attempts: job.attempts + attempt + 1,
@@ -137,6 +155,14 @@ export async function runGeneration(jobId: string): Promise<void> {
  */
 export async function handleFailure(job: JobRow, reason: string, isRegen: boolean): Promise<void> {
   const last_error = reason.slice(0, 1000);
+  if (job.kind === 'usage') {
+    // One use of a credit pack failed: give the credit back. Nothing to refund in Stripe.
+    await updateJob(job.id, { status: 'failed', last_error, inputs: withoutImages(job.inputs) });
+    const token = job.inputs?.token;
+    if (typeof token === 'string')
+      await addCredits(token, 1).catch((e) => console.error('credit refund failed', e));
+    return;
+  }
   if (isRegen) {
     await updateJob(job.id, { status: 'done', regen_failed: true, last_error });
     return;

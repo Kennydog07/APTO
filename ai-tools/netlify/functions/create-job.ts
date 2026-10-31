@@ -36,7 +36,7 @@ export default async (req: Request, context: Context) => {
     return errorJson(429, 'Too many attempts. Please try again in an hour.');
   }
 
-  const parsed = generator.inputSchema.safeParse(body.inputs);
+  const parsed = (generator.purchaseSchema ?? generator.inputSchema).safeParse(body.inputs ?? {});
   if (!parsed.success) {
     return errorJson(400, 'Please check the form', {
       fields: z.flattenError(parsed.error as z.ZodError).fieldErrors,

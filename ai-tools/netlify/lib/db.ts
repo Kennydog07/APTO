@@ -19,6 +19,8 @@ export type JobStatus =
 export interface JobRow {
   id: string;
   tool: ToolId;
+  /** 'purchase' = paid order, 'usage' = one use of a credit pack. */
+  kind: 'purchase' | 'usage';
   inputs: Record<string, unknown> | null;
   status: JobStatus;
   stripe_session_id: string | null;

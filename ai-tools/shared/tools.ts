@@ -23,6 +23,8 @@ export interface ToolConfig {
   maxTokens: number;
   /** false = not built yet: hidden from navigation, sitemap and checkout. */
   live: boolean;
+  /** Set for credit-pack tools: number of uses bought per purchase. */
+  credits?: number;
   tagline: string;
   metaTitle: string;
   metaDescription: string;
@@ -80,7 +82,8 @@ export const TOOLS: Record<ToolId, ToolConfig> = {
     stripeProductName: '10 eBay/Vinted listings',
     pricePence: 199,
     maxTokens: 1200,
-    live: false,
+    live: true,
+    credits: 10,
     tagline: 'Snap a photo, get a search-friendly title and description. 10 listings for £1.99.',
     metaTitle: 'eBay & Vinted Listing Writer from Photos | 10 Listings £1.99',
     metaDescription:

@@ -35,4 +35,10 @@ export const SAMPLE_INPUTS = {
     minutes: 3,
     avoid: 'No jokes about exes or drinking.',
   },
+  // Credit pack purchase (what create-job receives). Listings are written later from photos.
+  'listing-writer': { kind: 'pack' },
 } as const;
+
+/** A 96x96 plain red JPEG, used by the e2e test to exercise the listing writer end to end. */
+export const SAMPLE_PHOTO_JPEG_BASE64 =
+  '/9j/4AAQSkZJRgABAQAAAAAAAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCABgAGADASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFgEBAQEAAAAAAAAAAAAAAAAAAAYH/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AlAE608AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB/9k=';

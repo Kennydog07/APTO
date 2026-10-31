@@ -57,10 +57,17 @@ export function TermsPage() {
         <li>Only give other people’s details if you are entitled to.</li>
         <li>Don’t use the tools for anything unlawful, misleading or abusive.</li>
       </ul>
+      <h2>Credit packs</h2>
+      <p>
+        Some tools (such as the listing writer) are sold as packs of credits. We email you a private
+        link that holds your credits: anyone with the link can use them, so keep it private. Each
+        use takes one credit. Credits don’t expire, and if a use fails the credit is returned
+        automatically.
+      </p>
       <h2>AI output</h2>
       <p>
         AI can make mistakes. You are responsible for checking and editing the result before you
-        send or rely on it. Each purchase includes one free regeneration.
+        send or rely on it. Each single purchase (not credit packs) includes one free regeneration.
       </p>
       <h2>Payment and refunds</h2>
       <p>
@@ -109,6 +116,11 @@ export function PrivacyPage() {
           <strong>For the bedtime story tool, a child’s first name</strong> (never a surname or
           photo), an age band and favourite things. These are used only to write that story and are
           deleted with the order after 30 days.
+        </li>
+        <li>
+          <strong>For the listing writer, photos of the item you’re selling.</strong> Photos are
+          resized in your browser (which also removes location data), used once to write the
+          listing, and deleted straight afterwards. We keep the listing text for 30 days.
         </li>
         <li>
           <strong>Your email address</strong>, collected at checkout by Stripe, so we can send your
@@ -201,10 +213,16 @@ export function RefundsPage() {
         <strong>refund you in full automatically</strong> and email you. You don’t need to do
         anything. Refunds usually take 5–10 working days to appear.
       </p>
+      <h2>Credit packs</h2>
+      <p>
+        If a listing can’t be written, the credit is returned to your link automatically. If you
+        bought a pack but couldn’t use it because of a problem on our side, email us and we’ll
+        refund it.
+      </p>
       <h2>If it isn’t quite right</h2>
       <p>
-        Every purchase includes <strong>one free regeneration</strong>. Use the “Regenerate once
-        free” button on your results page and tell us what to change.
+        Every single purchase (not credit packs) includes <strong>one free regeneration</strong>.
+        Use the “Regenerate once free” button on your results page and tell us what to change.
       </p>
       <h2>If it’s faulty</h2>
       <p>

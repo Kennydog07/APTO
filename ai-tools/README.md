@@ -2,7 +2,7 @@
 
 This folder holds five small AI tools. Each one works the same way: the visitor fills in a form, pays once with Stripe Checkout, the AI writes the result, and the visitor downloads it. There are no accounts.
 
-> **Status: Phases 1 and 2 are done.** Live tools: Parking Appeal (£3.99), Bedtime Story (£2.99) and Speech Writer (£4.99). Tools 4 and 5 are set up in `shared/tools.ts` with `live: false`, so they are hidden until they are built.
+> **Status: Phases 1–3 are done.** Live tools: Parking Appeal (£3.99), Bedtime Story (£2.99), Speech Writer (£4.99) and the Listing Writer (10 listings for £1.99). Tool 5 (CV tailor) is set up in `shared/tools.ts` with `live: false`, so it is hidden until it is built.
 >
 > | Tool           | Route             | Output                                                         |
 > | -------------- | ----------------- | -------------------------------------------------------------- |
@@ -44,16 +44,18 @@ form ──POST /api/create-job──► jobs row (awaiting_payment) + Stripe Ch
 
 ### Endpoints
 
-| Endpoint                    | Notes                                                                                                |
-| --------------------------- | ---------------------------------------------------------------------------------------------------- |
-| `POST /api/create-job`      | Rate limit: 10 per IP per hour. Returns 503 `{paused:true}` once the daily budget is used up         |
-| `POST /api/stripe-webhook`  | Handles `checkout.session.completed` and `checkout.session.expired`                                  |
-| `GET /api/job-status?job=`  | Polled by the done page. Never returns inputs or email                                               |
-| `POST /api/regenerate`      | Uses the job's one free regeneration                                                                 |
-| `GET /api/site-status`      | Returns `{accepting}`. Forms show "Back shortly" when this is false                                  |
-| `GET /api/stats?key=`       | Anonymised stats for the marketing bot                                                               |
-| `sweeper` (every 10 min)    | Re-triggers paid jobs that never started, fails and refunds stuck jobs, retries refunds that errored |
-| `retention-cleanup` (daily) | Wipes inputs, results, emails and files after 30 days, and expires abandoned checkouts               |
+| Endpoint                     | Notes                                                                                                                                                                                                                                 |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `POST /api/create-job`       | Rate limit: 10 per IP per hour. Returns 503 `{paused:true}` once the daily budget is used up                                                                                                                                          |
+| `POST /api/stripe-webhook`   | Handles `checkout.session.completed` and `checkout.session.expired`                                                                                                                                                                   |
+| `GET /api/job-status?job=`   | Polled by the done page. Never returns inputs or email                                                                                                                                                                                |
+| `POST /api/regenerate`       | Uses the job's one free regeneration (not for credit packs)                                                                                                                                                                           |
+| `POST /api/listing-generate` | Listing writer: spends 1 credit and writes a listing from 1–3 photos. Runs synchronously when it can (`LISTING_SYNC_TIMEOUT_MS`, default 8s), otherwise hands over to the background function. A failed listing gives its credit back |
+| `GET /api/credits?token=`    | Credits left on a magic link                                                                                                                                                                                                          |
+| `GET /api/site-status`       | Returns `{accepting}`. Forms show "Back shortly" when this is false                                                                                                                                                                   |
+| `GET /api/stats?key=`        | Anonymised stats for the marketing bot                                                                                                                                                                                                |
+| `sweeper` (every 10 min)     | Re-triggers paid jobs that never started, fails and refunds stuck jobs, retries refunds that errored                                                                                                                                  |
+| `retention-cleanup` (daily)  | Wipes inputs, results, emails and files after 30 days, and expires abandoned checkouts                                                                                                                                                |
 
 ### Reliability and cost guards
 
@@ -67,7 +69,7 @@ form ──POST /api/create-job──► jobs row (awaiting_payment) + Stripe Ch
 ### 1. Supabase (about 5 minutes)
 
 1. Create a project at supabase.com. A London (eu-west-2) region suits UK GDPR.
-2. Open **SQL editor**, paste in `supabase/migrations/0001_init.sql` and run it. This creates the tables, the RLS lock-down, the helper functions and the private `outputs` bucket.
+2. Open **SQL editor**, then paste in and run each file in `supabase/migrations/` **in order** (`0001_init.sql`, then `0002_credit_packs.sql`). Together they create the tables, the RLS lock-down, the helper functions and the private `outputs` bucket.
 3. Go to **Project settings → API** and copy the Project URL and the `service_role` key.
 
 ### 2. Environment
@@ -83,7 +85,7 @@ Use **Stripe test keys** (`sk_test_…`). Set `SITE_URL=http://localhost:8888`. 
 ### 3. Automated checks (no keys needed)
 
 ```bash
-npm test            # 70 unit tests: prompt builders, parsers, prices, kill switch, PDF/DOCX, markdown
+npm test            # 90 unit tests: prompt builders, parsers, prices, kill switch, PDF/DOCX, markdown
 npm run typecheck
 npm run lint
 npm run build       # client build + pre-render + sitemap/robots into dist/
@@ -99,6 +101,7 @@ npx netlify dev
 npm run e2e                              # parking appeal
 npm run e2e -- --tool=bedtime-story
 npm run e2e -- --tool=speech-writer
+npm run e2e -- --tool=listing-writer     # buys a pack, checks the token, writes 1 listing
 ```
 
 The script uses your `.env` and **refuses to run with a live Stripe key**. It does the following:

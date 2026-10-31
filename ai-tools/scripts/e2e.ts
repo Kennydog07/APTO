@@ -18,7 +18,7 @@
  * Optional: E2E_BASE_URL (default http://localhost:8888), E2E_EMAIL (to receive the emails).
  */
 import Stripe from 'stripe';
-import { SAMPLE_INPUTS } from './sample-inputs.ts';
+import { SAMPLE_INPUTS, SAMPLE_PHOTO_JPEG_BASE64 } from './sample-inputs.ts';
 import { TOOLS, isToolId } from '../shared/tools.ts';
 
 const BASE = (process.env.E2E_BASE_URL || 'http://localhost:8888').replace(/\/+$/, '');
@@ -33,6 +33,7 @@ if (!isToolId(toolArg) || !(toolArg in SAMPLE_INPUTS)) {
 }
 const TOOL = toolArg as keyof typeof SAMPLE_INPUTS;
 const PRICE = TOOLS[TOOL].pricePence;
+const IS_PACK = Boolean(TOOLS[TOOL].credits);
 
 if (!KEY.startsWith('sk_test_')) {
   console.error('Refusing to run: STRIPE_SECRET_KEY must be a TEST key (sk_test_...).');
@@ -181,22 +182,72 @@ const done = await waitFor(
 );
 check(done.status === 'done', `job finished as done (got ${done.status})`);
 check(done.result != null && typeof done.result === 'object', 'inline result returned');
-check(done.canRegenerate === true, 'free regeneration offered');
-await checkDownloads(done);
+if (IS_PACK) {
+  console.log('\n2. Credit pack: magic link, credits, one listing');
+  const token = (done.result as { token?: string } | undefined)?.token ?? '';
+  check(/^[A-Za-z0-9]{32}$/.test(token), 'pack result contains a 32-char token');
+  const credits = await api<{ remaining: number }>(`/api/credits?token=${token}`);
+  check(credits.json.remaining === TOOLS[TOOL].credits, `credits = ${credits.json.remaining}`);
+  const listingJob = crypto.randomUUID();
+  const gen = await api<{ status: string; result?: { title?: string }; remaining: number }>(
+    '/api/listing-generate',
+    {
+      jobId: listingJob,
+      token,
+      platform: 'ebay',
+      notes: 'Plain red square, used for an automated test.',
+      images: [{ mediaType: 'image/jpeg', data: SAMPLE_PHOTO_JPEG_BASE64 }],
+    },
+  );
+  check(
+    gen.status === 200 || gen.status === 202,
+    `listing-generate accepted (${gen.status} ${gen.json.status})`,
+  );
+  const listing =
+    gen.json.status === 'done'
+      ? { status: 'done', result: gen.json.result }
+      : await waitFor(listingJob, (s) => ['done', 'failed'].includes(s.status));
+  check(
+    listing.status === 'done' && Boolean((listing.result as { title?: string })?.title),
+    'listing written with a title',
+  );
+  const after = await api<{ remaining: number }>(`/api/credits?token=${token}`);
+  check(
+    after.json.remaining === TOOLS[TOOL].credits! - 1,
+    `one credit used (${after.json.remaining} left)`,
+  );
+  const dupe = await api('/api/listing-generate', {
+    jobId: listingJob,
+    token,
+    platform: 'ebay',
+    images: [{ mediaType: 'image/jpeg', data: SAMPLE_PHOTO_JPEG_BASE64 }],
+  });
+  check(dupe.status === 409, 're-using a request id is refused (credit given back)');
+  const afterDupe = await api<{ remaining: number }>(`/api/credits?token=${token}`);
+  check(
+    afterDupe.json.remaining === after.json.remaining,
+    'credit returned after the refused duplicate',
+  );
+  const regen = await api('/api/regenerate', { job: job.jobId, note: 'x' });
+  check(regen.status === 409, 'credit packs have no free regeneration');
+} else {
+  check(done.canRegenerate === true, 'free regeneration offered');
+  await checkDownloads(done);
 
-console.log('\n2. Free regeneration');
-const regen = await api(`/api/regenerate`, { job: job.jobId, note: 'Make it a little shorter.' });
-check(regen.status === 202, `regenerate accepted (${regen.status})`);
-const afterRegen = await waitFor(
-  job.jobId,
-  (s) => s.status === 'done' && s.canRegenerate === false,
-);
-check(
-  afterRegen.status === 'done' && afterRegen.canRegenerate === false,
-  'regenerated, no more free regenerations',
-);
-const regen2 = await api(`/api/regenerate`, { job: job.jobId, note: 'again' });
-check(regen2.status === 409, 'second regeneration refused');
+  console.log('\n2. Free regeneration');
+  const regen = await api(`/api/regenerate`, { job: job.jobId, note: 'Make it a little shorter.' });
+  check(regen.status === 202, `regenerate accepted (${regen.status})`);
+  const afterRegen = await waitFor(
+    job.jobId,
+    (s) => s.status === 'done' && s.canRegenerate === false,
+  );
+  check(
+    afterRegen.status === 'done' && afterRegen.canRegenerate === false,
+    'regenerated, no more free regenerations',
+  );
+  const regen2 = await api(`/api/regenerate`, { job: job.jobId, note: 'again' });
+  check(regen2.status === 409, 'second regeneration refused');
+}
 
 if (!MANUAL) {
   console.log('\n3. Failure -> automatic refund (forced, test mode only; takes ~30s for retries)');

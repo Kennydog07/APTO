@@ -8,6 +8,11 @@ import type { OutputFile } from '../storage.ts';
  */
 export interface ToolGenerator<TIn = unknown, TOut = unknown> {
   inputSchema: ZodType<TIn>;
+  /**
+   * Credit-pack tools only: schema for what is bought at checkout (create-job). The
+   * inputSchema then describes one use of a credit instead.
+   */
+  purchaseSchema?: ZodType<unknown>;
   prompt: PromptModule<TIn, TOut>;
   /** Turn validated AI output into files + the JSON shown inline on the done page. */
   build(inputs: TIn, output: TOut): Promise<{ display: unknown; files: OutputFile[] }>;
