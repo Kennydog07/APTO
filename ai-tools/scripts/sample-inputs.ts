@@ -35,6 +35,32 @@ export const SAMPLE_INPUTS = {
     minutes: 3,
     avoid: 'No jokes about exes or drinking.',
   },
+  'cv-tailor': {
+    cvText: [
+      'Alex Example',
+      'alex@example.com · 07700 900123 · Exampletown',
+      '',
+      'PROFILE',
+      'Reliable office manager with five years of experience in busy small businesses.',
+      '',
+      'EXPERIENCE',
+      'Office Manager, Acme Limited, Exampletown, 2019 – 2024',
+      '- Managed a team of 5 administrators',
+      '- Redesigned the filing process so documents were quicker to find',
+      '- Handled supplier orders and kept basic bookkeeping records in Excel',
+      'Sales Assistant, Corner Shop & Co, Exampletown, 2016 – 2019',
+      '- Served customers, handled cash and stock deliveries',
+      '',
+      'EDUCATION',
+      'BA (Hons) History, University of Exampletown, 2013 – 2016',
+      '',
+      'SKILLS',
+      'Excel, scheduling, customer service, supplier management, basic bookkeeping',
+    ].join('\n'),
+    advert:
+      'Office Manager – Bright Futures Ltd, Exampletown. We are looking for an organised Office Manager to lead our small admin team, manage supplier relationships, keep basic financial records and improve how the office runs. Experience leading a team is essential. Xero experience is desirable. Full time, office based.',
+    notes: 'Want to emphasise leadership.',
+  },
   // Credit pack purchase (what create-job receives). Listings are written later from photos.
   'listing-writer': { kind: 'pack' },
 } as const;

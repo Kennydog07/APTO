@@ -168,6 +168,32 @@ console.log(`E2E for ${TOOL} against ${BASE}\n`);
 const site = await api<{ accepting: boolean }>('/api/site-status');
 check(site.json.accepting === true, 'site is accepting orders (budget not exceeded)');
 
+if (TOOL === 'cv-tailor') {
+  console.log('\n0. CV upload + free preview');
+  const { Document, Packer, Paragraph } = await import('docx');
+  const cv = SAMPLE_INPUTS['cv-tailor'].cvText;
+  const docx = await Packer.toBuffer(
+    new Document({ sections: [{ children: cv.split('\n').map((t) => new Paragraph(t)) }] }),
+  );
+  const ex = await api<{ text?: string; type?: string }>('/api/cv-extract', {
+    data: Buffer.from(docx).toString('base64'),
+  });
+  check(
+    ex.status === 200 && ex.json.type === 'docx' && ex.json.text?.includes('Acme Limited'),
+    `cv-extract reads a DOCX (${ex.status})`,
+  );
+  const bad = await api('/api/cv-extract', { data: Buffer.from('not a cv').toString('base64') });
+  check(bad.status === 400, 'cv-extract rejects a non-PDF/DOCX file');
+  const pv = await api<{ fit?: string; bullets?: string[] }>('/api/cv-preview', {
+    cvText: cv,
+    advert: SAMPLE_INPUTS['cv-tailor'].advert,
+  });
+  check(
+    (pv.status === 200 && pv.json.bullets?.length === 3) || pv.status === 429,
+    `free preview returns 3 bullets (${pv.status}${pv.status === 429 ? ': daily preview limit already used' : ''})`,
+  );
+}
+
 console.log('\n1. Happy path');
 const job = await createJob();
 if (MANUAL) {

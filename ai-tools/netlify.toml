@@ -12,6 +12,10 @@
 [functions]
   node_bundler = "esbuild"
 
+# pdf-parse ships a PDF.js worker that must not be bundled.
+[functions."cv-extract"]
+  external_node_modules = ["pdf-parse", "mammoth"]
+
 # Client-only pages (the "done" page) are served from an empty app shell.
 [[redirects]]
   from = "/t/*"

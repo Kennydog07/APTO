@@ -12,6 +12,8 @@ export interface RegenContext<TOutput> {
  */
 export interface PromptModule<TInputs, TOutput> {
   max_tokens: number;
+  /** Optional model override (e.g. a cheaper model for the free CV preview). Defaults to ANTHROPIC_MODEL. */
+  model?: string;
   buildSystemPrompt(): string;
   /** A string, or content blocks (e.g. images for the listing writer). */
   buildUserPrompt(

@@ -2,7 +2,7 @@
 
 This folder holds five small AI tools. Each one works the same way: the visitor fills in a form, pays once with Stripe Checkout, the AI writes the result, and the visitor downloads it. There are no accounts.
 
-> **Status: Phases 1–3 are done.** Live tools: Parking Appeal (£3.99), Bedtime Story (£2.99), Speech Writer (£4.99) and the Listing Writer (10 listings for £1.99). Tool 5 (CV tailor) is set up in `shared/tools.ts` with `live: false`, so it is hidden until it is built.
+> **Status: Phases 1–4 are done.** All five tools are live: Parking Appeal (£3.99), Bedtime Story (£2.99), Speech Writer (£4.99), Listing Writer (10 listings for £1.99) and CV Tailor (£4.99).
 >
 > | Tool           | Route             | Output                                                         |
 > | -------------- | ----------------- | -------------------------------------------------------------- |
@@ -52,6 +52,8 @@ form ──POST /api/create-job──► jobs row (awaiting_payment) + Stripe Ch
 | `POST /api/regenerate`       | Uses the job's one free regeneration (not for credit packs)                                                                                                                                                                           |
 | `POST /api/listing-generate` | Listing writer: spends 1 credit and writes a listing from 1–3 photos. Runs synchronously when it can (`LISTING_SYNC_TIMEOUT_MS`, default 8s), otherwise hands over to the background function. A failed listing gives its credit back |
 | `GET /api/credits?token=`    | Credits left on a magic link                                                                                                                                                                                                          |
+| `POST /api/cv-extract`       | Reads text from an uploaded CV (PDF/DOCX, max 2MB). No AI, nothing stored. 20 per IP per hour                                                                                                                                         |
+| `POST /api/cv-preview`       | Free 3-bullet match summary: the **only** pre-payment AI call. `ANTHROPIC_PREVIEW_MODEL` (default `claude-haiku-5-5`), 300 tokens, 3 per IP per day, off when over budget                                                             |
 | `GET /api/site-status`       | Returns `{accepting}`. Forms show "Back shortly" when this is false                                                                                                                                                                   |
 | `GET /api/stats?key=`        | Anonymised stats for the marketing bot                                                                                                                                                                                                |
 | `sweeper` (every 10 min)     | Re-triggers paid jobs that never started, fails and refunds stuck jobs, retries refunds that errored                                                                                                                                  |
@@ -85,7 +87,7 @@ Use **Stripe test keys** (`sk_test_…`). Set `SITE_URL=http://localhost:8888`. 
 ### 3. Automated checks (no keys needed)
 
 ```bash
-npm test            # 90 unit tests: prompt builders, parsers, prices, kill switch, PDF/DOCX, markdown
+npm test            # 107 unit tests: prompt builders, parsers, prices, kill switch, PDF/DOCX, markdown
 npm run typecheck
 npm run lint
 npm run build       # client build + pre-render + sitemap/robots into dist/
@@ -102,6 +104,7 @@ npm run e2e                              # parking appeal
 npm run e2e -- --tool=bedtime-story
 npm run e2e -- --tool=speech-writer
 npm run e2e -- --tool=listing-writer     # buys a pack, checks the token, writes 1 listing
+npm run e2e -- --tool=cv-tailor          # also tests CV upload (DOCX) and the free preview
 ```
 
 The script uses your `.env` and **refuses to run with a live Stripe key**. It does the following:
@@ -156,4 +159,4 @@ These were deliberately **not** added:
 - **A Markdown library.** `src/lib/markdown.ts` handles headings, lists, links, bold and italic, quotes and images.
 - **An SSG plugin.** Pre-rendering is a small script, `scripts/prerender.mjs`, using Vite's SSR build.
 
-`mammoth` and `pdf-parse` will be added in Phase 4.
+`mammoth` and `pdf-parse` read uploaded CVs (`cv-extract` keeps them as external modules in `netlify.toml`, because pdf-parse loads a PDF.js worker at runtime).

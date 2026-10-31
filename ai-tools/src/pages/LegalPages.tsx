@@ -123,6 +123,12 @@ export function PrivacyPage() {
           listing, and deleted straight afterwards. We keep the listing text for 30 days.
         </li>
         <li>
+          <strong>For the CV tailor, your CV and the job advert.</strong> Your CV file is read in
+          memory and not stored; only its text is kept, with the results, for 30 days. If you use
+          the free match preview before paying, your CV and the advert are sent to the AI for that
+          preview and not stored by us.
+        </li>
+        <li>
           <strong>Your email address</strong>, collected at checkout by Stripe, so we can send your
           download link.
         </li>
@@ -164,7 +170,8 @@ export function PrivacyPage() {
       <ul>
         <li>
           <strong>Anthropic</strong> – the AI model that writes your document. Your inputs are sent
-          to it only after payment.
+          to it only after payment (except the optional free CV match preview, which you choose to
+          run).
         </li>
         <li>
           <strong>Supabase</strong> – database and file storage.

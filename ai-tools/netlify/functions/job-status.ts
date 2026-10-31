@@ -6,13 +6,11 @@
 import type { Config } from '@netlify/functions';
 import { getJob, isUuid } from '../lib/db.ts';
 import { errorJson, json } from '../lib/http.ts';
-import { signedDownloads } from '../lib/storage.ts';
+import { downloadLabel, signedDownloads } from '../lib/storage.ts';
 import type { StoredResult } from '../lib/generators/types.ts';
 import { TOOLS } from '../../shared/tools.ts';
 
 export const config: Config = { path: '/api/job-status', method: 'GET' };
-
-const LABELS: Record<string, string> = { pdf: 'Download PDF', docx: 'Download Word (.docx)' };
 
 export default async (req: Request) => {
   const id = new URL(req.url).searchParams.get('job');
@@ -29,7 +27,7 @@ export default async (req: Request) => {
 
   const downloads = (await signedDownloads(job.output_paths)).map((d) => ({
     ...d,
-    label: LABELS[d.filename.split('.').pop() ?? ''] ?? `Download ${d.filename}`,
+    label: downloadLabel(d.filename),
   }));
   return json({
     ...base,

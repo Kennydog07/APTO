@@ -37,6 +37,7 @@ export class AiRefusalError extends Error {
  * Model-specific settings:
  *  - claude-sonnet-5-5: thinking switched off ("between_tools", no tools are used) so the whole
  *    max_tokens budget goes to the answer; server-side refusal fallback enabled.
+ *  - claude-haiku-5-5 (CV preview): thinking disabled, low effort, so 300 tokens go to the answer.
  *  - other models: low effort keeps any thinking short.
  */
 export async function callClaude(opts: {
@@ -50,6 +51,7 @@ export async function callClaude(opts: {
 }): Promise<{ text: string; usage: AiUsage; stopReason: string | null }> {
   const model = opts.model ?? anthropicModel();
   const isSonnet55 = model === 'claude-sonnet-5-5';
+  const isHaiku55 = model === 'claude-haiku-5-5';
 
   const response = await anthropic().beta.messages.create(
     {
@@ -66,7 +68,9 @@ export async function callClaude(opts: {
             betas: ['server-side-fallback-2026-07-01'],
             fallbacks: 'default' as const,
           }
-        : { output_config: { effort: 'low' as const } }),
+        : isHaiku55
+          ? { thinking: { type: 'disabled' as const }, output_config: { effort: 'low' as const } }
+          : { output_config: { effort: 'low' as const } }),
     },
     {
       ...(opts.timeoutMs !== undefined ? { timeout: opts.timeoutMs } : {}),
@@ -108,6 +112,7 @@ export async function generateStructured<TIn, TOut>(
       system: module.buildSystemPrompt(),
       user: module.buildUserPrompt(inputs, regen),
       maxTokens: module.max_tokens,
+      ...(module.model ? { model: module.model } : {}),
       ...(timeLeft !== undefined ? { timeoutMs: timeLeft, maxRetries: 0 } : {}),
     });
     total.tokensIn += usage.tokensIn;

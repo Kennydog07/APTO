@@ -47,3 +47,13 @@ export async function deleteOutputs(paths: string[]) {
   const { error } = await db().storage.from(OUTPUT_BUCKET).remove(paths);
   if (error) throw error;
 }
+
+const FORMAT: Record<string, string> = { pdf: 'PDF', docx: 'Word' };
+
+/** "cover-letter.docx" -> "Download cover letter (Word)" */
+export function downloadLabel(filename: string): string {
+  const dot = filename.lastIndexOf('.');
+  const base = filename.slice(0, dot).replace(/-/g, ' ');
+  const ext = filename.slice(dot + 1);
+  return `Download ${base} (${FORMAT[ext] ?? ext.toUpperCase()})`;
+}

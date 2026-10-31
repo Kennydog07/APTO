@@ -12,11 +12,13 @@ import { ParkingAppealResult, type ParkingAppealDisplay } from '../tools/parking
 import { BedtimeStoryResult, type BedtimeStoryDisplay } from '../tools/bedtime-story/Result';
 import { SpeechResult, type SpeechDisplay } from '../tools/speech-writer/Result';
 import { PackDone } from '../tools/listing-writer/PackDone';
+import { CvResult, type CvDisplay } from '../tools/cv-tailor/Result';
 
 const RESULT_VIEWS: Partial<Record<ToolId, (r: unknown) => ReactNode>> = {
   'parking-appeal': (r) => <ParkingAppealResult r={r as ParkingAppealDisplay} />,
   'bedtime-story': (r) => <BedtimeStoryResult r={r as BedtimeStoryDisplay} />,
   'speech-writer': (r) => <SpeechResult r={r as SpeechDisplay} />,
+  'cv-tailor': (r) => <CvResult r={r as CvDisplay} />,
   'listing-writer': (r) => (
     <PackDone r={r as { token: string; added: number; remaining: number; topUp: boolean }} />
   ),

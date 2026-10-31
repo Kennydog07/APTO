@@ -97,7 +97,7 @@ export const TOOLS: Record<ToolId, ToolConfig> = {
     stripeProductName: 'Tailored CV + cover letter (PDF + Word)',
     pricePence: 499,
     maxTokens: 5000,
-    live: false,
+    live: true,
     tagline: 'Tailor your CV to a job advert honestly, plus a one-page cover letter.',
     metaTitle: 'Tailor Your CV to a Job Advert + Cover Letter (UK) | £4.99',
     metaDescription:
