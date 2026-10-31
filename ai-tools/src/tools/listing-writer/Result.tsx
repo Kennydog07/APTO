@@ -26,7 +26,7 @@ function Field({
   return (
     <div className="border-t border-stone-200 py-3 first:border-t-0">
       <div className="flex items-start justify-between gap-3">
-        <h4 className="text-sm font-semibold uppercase tracking-wide text-stone-600">{label}</h4>
+        <h3 className="text-sm font-semibold uppercase tracking-wide text-stone-600">{label}</h3>
         {!sample && <CopyButton text={copy} label="Copy" />}
       </div>
       <div className="mt-1">{children}</div>

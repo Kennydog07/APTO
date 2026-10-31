@@ -19,7 +19,16 @@ const { render, prerenderRoutes, sitemapEntries } = await import(
   pathToFileURL(path.join(root, 'dist-ssr', 'entry-server.js')).href
 );
 
-const template = fs.readFileSync(path.join(dist, 'index.html'), 'utf8');
+let template = fs.readFileSync(path.join(dist, 'index.html'), 'utf8');
+
+// Inline the (small) stylesheet so the first paint doesn't wait for an extra request.
+template = template.replace(
+  /<link rel="stylesheet"[^>]*href="(\/assets\/[^"]+\.css)"[^>]*>/,
+  (tag, href) => {
+    const css = fs.readFileSync(path.join(dist, href), 'utf8');
+    return css.length < 60_000 ? `<style>${css}</style>` : tag;
+  },
+);
 const plausible = process.env.PLAUSIBLE_DOMAIN
   ? `<script defer data-domain="${process.env.PLAUSIBLE_DOMAIN}" src="https://plausible.io/js/script.js"></script>`
   : '';

@@ -117,6 +117,7 @@ export default async (req: Request) => {
       name: TOOLS[id].name,
       route: TOOLS[id].route,
       price_gbp: TOOLS[id].pricePence / 100,
+      ...(TOOLS[id].credits ? { uses_per_purchase: TOOLS[id].credits } : {}),
     })),
   });
 };

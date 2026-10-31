@@ -9,8 +9,8 @@
  *                          function finishes it; the page polls job-status.
  *   - fails completely  -> the credit is given back automatically.
  *
- * LISTING_SYNC_TIMEOUT_MS (default 8000) must stay below the site's synchronous function
- * limit (Netlify default 10s). Raise both together, e.g. 20000 with a 26s function limit.
+ * LISTING_SYNC_TIMEOUT_MS (default 20000, per spec) must stay well below Netlify's 60s
+ * synchronous function limit.
  */
 import type { Config, Context } from '@netlify/functions';
 import { z } from 'zod';
@@ -34,7 +34,7 @@ const TOOL = 'listing-writer';
 
 export default async (req: Request, context: Context) => {
   const started = Date.now();
-  const syncMs = Number(process.env.LISTING_SYNC_TIMEOUT_MS) || 8000;
+  const syncMs = Number(process.env.LISTING_SYNC_TIMEOUT_MS) || 20_000;
 
   const body = (await readJson(req, 5_000_000)) as Record<string, unknown> | null;
   if (!body) return errorJson(400, 'Invalid request');

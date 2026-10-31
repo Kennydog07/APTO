@@ -10,13 +10,18 @@ import type { Config } from '@netlify/functions';
 import { db } from '../lib/db.ts';
 import { deleteOutputs } from '../lib/storage.ts';
 
-export const config: Config = { schedule: '@daily' };
+// 03:17 UTC every day (quiet time; off the hour to avoid scheduler congestion).
+export const config: Config = { schedule: '17 3 * * *' };
+
+/** Scheduled functions are stopped after 30s: stop starting new batches after 20s. */
+const TIME_BUDGET_MS = 20_000;
 
 const daysAgo = (d: number) => new Date(Date.now() - d * 86_400_000).toISOString();
 
 export default async () => {
-  // Process in batches so a backlog can never time the function out.
-  for (let batch = 0; batch < 20; batch++) {
+  const started = Date.now();
+  // Process in batches so a backlog can never time the function out; tomorrow's run continues.
+  for (let batch = 0; batch < 20 && Date.now() - started < TIME_BUDGET_MS; batch++) {
     const { data, error } = await db()
       .from('jobs')
       .select('id, output_paths')

@@ -14,7 +14,12 @@ export const config: Config = { schedule: '*/10 * * * *' };
 const minutesAgo = (m: number) => new Date(Date.now() - m * 60_000).toISOString();
 const isRegen = (j: JobRow) => j.regenerations_used > 0 && j.result != null;
 
+/** Scheduled functions are stopped after 30s; leftovers are handled on the next run. */
+const TIME_BUDGET_MS = 20_000;
+
 export default async () => {
+  const started = Date.now();
+  const timeLeft = () => Date.now() - started < TIME_BUDGET_MS;
   const jobs = db().from('jobs');
 
   // 1 + 2: paid but not started
@@ -24,6 +29,7 @@ export default async () => {
     .lt('paid_at', minutesAgo(3))
     .limit(50);
   for (const job of (paid ?? []) as JobRow[]) {
+    if (!timeLeft()) return;
     if (job.trigger_count < 3) {
       await updateJob(job.id, { trigger_count: job.trigger_count + 1 });
       await triggerGeneration(job.id);
@@ -40,6 +46,7 @@ export default async () => {
     .lt('generation_started_at', minutesAgo(20))
     .limit(50);
   for (const job of (stuck ?? []) as JobRow[]) {
+    if (!timeLeft()) return;
     await handleFailure(job, 'Generation timed out', isRegen(job));
   }
 
@@ -51,5 +58,8 @@ export default async () => {
     .is('refunded_at', null)
     .not('stripe_payment_intent', 'is', null)
     .limit(50);
-  for (const job of unrefunded ?? []) await refundJob(job as JobRow);
+  for (const job of unrefunded ?? []) {
+    if (!timeLeft()) return;
+    await refundJob(job as JobRow);
+  }
 };
