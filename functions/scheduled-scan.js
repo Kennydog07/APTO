@@ -1,153 +1,104 @@
 /**
- * APTO Pro — Scheduled Lead Scanner
- * Runs every hour via Netlify scheduled functions
- * Scans for leads and stores them in Supabase
- * 
- * Schedule: defined in netlify.toml
+ * APTO Pro — Scheduled Lead Scanner (hourly trigger, see netlify.toml; work runs in scan-worker-background.js)
+ *
+ * For every user with alerts enabled, uses that user's trade (user_settings)
+ * and location (last manual-scan location, stored in auth app_metadata) and:
+ *   - every run:      Contracts Finder (free, official gov API)
+ *   - every 6 hours:  planning applications near the user (free)
+ *   - once a day (SERP_HOUR_UTC, default 07:00 UTC): the same SerpAPI
+ *     collectors as scan-leads, capped by a monthly-quota guard so the free
+ *     250 searches/month plan isn't exhausted.
+ * New leads are deduped against everything already stored for that user and
+ * saved to Supabase `leads`. No emails or notifications are sent here.
  */
+const E = require('./lib/lead-engine');
 
-const TRADE_TERMS = {
-  plumbing:        ['plumber', 'plumbing', 'boiler', 'burst pipe', 'no hot water'],
-  electrical:      ['electrician', 'electrical', 'fuse box', 'rewire'],
-  decorating:      ['decorator', 'painter', 'decorating', 'painting'],
-  gardening:       ['gardener', 'gardening', 'garden', 'landscaper', 'lawn'],
-  building:        ['builder', 'building', 'extension', 'loft conversion'],
-  'dog-grooming':  ['dog groomer', 'dog grooming', 'mobile groomer'],
-  cleaning:        ['cleaner', 'cleaning', 'end of tenancy', 'carpet clean'],
-  removals:        ['removal', 'removals', 'man and van', 'moving house'],
-  hvac:            ['boiler engineer', 'gas engineer', 'central heating', 'air conditioning'],
-  locksmith:       ['locksmith', 'locked out', 'lock change'],
-  catering:        ['caterer', 'catering', 'wedding catering'],
-  photography:     ['photographer', 'photography', 'wedding photographer'],
-  'windows-doors': ['window fitter', 'double glazing', 'UPVC windows'],
-  hairdressing:    ['hairdresser', 'mobile hairdresser', 'hair stylist'],
-  general:         ['handyman', 'odd jobs', 'general help', 'home repairs'],
-  carer:           ['carer', 'care worker', 'home help', 'elderly care'],
-  clearance:       ['house clearance', 'rubbish removal', 'garden clearance'],
-  roofing:         ['roofer', 'roofing', 'roof repair'],
-  plastering:      ['plasterer', 'plastering', 'skim coat'],
-  tiling:          ['tiler', 'tiling', 'tile fitting'],
-};
+const SERP_HOUR_UTC       = Number(process.env.SERP_HOUR_UTC ?? 7);
+const SERP_RESERVE        = Number(process.env.SERP_RESERVE ?? 100); // kept back for manual scans
+const SERP_MAX_PER_USER   = Number(process.env.SERP_MAX_PER_USER ?? 3);
 
-const INTENT_PHRASES = ['looking for', 'can anyone recommend', 'need a', 'need someone', 'who can', 'anyone know', 'urgent', 'ASAP', 'help wanted', 'after a'];
-
-async function searchAndAnalyse(trade, location) {
-  const tradeTerms = TRADE_TERMS[trade] || [trade];
-  const intentPart = INTENT_PHRASES.slice(0, 4).map(p => `"${p}"`).join(' OR ');
-  const tradePart  = tradeTerms.slice(0, 4).map(t => `"${t}"`).join(' OR ');
-  const query      = `(${intentPart}) AND (${tradePart}) ${location}`;
-
-  const serpUrl = new URL('https://serpapi.com/search.json');
-  serpUrl.searchParams.set('q',       query);
-  serpUrl.searchParams.set('api_key', process.env.SERPAPI_KEY);
-  serpUrl.searchParams.set('num',     '10');
-  serpUrl.searchParams.set('hl',      'en');
-  serpUrl.searchParams.set('gl',      'uk');
-  serpUrl.searchParams.set('tbs',     'qdr:d1'); // last 24 hours
-
-  const res  = await fetch(serpUrl.toString());
-  const data = await res.json();
-
-  if (data.error || !data.organic_results?.length) return [];
-
-  const candidates = data.organic_results.slice(0, 5).map(item => ({
-    title: item.title, snippet: item.snippet, link: item.link,
-    source: (() => { try { return new URL(item.link).hostname; } catch { return item.link; } })()
-  }));
-
-  const prompt = `You are APTO Pro Lead Filter. From these search results find genuine service requests from people looking for a ${trade} service in ${location}. Be generous — include anything that MIGHT be a real person seeking help. JSON array only, no markdown:
-[{"isGenuineLead":true,"score":85,"headline":"what they need","urgency":"High","detectedLocation":"Brighton","detectedTrade":"${trade}","reply":"Natural reply under 50 words","sourceUrl":"url","sourceName":"site"}]
-RESULTS:${JSON.stringify(candidates)}`;
-
-  const claudeRes = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'x-api-key': process.env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' },
-    body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 1500, messages: [{ role: 'user', content: prompt }] })
-  });
-
-  const claudeData = await claudeRes.json();
-  const rawText    = claudeData.content?.map(b => b.text || '').join('') || '[]';
-  const cleaned    = rawText.replace(/```json|```/g, '').trim();
-
-  try {
-    const results = JSON.parse(cleaned);
-    return results.filter(r => r.isGenuineLead);
-  } catch { return []; }
+function daysLeftInMonth(renews) {
+  const end = renews ? Date.parse(renews) : NaN;
+  const now = Date.now();
+  if (!isNaN(end) && end > now) return Math.max(1, Math.ceil((end - now) / 864e5));
+  const d = new Date(); return new Date(d.getUTCFullYear(), d.getUTCMonth() + 1, 0).getUTCDate() - d.getUTCDate() + 1;
 }
 
-async function saveLeadsToSupabase(leads, userId, trade, location) {
-  if (!leads.length) return;
+async function scanUser(setting, opts) {
+  const trade = setting.trade || 'plumbing';
+  const { location, radius } = await E.getUserLocation(setting.user_id);
+  const geo = await E.geocode(location);
+  const report = { user: setting.user_id.slice(0, 8), trade, location: location || 'UK', sources: {}, saved: 0 };
+  const leads = [];
 
-  const rows = leads.map(lead => ({
-    user_id:          userId,
-    trade:            lead.detectedTrade || trade,
-    location:         lead.detectedLocation || location,
-    headline:         lead.headline,
-    score:            lead.score,
-    urgency:          lead.urgency,
-    reply:            lead.reply,
-    source_url:       lead.sourceUrl,
-    source_name:      lead.sourceName,
-    is_read:          false,
-    found_at:         new Date().toISOString(),
-  }));
+  const cf = await E.contractsLeads({ trade, geo });
+  report.sources.contracts = cf.debug; leads.push(...cf.leads);
 
-  const res = await fetch(`${process.env.SUPABASE_URL}/rest/v1/leads`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'apikey':        process.env.SUPABASE_ANON_KEY,
-      'Authorization': `Bearer ${process.env.SUPABASE_SERVICE_KEY}`,
-      'Prefer':        'return=minimal'
-    },
-    body: JSON.stringify(rows)
-  });
+  if (opts.runPlanning) {
+    const pl = await E.planningLeads({ trade, geo, radiusMiles: radius });
+    report.sources.planning = pl.debug; leads.push(...pl.leads);
+  }
 
-  console.log(`Saved ${rows.length} leads for user ${userId}. Status: ${res.status}`);
+  if (opts.serpPerUser > 0) {
+    const defs = E.buildSerpDefs({ trade, location, tbs: 'qdr:d2' }) // daily run; 2-day window overlaps, dedupe drops repeats.slice(0, opts.serpPerUser);
+    const { lists, debug } = await E.runSerpDefs(defs, process.env.SERPAPI_KEY);
+    report.sources.serp = debug;
+    const candidates = E.dedupeCandidates(E.interleave(lists)).slice(0, 50);
+    const scored = await E.scoreCandidates(candidates, { trade, isJob: false, areaCtx: location ? `in or near ${location}` : 'anywhere in the UK' });
+    report.sources.scoring = { candidates: candidates.length, genuine: scored.leads.length, aiUsed: scored.aiUsed, aiError: scored.aiError };
+    leads.push(...scored.leads);
+  }
+
+  const r = await E.saveNewLeads(setting.user_id, leads, { trade, location });
+  report.found = leads.length; report.saved = r.saved; report.duplicates = r.skipped;
+  return report;
 }
 
-exports.handler = async () => {
-  console.log('Scheduled scan starting:', new Date().toISOString());
+async function run({ forceSerp = false, forcePlanning = false, dryRunSerp = false } = {}) {
+  const hour = new Date().getUTCHours();
+  let settings;
+  try { settings = await E.sbGet('user_settings?alerts_enabled=eq.true&select=user_id,trade,alert_min_score'); }
+  catch (e) { console.error('Could not load user_settings:', e.message); return { success: false, error: e.message }; }
+  if (!Array.isArray(settings)) { console.error('user_settings response was not a list'); return { success: false, error: 'bad user_settings response' }; }
+  console.log(`Scheduled scan: ${settings.length} users with alerts enabled`);
 
-  try {
-    // Get all users with alerts enabled from user_settings
-    const settingsRes = await fetch(
-      `${process.env.SUPABASE_URL}/rest/v1/user_settings?alerts_enabled=eq.true&select=user_id,trade,alert_email`,
-      {
-        headers: {
-          'apikey':        process.env.SUPABASE_ANON_KEY,
-          'Authorization': `Bearer ${process.env.SUPABASE_SERVICE_KEY}`
-        }
-      }
-    );
-
-    const settings = await settingsRes.json();
-    console.log(`Found ${settings.length} users with alerts enabled`);
-
-    // For each user, scan for their trade
-    for (const setting of settings) {
-      const trade    = setting.trade || 'plumbing';
-      const location = 'UK'; // Could personalise per user later
-
-      console.log(`Scanning for user ${setting.user_id}: ${trade} in ${location}`);
-      const leads = await searchAndAnalyse(trade, location);
-      console.log(`Found ${leads.length} genuine leads`);
-
-      if (leads.length > 0) {
-        await saveLeadsToSupabase(leads, setting.user_id, trade, location);
-      }
-
-      // Small delay between users to avoid rate limits
-      await new Promise(r => setTimeout(r, 2000));
+  let serpPerUser = 0, quota = null;
+  if ((hour === SERP_HOUR_UTC || forceSerp) && !dryRunSerp && settings.length) {
+    quota = await E.serpQuota(process.env.SERPAPI_KEY);
+    if (quota.ok) {
+      const daily = Math.floor(Math.max(0, quota.left - SERP_RESERVE) / daysLeftInMonth(quota.renews));
+      serpPerUser = Math.min(SERP_MAX_PER_USER, Math.floor(daily / settings.length));
     }
+    console.log(`SerpAPI guard: left=${quota.ok ? quota.left : 'unknown'} perUser=${serpPerUser}${quota.ok ? '' : ' (' + quota.error + ')'}`);
+  }
+  const runPlanning = forcePlanning || hour % 6 === 0;
 
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ success: true, usersScanned: settings.length })
-    };
+  const reports = [];
+  for (const s of settings) {
+    if (!s || !s.user_id) continue;
+    try { reports.push(await scanUser(s, { serpPerUser, runPlanning })); }
+    catch (e) { console.error(`Scan failed for user ${String(s.user_id).slice(0, 8)}:`, e.message); reports.push({ user: String(s.user_id).slice(0, 8), error: e.message }); }
+  }
+  console.log('Scheduled scan results:', JSON.stringify(reports));
+  return { success: true, usersScanned: settings.length, serpPerUser, serpLeftBefore: quota?.left ?? null, reports };
+}
 
+exports.run = run;
+
+// Netlify scheduled functions are capped at 30s, but one SerpAPI query can
+// take ~25s, so the hourly trigger just hands off to the background worker
+// (scan-worker-background.js, 15-minute limit), which calls run().
+exports.cronToken = () => require('crypto').createHmac('sha256', process.env.SUPABASE_SERVICE_KEY || '').update('apto-scan-worker').digest('hex');
+exports.handler = async () => {
+  try {
+    const base = process.env.URL || 'https://apto-pro.com';
+    const res = await fetch(`${base}/.netlify/functions/scan-worker-background`, {
+      method: 'POST', headers: { 'x-apto-cron': exports.cronToken() }, body: '{}',
+    });
+    console.log(`Scheduled scan: handed off to background worker (HTTP ${res.status})`);
+    return { statusCode: 200, body: JSON.stringify({ dispatched: res.status }) };
   } catch (err) {
-    console.error('Scheduled scan error:', err);
+    console.error('Scheduled scan dispatch error:', err);
     return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
   }
 };
