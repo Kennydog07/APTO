@@ -1,5 +1,5 @@
 /**
- * GET /api/stats?key=<STATS_API_KEY>
+ * GET /ai/api/stats?key=<STATS_API_KEY>
  * Read-only, anonymised stats for the marketing bot. No personal data. See MARKETING_BOT.md.
  */
 import type { Config } from '@netlify/functions';
@@ -9,8 +9,9 @@ import { env } from '../lib/env.ts';
 import { errorJson, json } from '../lib/http.ts';
 import { budgetCapGbp } from '../lib/spend.ts';
 import { TOOL_IDS, TOOLS } from '../../shared/tools.ts';
+import { withBase } from '../../shared/paths.ts';
 
-export const config: Config = { path: '/api/stats', method: 'GET' };
+export const config: Config = { path: '/ai/api/stats', method: 'GET' };
 
 interface Row {
   tool: string;
@@ -115,7 +116,7 @@ export default async (req: Request) => {
     tools: TOOL_IDS.filter((id) => TOOLS[id].live).map((id) => ({
       id,
       name: TOOLS[id].name,
-      route: TOOLS[id].route,
+      route: withBase(TOOLS[id].route),
       price_gbp: TOOLS[id].pricePence / 100,
       ...(TOOLS[id].credits ? { uses_per_purchase: TOOLS[id].credits } : {}),
     })),

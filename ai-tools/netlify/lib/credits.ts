@@ -4,7 +4,7 @@
  */
 import { randomBytes } from 'node:crypto';
 import { db, updateJob, type JobRow } from './db.ts';
-import { siteUrl } from './env.ts';
+import { appUrl } from './env.ts';
 import { button, emailLayout, escapeHtml, sendEmail } from './email.ts';
 import { TOOLS, type ToolId } from '../../shared/tools.ts';
 import type { ListingImage } from '../../shared/schemas/listing-writer.ts';
@@ -23,7 +23,7 @@ export function newToken(length = 32): string {
 }
 
 export function magicLink(tool: ToolId, token: string): string {
-  return `${siteUrl()}${TOOLS[tool].route}?token=${token}`;
+  return `${appUrl()}${TOOLS[tool].route}?token=${token}`;
 }
 
 export async function getCredits(
@@ -39,7 +39,7 @@ export async function getCredits(
 }
 
 /** Spend one credit. Returns credits left, or -1 if the token is invalid or empty. */
-export async function useCredit(token: string): Promise<number> {
+export async function spendCredit(token: string): Promise<number> {
   const { data, error } = await db().rpc('use_credit', { p_token: token });
   if (error) throw error;
   return Number(data);

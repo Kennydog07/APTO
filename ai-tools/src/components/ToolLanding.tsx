@@ -1,3 +1,4 @@
+import { withBase } from '../../shared/paths';
 /** Shared landing-page layout for every tool: h1, price, form above the fold, sample, FAQs. */
 import type { ReactNode } from 'react';
 import type { ToolConfig } from '../../shared/tools';
@@ -65,12 +66,12 @@ export function CheckoutSmallPrint({ what }: { what: string }) {
     <p className="text-xs text-stone-600">
       Secure payment by Stripe. Your {what} is ready about a minute after payment, with one free
       regeneration. By paying you agree to our{' '}
-      <a href="/terms" className="underline">
+      <a href={withBase('/terms')} className="underline">
         terms
       </a>{' '}
       and to your {what} being supplied straight away, so the 14-day cancellation right no longer
       applies (
-      <a href="/refunds" className="underline">
+      <a href={withBase('/refunds')} className="underline">
         refund policy
       </a>
       ).

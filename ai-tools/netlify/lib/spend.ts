@@ -1,8 +1,9 @@
+import { readEnv } from './env.ts';
 import { db } from './db.ts';
 import { estimateCostGbp, isOverBudget, parseBudgetCap } from '../../shared/budget.ts';
 
 export function budgetCapGbp(): number {
-  return parseBudgetCap(process.env.DAILY_AI_BUDGET_GBP);
+  return parseBudgetCap(readEnv('DAILY_AI_BUDGET_GBP'));
 }
 
 function todayUtc(): string {

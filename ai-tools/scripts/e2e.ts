@@ -11,7 +11,7 @@
  * webhook, background generation, storage, downloads, regeneration and the real refund API.
  * It then forces a failure (test mode only) and checks the job is refunded automatically.
  *
- * Manual mode needs:  stripe listen --forward-to localhost:8888/api/stripe-webhook
+ * Manual mode needs:  stripe listen --forward-to localhost:8888/ai/api/stripe-webhook
  * (and STRIPE_WEBHOOK_SECRET in .env set to the whsec_ that command prints). Pay with 4242 4242 4242 4242.
  *
  * Env (from .env): STRIPE_SECRET_KEY (sk_test_ only), STRIPE_WEBHOOK_SECRET, STATS_API_KEY.
@@ -20,6 +20,7 @@
 import Stripe from 'stripe';
 import { SAMPLE_INPUTS, SAMPLE_PHOTO_JPEG_BASE64 } from './sample-inputs.ts';
 import { TOOLS, isToolId } from '../shared/tools.ts';
+import { withBase } from '../shared/paths.ts';
 
 const BASE = (process.env.E2E_BASE_URL || 'http://localhost:8888').replace(/\/+$/, '');
 const KEY = process.env.STRIPE_SECRET_KEY || '';
@@ -51,7 +52,8 @@ async function api<T = Record<string, unknown>>(
   path: string,
   body?: unknown,
 ): Promise<{ status: number; json: T }> {
-  const res = await fetch(`${BASE}${path}`, {
+  // `path` is app-relative ("/api/..."); the tools live under /ai on the site.
+  const res = await fetch(`${BASE}${withBase(path)}`, {
     method: body ? 'POST' : 'GET',
     headers: body ? { 'content-type': 'application/json' } : undefined,
     body: body ? JSON.stringify(body) : undefined,
@@ -134,14 +136,14 @@ async function simulatePayment(jobId: string) {
     },
   });
   const header = stripe.webhooks.generateTestHeaderString({ payload, secret: WHSEC });
-  const res = await fetch(`${BASE}/api/stripe-webhook`, {
+  const res = await fetch(`${BASE}${withBase('/api/stripe-webhook')}`, {
     method: 'POST',
     headers: { 'content-type': 'application/json', 'stripe-signature': header },
     body: payload,
   });
   check(res.status === 200, `webhook accepted (${res.status})`);
 
-  const bad = await fetch(`${BASE}/api/stripe-webhook`, {
+  const bad = await fetch(`${BASE}${withBase('/api/stripe-webhook')}`, {
     method: 'POST',
     headers: { 'stripe-signature': 't=1,v1=deadbeef' },
     body: payload,

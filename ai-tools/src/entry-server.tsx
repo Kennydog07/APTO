@@ -5,6 +5,7 @@ import { RouterProvider } from './lib/router';
 import { HeadCollector, renderHead, type HeadData } from './lib/seo';
 import { POSTS } from './lib/blog';
 import { LIVE_TOOLS } from '../shared/tools';
+import { withBase } from '../shared/paths';
 
 export function render(url: string, siteUrl: string) {
   let collected: HeadData | undefined;
@@ -26,14 +27,14 @@ export function prerenderRoutes(): string[] {
   return [...Object.keys(STATIC_ROUTES), ...POSTS.map((p) => `/blog/${p.slug}`)];
 }
 
-/** Sitemap priority hints: tools first. */
+/** Sitemap entries (full paths including the base path); tools first. */
 export function sitemapEntries(): { path: string; priority: number; lastmod?: string }[] {
   const toolRoutes = new Set(LIVE_TOOLS.map((t) => t.route));
   return [
     ...Object.keys(STATIC_ROUTES).map((path) => ({
-      path,
+      path: withBase(path),
       priority: path === '/' ? 1 : toolRoutes.has(path) ? 0.9 : 0.4,
     })),
-    ...POSTS.map((p) => ({ path: `/blog/${p.slug}`, priority: 0.6, lastmod: p.date })),
+    ...POSTS.map((p) => ({ path: withBase(`/blog/${p.slug}`), priority: 0.6, lastmod: p.date })),
   ];
 }

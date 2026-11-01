@@ -1,5 +1,5 @@
 /**
- * POST /api/stripe-webhook  (configure this URL in the Stripe dashboard)
+ * POST /ai/api/stripe-webhook  (configure this URL in the Stripe dashboard)
  * Events: checkout.session.completed, checkout.session.expired
  */
 import type { Config } from '@netlify/functions';
@@ -9,7 +9,7 @@ import { env } from '../lib/env.ts';
 import { stripe } from '../lib/stripe.ts';
 import { triggerGeneration } from '../lib/pipeline.ts';
 
-export const config: Config = { path: '/api/stripe-webhook', method: 'POST' };
+export const config: Config = { path: '/ai/api/stripe-webhook', method: 'POST' };
 
 export default async (req: Request) => {
   const signature = req.headers.get('stripe-signature');

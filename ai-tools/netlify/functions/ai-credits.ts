@@ -1,10 +1,10 @@
-/** GET /api/credits?token=<token>  ->  { tool, remaining } */
+/** GET /ai/api/credits?token=<token>  ->  { tool, remaining } */
 import type { Config } from '@netlify/functions';
 import { errorJson, json } from '../lib/http.ts';
 import { getCredits } from '../lib/credits.ts';
 import { TOKEN_RE } from '../../shared/schemas/listing-writer.ts';
 
-export const config: Config = { path: '/api/credits', method: 'GET' };
+export const config: Config = { path: '/ai/api/credits', method: 'GET' };
 
 export default async (req: Request) => {
   const token = new URL(req.url).searchParams.get('token') ?? '';

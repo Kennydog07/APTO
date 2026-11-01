@@ -16,7 +16,10 @@ export const CV_PREVIEW_MODEL_DEFAULT = 'claude-haiku-5-5';
 
 export const cvPreviewPrompt: PromptModule<CvPreviewInputs, CvPreviewOutput> = {
   max_tokens: 300,
-  model: process.env.ANTHROPIC_PREVIEW_MODEL || CV_PREVIEW_MODEL_DEFAULT,
+  model:
+    process.env.AI_TOOLS_ANTHROPIC_PREVIEW_MODEL ||
+    process.env.ANTHROPIC_PREVIEW_MODEL ||
+    CV_PREVIEW_MODEL_DEFAULT,
   buildSystemPrompt() {
     return [
       'You give a quick, honest match summary of how well a UK CV fits a job advert.',

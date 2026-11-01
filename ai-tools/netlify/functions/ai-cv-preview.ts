@@ -1,5 +1,5 @@
 /**
- * POST /api/cv-preview  { cvText, advert }  ->  { fit, bullets[3] }
+ * POST /ai/api/cv-preview  { cvText, advert }  ->  { fit, bullets[3] }
  * The ONLY AI call made before payment: a cheap model, max 300 tokens,
  * 3 per IP per day, and switched off when the daily budget is used up.
  */
@@ -12,7 +12,7 @@ import { generateStructured } from '../lib/ai.ts';
 import { cvPreviewPrompt } from '../../prompts/cv-preview.ts';
 import { cvPreviewSchema } from '../../shared/schemas/cv-tailor.ts';
 
-export const config: Config = { path: '/api/cv-preview', method: 'POST' };
+export const config: Config = { path: '/ai/api/cv-preview', method: 'POST' };
 
 export default async (req: Request, context: Context) => {
   const parsed = cvPreviewSchema.safeParse(await readJson(req, 100_000));

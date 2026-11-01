@@ -1,5 +1,5 @@
 /**
- * GET /api/job-status?job=<uuid>
+ * GET /ai/api/job-status?job=<uuid>
  * Polled every 3s by the done page. The unguessable job id acts as the access token.
  * Never returns inputs or email.
  */
@@ -10,7 +10,7 @@ import { downloadLabel, signedDownloads } from '../lib/storage.ts';
 import type { StoredResult } from '../lib/generators/types.ts';
 import { TOOLS } from '../../shared/tools.ts';
 
-export const config: Config = { path: '/api/job-status', method: 'GET' };
+export const config: Config = { path: '/ai/api/job-status', method: 'GET' };
 
 export default async (req: Request) => {
   const id = new URL(req.url).searchParams.get('job');

@@ -10,6 +10,7 @@ import {
   type AnchorHTMLAttributes,
   type ReactNode,
 } from 'react';
+import { stripBase, withBase } from '../../shared/paths';
 
 interface Loc {
   pathname: string;
@@ -22,8 +23,10 @@ const RouterCtx = createContext<{ loc: Loc; navigate: (to: string) => void }>({
 
 function parse(url: string): Loc {
   const u = new URL(url, 'http://x');
-  // Normalise trailing slash ("/terms/" -> "/terms") except for the root.
-  const pathname = u.pathname.length > 1 ? u.pathname.replace(/\/+$/, '') : u.pathname;
+  // App-relative path without trailing slash: "/ai/terms/" -> "/terms". The base path is
+  // added back by navigate() and <Link>.
+  const rel = stripBase(u.pathname);
+  const pathname = rel.length > 1 ? rel.replace(/\/+$/, '') : rel;
   return { pathname, search: u.search };
 }
 
@@ -42,7 +45,7 @@ export function RouterProvider({ url, children }: { url?: string; children: Reac
   }, []);
 
   const navigate = (to: string) => {
-    window.history.pushState({}, '', to);
+    window.history.pushState({}, '', withBase(to));
     setLoc(parse(to));
     window.scrollTo(0, 0);
   };
@@ -53,7 +56,10 @@ export function RouterProvider({ url, children }: { url?: string; children: Reac
 export const useLocation = () => useContext(RouterCtx).loc;
 export const useNavigate = () => useContext(RouterCtx).navigate;
 
-/** Internal link: client-side navigation, but a normal <a href> for crawlers and new tabs. */
+/**
+ * Internal link: client-side navigation, but a normal <a href> for crawlers and new tabs.
+ * `href` is app-relative ("/terms"); the base path ("/ai") is added automatically.
+ */
 export function Link({
   href,
   onClick,
@@ -62,7 +68,7 @@ export function Link({
   const navigate = useNavigate();
   return (
     <a
-      href={href}
+      href={withBase(href)}
       onClick={(e) => {
         onClick?.(e);
         if (

@@ -14,7 +14,7 @@ describe('blog markdown', () => {
     expect(html).toContain('<h2>Title</h2>');
     expect(html).toContain('<strong>bold</strong>');
     expect(html).toContain('<em>it</em>');
-    expect(html).toContain('<a href="/x">a link</a>');
+    expect(html).toContain('<a href="/ai/x">a link</a>'); // internal links get the base path
     expect(html).toContain('<ul><li>one</li><li>two</li></ul>');
     expect(html).toContain('<ol><li>a</li><li>b</li></ol>');
   });

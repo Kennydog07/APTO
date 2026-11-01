@@ -1,3 +1,5 @@
+import { withBase } from '../../shared/paths';
+
 /** Thin fetch wrapper for our /api endpoints. */
 export class ApiError extends Error {
   constructor(
@@ -10,7 +12,8 @@ export class ApiError extends Error {
 }
 
 export async function api<T>(path: string, init?: { method?: string; body?: unknown }): Promise<T> {
-  const res = await fetch(path, {
+  // `path` is app-relative ("/api/..."); the base path is added here.
+  const res = await fetch(withBase(path), {
     method: init?.method ?? (init?.body ? 'POST' : 'GET'),
     headers: init?.body ? { 'content-type': 'application/json' } : undefined,
     body: init?.body ? JSON.stringify(init.body) : undefined,

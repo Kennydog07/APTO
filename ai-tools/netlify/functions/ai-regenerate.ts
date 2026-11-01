@@ -1,5 +1,5 @@
 /**
- * POST /api/regenerate  { job, note }
+ * POST /ai/api/regenerate  { job, note }
  * Uses the job's ONE free regeneration. The previous output and the note are sent to the AI.
  */
 import type { Config } from '@netlify/functions';
@@ -11,7 +11,7 @@ import { TOOL_IDS, TOOLS } from '../../shared/tools.ts';
 /** Credit-pack tools have no free regeneration (each use costs a credit). */
 const CREDIT_TOOLS = TOOL_IDS.filter((id) => TOOLS[id].credits);
 
-export const config: Config = { path: '/api/regenerate', method: 'POST' };
+export const config: Config = { path: '/ai/api/regenerate', method: 'POST' };
 
 const MAX_NOTE = 500;
 

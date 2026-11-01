@@ -2,15 +2,20 @@
 
 Five small AI tools in one site. Each one works the same way: the visitor fills in a form, pays once with Stripe Checkout, the AI writes the result, and the visitor downloads it. There are no accounts and no logins. The site is built to run unattended: failed orders refund themselves, stuck jobs are swept up, and personal data deletes itself after 30 days.
 
-| Tool           | Route             | Price        | Output                                                                                                   |
-| -------------- | ----------------- | ------------ | -------------------------------------------------------------------------------------------------------- |
-| Parking Appeal | `/parking-appeal` | £3.99        | Appeal letter (PDF + Word), evidence list, next steps                                                    |
-| Bedtime Story  | `/bedtime-story`  | £2.99        | A5 PDF: cover, large-type pages, vector borders, "The End"                                               |
-| Speech Writer  | `/speech-writer`  | £4.99        | Large-print PDF + Word, printable cue cards, `[pause]` markers                                           |
-| Listing Writer | `/listing-writer` | £1.99 for 10 | eBay/Vinted title, description, category, specifics, condition and 5 keywords, each with a copy button   |
-| CV Tailor      | `/cv-tailor`      | £4.99        | Tailored ATS-friendly CV and a one-page cover letter (PDF + Word each), changes list. Free match preview |
+| Tool           | Route                | Price        | Output                                                                                                   |
+| -------------- | -------------------- | ------------ | -------------------------------------------------------------------------------------------------------- |
+| Parking Appeal | `/ai/parking-appeal` | £3.99        | Appeal letter (PDF + Word), evidence list, next steps                                                    |
+| Bedtime Story  | `/ai/bedtime-story`  | £2.99        | A5 PDF: cover, large-type pages, vector borders, "The End"                                               |
+| Speech Writer  | `/ai/speech-writer`  | £4.99        | Large-print PDF + Word, printable cue cards, `[pause]` markers                                           |
+| Listing Writer | `/ai/listing-writer` | £1.99 for 10 | eBay/Vinted title, description, category, specifics, condition and 5 keywords, each with a copy button   |
+| CV Tailor      | `/ai/cv-tailor`      | £4.99        | Tailored ATS-friendly CV and a one-page cover letter (PDF + Word each), changes list. Free match preview |
 
-This folder is separate from the apto-pro.com static site in the repo root. It deploys as its **own Netlify site** with base directory `ai-tools`, so the two can't clash (both have a `/api/stripe-webhook`, `/privacy` and so on). Give it its own subdomain, such as `tools.apto-pro.com`.
+Everything is served under **`/ai/`**: the pages, the assets and the API (`/ai/api/...`). That lets the tools go live **inside the main apto-pro.com site** (`apto-pro.com/ai/...`) without clashing with its pages or its own `/ai/api/*` functions. There are two ways to deploy:
+
+- **Merged into apto-pro.com (recommended).** One command adds the tools to the main site; see **[`MERGE_INTO_APTO_TOOLS.md`](./MERGE_INTO_APTO_TOOLS.md)**.
+- **As a separate Netlify site** (base directory `ai-tools`, the steps below). The site root redirects to `/ai/`.
+
+**Settings** are read as `AI_TOOLS_<NAME>` first, then `<NAME>` (for example `AI_TOOLS_STRIPE_WEBHOOK_SECRET`), so they can't collide with the main site's settings.
 
 **Contents:**
 
@@ -25,6 +30,8 @@ For the stats API, blog posts and landing page URLs, see [`MARKETING_BOT.md`](./
 ---
 
 ## Deploy to production, step by step
+
+> Merging into apto-pro.com? Do steps 1–4 and 7 here, but follow [`MERGE_INTO_APTO_TOOLS.md`](./MERGE_INTO_APTO_TOOLS.md) instead of steps 5–6.
 
 Allow about an hour. Do the steps in this order, because later steps need values from earlier ones.
 
@@ -98,7 +105,7 @@ If Resend isn't set up, the site still works. Emails are skipped (with a warning
 ### Step 6: Stripe webhook
 
 1. In Stripe, open **Developers → Webhooks** (also called **Workbench → Event destinations**), then **Add endpoint** or **Add destination**.
-2. Set the endpoint URL to `https://<your-domain>/api/stripe-webhook`.
+2. Set the endpoint URL to `https://<your-domain>/ai/api/stripe-webhook`.
 3. Select these events:
    - `checkout.session.completed`
    - `checkout.session.async_payment_succeeded`
@@ -109,10 +116,10 @@ If Resend isn't set up, the site still works. Emails are skipped (with a warning
 ### Step 7: Go-live checklist
 
 - [ ] Do one real purchase with a live card for the cheapest tool (bedtime story, £2.99). Check you get the PDF and the email, then refund yourself from the Stripe Dashboard.
-- [ ] In Netlify, open **Logs → Functions** and check `sweeper` and `retention-cleanup` are listed. Scheduled functions only run on the **published production deploy**. Use **Run now** to try them once.
-- [ ] Run `curl "https://<your-domain>/api/stats?key=<STATS_API_KEY>"` and check it returns JSON.
-- [ ] Check `https://<your-domain>/sitemap.xml` and `/robots.txt`, then submit the sitemap in Google Search Console.
-- [ ] Read the legal pages (`/terms`, `/privacy`, `/refunds`, `/contact`) and confirm the business name and contact details in `src/config/brand.ts`. I wrote them as a careful starting point; they haven't been reviewed by a lawyer.
+- [ ] In Netlify, open **Logs → Functions** and check `ai-sweeper` and `ai-retention-cleanup` are listed. Scheduled functions only run on the **published production deploy**. Use **Run now** to try them once.
+- [ ] Run `curl "https://<your-domain>/ai/api/stats?key=<STATS_API_KEY>"` and check it returns JSON.
+- [ ] Check `https://<your-domain>/ai/sitemap.xml` and `/robots.txt`, then submit the sitemap in Google Search Console.
+- [ ] Read the legal pages (`/ai/terms`, `/ai/privacy`, `/ai/refunds`, `/ai/contact`) and confirm the business name and contact details in `src/config/brand.ts`. I wrote them as a careful starting point; they haven't been reviewed by a lawyer.
 - [ ] Run Lighthouse (Chrome DevTools → Lighthouse, mobile) on each landing page. The targets are 90+ for performance, SEO and accessibility. A local production build with compression scored 99–100 for performance and 100 for accessibility and SEO.
 - [ ] Set your Anthropic monthly limit (Step 2) and a Stripe balance alert.
 
@@ -136,7 +143,8 @@ Use a separate Supabase project for development if you can, with both migrations
 npm test            # 107 unit tests: prompts, parsers, prices, kill switch, PDF/DOCX, credits, CV checks
 npm run typecheck
 npm run lint
-npm run build       # client build + pre-render + sitemap/robots into dist/
+npm run build       # client build + pre-render + sitemap into dist/ai/ (served at /ai/)
+npm run build:functions   # bundles the functions into functions-dist/ (used by the merged site)
 ```
 
 ### End-to-end test against Stripe test mode
@@ -160,7 +168,7 @@ The script uses your `.env` and **refuses to run with a live Stripe key**. For e
 3. Waits for `done` and downloads every file, checking the PDF and DOCX file headers.
 4. Tests the free regeneration (or, for the listing writer, credits and duplicate-request handling).
 5. **Failure path:** forces a failure (this only works in test mode), then checks the job is `failed` and fully refunded in Stripe.
-6. Checks that `/api/stats` rejects a wrong key and shows today's paid jobs.
+6. Checks that `/ai/api/stats` rejects a wrong key and shows today's paid jobs.
 
 To also see the emails, set `E2E_EMAIL=you@example.com`. A run costs a few pence of AI usage.
 
@@ -180,7 +188,7 @@ Open a tool page, fill in the form, and pay with `4242 4242 4242 4242` (any futu
 | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Kill switch    | Set `DAILY_AI_BUDGET_GBP=0` and restart. Forms show "Back shortly", `create-job` returns 503, and the CV preview is off                                                                                                 |
 | Rate limits    | `create-job`: 10 per IP per hour. CV preview: 3 per IP per day. CV upload: 20 per hour. Listings: 30 per hour                                                                                                           |
-| Scheduled jobs | `npx netlify functions:invoke sweeper` and `npx netlify functions:invoke retention-cleanup`                                                                                                                             |
+| Scheduled jobs | `npx netlify functions:invoke ai-sweeper` and `npx netlify functions:invoke ai-retention-cleanup`                                                                                                                       |
 | Sample outputs | `npm run seed` calls Claude once per tool (a few pence) and rewrites `src/samples/<tool>.json`. Use `npm run seed -- cv-tailor` for one tool. The listing writer's sample is hand-written, because it needs real photos |
 
 ---
@@ -190,21 +198,21 @@ Open a tool page, fill in the form, and pay with `4242 4242 4242 4242` (any futu
 ### Purchase and generation flow
 
 ```
-form ──POST /api/create-job──► jobs row (awaiting_payment) + Stripe Checkout Session
+form ──POST /ai/api/create-job──► jobs row (awaiting_payment) + Stripe Checkout Session
                                    │
                     customer pays on Stripe
                                    ▼
-            POST /api/stripe-webhook (signature verified) ──► status=paid
+            POST /ai/api/stripe-webhook (signature verified) ──► status=paid
                                    │  (HMAC-signed call)
                                    ▼
         generate-background: claim job → Claude → zod-validate → PDF/DOCX
               → Supabase Storage (private "outputs" bucket) → status=done → email link
               ✗ after 3 attempts → status=failed → automatic full refund → apology email
                                    │
-   /t/<tool>/done?job=<id> polls /api/job-status every 3s → inline result + 7-day signed downloads
+   /ai/t/<tool>/done?job=<id> polls /ai/api/job-status every 3s → inline result + 7-day signed downloads
 ```
 
-**The listing writer is a credit pack.** Buying a pack goes through the same flow, but "generation" creates a 32-character token in `credits` and emails a magic link (`/listing-writer?token=…`). Each listing then runs through `POST /api/listing-generate`:
+**The listing writer is a credit pack.** Buying a pack goes through the same flow, but "generation" creates a 32-character token in `credits` and emails a magic link (`/ai/listing-writer?token=…`). Each listing then runs through `POST /ai/api/listing-generate`:
 
 1. It spends a credit atomically.
 2. It writes the listing synchronously, within up to 20 seconds.
@@ -213,37 +221,40 @@ form ──POST /api/create-job──► jobs row (awaiting_payment) + Stripe Ch
 
 ### Code map
 
-| Path                      | Purpose                                                                                                           |
-| ------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| `shared/tools.ts`         | **Prices**, routes, `max_tokens`, credit-pack sizes and SEO copy for every tool (the single source of truth)      |
-| `shared/budget.ts`        | AI cost estimate and the kill-switch logic                                                                        |
-| `shared/schemas/`         | zod schemas for form inputs (used by both the browser and the server)                                             |
-| `prompts/<tool>.ts`       | `buildSystemPrompt`, `buildUserPrompt`, `max_tokens`, `parseOutput` (zod-validated, with honesty checks)          |
-| `netlify/lib/pipeline.ts` | Shared generation, retry, refund and email logic                                                                  |
-| `netlify/lib/generators/` | Per-tool code that turns AI JSON into files. Every tool is registered in `index.ts`                               |
-| `netlify/lib/docs/`       | PDF (pdf-lib) and Word (docx) builders                                                                            |
-| `netlify/functions/`      | API endpoints, the background job and scheduled jobs                                                              |
-| `src/`                    | React SPA. Each tool lives in `src/tools/<tool>/`. `src/config/brand.ts` holds the name, logo and contact details |
-| `content/blog/*.md`       | Blog posts, pre-rendered at build time                                                                            |
-| `scripts/`                | Pre-render, seed, e2e test and OG image generator                                                                 |
-| `supabase/migrations/`    | Database schema; run these in order                                                                               |
+| Path                                           | Purpose                                                                                                           |
+| ---------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `shared/tools.ts`                              | **Prices**, routes, `max_tokens`, credit-pack sizes and SEO copy for every tool (the single source of truth)      |
+| `shared/budget.ts`                             | AI cost estimate and the kill-switch logic                                                                        |
+| `shared/schemas/`                              | zod schemas for form inputs (used by both the browser and the server)                                             |
+| `prompts/<tool>.ts`                            | `buildSystemPrompt`, `buildUserPrompt`, `max_tokens`, `parseOutput` (zod-validated, with honesty checks)          |
+| `netlify/lib/pipeline.ts`                      | Shared generation, retry, refund and email logic                                                                  |
+| `netlify/lib/generators/`                      | Per-tool code that turns AI JSON into files. Every tool is registered in `index.ts`                               |
+| `netlify/lib/docs/`                            | PDF (pdf-lib) and Word (docx) builders                                                                            |
+| `netlify/functions/`                           | API endpoints, the background job and scheduled jobs                                                              |
+| `src/`                                         | React SPA. Each tool lives in `src/tools/<tool>/`. `src/config/brand.ts` holds the name, logo and contact details |
+| `content/blog/*.md`                            | Blog posts, pre-rendered at build time                                                                            |
+| `scripts/`                                     | Pre-render, seed, e2e test and OG image generator                                                                 |
+| `supabase/migrations/`                         | Database schema; run these in order                                                                               |
+| `shared/paths.ts`                              | The `/ai` base path, and `withBase()` / `stripBase()`                                                             |
+| `merge-kit/` + `scripts/apply-merge-kit.mjs`   | Everything needed to merge into apto-pro.com (see `MERGE_INTO_APTO_TOOLS.md`)                                     |
+| `vite.functions.config.ts` → `functions-dist/` | Pre-bundled functions used by the merged site (generated at build time, not committed)                            |
 
 ### Endpoints
 
-| Endpoint                              | Notes                                                                                                                                                                    |
-| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `POST /api/create-job`                | 10 per IP per hour. Returns 503 `{paused:true}` when the daily budget is used up                                                                                         |
-| `POST /api/stripe-webhook`            | Handles `checkout.session.completed`, `async_payment_succeeded` and `expired`                                                                                            |
-| `GET /api/job-status?job=`            | Polled by the done page. Never returns inputs or email                                                                                                                   |
-| `POST /api/regenerate`                | Uses the job's one free regeneration (not for credit packs)                                                                                                              |
-| `POST /api/listing-generate`          | Spends 1 credit and writes a listing from 1–3 photos. Synchronous up to `LISTING_SYNC_TIMEOUT_MS` (default 20s), then background. A failed listing gives its credit back |
-| `GET /api/credits?token=`             | Credits left on a magic link                                                                                                                                             |
-| `POST /api/cv-extract`                | Reads text from a PDF/DOCX CV (max 2MB). No AI, nothing stored                                                                                                           |
-| `POST /api/cv-preview`                | Free 3-bullet match summary: the **only** pre-payment AI call. 300 tokens, 3 per IP per day, off when over budget                                                        |
-| `GET /api/site-status`                | `{accepting}`. Forms show "Back shortly" when this is false                                                                                                              |
-| `GET /api/stats?key=`                 | Anonymised stats for the marketing bot (see `MARKETING_BOT.md`)                                                                                                          |
-| `sweeper` (every 10 min)              | Re-triggers paid jobs that never started, fails and refunds stuck jobs, retries refunds that errored                                                                     |
-| `retention-cleanup` (03:17 UTC daily) | Wipes inputs, results, emails and files after 30 days, and expires abandoned checkouts                                                                                   |
+| Endpoint                                 | Notes                                                                                                                                                                    |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `POST /ai/api/create-job`                | 10 per IP per hour. Returns 503 `{paused:true}` when the daily budget is used up                                                                                         |
+| `POST /ai/api/stripe-webhook`            | Handles `checkout.session.completed`, `async_payment_succeeded` and `expired`                                                                                            |
+| `GET /ai/api/job-status?job=`            | Polled by the done page. Never returns inputs or email                                                                                                                   |
+| `POST /ai/api/regenerate`                | Uses the job's one free regeneration (not for credit packs)                                                                                                              |
+| `POST /ai/api/listing-generate`          | Spends 1 credit and writes a listing from 1–3 photos. Synchronous up to `LISTING_SYNC_TIMEOUT_MS` (default 20s), then background. A failed listing gives its credit back |
+| `GET /ai/api/credits?token=`             | Credits left on a magic link                                                                                                                                             |
+| `POST /ai/api/cv-extract`                | Reads text from a PDF/DOCX CV (max 2MB). No AI, nothing stored                                                                                                           |
+| `POST /ai/api/cv-preview`                | Free 3-bullet match summary: the **only** pre-payment AI call. 300 tokens, 3 per IP per day, off when over budget                                                        |
+| `GET /ai/api/site-status`                | `{accepting}`. Forms show "Back shortly" when this is false                                                                                                              |
+| `GET /ai/api/stats?key=`                 | Anonymised stats for the marketing bot (see `MARKETING_BOT.md`)                                                                                                          |
+| `ai-sweeper` (every 10 min)              | Re-triggers paid jobs that never started, fails and refunds stuck jobs, retries refunds that errored                                                                     |
+| `ai-retention-cleanup` (03:17 UTC daily) | Wipes inputs, results, emails and files after 30 days, and expires abandoned checkouts                                                                                   |
 
 ### Reliability and cost guards
 
@@ -272,8 +283,8 @@ form ──POST /api/create-job──► jobs row (awaiting_payment) + Stripe Ch
 | Raise or lower the AI budget      | Change `DAILY_AI_BUDGET_GBP` in Netlify, then redeploy                                                                                                     |
 | Switch AI model                   | Set `ANTHROPIC_MODEL` and redeploy. Check the price table in `shared/budget.ts` covers it (unknown models are costed pessimistically)                      |
 | Turn a tool off                   | Set `live: false` in `shared/tools.ts`. It disappears from navigation, the sitemap and checkout                                                            |
-| See what's happening              | Netlify **Logs → Functions**; Supabase **Table Editor → jobs**; `/api/stats`                                                                               |
-| A customer can't find their files | Find their job in Supabase `jobs` by `email`, then send them `https://<domain>/t/<tool>/done?job=<id>` (it works for 30 days)                              |
+| See what's happening              | Netlify **Logs → Functions**; Supabase **Table Editor → jobs**; `/ai/api/stats`                                                                            |
+| A customer can't find their files | Find their job in Supabase `jobs` by `email`, then send them `https://<domain>/ai/t/<tool>/done?job=<id>` (it works for 30 days)                           |
 | Manual refund                     | Refund in Stripe, using the `job_id` in the payment metadata                                                                                               |
 | Database change                   | Add `supabase/migrations/0003_….sql` and run it in the SQL Editor. Never edit migrations that have already been run                                        |
 

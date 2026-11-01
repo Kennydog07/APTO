@@ -1,5 +1,5 @@
 /**
- * POST /api/cv-extract  { data: <base64 of a PDF or DOCX, max 2MB> }  ->  { text, type, words }
+ * POST /ai/api/cv-extract  { data: <base64 of a PDF or DOCX, max 2MB> }  ->  { text, type, words }
  * Text extraction only: no AI call, nothing stored.
  */
 import type { Config, Context } from '@netlify/functions';
@@ -8,7 +8,7 @@ import { allowRequest } from '../lib/rate-limit.ts';
 import { CvExtractError, extractCvText } from '../lib/cv-extract.ts';
 import { CV_LIMITS } from '../../shared/schemas/cv-tailor.ts';
 
-export const config: Config = { path: '/api/cv-extract', method: 'POST' };
+export const config: Config = { path: '/ai/api/cv-extract', method: 'POST' };
 
 export default async (req: Request, context: Context) => {
   const body = (await readJson(req, 3_000_000)) as { data?: unknown } | null;

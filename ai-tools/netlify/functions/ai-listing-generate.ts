@@ -1,5 +1,5 @@
 /**
- * POST /api/listing-generate  { jobId, token, platform, notes, images[] }
+ * POST /ai/api/listing-generate  { jobId, token, platform, notes, images[] }
  *
  * Spends one credit and writes a listing SYNCHRONOUSLY when it can. The browser generates
  * jobId (a UUID), so if this request times out or the connection drops it can still poll
@@ -15,10 +15,11 @@
 import type { Config, Context } from '@netlify/functions';
 import { z } from 'zod';
 import { db, isUuid } from '../lib/db.ts';
+import { readEnv } from '../lib/env.ts';
 import { errorJson, hashedIp, json, readJson } from '../lib/http.ts';
 import { allowRequest } from '../lib/rate-limit.ts';
 import { budgetStatus } from '../lib/spend.ts';
-import { addCredits, looksLikeImage, useCredit, withoutImages } from '../lib/credits.ts';
+import { addCredits, looksLikeImage, spendCredit, withoutImages } from '../lib/credits.ts';
 import { generateStructured } from '../lib/ai.ts';
 import { triggerGeneration } from '../lib/pipeline.ts';
 import { listingWriterGenerator } from '../lib/generators/listing-writer.ts';
@@ -28,13 +29,13 @@ import {
   type ListingJobInputs,
 } from '../../shared/schemas/listing-writer.ts';
 
-export const config: Config = { path: '/api/listing-generate', method: 'POST' };
+export const config: Config = { path: '/ai/api/listing-generate', method: 'POST' };
 
 const TOOL = 'listing-writer';
 
 export default async (req: Request, context: Context) => {
   const started = Date.now();
-  const syncMs = Number(process.env.LISTING_SYNC_TIMEOUT_MS) || 20_000;
+  const syncMs = Number(readEnv('LISTING_SYNC_TIMEOUT_MS')) || 20_000;
 
   const body = (await readJson(req, 5_000_000)) as Record<string, unknown> | null;
   if (!body) return errorJson(400, 'Invalid request');
@@ -63,7 +64,7 @@ export default async (req: Request, context: Context) => {
     });
   }
 
-  const remaining = await useCredit(token.data);
+  const remaining = await spendCredit(token.data);
   if (remaining < 0)
     return errorJson(402, 'You have no listings left on this link.', { remaining: 0 });
 

@@ -1,4 +1,5 @@
 import { TOOLS } from '../../../shared/tools';
+import { withBase } from '../../../shared/paths';
 
 /** Done page after buying a pack: link to the writer with the token. */
 export function PackDone({
@@ -6,7 +7,7 @@ export function PackDone({
 }: {
   r: { token: string; added: number; remaining: number; topUp: boolean };
 }) {
-  const href = `${TOOLS['listing-writer'].route}?token=${r.token}`;
+  const href = withBase(`${TOOLS['listing-writer'].route}?token=${r.token}`);
   return (
     <div className="space-y-4 rounded-lg bg-white p-5 ring-1 ring-stone-200">
       <p className="text-lg">

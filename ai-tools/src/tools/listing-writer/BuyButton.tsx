@@ -1,3 +1,4 @@
+import { withBase } from '../../../shared/paths';
 import { TOOLS, formatPrice } from '../../../shared/tools';
 import { Button, Notice } from '../../components/ui';
 import { useCheckout } from '../useCheckout';
@@ -28,11 +29,11 @@ export function PackSmallPrint() {
     <p className="text-xs text-stone-600">
       Secure payment by Stripe. We email you a private link straight after payment, and your credits
       don’t expire. By paying you agree to our{' '}
-      <a href="/terms" className="underline">
+      <a href={withBase('/terms')} className="underline">
         terms
       </a>{' '}
       and to immediate supply, so the 14-day cancellation right no longer applies (
-      <a href="/refunds" className="underline">
+      <a href={withBase('/refunds')} className="underline">
         refund policy
       </a>
       ). If a listing fails, the credit is returned automatically.

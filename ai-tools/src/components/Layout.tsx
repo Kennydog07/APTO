@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { BRAND } from '../config/brand';
 import { LIVE_TOOLS } from '../../shared/tools';
 import { Link } from '../lib/router';
+import { withBase } from '../../shared/paths';
 
 export function Layout({ children }: { children: ReactNode }) {
   return (
@@ -15,7 +16,13 @@ export function Layout({ children }: { children: ReactNode }) {
       <header className="border-b border-stone-200 bg-white">
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3">
           <Link href="/" className="flex items-center gap-2 font-bold text-stone-900">
-            <img src={BRAND.logo} alt="" width={32} height={32} className="h-8 w-8 rounded" />
+            <img
+              src={withBase(BRAND.logo)}
+              alt=""
+              width={32}
+              height={32}
+              className="h-8 w-8 rounded"
+            />
             <span>{BRAND.name}</span>
           </Link>
           <nav aria-label="Main" className="hidden gap-4 text-sm sm:flex">

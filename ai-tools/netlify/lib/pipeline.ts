@@ -10,7 +10,7 @@
  */
 import { createHmac, timingSafeEqual } from 'node:crypto';
 import { db, getJob, updateJob, type JobRow } from './db.ts';
-import { env, isStripeTestMode, siteUrl } from './env.ts';
+import { appUrl, env, isStripeTestMode, siteOrigin } from './env.ts';
 import { generateStructured } from './ai.ts';
 import { uploadOutputs, signedDownloads } from './storage.ts';
 import { refundPayment } from './stripe.ts';
@@ -39,7 +39,7 @@ export function verifyJobSig(jobId: string, sig: unknown): boolean {
 /** Fire-and-forget call to the background function (it replies 202 immediately). */
 export async function triggerGeneration(jobId: string): Promise<boolean> {
   try {
-    const res = await fetch(`${siteUrl()}/.netlify/functions/generate-background`, {
+    const res = await fetch(`${siteOrigin()}/.netlify/functions/ai-generate-background`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ jobId, sig: signJobId(jobId) }),
@@ -180,7 +180,7 @@ export async function handleFailure(job: JobRow, reason: string, isRegen: boolea
          refunded
            ? `We've refunded the full ${formatPrice(job.amount_pence)} to your card. Refunds usually appear within 5–10 working days.`
            : `We'll refund the full ${formatPrice(job.amount_pence)} to your card automatically – no action is needed from you.`
-       }</p><p>You're welcome to try again.</p>${button(`${siteUrl()}${tool.route}`, 'Try again')}`,
+       }</p><p>You're welcome to try again.</p>${button(`${appUrl()}${tool.route}`, 'Try again')}`,
     ),
   );
 }
@@ -207,7 +207,7 @@ export async function refundJob(
 async function emailSuccess(job: JobRow, paths: string[], isRegen: boolean) {
   const tool = TOOLS[job.tool];
   const links = await signedDownloads(paths);
-  const page = `${siteUrl()}${donePath(job.tool, job.id)}`;
+  const page = `${appUrl()}${donePath(job.tool, job.id)}`;
   await sendEmail(
     job.email,
     isRegen

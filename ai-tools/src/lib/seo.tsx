@@ -5,6 +5,7 @@
  */
 import { createContext, useContext, useEffect } from 'react';
 import { BRAND } from '../config/brand';
+import { withBase } from '../../shared/paths';
 
 export interface HeadData {
   title: string;
@@ -34,8 +35,8 @@ const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').repl
 
 /** Serialise head data to HTML (used by the pre-renderer). */
 export function renderHead(h: HeadData, siteUrl: string): string {
-  const url = `${siteUrl}${h.path === '/' ? '/' : h.path}`;
-  const image = `${siteUrl}${h.ogImage ?? '/og/default.png'}`;
+  const url = `${siteUrl}${withBase(h.path)}`;
+  const image = `${siteUrl}${withBase(h.ogImage ?? '/og/default.png')}`;
   const tags = [
     `<title>${esc(h.title)}</title>`,
     `<meta name="description" content="${esc(h.description)}">`,

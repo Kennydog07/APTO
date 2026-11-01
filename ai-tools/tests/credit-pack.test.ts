@@ -56,7 +56,7 @@ vi.mock('../netlify/lib/email.ts', () => ({
   escapeHtml: (s: string) => s,
 }));
 
-const { fulfilCreditPack, useCredit, addCredits } = await import('../netlify/lib/credits.ts');
+const { fulfilCreditPack, spendCredit, addCredits } = await import('../netlify/lib/credits.ts');
 const { handleFailure } = await import('../netlify/lib/pipeline.ts');
 
 function job(over: Row = {}) {
@@ -120,10 +120,10 @@ describe('credit packs', () => {
 
   it('spending stops at zero and failed uses can be given back', async () => {
     tables.credits!.push({ token: 't', remaining: 1 });
-    expect(await useCredit('t')).toBe(0);
-    expect(await useCredit('t')).toBe(-1);
+    expect(await spendCredit('t')).toBe(0);
+    expect(await spendCredit('t')).toBe(-1);
     expect(await addCredits('t', 1)).toBe(1);
-    expect(await useCredit('missing')).toBe(-1);
+    expect(await spendCredit('missing')).toBe(-1);
   });
 
   it('a failed listing (usage job) returns the credit, strips photos and is not refunded in Stripe', async () => {

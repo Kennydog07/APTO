@@ -3,11 +3,15 @@
  * Supports: # headings (1-4), paragraphs, - / * / 1. lists, > quotes, --- rules,
  * **bold**, *italic*, `code`, [links](url) and ![images](url).
  */
+import { withBase } from '../../shared/paths';
+
 const esc = (s: string) =>
   s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
+/** Allow only safe URLs. Internal "/x" links get the base path ("/ai/x"). */
 function safeUrl(url: string): string {
-  return /^(https?:\/\/|\/|#|mailto:)/i.test(url) ? url : '#';
+  if (url.startsWith('/') && !url.startsWith('//')) return withBase(url);
+  return /^(https?:\/\/|#|mailto:)/i.test(url) ? url : '#';
 }
 
 function inline(s: string): string {

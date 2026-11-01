@@ -6,11 +6,11 @@ Everything an automated marketing agent needs to:
 - publish blog posts;
 - link to the right pages.
 
-Replace `https://tools.apto-pro.com` below with the live `SITE_URL`.
+The tools live under **`/ai/`** on the main site, so every URL below is `https://apto-pro.com/ai/...`. If they're ever moved, swap in the new base URL.
 
 > **Rules for the bot**
 >
-> - The stats API is read-only and contains no personal data. Don't try to reach any other `/api/` endpoint.
+> - The stats API is read-only and contains no personal data. Don't try to reach any other `/ai/api/` endpoint.
 > - Never make claims the product can't back up:
 >   - no "guaranteed to win your appeal";
 >   - no "legal advice";
@@ -23,7 +23,7 @@ Replace `https://tools.apto-pro.com` below with the live `SITE_URL`.
 ## 1. Stats endpoint
 
 ```
-GET https://tools.apto-pro.com/api/stats?key=<STATS_API_KEY>
+GET https://apto-pro.com/ai/api/stats?key=<STATS_API_KEY>
 ```
 
 - **Auth:** the `key` query parameter must equal the `STATS_API_KEY` environment variable. A wrong or missing key returns `401`.
@@ -130,13 +130,13 @@ Visitor and traffic numbers aren't in this endpoint. If analytics is on (`PLAUSI
 
 Posts are Markdown files in **`ai-tools/content/blog/`**. To publish, **commit a new `.md` file to the default branch**. Netlify rebuilds automatically, usually within 2–3 minutes. The post is then:
 
-- pre-rendered as HTML at `/blog/<slug>` (good for SEO);
-- listed on `/blog`, newest first;
-- added to `sitemap.xml`.
+- pre-rendered as HTML at `/ai/blog/<slug>` (good for SEO);
+- listed on `/ai/blog`, newest first;
+- added to `/ai/sitemap.xml`.
 
 ### File rules
 
-- **File name = URL slug.** Lowercase letters, numbers and hyphens only, for example `how-to-write-a-best-man-speech.md` → `/blog/how-to-write-a-best-man-speech`. Files with other characters are ignored.
+- **File name = URL slug.** Lowercase letters, numbers and hyphens only, for example `how-to-write-a-best-man-speech.md` → `/ai/blog/how-to-write-a-best-man-speech`. Files with other characters are ignored.
 - **Front matter** is required:
 
 ```markdown
@@ -164,15 +164,15 @@ The renderer is deliberately small. Stick to:
 - Paragraphs, separated by a blank line.
 - `- bullet` lists and `1. numbered` lists. Keep each list item on one line.
 - `**bold**`, `*italic*`, `` `code` `` and `> quote`.
-- Links: `[text](/parking-appeal)` (internal) or `[text](https://…)` (external).
-- Images: `![alt text](/blog-images/my-image.webp)`. Commit image files to `ai-tools/public/blog-images/`, ideally `.webp` under 150KB, and always write meaningful alt text.
+- Links: `[text](/parking-appeal)` (internal) or `[text](https://…)` (external). Internal links are written **without** `/ai`; it's added automatically, so `/parking-appeal` becomes `/ai/parking-appeal`. To link to the main site outside the tools, use a full URL, such as `https://apto-pro.com/money`.
+- Images: `![alt text](/blog-images/my-image.webp)` (served at `/ai/blog-images/…`). Commit image files to `ai-tools/public/blog-images/`, ideally `.webp` under 150KB, and always write meaningful alt text.
 - `---` for a horizontal rule.
 
 Raw HTML is escaped (shown as text), not rendered. Tables and code blocks aren't supported.
 
 ### Content guidelines
 
-- Every post should link to at least one tool landing page with descriptive anchor text, for example "our [parking appeal letter writer](/parking-appeal)".
+- Every post should link to at least one tool landing page with descriptive anchor text, for example "our [parking appeal letter writer](/parking-appeal)" (written without `/ai`; it's added automatically).
 - Write in British English, keep it plain and helpful, and cover one topic per post.
 - Parking posts: include the disclaimer, and tell readers to check the deadline on their own ticket. Never cite specific laws, case names or statistics unless a human has verified them.
 - Don't use real people's names, real tickets or real CVs as examples.
@@ -181,21 +181,21 @@ Raw HTML is escaped (shown as text), not rendered. Tables and code blocks aren't
 
 ## 3. Landing page URLs
 
-| Page                                | URL                                          | Primary keyword ideas                                                          |
-| ----------------------------------- | -------------------------------------------- | ------------------------------------------------------------------------------ |
-| Home                                | `/`                                          | AI tools UK, pay once                                                          |
-| Parking appeal                      | `/parking-appeal`                            | parking ticket appeal letter, PCN appeal letter, private parking charge appeal |
-| Bedtime story                       | `/bedtime-story`                             | personalised bedtime story, story with my child's name                         |
-| Speech writer                       | `/speech-writer`                             | best man speech writer, eulogy writer, retirement speech, leaving speech       |
-| Listing writer                      | `/listing-writer`                            | eBay listing description writer, Vinted description generator                  |
-| CV tailor                           | `/cv-tailor`                                 | tailor CV to job description, cover letter writer UK                           |
-| Blog                                | `/blog` and `/blog/<slug>`                   | (per post)                                                                     |
-| Terms / Privacy / Refunds / Contact | `/terms`, `/privacy`, `/refunds`, `/contact` | (don't promote)                                                                |
+| Page                                | URL                                                      | Primary keyword ideas                                                          |
+| ----------------------------------- | -------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| Tools home                          | `/ai/`                                                   | AI tools UK, pay once                                                          |
+| Parking appeal                      | `/ai/parking-appeal`                                     | parking ticket appeal letter, PCN appeal letter, private parking charge appeal |
+| Bedtime story                       | `/ai/bedtime-story`                                      | personalised bedtime story, story with my child's name                         |
+| Speech writer                       | `/ai/speech-writer`                                      | best man speech writer, eulogy writer, retirement speech, leaving speech       |
+| Listing writer                      | `/ai/listing-writer`                                     | eBay listing description writer, Vinted description generator                  |
+| CV tailor                           | `/ai/cv-tailor`                                          | tailor CV to job description, cover letter writer UK                           |
+| Blog                                | `/ai/blog` and `/ai/blog/<slug>`                         | (per post)                                                                     |
+| Terms / Privacy / Refunds / Contact | `/ai/terms`, `/ai/privacy`, `/ai/refunds`, `/ai/contact` | (don't promote)                                                                |
 
-- **Sitemap:** `/sitemap.xml`, which always reflects the live pages and posts.
-- **Social images:** each tool has an Open Graph image at `/og/<tool-id>.png` (1200×630), already set in the page meta tags. `/og/default.png` covers everything else.
-- **Never link to** `/t/…` (private order pages, set to noindex) or any `/api/…` URL.
+- **Sitemap:** `/ai/sitemap.xml`, which always reflects the live tool pages and posts. It's also listed in the main site's `robots.txt`.
+- **Social images:** each tool has an Open Graph image at `/ai/og/<tool-id>.png` (1200×630), already set in the page meta tags. `/ai/og/default.png` covers everything else.
+- **Never link to** `/ai/t/…` (private order pages, set to noindex) or any `/ai/api/…` URL.
 
 ### Tracking links
 
-If Plausible is on, add UTM parameters to links you post, for example `/parking-appeal?utm_source=reddit&utm_medium=social&utm_campaign=pcn-guide`. They don't affect the page and don't set cookies.
+If Plausible is on, add UTM parameters to links you post, for example `/ai/parking-appeal?utm_source=reddit&utm_medium=social&utm_campaign=pcn-guide`. They don't affect the page and don't set cookies.

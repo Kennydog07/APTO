@@ -1,5 +1,5 @@
 /**
- * POST /api/create-job  { tool, inputs }
+ * POST /ai/api/create-job  { tool, inputs }
  * Validates inputs, stores the job (awaiting_payment) and returns a Stripe Checkout URL.
  * No AI is called here.
  */
@@ -10,11 +10,11 @@ import { errorJson, hashedIp, json, readJson } from '../lib/http.ts';
 import { allowRequest } from '../lib/rate-limit.ts';
 import { budgetStatus } from '../lib/spend.ts';
 import { stripe } from '../lib/stripe.ts';
-import { isStripeTestMode, siteUrl } from '../lib/env.ts';
+import { isStripeTestMode, appUrl } from '../lib/env.ts';
 import { GENERATORS } from '../lib/generators/index.ts';
 import { TOOLS, donePath, isToolId } from '../../shared/tools.ts';
 
-export const config: Config = { path: '/api/create-job', method: 'POST' };
+export const config: Config = { path: '/ai/api/create-job', method: 'POST' };
 
 export default async (req: Request, context: Context) => {
   const body = (await readJson(req)) as {
@@ -57,7 +57,7 @@ export default async (req: Request, context: Context) => {
   }
 
   try {
-    const site = siteUrl();
+    const site = appUrl();
     const session = await stripe().checkout.sessions.create(
       {
         mode: 'payment',
