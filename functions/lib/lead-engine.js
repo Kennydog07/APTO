@@ -63,7 +63,7 @@ const INTENTS = [
 
 // Keywords used to map planning descriptions / contract titles to trades.
 const STRUCTURED_KEYWORDS = {
-  plumbing:   ['plumbing', 'bathroom', 'toilet', 'drainage', 'shower room', 'wc'],
+  plumbing:   ['plumbing', 'bathroom', 'toilet', 'shower room', 'wc'],
   electrical: ['electrical', 'solar panel', 'photovoltaic', 'ev charg', 'lighting', 'rewir'],
   decorating: ['redecorat', 'painting', 'render', 'decoration'],
   gardening:  ['landscap', 'garden', 'grounds maintenance', 'tree', 'hedge'],
@@ -206,7 +206,9 @@ async function geocode(location) {
 
 function tradesFromText(text) {
   const t = (text || '').toLowerCase(); const out = [];
-  for (const [trade, kws] of Object.entries(STRUCTURED_KEYWORDS)) if (kws.some(k => t.includes(k))) out.push(trade);
+  // Match at word starts so e.g. "wc" doesn't hit inside other words.
+  const hit = k => new RegExp(`\\b${k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}${k.length < 4 ? '\\b' : ''}`).test(t);
+  for (const [trade, kws] of Object.entries(STRUCTURED_KEYWORDS)) if (kws.some(hit)) out.push(trade);
   return out;
 }
 const tradeMatches = (trade, trades) => trade === 'all' || trades.includes(trade);
@@ -270,7 +272,7 @@ async function contractsLeads({ trade, geo, days = 14 }) {
     for (const r of releases) {
       const t = r.tender || {};
       const cpv = String(t.classification?.id || '');
-      const trades = new Set(tradesFromText(`${t.title} ${t.description || ''}`));
+      const trades = new Set(tradesFromText(t.title || '')); // title + CPV only; descriptions are too noisy
       for (const [p, tr] of CPV_TRADES) if (cpv.startsWith(p)) trades.add(tr);
       if (!tradeMatches(trade, [...trades])) continue;
       const regions = (t.items || []).flatMap(i => i.deliveryAddresses || []).map(a => a.region).filter(Boolean);
@@ -301,7 +303,10 @@ async function contractsLeads({ trade, geo, days = 14 }) {
 function ruleScore(c, { trade, isJob }) {
   const text = `${c.title} ${c.snippet}`.toLowerCase();
   if (PROMO.some(p => text.includes(p))) return null;
-  const intent = INTENTS.some(p => text.includes(p)) || /recommend|wanted|needed|anyone know|quotes?/.test(text);
+  // Business pages/adverts ("Reliable local plumbing services in ...") aren't requests.
+  const title = (c.title || '').toLowerCase();
+  if (/\b(services?|ltd|limited|company|specialists?|professional|reliable|trusted|experts?)\b/.test(title) && !/\?|recommend|looking for|need/.test(title)) return null;
+  const intent = INTENTS.some(p => text.includes(p)) || /can (any|some)one recommend|recommendations?|anyone know|\bwanted\b|\bneeded\b/.test(text);
   const terms = (isJob ? JOB_TERMS[trade] : TRADE_TERMS[trade]) || (trade === 'all' ? Object.values(TRADE_TERMS).flat() : [trade]);
   const tradeHit = terms.some(t => text.includes(t.toLowerCase()));
   if (!intent || !tradeHit) return null;
@@ -409,7 +414,7 @@ async function saveNewLeads(userId, leads, { trade, location }) {
       urgency: l.urgency || 'Normal',
       reply: l.reply || '',
       source_url: `${String(l.sourceUrl).split('#')[0]}#apto=${h}`,
-      source_name: `${l.sourceName || ''}${l.aiScored ? '' : ' (rule-scored)'}`.trim(),
+      source_name: `${l.sourceName || ''}${l.aiScored || l.kind ? '' : ' (rule-scored)'}`.trim(), // structured sources are rule-scored by design
       is_read: false,
       found_at: new Date().toISOString(),
     });
