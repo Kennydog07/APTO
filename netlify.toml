@@ -254,11 +254,12 @@
   status = 404
 
 # ---------- APTO Solve (/solve) ----------
-# The AI endpoint is an edge function on the original apto-solve site; its source is not in any repo,
-# so it is proxied rather than copied.
+# The AI endpoint is an edge function on the original apto-solve site; its source is not in any repo.
+# A direct proxy rewrite 404s (edge functions don't run on proxied requests) and browser calls are
+# blocked by its origin check, so functions/solve-ai.mjs relays /solve/api/ai server-side.
 [[redirects]]
-  from = "/solve/api/*"
-  to = "https://apto-solve.netlify.app/api/:splat"
+  from = "/solve/api/ai"
+  to = "/.netlify/functions/solve-ai"
   status = 200
   force = true
 [[redirects]]
