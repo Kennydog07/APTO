@@ -82,6 +82,7 @@ exports.handler = async (event) => {
       const qs = new URLSearchParams({
         select: 'plan,status,current_period_end,updated_at,email',
         email:  `ilike.${likeLiteral(email)}`,
+        plan:   'neq.flipfinder', // one-off Flip Finder purchases are not APTO Pro subscriptions
         order:  'updated_at.desc.nullslast',
         limit:  '10',
       });

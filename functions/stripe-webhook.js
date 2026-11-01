@@ -115,6 +115,25 @@ exports.handler = async (event) => {
 
       case 'checkout.session.completed': {
         const session = stripeEvent.data.object;
+        // APTO Flip Finder — one-off £3.99 purchase via its Stripe Payment Link
+        if (session.mode === 'payment') {
+          const linkId = process.env.FLIPFINDER_PAYMENT_LINK_ID || '';
+          const isFlipFinder = linkId
+            ? session.payment_link === linkId
+            : (session.currency === 'gbp' && session.amount_total === 399);
+          if (isFlipFinder && session.payment_status === 'paid') {
+            await upsertSubscription({
+              customerId:       session.customer || null,
+              customerEmail:    session.customer_email || session.customer_details?.email || '',
+              subscriptionId:   session.id, // checkout session id = the buyer's access key
+              plan:             'flipfinder',
+              status:           'paid',
+              currentPeriodEnd: null,
+            });
+            console.log('Flip Finder purchase recorded:', session.id);
+          }
+          break;
+        }
         if (session.mode !== 'subscription') break;
         await upsertSubscription({
           customerId:       session.customer,

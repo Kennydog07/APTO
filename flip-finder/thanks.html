@@ -1,0 +1,48 @@
+<!DOCTYPE html><html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Your APTO Flip Finder</title><meta name="description" content="Access your APTO Flip Finder purchase."><meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="/favicon.ico"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/apto-tools.css"><style>
+.ff-hero{background:var(--navy);color:#fff;padding:3.5rem 1.25rem 4rem;border-bottom:4px solid var(--coral)}
+.ff-hero .in{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1.1fr .9fr;gap:2.5rem;align-items:center}
+@media(max-width:860px){.ff-hero .in{grid-template-columns:1fr}}
+.ff-badge{display:inline-block;background:rgba(235,110,20,.15);border:1px solid rgba(235,110,20,.45);color:var(--coral);font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .85rem;border-radius:999px}
+.ff-hero h1{font-size:clamp(2.2rem,5vw,3.5rem);font-weight:900;letter-spacing:-.03em;line-height:1.05;margin:.8rem 0}
+.ff-hero h1 em{font-family:'Lora',serif;color:var(--coral)}
+.ff-hero p{color:#c7d1dd;font-size:1.1rem;max-width:560px}
+.price{display:flex;align-items:baseline;gap:.6rem;margin-top:1.4rem}.price b{font-size:2.4rem;font-weight:900}.price span{color:#c7d1dd}
+.buy{display:inline-flex;align-items:center;gap:.5rem;background:var(--coral);color:#fff;text-decoration:none;font-weight:800;font-size:1.05rem;padding:.95rem 1.7rem;border-radius:999px;margin-top:1rem;border:0;cursor:pointer;font-family:inherit}
+.buy:hover{background:#d05e0e}.buy[aria-disabled=true]{background:#5b6b80;cursor:not-allowed}
+.buy-note{color:#9fb0c3;font-size:.9rem;margin-top:.7rem}
+.shots{display:flex;gap:1rem;align-items:flex-end;justify-content:center}
+.shots img{border-radius:14px;box-shadow:0 20px 50px rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.12)}
+.shots .d{width:72%;max-width:440px}.shots .m{width:26%;max-width:160px}
+.feat{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.1rem;margin-top:2rem}
+.feat div{background:#fff;border:1px solid var(--border);border-radius:16px;padding:1.3rem;box-shadow:var(--shadow)}.feat b{display:block;font-size:1.08rem;margin:.4rem 0 .25rem}.feat p{color:var(--muted);font-size:.95rem}
+.steps{counter-reset:s;display:grid;gap:.8rem;margin-top:1.5rem;max-width:760px}
+.steps li{list-style:none;background:#fff;border:1px solid var(--border);border-radius:14px;padding:1rem 1.2rem 1rem 3.4rem;position:relative}
+.steps li::before{counter-increment:s;content:counter(s);position:absolute;left:1rem;top:1rem;width:28px;height:28px;border-radius:50%;background:var(--coral);color:#fff;font-weight:800;display:grid;place-items:center}
+.faq details{background:#fff;border:1px solid var(--border);border-radius:12px;padding:1rem 1.2rem;margin-top:.7rem;max-width:760px}.faq summary{font-weight:800;cursor:pointer}.faq p{color:var(--muted);margin-top:.5rem}
+.notice{background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;border-radius:12px;padding:.9rem 1.1rem;margin:1rem auto 0;max-width:1180px;font-weight:600}
+</style></head><body><header class="at-nav"><div class="in"><a class="at-brand" href="/"><img src="/apto-logo.jpg" alt="">APTO <span>TOOLS</span></a><nav class="at-links" aria-label="Main"><a href="/">Home</a><a href="/money">Money & AI</a><a href="/pro/">APTO Pro</a><a href="/web/">Websites</a><a href="/solve/">APTO Solve</a><a href="/home-checks/">Home Checks</a><a href="/flip-finder/" aria-current=page>Flip Finder</a><a href="/portfolio/">Portfolio</a></nav></div></header>
+
+<section class="ff-hero"><div class="in" style="grid-template-columns:1fr"><div>
+<span class="ff-badge">APTO Flip Finder</span>
+<h1 id="h">Confirming your <em>purchase</em>…</h1>
+<p id="msg">This usually takes a few seconds.</p>
+<div id="actions" hidden><a id="openBtn" class="buy" href="#">Open Flip Finder →</a> <a id="dlBtn" class="buy" href="#" style="background:transparent;border:2px solid rgba(255,255,255,.35)">Download (HTML file)</a>
+<p class="buy-note">Bookmark this page: it’s your private access link. On your phone, open the app and use “Add to Home Screen” to keep it like an app.</p></div>
+</div></div></section>
+<footer class="at-foot"><div class="in"><div><strong style="color:#fff">APTO Flip Finder</strong><br>An APTO app. Estimates only — always check sold listings.</div><div><a href="/">Home</a><a href="/flip-finder/">Flip Finder</a><a href="/pro/">APTO Pro</a><a href="/pro/terms">Terms</a><a href="/pro/privacy">Privacy</a><a href="/pro/contact">Contact</a></div></div></footer>
+<script>
+(function(){
+ var id=new URLSearchParams(location.search).get('session_id')||'';var h=document.getElementById('h'),m=document.getElementById('msg');
+ if(!/^cs_(live|test)_/.test(id)){h.innerHTML='No purchase <em>found</em>';m.innerHTML='This page needs the link Stripe sent you back with. <a style="color:#eb6e14" href="/flip-finder/">Go to Flip Finder</a>.';return;}
+ var q='session_id='+encodeURIComponent(id),tries=0;
+ function check(){fetch('/api/flipfinder?action=status&'+q,{cache:'no-store'}).then(function(r){return r.json()}).then(function(d){
+  if(d.paid){h.innerHTML='You’re all set — <em>thanks!</em>';m.textContent='Your copy of APTO Flip Finder is ready.';document.getElementById('openBtn').href='/api/flipfinder?action=app&'+q;document.getElementById('dlBtn').href='/api/flipfinder?action=download&'+q;document.getElementById('actions').hidden=false;}
+  else if(++tries<20){setTimeout(check,3000);}else{h.innerHTML='Still <em>confirming</em>';m.innerHTML='We haven’t received confirmation from Stripe yet. Refresh this page in a minute. If it still doesn’t work, <a style="color:#eb6e14" href="/pro/contact">contact us</a> with your receipt.';}
+ }).catch(function(){if(++tries<20)setTimeout(check,3000);});}
+ check();
+})();
+</script></body></html>

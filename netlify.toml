@@ -302,3 +302,13 @@
   for = "/product-assets/*"
   [headers.values]
     X-Robots-Tag = "noindex, nofollow"
+
+# ---------- APTO Flip Finder (/flip-finder) — paid app, £3.99 ----------
+[[redirects]]
+  from = "/flip-finder"
+  to = "/flip-finder/"
+  status = 301
+[[headers]]
+  for = "/flip-finder/thanks*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
