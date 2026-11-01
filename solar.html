@@ -172,7 +172,7 @@ footer{background:#07101c;padding:2.5rem 2rem}
 .back-home-fab{position:fixed;bottom:1.25rem;left:1.25rem;z-index:999;display:flex;align-items:center;gap:6px;background:#0d1f35;color:#fff;text-decoration:none;padding:.6rem 1.1rem;border-radius:50px;font-family:'Cabinet Grotesk',sans-serif;font-size:.85rem;font-weight:700;box-shadow:0 4px 16px rgba(0,0,0,.25);transition:transform .15s,background .15s}
 .back-home-fab:hover{background:#eb6e14;transform:translateY(-2px)}
 </style>
-</head>
+<style id="apto-mobile-nav">@media(max-width:820px){nav{flex-wrap:wrap;height:auto!important;min-height:62px;padding:.5rem 1rem!important;gap:.4rem}nav .nav-links{flex-wrap:wrap;width:100%;justify-content:flex-start;display:flex!important}nav .nav-links a{padding:.35rem .6rem;font-size:.82rem}}</style></head>
 <body><div class="apto-tools-bar" style="background:#0d1f35;color:#cfd8e3;font:600 13px/1.2 system-ui,sans-serif;padding:7px 14px;display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center;position:relative;z-index:9999"><a href="/" style="color:#fff;text-decoration:none;font-weight:900">APTO <span style="color:#eb6e14">TOOLS</span></a><a href="/money" style="color:#cfd8e3;text-decoration:none">Money &amp; AI</a><a href="/pro/" style="color:#cfd8e3;text-decoration:none">APTO Pro</a><a href="/web/" style="color:#cfd8e3;text-decoration:none">Websites</a><a href="/solve/" style="color:#cfd8e3;text-decoration:none">APTO Solve</a><a href="/home-checks/" style="color:#cfd8e3;text-decoration:none">Home Checks</a><a href="/portfolio/" style="color:#cfd8e3;text-decoration:none">Portfolio</a></div>
 
 <a href="index.html" class="back-home-fab">← APTO Home</a>
@@ -331,7 +331,8 @@ footer{background:#07101c;padding:2.5rem 2rem}
     <!-- AFFILIATE CTAs -->
     <div style="margin-bottom:16px">
       <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--coral);margin-bottom:10px;display:flex;align-items:center;gap:6px"><span>—</span> Next step — get your quotes</div>
-      <div class="aff-primary">
+      <!-- HIDDEN until real affiliate URLs are added: replace AFFILIATE_QUOTES_URL / AFFILIATE_SEG_URL / AFFILIATE_BATTERY_URL and remove style="display:none" -->
+      <div class="aff-primary" style="display:none">
         <div class="aff-primary-text">
           <div class="aff-primary-title">☀ Get Free Solar Quotes</div>
           <div class="aff-primary-desc">Compare MCS-certified installers in your area. Takes 2 minutes, no obligation, no pushy calls. This is how you turn your estimate into a real installation date.</div>
@@ -340,12 +341,12 @@ footer{background:#07101c;padding:2.5rem 2rem}
       </div>
     </div>
     <div class="aff-grid">
-      <div class="aff-card">
+      <div class="aff-card" style="display:none">
         <div class="aff-card-top"><div class="aff-icon">⚡</div><div class="aff-title">Best SEG Rates 2026</div></div>
         <div class="aff-desc">Get paid for surplus solar you export to the grid. Compare suppliers — rates vary from 7p to 15p/kWh.</div>
         <a href="AFFILIATE_SEG_URL" class="aff-btn" target="_blank" rel="noopener sponsored">Compare SEG rates →</a>
       </div>
-      <div class="aff-card">
+      <div class="aff-card" style="display:none">
         <div class="aff-card-top"><div class="aff-icon">🔋</div><div class="aff-title">Battery Storage Deals</div></div>
         <div class="aff-desc">Increase self-consumption from 40% to 65%. See the best battery storage deals for 2026.</div>
         <a href="AFFILIATE_BATTERY_URL" class="aff-btn ghost" target="_blank" rel="noopener sponsored">See battery deals →</a>
