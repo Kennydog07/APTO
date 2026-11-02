@@ -1,0 +1,33 @@
+{
+  "title": "To Sam and Priya",
+  "subtitle": "Best man speech · about 2 minutes",
+  "speechText": "Good evening, everyone. For those who don't know me, I'm Jordan, and I've had the honour of being Sam's best friend since we were eleven. [pause] Thank you all for being here, and a special thank you to Priya's parents for such a wonderful day.\n\nNow, Sam and I met on the first day of secondary school, when he confidently walked into the wrong classroom and stayed there for the whole lesson. [pause] He says it was a deliberate choice. Twenty years later, I've learned that this is Sam all over: once he's committed, he's committed.\n\nThat's never been more true than with Priya. Sam told me about her after their very first date, a walk along the river that was meant to take an hour and somehow took five. [pause] He came back and said, quite seriously, \"I think I've just met the person I'm going to annoy for the rest of my life.\"\n\nPriya, I've watched you make my best mate kinder, braver and, most impressively of all, on time. [pause] Last year, when Sam's dad was unwell, you were there every single weekend, without being asked. That told all of us everything we needed to know.\n\nSo, would you all please raise your glasses. [pause] To Sam and Priya: may every walk you take together run five hours over. To the happy couple!",
+  "cueCards": [
+    {
+      "heading": "Hello & thanks",
+      "points": ["Jordan – best friend since age 11", "Thank everyone", "Thank Priya's parents"]
+    },
+    {
+      "heading": "The wrong classroom",
+      "points": [
+        "First day of secondary school",
+        "Stayed for the whole lesson",
+        "Once committed, he's committed"
+      ]
+    },
+    {
+      "heading": "Meeting Priya",
+      "points": ["River walk: 1 hour became 5", "\"The person I'll annoy for life\""]
+    },
+    {
+      "heading": "Priya",
+      "points": ["Kinder, braver… and on time", "There every weekend when his dad was unwell"]
+    },
+    {
+      "heading": "Toast",
+      "points": ["Raise glasses", "Every walk runs five hours over", "To the happy couple!"]
+    }
+  ],
+  "wordCount": 263,
+  "estimatedMinutes": 2
+}

@@ -1,0 +1,9 @@
+node_modules/
+dist/
+dist-ssr/
+.netlify/
+.env
+.env.*
+!.env.example
+sample-output/
+functions-dist/

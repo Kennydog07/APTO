@@ -1,0 +1,11 @@
+{
+  "changes": [
+    "Rewrote your profile to lead with office and team management, which the advert lists first.",
+    "Moved “supplier management” and “bookkeeping” into Key skills, using the advert’s wording “supplier relationships” and “basic bookkeeping”.",
+    "Reordered your Acme Ltd bullets so the filing-process improvement comes first.",
+    "Shortened your earlier retail role to two bullets, as it’s less relevant.",
+    "Gap to consider: the advert asks for Xero experience, which your CV doesn’t mention. If you have it, add it yourself."
+  ],
+  "cvText": "Alex Example\nalex@example.com · 07700 900123 · Exampletown\n\nPROFILE\nOrganised office manager with five years’ experience running busy offices, leading a small team and improving processes. Confident with supplier relationships, scheduling and basic bookkeeping.\n\nKEY SKILLS\nOffice management · Team leadership · Supplier relationships · Scheduling · Basic bookkeeping · Excel\n\nEXPERIENCE\n\nOffice Manager – Acme Ltd, Exampletown (2019 – 2024)\n• Redesigned the filing process, cutting time spent finding documents\n• Managed a team of 5 administrators\n• Handled supplier orders and relationships",
+  "coverLetterText": "Alex Example\nalex@example.com\n07700 900123\nExampletown\n\n31 October 2026\n\nHiring Manager\nBright Futures Ltd\n\nApplication for Office Manager\n\nDear Hiring Manager,\n\nI was pleased to see your advert for an Office Manager. With five years running a busy office at Acme Ltd, including leading a team of five, I’d welcome the chance to bring that experience to Bright Futures…"
+}

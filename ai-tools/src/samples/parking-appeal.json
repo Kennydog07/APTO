@@ -1,0 +1,18 @@
+{
+  "letterText": "Alex Example\n12 Sample Street\nExampletown\nEX1 2MP\n\n3 March 2026\n\nExampletown Borough Council\nParking Services – Appeals\n\nRe: Penalty Charge Notice EX12345678\nVehicle registration: AB12 CDE · Date: 28 February 2026 · Location: Market Street car park\n\nDear Sir or Madam,\n\nI am writing to challenge the above Penalty Charge Notice, issued to my vehicle at Market Street car park on 28 February 2026. I respectfully ask that it is cancelled.\n\nWhen I arrived, I attempted to pay at the only pay-and-display machine in the car park. The machine's screen was blank and it would not accept coins or cards. I could not see any notice on or near the machine explaining an alternative way to pay.\n\nIt is a reasonable expectation that a motorist who tries in good faith to pay, but is prevented from doing so by faulty equipment provided by the council, should not be penalised. I did not intend to park without paying and took a photograph of the blank machine at the time.\n\nI would therefore be grateful if you would cancel this Penalty Charge Notice. If you need any further information, please contact me at the address above.\n\nYours faithfully,\n\nAlex Example",
+  "evidence": [
+    "If you have it: the photo of the blank payment machine, ideally showing the time and date.",
+    "If you have it: a photo of the car park signage near the machine.",
+    "If you have it: a bank statement showing no card payment was taken."
+  ],
+  "suggestions": [
+    "Did you try any other machine or a phone payment option? If so, say which and what happened.",
+    "Note how long you were parked, if you know."
+  ],
+  "nextSteps": [
+    "Check the deadline printed on your ticket. Councils often offer a reduced rate if you pay within a short period, and some will re-offer it if an early challenge is rejected.",
+    "Send this letter to the council as an informal challenge (or as formal representations if you have already received a Notice to Owner). Use their online form or postal address and keep a copy.",
+    "If the council rejects your formal representations, you can usually appeal to an independent parking adjudicator. The council’s rejection letter will explain how."
+  ],
+  "disclaimer": "This is a letter-writing tool, not legal advice."
+}

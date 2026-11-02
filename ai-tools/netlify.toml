@@ -1,0 +1,53 @@
+# Netlify config for running the AI tools as their OWN site (base directory: ai-tools).
+# Everything is served under /ai/ so the same build can be merged into the main
+# apto-pro.com site. For the merged setup, see MERGE_INTO_APTO_TOOLS.md.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+  functions = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[functions]
+  node_bundler = "esbuild"
+
+# pdf-parse uses a native add-on (@napi-rs/canvas) and loads PDF.js's worker at runtime,
+# which Netlify's file tracing can't see, so they are listed explicitly.
+[functions."ai-cv-extract"]
+  external_node_modules = ["pdf-parse"]
+  included_files = ["node_modules/@napi-rs/**", "node_modules/pdfjs-dist/legacy/build/pdf.worker.mjs"]
+
+# Standalone only: the site root goes to the tools home page.
+[[redirects]]
+  from = "/"
+  to = "/ai/"
+  status = 302
+
+# Unknown pages: Netlify serves dist/404.html automatically (written by the pre-render).
+# No catch-all redirect, so nothing can ever shadow the /ai/api/* function routes.
+
+# Client-only pages (the "done" page) are served from an empty app shell.
+[[redirects]]
+  from = "/ai/t/*"
+  to = "/ai/app-shell.html"
+  status = 200
+
+[[headers]]
+  for = "/ai/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    X-Frame-Options = "DENY"
+
+[[headers]]
+  for = "/ai/t/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+  for = "/ai/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

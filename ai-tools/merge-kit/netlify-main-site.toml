@@ -1,0 +1,47 @@
+
+# >>> APTO AI tools (/ai) >>> — added by ai-tools/scripts/apply-merge-kit.mjs
+# The tools' source lives in ai-tools/. The build writes the pages to ./ai/ (served at /ai/)
+# and pre-bundles the functions into ai-tools/functions-dist/, which the functions/ai-*.mts
+# wrappers load.
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# pdf-parse uses a native add-on, so it's installed (root package.json), not bundled.
+[functions."ai-cv-extract"]
+  external_node_modules = ["pdf-parse"]
+  # pdfjs loads these via createRequire()/import() at runtime, which Netlify's file tracing
+  # can't see, so they are listed explicitly.
+  included_files = ["node_modules/@napi-rs/**", "node_modules/pdfjs-dist/legacy/build/pdf.worker.mjs"]
+
+# Client-only order pages use the empty app shell.
+[[redirects]]
+  from = "/ai/t/*"
+  to = "/ai/app-shell.html"
+  status = 200
+
+[[headers]]
+  for = "/ai/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    X-Frame-Options = "DENY"
+
+[[headers]]
+  for = "/ai/t/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+  for = "/ai/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Keep the tools' source code private (the main site publishes the repo root).
+[[redirects]]
+  from = "/ai-tools/*"
+  to = "/ai/404.html"
+  status = 404
+  force = true
+# <<< APTO AI tools (/ai) <<<
