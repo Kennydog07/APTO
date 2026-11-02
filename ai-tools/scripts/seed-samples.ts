@@ -18,6 +18,10 @@ const only = process.argv[2] as ToolId | undefined;
 
 for (const tool of LIVE_TOOLS) {
   if (only && tool.id !== only) continue;
+  if (tool.id === 'parking-appeal') {
+    console.log('skipping parking-appeal: no public sample letter (it could just be copied)');
+    continue;
+  }
   if (tool.credits) {
     console.log(
       `skipping ${tool.id}: credit-pack tool, sample is written by hand (needs real photos)`,

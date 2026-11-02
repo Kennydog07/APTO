@@ -9,8 +9,13 @@ export function ToolLanding(p: {
   tool: ToolConfig;
   h1: string;
   form: ReactNode;
-  sample: ReactNode;
-  sampleIntro: string;
+  /** Optional "What you'll get" sample. Omitted on pages where a full sample could be copied. */
+  sample?: ReactNode;
+  sampleIntro?: string;
+  /** Optional illustration shown under the price, above the form. */
+  hero?: ReactNode;
+  /** Optional section shown where the sample would be (e.g. a how-it-works flowchart). */
+  extra?: ReactNode;
   faqs: { q: string; a: string }[];
   priceNote?: string;
 }) {
@@ -44,17 +49,21 @@ export function ToolLanding(p: {
         <div className="mt-3">
           <PriceBadge pence={tool.pricePence} note={p.priceNote} />
         </div>
+        {p.hero}
       </section>
       <section aria-label={p.h1} className="mx-auto max-w-3xl px-4">
         {p.form}
       </section>
-      <section aria-labelledby="sample-h" className="mx-auto max-w-3xl px-4 pt-12">
-        <h2 id="sample-h" className="text-2xl font-bold">
-          What you’ll get
-        </h2>
-        <p className="mb-4 mt-1 text-stone-700">{p.sampleIntro}</p>
-        {p.sample}
-      </section>
+      {p.extra}
+      {p.sample && (
+        <section aria-labelledby="sample-h" className="mx-auto max-w-3xl px-4 pt-12">
+          <h2 id="sample-h" className="text-2xl font-bold">
+            What you’ll get
+          </h2>
+          <p className="mb-4 mt-1 text-stone-700">{p.sampleIntro}</p>
+          {p.sample}
+        </section>
+      )}
       <Faq items={p.faqs} />
     </>
   );
