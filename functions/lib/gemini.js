@@ -16,6 +16,20 @@ class GeminiError extends Error {
  * Returns { text, json } . Throws GeminiError with code NOT_CONFIGURED | RATE_LIMIT | AUTH | TIMEOUT | BAD_OUTPUT | ERROR.
  */
 async function generate(opts) {
+  try {
+    return await generateOnce(opts);
+  } catch (e) {
+    // Gemini rejects some large/nested schemas with 400 INVALID_ARGUMENT; retry once in plain JSON mode
+    // with the schema given in the instructions instead (callers validate the result).
+    if (e.code === 'ERROR' && e.status === 400 && opts.schema) {
+      const system = `${opts.system || ''}\n\nReturn ONLY JSON matching this JSON Schema (respect maxLength/maxItems):\n${JSON.stringify(opts.schema)}`;
+      return generateOnce({ ...opts, schema: undefined, json: true, system });
+    }
+    throw e;
+  }
+}
+
+async function generateOnce(opts) {
   if (!geminiConfigured()) throw new GeminiError('NOT_CONFIGURED', 'GEMINI_API_KEY not set');
   const parts = opts.parts || [{ text: String(opts.prompt || '') }];
   const generationConfig = { maxOutputTokens: opts.maxTokens || 4000 };
