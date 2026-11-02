@@ -4,13 +4,14 @@
 //   POST {action,clientId,request?,mode?,answers?,images?,context?}
 //        -> {ok:true,data,refused?,source:"ai",usage:{limit,remaining}}
 //        -> {ok:false,error:{code,message},usage?}
+// AI: Google Gemini (GEMINI_API_KEY, optional GEMINI_MODEL) with structured JSON output.
 // Daily limits: 5 successful requests per browser clientId and 15 per IP (UTC day), in Netlify Blobs.
 import { getStore } from "@netlify/blobs";
 import SCHEMAS from "./schemas.json" with { type: "json" };
+import gemini from "../lib/gemini.js";
 
 const LIMIT = 5;
 const IP_LIMIT = 15;
-const MODEL = process.env.SOLVE_MODEL || "claude-sonnet-4-5";
 const ACTIONS = ["assess", "practical_plan", "step_help", "course_plan", "course_help", "adapt_course"];
 const MAX_BODY = 5 * 1024 * 1024;
 
@@ -24,7 +25,7 @@ const err = (status, code, message, usage, extra) =>
 
 const day = () => new Date().toISOString().slice(0, 10);
 const cleanId = (s) => String(s || "").replace(/[^a-zA-Z0-9-]/g, "").slice(0, 64);
-const configured = () => /^sk-ant-/.test(process.env.ANTHROPIC_API_KEY || "");
+const configured = () => gemini.geminiConfigured();
 
 async function counts(store, clientId, ip) {
   const d = day();
@@ -53,14 +54,14 @@ Only describe what is actually visible in photos as observations; never claim a 
 State assumptions and uncertainties honestly. Use plain British English, short sentences, metric units and UK
 terminology. Ask only the questions you truly need (at most 4). Keep within the length limits of the schema.
 APTO Solve provides educational guidance only and cannot inspect, certify or guarantee work.
-Always answer by calling the provided tool exactly once with a complete, valid object.`;
+Always answer with one complete JSON object that matches the response schema.`;
 
 function userContent(action, b) {
   const parts = [];
   const imgs = Array.isArray(b.images) ? b.images.slice(0, 3) : [];
   for (const im of imgs) {
     if (im && typeof im.data === "string" && /^image\/(jpeg|png|webp|gif)$/.test(im.mimeType || ""))
-      parts.push({ type: "image", source: { type: "base64", media_type: im.mimeType, data: im.data.replace(/^data:[^,]+,/, "") } });
+      parts.push({ inline_data: { mime_type: im.mimeType, data: im.data.replace(/^data:[^,]+,/, "") } });
   }
   const payload = {
     action,
@@ -78,46 +79,27 @@ function userContent(action, b) {
     course_help: "The learner needs help within a course lesson (see context.kind). Explain, give an example, and include a short quiz if useful.",
     adapt_course: "Adapt the remaining course lessons based on the learner's progress and feedback in context.",
   }[action];
-  parts.push({ type: "text", text: `${task}\n\nInput:\n${JSON.stringify(payload)}` });
+  parts.push({ text: `${task}\n\nInput:\n${JSON.stringify(payload)}` });
   return parts;
 }
 
-async function callClaude(action, b) {
-  const schema = action === "assess" ? SCHEMAS.assess : SCHEMAS[action];
-  const ctrl = new AbortController();
-  const t = setTimeout(() => ctrl.abort(), 55000);
+async function callAI(action, b) {
   try {
-    const r = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      signal: ctrl.signal,
-      headers: {
-        "content-type": "application/json",
-        "x-api-key": process.env.ANTHROPIC_API_KEY,
-        "anthropic-version": "2023-06-01",
-      },
-      body: JSON.stringify({
-        model: MODEL,
-        max_tokens: action === "course_plan" || action === "adapt_course" ? 8000 : 4000,
-        system: SYSTEM,
-        tools: [{ name: "respond", description: `Return the ${action} result.`, input_schema: schema }],
-        tool_choice: { type: "tool", name: "respond" },
-        messages: [{ role: "user", content: userContent(action, b) }],
-      }),
+    const { json } = await gemini.generate({
+      system: SYSTEM,
+      parts: userContent(action, b),
+      schema: SCHEMAS[action],
+      maxTokens: action === "course_plan" || action === "adapt_course" ? 8000 : 4000,
+      timeoutMs: 55000,
     });
-    if (r.status === 429 || r.status === 529) return { code: "AI_RATE_LIMIT", status: 429 };
-    if (!r.ok) {
-      console.error("solve-ai anthropic error", r.status, (await r.text()).slice(0, 300));
-      return { code: r.status === 401 ? "NOT_CONFIGURED" : "AI_ERROR", status: 502 };
-    }
-    const out = await r.json();
-    const tool = (out.content || []).find((c) => c.type === "tool_use");
-    if (!tool || typeof tool.input !== "object") return { code: "AI_ERROR", status: 502 };
-    return { data: tool.input };
+    if (!json || typeof json !== "object" || Array.isArray(json)) return { code: "AI_ERROR", status: 502 };
+    return { data: json };
   } catch (e) {
-    console.error("solve-ai fetch failed", e?.name);
-    return { code: e?.name === "AbortError" ? "TIMEOUT" : "AI_ERROR", status: 504 };
-  } finally {
-    clearTimeout(t);
+    console.error("solve-ai gemini error", e.code, e.message);
+    if (e.code === "RATE_LIMIT") return { code: "AI_RATE_LIMIT", status: 429 };
+    if (e.code === "AUTH" || e.code === "NOT_CONFIGURED") return { code: "NOT_CONFIGURED", status: 503 };
+    if (e.code === "TIMEOUT") return { code: "TIMEOUT", status: 504 };
+    return { code: "AI_ERROR", status: 502 };
   }
 }
 
@@ -170,7 +152,7 @@ export default async (req, context) => {
   await store.setJSON(lockKey, { t: Date.now() });
 
   try {
-    const res = await callClaude(action, b);
+    const res = await callAI(action, b);
     if (res.code) {
       const msg = {
         AI_RATE_LIMIT: "The free AI service is busy right now. Please wait a minute and try again.",

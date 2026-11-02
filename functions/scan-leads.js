@@ -9,7 +9,7 @@
  *     Facebook itself is never accessed directly)
  *   - SerpAPI quota guard: SerpAPI collectors are skipped when the monthly
  *     allowance is nearly used up (free sources still run)
- *   - AI scoring falls back to keyword/urgency rules if the Anthropic call
+ *   - AI scoring falls back to keyword/urgency rules if the Gemini call
  *     fails (leads are marked aiScored:false / "(rule-scored)")
  *   - genuine leads are saved to the user's `leads` table, deduped across
  *     runs (normalised URL + title/snippet hash); the scan location is

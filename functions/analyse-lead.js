@@ -2,7 +2,7 @@
  * APTO Pro — Netlify Serverless Function
  * POST /api/analyse-lead
  *
- * Proxies requests to the Anthropic API, keeping the API key
+ * Calls Google Gemini (GEMINI_API_KEY), keeping the API key
  * server-side and never exposed to the browser.
  */
 
@@ -31,6 +31,26 @@ async function getAuthedUser(event) {
     return { status: 503, error: 'Sign-in service unavailable — please try again later' };
   }
 }
+
+function fallbackAnalysis(leadText, trade, location) {
+  const r = ruleScore({ title: leadText.slice(0, 120), snippet: leadText, link: '', source: '' }, { trade: String(trade).toLowerCase(), isJob: false });
+  const text = leadText.toLowerCase();
+  const urgent = /urgent|asap|emergency|today|tonight|leak|flood|no heating|no hot water/.test(text);
+  const score = r ? r.score : 40;
+  return {
+    isLead: !!r, score, trade, detectedLocation: location || null,
+    urgency: urgent ? 'High' : 'Normal', urgencyLabel: urgent ? 'Sounds urgent' : 'No clear deadline',
+    intentScore: r ? 70 : 35, intentLabel: r ? 'Asking for help' : 'Unclear intent',
+    estimatedValue: 'Unknown', timeline: urgent ? 'Soon' : 'Unknown',
+    headline: leadText.replace(/\s+/g, ' ').slice(0, 60),
+    insight: 'AI analysis is unavailable right now, so this is a basic keyword-based estimate. Please read the post and judge it yourself.',
+    reply: r ? r.reply : `Hi, I saw your post. I'm a local ${trade} and would be happy to help if you need one.`,
+    keywords: [], confidence: 30, aiScored: false,
+  };
+}
+
+const gemini = require('./lib/gemini');
+const { ruleScore } = require('./lib/lead-engine');
 
 exports.handler = async (event) => {
   const headers = {
@@ -94,23 +114,15 @@ Respond ONLY with valid JSON — no markdown, no backticks:
   "confidence": 94
 }`;
 
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': process.env.ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01'
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 1000,
-        messages: [{ role: 'user', content: prompt }]
-      })
-    });
-
-    const data = await res.json();
-    const raw = data.content.map(b => b.text || '').join('');
-    const result = JSON.parse(raw.replace(/```json|```/g, '').trim());
+    let result;
+    try {
+      ({ json: result } = await gemini.generate({ prompt, json: true, maxTokens: 1000, timeoutMs: 20000 }));
+      if (!result || typeof result !== 'object' || Array.isArray(result)) throw new Error('bad AI output');
+      result.aiScored = true;
+    } catch (e) {
+      console.error('analyse-lead AI failed, using rule-based fallback:', e.code || '', e.message);
+      result = fallbackAnalysis(leadText, trade, location);
+    }
 
     return { statusCode: 200, headers, body: JSON.stringify(result) };
 

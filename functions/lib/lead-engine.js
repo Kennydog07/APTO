@@ -5,13 +5,14 @@
  *  - SerpAPI monthly-quota guard (account endpoint is free and doesn't count)
  *  - Free structured sources: PlanIt planning applications (aggregated council
  *    planning data) and Contracts Finder (official UK gov OCDS API)
- *  - AI scoring via Anthropic with a rule-based fallback when the AI call fails
+ *  - AI scoring via Google Gemini with a rule-based fallback when the AI call fails
  *  - Cross-run dedupe (normalised URL + hash of title/snippet) and saving to
  *    the Supabase `leads` table
  */
 const crypto = require('crypto');
 
 const SERP_TIMEOUT_MS   = 30000; // long OR-queries measured at ~25s on SerpAPI
+const gemini = require('./gemini');
 const CLAUDE_TIMEOUT_MS = 25000;
 const FREE_TIMEOUT_MS   = 15000;
 const UA = { 'User-Agent': 'APTO-Pro-lead-scanner/1.0 (+https://apto-pro.com/pro/)' };
@@ -299,7 +300,7 @@ async function contractsLeads({ trade, geo, days = 14 }) {
   } catch (e) { return { leads: [], debug: { label: 'contracts-finder', error: e.message } }; }
 }
 
-// ── Scoring: Anthropic first, rule-based fallback ────────────────────────────
+// ── Scoring: Gemini first, rule-based fallback ────────────────────────────
 function ruleScore(c, { trade, isJob }) {
   const text = `${c.title} ${c.snippet}`.toLowerCase();
   if (PROMO.some(p => text.includes(p))) return null;
@@ -331,18 +332,7 @@ Return ONLY a valid JSON array (empty [] if none):
 RESULTS:
 ${JSON.stringify(candidates.map(({ title, snippet, link, source }) => ({ title, snippet, link, source })))}`;
   try {
-    if (!process.env.ANTHROPIC_API_KEY) throw new Error('ANTHROPIC_API_KEY not set');
-    const res = await fetchWithTimeout('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-api-key': process.env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' },
-      body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 4000, messages: [{ role: 'user', content: prompt }] }),
-    }, CLAUDE_TIMEOUT_MS);
-    const data = await res.json();
-    if (!res.ok || data.error) throw new Error(`Anthropic ${res.status}: ${data.error?.message || 'error'}`);
-    const raw = (data.content || []).map(b => b.text || '').join('');
-    let arr;
-    try { arr = JSON.parse(raw.replace(/```json|```/g, '').trim()); }
-    catch { const s = raw.indexOf('['), e = raw.lastIndexOf(']'); arr = JSON.parse(raw.slice(s, e + 1)); }
+    const { json: arr } = await gemini.generate({ prompt, json: true, maxTokens: 4000, timeoutMs: CLAUDE_TIMEOUT_MS });
     if (!Array.isArray(arr)) throw new Error('AI returned non-array');
     const byUrl = new Map(candidates.map(c => [c.link, c]));
     const leads = arr.filter(l => l && l.isGenuineLead).map(l => {
@@ -351,7 +341,7 @@ ${JSON.stringify(candidates.map(({ title, snippet, link, source }) => ({ title, 
     });
     return { leads, aiUsed: true };
   } catch (e) {
-    console.error('AI scoring failed, using rule-based fallback:', e.message);
+    console.error('AI scoring failed, using rule-based fallback:', e.code || '', e.message);
     const leads = candidates.map(c => { const l = ruleScore(c, { trade, isJob }); return l && { ...l, _title: c.title, _snippet: c.snippet }; }).filter(Boolean);
     return { leads, aiUsed: false, aiError: e.message };
   }
