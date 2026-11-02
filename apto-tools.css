@@ -37,3 +37,15 @@ h2{font-size:clamp(1.7rem,3vw,2.3rem);font-weight:900;letter-spacing:-.02em;marg
 footer.at-foot{background:var(--navy);color:#9fb0c3;padding:2.5rem 1.25rem;font-size:.9rem}
 footer.at-foot .in{max-width:1180px;margin:0 auto;display:flex;flex-wrap:wrap;gap:1rem 2rem;justify-content:space-between}
 footer.at-foot a{color:#cfd8e3;text-decoration:none;margin-right:1rem}
+
+/* Mini Apps dropdown */
+.at-dd{position:relative}
+.at-dd>summary{list-style:none;cursor:pointer;color:#cfd8e3;font-weight:600;font-size:.92rem;padding:.4rem .65rem;border-radius:8px;user-select:none}
+.at-dd>summary::-webkit-details-marker{display:none}
+.at-dd>summary::after{content:" ▾";font-size:.8em}
+.at-dd[open]>summary,.at-dd>summary:hover,.at-dd.cur>summary{background:rgba(255,255,255,.1);color:#fff}
+.at-dd-menu{position:absolute;right:0;top:calc(100% + 6px);background:#fff;border:1px solid var(--border);border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.18);padding:.4rem;min-width:270px;z-index:60}
+.at-links .at-dd-menu a{display:flex;justify-content:space-between;gap:1rem;color:var(--text);padding:.55rem .7rem;border-radius:8px;font-size:.92rem}
+.at-links .at-dd-menu a:hover,.at-links .at-dd-menu a[aria-current]{background:#fff7ed;color:var(--text)}
+.at-dd-menu b{color:var(--coral);font-weight:800;white-space:nowrap}
+@media(max-width:700px){.at-dd{width:100%}.at-dd-menu{position:static;box-shadow:none;margin-top:.3rem;min-width:0}}
