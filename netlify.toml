@@ -255,9 +255,7 @@
   status = 404
 
 # ---------- APTO Solve (/solve) ----------
-# The AI endpoint is an edge function on the original apto-solve site; its source is not in any repo.
-# A direct proxy rewrite 404s (edge functions don't run on proxied requests) and browser calls are
-# blocked by its origin check, so functions/solve-ai.mjs relays /solve/api/ai server-side.
+# The AI tutor API is native here: functions/solve-ai/ (Anthropic + Netlify Blobs daily limits).
 [[redirects]]
   from = "/solve/api/ai"
   to = "/.netlify/functions/solve-ai"
