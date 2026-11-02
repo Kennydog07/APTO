@@ -1,10 +1,19 @@
 import { TOOLS } from '../../../shared/tools';
 import { withBase } from '../../../shared/paths';
+import { HowItWorks, type HowStep } from '../../components/HowItWorks';
 import { ToolLanding } from '../../components/ToolLanding';
 import { STORY_FAQS } from './content';
 import { BedtimeStoryForm } from './Form';
 import { BedtimeStoryResult, type BedtimeStoryDisplay } from './Result';
 import sample from '../../samples/bedtime-story.json';
+
+const STEPS: HowStep[] = [
+  { t: 'Tell us about your child', d: 'Their first name, age and 1 to 3 favourite things to star in the story.' },
+  { t: 'Pick a theme and length', d: 'Choose an optional theme and how long the story should be.' },
+  { t: 'Pay £2.99', d: 'Secure checkout by Stripe.' },
+  { t: 'Your story is written', d: 'A gentle, personalised bedtime story starring your child.' },
+  { t: 'Download and print', d: 'A printable A5 PDF with a cover, borders and a “The End” page.' },
+];
 
 function Mascot() {
   const src = (w: number, ext: string) => withBase(`/img/mascot-bedtime-${w}.${ext}`);
@@ -31,6 +40,7 @@ export function BedtimeStoryPage() {
       tool={TOOLS['bedtime-story']}
       h1="Personalised bedtime story for your child"
       hero={<Mascot />}
+      extra={<HowItWorks steps={STEPS} />}
       form={<BedtimeStoryForm />}
       sampleIntro="The start of a sample story. Yours arrives as a printable A5 PDF with a cover, borders and a “The End” page."
       sample={<BedtimeStoryResult r={sample as BedtimeStoryDisplay} sample />}

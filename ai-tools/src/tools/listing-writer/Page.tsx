@@ -1,5 +1,6 @@
 import { TOOLS } from '../../../shared/tools';
 import { withBase } from '../../../shared/paths';
+import { HowItWorks, type HowStep } from '../../components/HowItWorks';
 import { ToolLanding } from '../../components/ToolLanding';
 import { LISTING_FAQS } from './content';
 import { ListingWriterApp } from './App';
@@ -7,6 +8,14 @@ import { ListingResult, type ListingDisplay } from './Result';
 import sample from '../../samples/listing-writer.json';
 
 const tool = TOOLS['listing-writer'];
+
+const STEPS: HowStep[] = [
+  { t: 'Buy 10 listings for £1.99', d: 'Secure checkout by Stripe. No account needed.' },
+  { t: 'Open your private link', d: 'We email it straight after payment. Your 10 credits live there.' },
+  { t: 'Snap your item', d: 'Add 1 to 3 photos, plus any notes.' },
+  { t: 'Get your listing', d: 'A search-friendly title and description, ready for eBay or Vinted.' },
+  { t: 'Copy, paste, sell', d: 'Each listing uses 1 credit. Top up any time.' },
+];
 
 function Mascot() {
   const src = (w: number, ext: string) => withBase(`/img/mascot-listing-${w}.${ext}`);
@@ -32,6 +41,7 @@ export function ListingWriterPage() {
     <ToolLanding
       tool={tool}
       hero={<Mascot />}
+      extra={<HowItWorks steps={STEPS} />}
       h1="eBay & Vinted listing writer from photos"
       priceNote={`for ${tool.credits} listings · no account`}
       form={<ListingWriterApp />}

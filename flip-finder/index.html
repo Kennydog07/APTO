@@ -19,6 +19,13 @@
 .shots .d{width:72%;max-width:440px}.shots .m{width:26%;max-width:160px}
 .feat{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.1rem;margin-top:2rem}
 .feat div{background:#fff;border:1px solid var(--border);border-radius:16px;padding:1.3rem;box-shadow:var(--shadow)}.feat b{display:block;font-size:1.08rem;margin:.4rem 0 .25rem}.feat p{color:var(--muted);font-size:.95rem}
+.hiw{display:flex;flex-direction:column;gap:.4rem;margin-top:1.5rem;padding:0}
+.hiw li{list-style:none;display:flex;flex-direction:column;align-items:center;flex:1}
+.hiw .c{width:100%;flex:1;background:#fff;border:1px solid var(--border);border-radius:14px;padding:1rem}
+.hiw .n{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--coral);color:#fff;font-weight:800}
+.hiw h3{margin:.45rem 0 .2rem;font-size:1rem}.hiw p{margin:0;font-size:.9rem;opacity:.8}
+.hiw .a{color:var(--coral);font-size:1.5rem;font-weight:800;padding:.1rem .3rem}.hiw .a::before{content:"↓"}
+@media(min-width:768px){.hiw{flex-direction:row}.hiw li{flex-direction:row}.hiw .a::before{content:"→"}}
 .steps{counter-reset:s;display:grid;gap:.8rem;margin-top:1.5rem;max-width:760px}
 .steps li{list-style:none;background:#fff;border:1px solid var(--border);border-radius:14px;padding:1rem 1.2rem 1rem 3.4rem;position:relative}
 .steps li::before{counter-increment:s;content:counter(s);position:absolute;left:1rem;top:1rem;width:28px;height:28px;border-radius:50%;background:var(--coral);color:#fff;font-weight:800;display:grid;place-items:center}
@@ -44,6 +51,7 @@
 <div><span class="ico">🧰</span><b>Nine categories</b><p>Electronics, books, clothing, furniture, toys and collectibles, tools, DVDs, games and vinyl, home and kitchen, and scrap or parts.</p></div>
 <div><span class="ico">📱</span><b>Works on your phone</b><p>Runs in your browser on iPhone, Android or a laptop. Add it to your home screen, or download it as a single file.</p></div>
 </div></section>
+<section class="wrap"><p class="kicker">How it works</p><h2>From shop shelf to verdict in seconds</h2><ol class="hiw"><li><div class="c"><span class="n">1</span><h3>Buy for £3.99</h3><p>One-off payment on Stripe’s secure checkout.</p></div><span class="a" aria-hidden="true"></span></li><li><div class="c"><span class="n">2</span><h3>Open or download</h3><p>Straight to your private access page. Open the app or add it to your home screen.</p></div><span class="a" aria-hidden="true"></span></li><li><div class="c"><span class="n">3</span><h3>Snap or type an item</h3><p>Take a photo or type what you’ve spotted in the charity shop or car boot.</p></div><span class="a" aria-hidden="true"></span></li><li><div class="c"><span class="n">4</span><h3>Get BUY, MAYBE or AVOID</h3><p>A cautious verdict with the likely sale price, profit and what to check before you pay.</p></div></li></ol></section>
 <section class="alt"><div class="wrap"><p class="kicker">How buying works</p><h2>Pay once, use it straight away</h2><ol class="steps">
 <li><b>Tap “Buy for £3.99”.</b> You pay securely on Stripe’s checkout.</li>
 <li><b>You’re sent straight back here</b> to your private access page, with buttons to open the app or download it.</li>

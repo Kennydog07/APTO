@@ -1,10 +1,19 @@
 import { TOOLS } from '../../../shared/tools';
 import { withBase } from '../../../shared/paths';
+import { HowItWorks, type HowStep } from '../../components/HowItWorks';
 import { ToolLanding } from '../../components/ToolLanding';
 import { CV_FAQS } from './content';
 import { CvTailorForm } from './Form';
 import { CvResult, type CvDisplay } from './Result';
 import sample from '../../samples/cv-tailor.json';
+
+const STEPS: HowStep[] = [
+  { t: 'Upload your CV', d: 'PDF or Word (.docx), or paste the text.' },
+  { t: 'Paste the job advert', d: 'Plus anything you want to emphasise.' },
+  { t: 'See a free match preview', d: '3 quick points on how your CV fits the job.' },
+  { t: 'Pay £4.99', d: 'Secure checkout by Stripe.' },
+  { t: 'Get your tailored CV + cover letter', d: 'PDF and Word, with a full list of changes.' },
+];
 
 function Mascot() {
   const src = (w: number, ext: string) => withBase(`/img/mascot-cv-${w}.${ext}`);
@@ -30,6 +39,7 @@ export function CvTailorPage() {
     <ToolLanding
       tool={TOOLS['cv-tailor']}
       hero={<Mascot />}
+      extra={<HowItWorks steps={STEPS} />}
       h1="Tailor your CV to a job advert + cover letter"
       form={<CvTailorForm />}
       sampleIntro="An extract from a sample using made-up details. Yours comes as PDF and Word, with a full list of changes."
