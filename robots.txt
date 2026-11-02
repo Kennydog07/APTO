@@ -1,4 +1,7 @@
 User-agent: *
+Disallow: /ai/t/
+Disallow: /ai/api/
 Allow: /
 
 Sitemap: https://apto-pro.com/sitemap.xml
+Sitemap: https://apto-pro.com/ai/sitemap.xml
