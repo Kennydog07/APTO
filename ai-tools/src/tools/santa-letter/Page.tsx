@@ -1,5 +1,5 @@
-import type { ReactNode } from 'react';
 import { TOOLS } from '../../../shared/tools';
+import { Mascot } from '../../components/Mascot';
 import { HowItWorks, type HowStep } from '../../components/HowItWorks';
 import { ToolLanding } from '../../components/ToolLanding';
 import { SANTA_FAQS } from './content';
@@ -27,19 +27,17 @@ const STEPS: HowStep[] = [
   },
 ];
 
-/**
- * Hero image slot. A mascot picture will be added later, like the other tools:
- *   <picture> with /img/mascot-santa-{600,1024}.{webp,jpg} via withBase (see bedtime-story/Page.tsx).
- * Until then nothing is rendered.
- */
-const HERO: ReactNode = null;
-
 export function SantaLetterPage() {
   return (
     <ToolLanding
       tool={TOOLS['santa-letter']}
       h1="Personalised letter from Santa"
-      hero={HERO}
+      hero={
+        <Mascot
+          name="santa"
+          alt="APTO mascot dressed as Father Christmas, writing a letter at the North Pole"
+        />
+      }
       extra={<HowItWorks steps={STEPS} />}
       form={<SantaLetterForm />}
       sampleIntro="The start of a sample letter. Yours is a printable A4 PDF with festive borders, a Nice List certificate and an envelope."
