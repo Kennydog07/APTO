@@ -118,6 +118,12 @@ export function PrivacyPage() {
           deleted with the order after 30 days.
         </li>
         <li>
+          <strong>For the Santa letter tool, a child’s first name</strong> (never a surname, address
+          or photo), an age band, a few good things they did this year and, if you add them, a
+          sibling’s or pet’s first name, an encouragement and a present hint. These are used only to
+          write that letter and are deleted with the order after 30 days.
+        </li>
+        <li>
           <strong>For the listing writer, photos of the item you’re selling.</strong> Photos are
           resized in your browser (which also removes location data), used once to write the
           listing, and deleted straight afterwards. We keep the listing text for 30 days.

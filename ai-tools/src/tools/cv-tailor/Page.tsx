@@ -19,7 +19,11 @@ function Mascot() {
   const src = (w: number, ext: string) => withBase(`/img/mascot-cv-${w}.${ext}`);
   return (
     <picture>
-      <source type="image/webp" srcSet={`${src(600, 'webp')} 600w, ${src(1024, 'webp')} 1024w`} sizes="(max-width: 768px) 100vw, 720px" />
+      <source
+        type="image/webp"
+        srcSet={`${src(600, 'webp')} 600w, ${src(1024, 'webp')} 1024w`}
+        sizes="(max-width: 768px) 100vw, 720px"
+      />
       <img
         src={src(1024, 'jpg')}
         srcSet={`${src(600, 'jpg')} 600w, ${src(1024, 'jpg')} 1024w`}

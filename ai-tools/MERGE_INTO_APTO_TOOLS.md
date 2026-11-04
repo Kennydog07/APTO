@@ -10,6 +10,7 @@ This guide is for whoever does the merge, whether that's a person or Grokbot. Wh
 | Speech writer  | `https://apto-pro.com/ai/speech-writer`  |
 | Listing writer | `https://apto-pro.com/ai/listing-writer` |
 | CV tailor      | `https://apto-pro.com/ai/cv-tailor`      |
+| Santa letter   | `https://apto-pro.com/ai/santa-letter`   |
 | Blog           | `https://apto-pro.com/ai/blog`           |
 | API (internal) | `https://apto-pro.com/ai/api/...`        |
 

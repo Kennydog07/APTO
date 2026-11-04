@@ -8,7 +8,10 @@ import { BedtimeStoryResult, type BedtimeStoryDisplay } from './Result';
 import sample from '../../samples/bedtime-story.json';
 
 const STEPS: HowStep[] = [
-  { t: 'Tell us about your child', d: 'Their first name, age and 1 to 3 favourite things to star in the story.' },
+  {
+    t: 'Tell us about your child',
+    d: 'Their first name, age and 1 to 3 favourite things to star in the story.',
+  },
   { t: 'Pick a theme and length', d: 'Choose an optional theme and how long the story should be.' },
   { t: 'Pay £2.99', d: 'Secure checkout by Stripe.' },
   { t: 'Your story is written', d: 'A gentle, personalised bedtime story starring your child.' },
@@ -19,7 +22,11 @@ function Mascot() {
   const src = (w: number, ext: string) => withBase(`/img/mascot-bedtime-${w}.${ext}`);
   return (
     <picture>
-      <source type="image/webp" srcSet={`${src(600, 'webp')} 600w, ${src(1024, 'webp')} 1024w`} sizes="(max-width: 768px) 100vw, 720px" />
+      <source
+        type="image/webp"
+        srcSet={`${src(600, 'webp')} 600w, ${src(1024, 'webp')} 1024w`}
+        sizes="(max-width: 768px) 100vw, 720px"
+      />
       <img
         src={src(1024, 'jpg')}
         srcSet={`${src(600, 'jpg')} 600w, ${src(1024, 'jpg')} 1024w`}

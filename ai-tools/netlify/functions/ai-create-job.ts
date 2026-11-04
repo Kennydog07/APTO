@@ -12,7 +12,7 @@ import { budgetStatus } from '../lib/spend.ts';
 import { stripe } from '../lib/stripe.ts';
 import { isStripeTestMode, appUrl } from '../lib/env.ts';
 import { GENERATORS } from '../lib/generators/index.ts';
-import { TOOLS, donePath, isToolId } from '../../shared/tools.ts';
+import { TOOLS, donePath, isInSeason, isToolId } from '../../shared/tools.ts';
 
 export const config: Config = { path: '/ai/api/create-job', method: 'POST' };
 
@@ -26,6 +26,10 @@ export default async (req: Request, context: Context) => {
   const tool = TOOLS[body.tool];
   const generator = GENERATORS[tool.id];
   if (!tool.live || !generator) return errorJson(404, 'This tool is not available yet');
+  // Seasonal tools (Santa letter): no checkout outside the season window.
+  if (!isInSeason(tool)) {
+    return errorJson(410, tool.season?.offSeasonNote ?? 'Back next season.', { offSeason: true });
+  }
 
   // Kill switch: pause new checkouts once today's AI budget is used up.
   const budget = await budgetStatus();

@@ -7,7 +7,15 @@
  */
 
 export type ToolId =
-  'parking-appeal' | 'bedtime-story' | 'speech-writer' | 'listing-writer' | 'cv-tailor';
+  | 'parking-appeal'
+  | 'bedtime-story'
+  | 'speech-writer'
+  | 'listing-writer'
+  | 'cv-tailor'
+  | 'santa-letter';
+
+/** Month (1-12) and day, inclusive. */
+export type MonthDay = [month: number, day: number];
 
 export interface ToolConfig {
   id: ToolId;
@@ -25,6 +33,12 @@ export interface ToolConfig {
   live: boolean;
   /** Set for credit-pack tools: number of uses bought per purchase. */
   credits?: number;
+  /**
+   * Seasonal tools only. Inside the window (inclusive, UK time) the tool is in the navigation
+   * and can be bought. Outside it the landing page stays live for SEO, with a
+   * "Back next Christmas" note, and checkout is switched off (client and server).
+   */
+  season?: { from: MonthDay; to: MonthDay; offSeasonNote: string };
   tagline: string;
   metaTitle: string;
   metaDescription: string;
@@ -103,10 +117,57 @@ export const TOOLS: Record<ToolId, ToolConfig> = {
     metaDescription:
       'Upload your CV and paste the job advert. Get an ATS-friendly tailored CV and cover letter. Free match preview. £4.99.',
   },
+  'santa-letter': {
+    id: 'santa-letter',
+    route: '/santa-letter',
+    name: 'Personalised Letter from Santa',
+    shortName: 'Santa letter',
+    stripeProductName: 'Personalised letter from Father Christmas (A4 PDF)',
+    pricePence: 199,
+    maxTokens: 1500,
+    live: true,
+    season: {
+      from: [10, 1],
+      to: [12, 24],
+      offSeasonNote:
+        'Father Christmas is resting after a busy Christmas. Letters are back next Christmas, from 1 October.',
+    },
+    tagline:
+      'A warm, personal letter from the North Pole, with a Nice List certificate and envelope.',
+    metaTitle: 'Personalised Letter from Santa (UK) – Printable PDF | £1.99',
+    metaDescription:
+      'A personalised letter from Father Christmas that mentions your child’s good deeds, plus a Nice List certificate and envelope to print. A4 PDF for £1.99.',
+  },
 };
 
 export const TOOL_IDS = Object.keys(TOOLS) as ToolId[];
 export const LIVE_TOOLS = TOOL_IDS.map((id) => TOOLS[id]).filter((t) => t.live);
+
+/** Today's month and day in the UK (seasonal switches follow UK dates). */
+export function ukMonthDay(now: Date = new Date()): MonthDay {
+  const parts = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Europe/London',
+    month: 'numeric',
+    day: 'numeric',
+  }).formatToParts(now);
+  const get = (t: string) => Number(parts.find((p) => p.type === t)?.value);
+  return [get('month'), get('day')];
+}
+
+/** True if the tool is non-seasonal, or today (UK) is inside its season window. */
+export function isInSeason(tool: ToolConfig, now: Date = new Date()): boolean {
+  if (!tool.season) return true;
+  const [m, d] = ukMonthDay(now);
+  const key = m * 100 + d;
+  const from = tool.season.from[0] * 100 + tool.season.from[1];
+  const to = tool.season.to[0] * 100 + tool.season.to[1];
+  return from <= to ? key >= from && key <= to : key >= from || key <= to;
+}
+
+/** Tools to show in navigation and on the home page today (live and in season). */
+export function navTools(now: Date = new Date()): ToolConfig[] {
+  return LIVE_TOOLS.filter((t) => isInSeason(t, now));
+}
 
 export function isToolId(value: unknown): value is ToolId {
   return typeof value === 'string' && value in TOOLS;

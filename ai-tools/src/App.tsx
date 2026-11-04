@@ -10,6 +10,7 @@ import { BedtimeStoryPage } from './tools/bedtime-story/Page';
 import { SpeechWriterPage } from './tools/speech-writer/Page';
 import { ListingWriterPage } from './tools/listing-writer/Page';
 import { CvTailorPage } from './tools/cv-tailor/Page';
+import { SantaLetterPage } from './tools/santa-letter/Page';
 
 /** Static routes. Each one is pre-rendered to HTML at build time. */
 export const STATIC_ROUTES: Record<string, () => React.ReactElement> = {
@@ -19,6 +20,7 @@ export const STATIC_ROUTES: Record<string, () => React.ReactElement> = {
   '/speech-writer': () => <SpeechWriterPage />,
   '/listing-writer': () => <ListingWriterPage />,
   '/cv-tailor': () => <CvTailorPage />,
+  '/santa-letter': () => <SantaLetterPage />,
   '/terms': () => <TermsPage />,
   '/privacy': () => <PrivacyPage />,
   '/refunds': () => <RefundsPage />,

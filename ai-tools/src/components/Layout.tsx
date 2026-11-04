@@ -1,20 +1,32 @@
 import type { ReactNode } from 'react';
 import { BRAND } from '../config/brand';
-import { LIVE_TOOLS } from '../../shared/tools';
+import { TOOLS, isInSeason } from '../../shared/tools';
+import { useNavTools, useToday } from '../lib/season';
 import { Link } from '../lib/router';
 import { withBase } from '../../shared/paths';
 
-const MINI_APPS = [
+const MINI_APPS: { href: string; name: string; price: string; seasonal?: 'santa-letter' }[] = [
   { href: '/flip-finder/', name: '🔎 Flip Finder', price: '£3.99' },
   { href: '/ai/parking-appeal/', name: '🅿️ Parking Ticket Appeal', price: '£3.99' },
   { href: '/ai/bedtime-story/', name: '🌙 Bedtime Story', price: '£2.99' },
   { href: '/ai/speech-writer/', name: '🎤 Speech Writer', price: '£4.99' },
   { href: '/ai/listing-writer/', name: '🏷️ eBay & Vinted Listings', price: '£1.99 / 10' },
   { href: '/ai/cv-tailor/', name: '📄 CV & Cover Letter', price: '£4.99' },
+  {
+    href: '/ai/santa-letter/',
+    name: '🎅 Letter from Santa',
+    price: '£1.99',
+    seasonal: 'santa-letter' as const,
+  },
 ];
 
 /** Main APTO site bar, so every /ai/ page has a way back to apto-pro.com (matches the main site's nav). */
 function AptoBar() {
+  // Seasonal items (Santa) are shown in the first render and hidden after mount out of season.
+  const today = useToday();
+  const apps = MINI_APPS.filter(
+    (m) => !m.seasonal || !today || isInSeason(TOOLS[m.seasonal], today),
+  );
   const a = 'rounded px-2 py-1 text-[#cfd8e3] hover:bg-white/10 hover:text-white';
   return (
     <div className="relative z-40 bg-[#0d1f35] text-[13px] font-semibold">
@@ -22,14 +34,26 @@ function AptoBar() {
         <a href="/" className="mr-1 font-black text-white">
           APTO <span className="text-[#eb6e14]">TOOLS</span>
         </a>
-        <a href="/" className={a}>← Home</a>
-        <a href="/money" className={a}>Money &amp; AI</a>
-        <a href="/pro/" className={a}>APTO Pro</a>
+        <a href="/" className={a}>
+          ← Home
+        </a>
+        <a href="/money" className={a}>
+          Money &amp; AI
+        </a>
+        <a href="/pro/" className={a}>
+          APTO Pro
+        </a>
         <details className="relative">
-          <summary className={`${a} cursor-pointer list-none [&::-webkit-details-marker]:hidden`}>Mini Apps ▾</summary>
+          <summary className={`${a} cursor-pointer list-none [&::-webkit-details-marker]:hidden`}>
+            Mini Apps ▾
+          </summary>
           <div className="absolute left-0 top-full z-50 mt-1 w-[270px] max-w-[calc(100vw-2rem)] rounded-xl border border-stone-200 bg-white p-1 shadow-xl">
-            {MINI_APPS.map((m) => (
-              <a key={m.href} href={m.href} className="flex justify-between gap-3 rounded-lg px-3 py-2 text-stone-900 hover:bg-orange-50">
+            {apps.map((m) => (
+              <a
+                key={m.href}
+                href={m.href}
+                className="flex justify-between gap-3 rounded-lg px-3 py-2 text-stone-900 hover:bg-orange-50"
+              >
                 <span>{m.name}</span>
                 <b className="whitespace-nowrap text-[#eb6e14]">{m.price}</b>
               </a>
@@ -42,6 +66,7 @@ function AptoBar() {
 }
 
 export function Layout({ children }: { children: ReactNode }) {
+  const tools = useNavTools();
   return (
     <div className="flex min-h-screen flex-col bg-stone-50 text-stone-900">
       <a
@@ -64,7 +89,7 @@ export function Layout({ children }: { children: ReactNode }) {
             <span>{BRAND.name}</span>
           </Link>
           <nav aria-label="Main" className="hidden gap-4 text-sm sm:flex">
-            {LIVE_TOOLS.map((t) => (
+            {tools.map((t) => (
               <Link
                 key={t.id}
                 href={t.route}
@@ -88,7 +113,7 @@ export function Layout({ children }: { children: ReactNode }) {
           <nav aria-label="Tools">
             <p className="font-semibold text-stone-800">Tools</p>
             <ul className="mt-1 space-y-1">
-              {LIVE_TOOLS.map((t) => (
+              {tools.map((t) => (
                 <li key={t.id}>
                   <Link href={t.route} className="hover:underline">
                     {t.name}

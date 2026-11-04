@@ -63,6 +63,20 @@ export const SAMPLE_INPUTS = {
   },
   // Credit pack purchase (what create-job receives). Listings are written later from photos.
   'listing-writer': { kind: 'pack' },
+  'santa-letter': {
+    childName: 'Oliver',
+    ageBand: '5-7',
+    goodThings: [
+      'learned to ride his bike by himself',
+      'helped Grandma plant bulbs in her garden',
+      'is gentle with his little sister',
+    ],
+    encouragement: 'keep sharing your toys with Rosie',
+    siblingName: 'Rosie',
+    petName: 'Pickle',
+    presentHint: 'a space rocket',
+    tone: 'magical',
+  },
 } as const;
 
 /** A 96x96 plain red JPEG, used by the e2e test to exercise the listing writer end to end. */

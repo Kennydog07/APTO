@@ -9,6 +9,7 @@ Five small AI tools in one site. Each one works the same way: the visitor fills 
 | Speech Writer  | `/ai/speech-writer`  | £4.99        | Large-print PDF + Word, printable cue cards, `[pause]` markers                                           |
 | Listing Writer | `/ai/listing-writer` | £1.99 for 10 | eBay/Vinted title, description, category, specifics, condition and 5 keywords, each with a copy button   |
 | CV Tailor      | `/ai/cv-tailor`      | £4.99        | Tailored ATS-friendly CV and a one-page cover letter (PDF + Word each), changes list. Free match preview |
+| Santa Letter   | `/ai/santa-letter`   | £1.99        | A4 PDF: letter with festive vector borders, Nice List certificate, envelope. Seasonal: 1 Oct – 24 Dec    |
 
 Everything is served under **`/ai/`**: the pages, the assets and the API (`/ai/api/...`). That lets the tools go live **inside the main apto-pro.com site** (`apto-pro.com/ai/...`) without clashing with its pages or its own `/ai/api/*` functions. There are two ways to deploy:
 
