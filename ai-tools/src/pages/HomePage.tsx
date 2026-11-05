@@ -1,9 +1,11 @@
 import { BRAND } from '../config/brand';
-import { LIVE_TOOLS, formatPrice } from '../../shared/tools';
+import { formatPrice } from '../../shared/tools';
+import { useNavTools } from '../lib/season';
 import { Link } from '../lib/router';
 import { Seo } from '../lib/seo';
 
 export function HomePage() {
+  const tools = useNavTools();
   return (
     <>
       <Seo
@@ -22,7 +24,7 @@ export function HomePage() {
         aria-label="Tools"
         className="mx-auto grid max-w-5xl gap-4 px-4 pb-14 sm:grid-cols-2"
       >
-        {LIVE_TOOLS.map((t) => (
+        {tools.map((t) => (
           <Link
             key={t.id}
             href={t.route}

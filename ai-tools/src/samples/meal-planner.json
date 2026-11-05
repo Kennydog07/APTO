@@ -1,0 +1,389 @@
+{
+  "days": [
+    {
+      "day": "Monday",
+      "lunch": "Cheese and spinach toasties",
+      "dinner": "Spinach and chickpea curry with rice"
+    },
+    {
+      "day": "Tuesday",
+      "lunch": "Leftover curry wraps",
+      "dinner": "Salmon fishcakes with peas"
+    },
+    {
+      "day": "Wednesday",
+      "lunch": "Ham and cucumber sandwiches",
+      "dinner": "Slow cooker beef chilli"
+    },
+    {
+      "day": "Thursday",
+      "lunch": "Tomato soup and bread",
+      "dinner": "Slow cooker beef chilli"
+    },
+    {
+      "day": "Friday",
+      "lunch": "Cheese and crackers with apples",
+      "dinner": "Cheese and tomato pasta bake"
+    },
+    {
+      "day": "Saturday",
+      "lunch": "Jacket potatoes with beans",
+      "dinner": "Lemon chicken traybake with potatoes"
+    },
+    {
+      "day": "Sunday",
+      "lunch": "Chicken sandwiches",
+      "dinner": "Sunday roast chicken"
+    }
+  ],
+  "recipes": [
+    {
+      "name": "Spinach and chickpea curry with rice",
+      "serves": 4,
+      "minutes": 30,
+      "ingredients": [
+        "1 onion, chopped",
+        "2 garlic cloves",
+        "2 tbsp mild curry paste",
+        "2 x 400g tins chickpeas",
+        "400g tin chopped tomatoes",
+        "100g spinach",
+        "4 tbsp natural yoghurt",
+        "300g basmati rice"
+      ],
+      "steps": [
+        "Cook the rice following the pack.",
+        "Soften the onion and garlic in a little oil for 5 minutes.",
+        "Stir in the curry paste, then the chickpeas and tomatoes. Simmer for 15 minutes.",
+        "Stir through the spinach until wilted and serve with rice and a spoon of yoghurt."
+      ]
+    },
+    {
+      "name": "Slow cooker beef chilli",
+      "serves": 8,
+      "minutes": 25,
+      "ingredients": [
+        "750g beef mince",
+        "2 onions, chopped",
+        "2 peppers, chopped",
+        "2 x 400g tins kidney beans",
+        "2 x 400g tins chopped tomatoes",
+        "2 tsp mild chilli powder",
+        "1 tsp ground cumin",
+        "1 beef stock cube"
+      ],
+      "steps": [
+        "Brown the mince in a pan, then tip into the slow cooker.",
+        "Add the onions, peppers, beans, tomatoes, spices and crumbled stock cube.",
+        "Cook on low for 6-8 hours.",
+        "Serve half with rice; cool and fridge the rest for Thursday."
+      ]
+    },
+    {
+      "name": "Lemon chicken traybake with potatoes",
+      "serves": 4,
+      "minutes": 45,
+      "ingredients": [
+        "8 chicken thighs",
+        "800g baby potatoes, halved",
+        "2 courgettes, chunked",
+        "1 red onion, wedged",
+        "1 lemon",
+        "2 tbsp olive oil",
+        "1 tsp dried oregano"
+      ],
+      "steps": [
+        "Heat the oven to 200C (180C fan).",
+        "Toss everything in a large tin with oil, oregano, salt and the lemon juice.",
+        "Roast for 40-45 minutes until the chicken is cooked through and golden."
+      ]
+    },
+    {
+      "name": "Salmon fishcakes with peas",
+      "serves": 4,
+      "minutes": 30,
+      "ingredients": [
+        "2 x 213g tins pink salmon",
+        "500g potatoes",
+        "2 spring onions",
+        "1 egg",
+        "50g breadcrumbs",
+        "300g frozen peas"
+      ],
+      "steps": [
+        "Boil the potatoes for 15 minutes, drain and mash.",
+        "Mix in the salmon, spring onions and egg. Shape into 8 cakes.",
+        "Coat in breadcrumbs and fry for 3-4 minutes each side.",
+        "Serve with peas."
+      ]
+    },
+    {
+      "name": "Cheese and tomato pasta bake",
+      "serves": 4,
+      "minutes": 30,
+      "ingredients": [
+        "400g pasta",
+        "500g jar tomato pasta sauce",
+        "100g spinach",
+        "150g grated cheddar"
+      ],
+      "steps": [
+        "Heat the oven to 200C (180C fan). Cook the pasta for 8 minutes.",
+        "Drain and mix with the sauce and spinach.",
+        "Tip into a dish, top with cheese and bake for 15 minutes."
+      ]
+    },
+    {
+      "name": "Sunday roast chicken",
+      "serves": 4,
+      "minutes": 90,
+      "ingredients": [
+        "1.5kg whole chicken",
+        "1kg potatoes",
+        "500g carrots",
+        "2 tbsp gravy granules",
+        "300g frozen peas"
+      ],
+      "steps": [
+        "Heat the oven to 190C (170C fan). Roast the chicken for about 1 hour 20 minutes until the juices run clear.",
+        "Parboil the potatoes for 8 minutes, then roast for 50 minutes.",
+        "Boil the carrots and peas, make the gravy and carve."
+      ]
+    }
+  ],
+  "shopping": [
+    {
+      "aisle": "fruit_veg",
+      "item": "Onions",
+      "quantity": "1kg bag",
+      "cost": 0.95
+    },
+    {
+      "aisle": "fruit_veg",
+      "item": "Garlic",
+      "quantity": "1 bulb",
+      "cost": 0.35
+    },
+    {
+      "aisle": "fruit_veg",
+      "item": "Peppers",
+      "quantity": "3 pack",
+      "cost": 1.35
+    },
+    {
+      "aisle": "fruit_veg",
+      "item": "Baby potatoes",
+      "quantity": "1kg",
+      "cost": 1.1
+    },
+    {
+      "aisle": "fruit_veg",
+      "item": "White potatoes",
+      "quantity": "2.5kg bag",
+      "cost": 1.75
+    },
+    {
+      "aisle": "fruit_veg",
+      "item": "Courgettes",
+      "quantity": "2",
+      "cost": 1.0
+    },
+    {
+      "aisle": "fruit_veg",
+      "item": "Red onion",
+      "quantity": "1",
+      "cost": 0.2
+    },
+    {
+      "aisle": "fruit_veg",
+      "item": "Lemon",
+      "quantity": "1",
+      "cost": 0.3
+    },
+    {
+      "aisle": "fruit_veg",
+      "item": "Spring onions",
+      "quantity": "1 bunch",
+      "cost": 0.5
+    },
+    {
+      "aisle": "fruit_veg",
+      "item": "Carrots",
+      "quantity": "1kg",
+      "cost": 0.6
+    },
+    {
+      "aisle": "fruit_veg",
+      "item": "Cucumber",
+      "quantity": "1",
+      "cost": 0.75
+    },
+    {
+      "aisle": "fruit_veg",
+      "item": "Apples",
+      "quantity": "6 pack",
+      "cost": 1.5
+    },
+    {
+      "aisle": "fruit_veg",
+      "item": "Bananas",
+      "quantity": "5 pack",
+      "cost": 0.8
+    },
+    {
+      "aisle": "meat_fish",
+      "item": "Beef mince (5% fat)",
+      "quantity": "750g",
+      "cost": 5.2
+    },
+    {
+      "aisle": "meat_fish",
+      "item": "Chicken thighs",
+      "quantity": "1kg pack",
+      "cost": 3.5
+    },
+    {
+      "aisle": "meat_fish",
+      "item": "Whole chicken",
+      "quantity": "1.5kg",
+      "cost": 4.5
+    },
+    {
+      "aisle": "meat_fish",
+      "item": "Pink salmon",
+      "quantity": "2 x 213g tins",
+      "cost": 4.0
+    },
+    {
+      "aisle": "meat_fish",
+      "item": "Sliced ham",
+      "quantity": "pack of 10",
+      "cost": 1.6
+    },
+    {
+      "aisle": "dairy",
+      "item": "Mature cheddar",
+      "quantity": "400g",
+      "cost": 3.1
+    },
+    {
+      "aisle": "dairy",
+      "item": "Eggs",
+      "quantity": "6 pack",
+      "cost": 1.2
+    },
+    {
+      "aisle": "dairy",
+      "item": "Butter",
+      "quantity": "250g",
+      "cost": 2.1
+    },
+    {
+      "aisle": "dairy",
+      "item": "Milk",
+      "quantity": "4 pints",
+      "cost": 1.55
+    },
+    {
+      "aisle": "cupboard",
+      "item": "Basmati rice",
+      "quantity": "1kg",
+      "cost": 1.8
+    },
+    {
+      "aisle": "cupboard",
+      "item": "Pasta",
+      "quantity": "500g",
+      "cost": 0.75
+    },
+    {
+      "aisle": "cupboard",
+      "item": "Chickpeas",
+      "quantity": "2 x 400g tins",
+      "cost": 1.0
+    },
+    {
+      "aisle": "cupboard",
+      "item": "Kidney beans",
+      "quantity": "2 x 400g tins",
+      "cost": 0.9
+    },
+    {
+      "aisle": "cupboard",
+      "item": "Chopped tomatoes",
+      "quantity": "4 x 400g tins",
+      "cost": 1.8
+    },
+    {
+      "aisle": "cupboard",
+      "item": "Tomato pasta sauce",
+      "quantity": "500g jar",
+      "cost": 1.3
+    },
+    {
+      "aisle": "cupboard",
+      "item": "Mild curry paste",
+      "quantity": "1 jar",
+      "cost": 1.6
+    },
+    {
+      "aisle": "cupboard",
+      "item": "Tomato soup",
+      "quantity": "4 tins",
+      "cost": 2.4
+    },
+    {
+      "aisle": "cupboard",
+      "item": "Baked beans",
+      "quantity": "4 pack",
+      "cost": 2.0
+    },
+    {
+      "aisle": "cupboard",
+      "item": "Gravy granules",
+      "quantity": "1 tub",
+      "cost": 1.0
+    },
+    {
+      "aisle": "cupboard",
+      "item": "Beef stock cubes",
+      "quantity": "1 pack",
+      "cost": 0.6
+    },
+    {
+      "aisle": "cupboard",
+      "item": "Crackers",
+      "quantity": "1 pack",
+      "cost": 0.9
+    },
+    {
+      "aisle": "cupboard",
+      "item": "Breadcrumbs",
+      "quantity": "1 pack",
+      "cost": 0.7
+    },
+    {
+      "aisle": "frozen",
+      "item": "Garden peas",
+      "quantity": "1kg",
+      "cost": 1.3
+    },
+    {
+      "aisle": "bakery",
+      "item": "Wholemeal bread",
+      "quantity": "2 loaves",
+      "cost": 2.3
+    },
+    {
+      "aisle": "bakery",
+      "item": "Tortilla wraps",
+      "quantity": "8 pack",
+      "cost": 1.1
+    }
+  ],
+  "tips": [
+    "On Sunday, chop the onions and peppers for Monday and Wednesday to save time.",
+    "Wednesday's chilli makes double: fridge half for Thursday (eat within 2 days).",
+    "Use the rest of the spinach in Monday's curry and Friday's pasta bake."
+  ]
+}

@@ -85,6 +85,7 @@ export function TextField(p: {
   type?: string;
   autoComplete?: string;
   required?: boolean;
+  inputMode?: 'decimal' | 'numeric' | 'text';
 }) {
   const id = useId();
   return (
@@ -92,6 +93,7 @@ export function TextField(p: {
       <input
         id={id}
         type={p.type ?? 'text'}
+        inputMode={p.inputMode}
         value={p.value}
         maxLength={p.maxLength}
         autoComplete={p.autoComplete}

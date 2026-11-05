@@ -48,6 +48,20 @@ export function TermsPage() {
         particular outcome, such as an appeal succeeding. Please read everything before you use it
         and check any deadlines yourself.
       </p>
+      <ul>
+        <li>
+          <strong>Claims and complaint letters</strong> (flight delay, deposit return, refund): any
+          compensation amount, right or deadline we show is worked out from published official
+          guidance and the details you give. It is a guide, not a guarantee that you will be paid.
+        </li>
+        <li>
+          <strong>Meal planner:</strong> we check plans against the allergens, diet and dislikes you
+          enter, but no automated check is perfect and recipes and products change.{' '}
+          <strong>
+            Always check ingredient labels for allergens. This is not medical or nutritional advice.
+          </strong>
+        </li>
+      </ul>
       <h2>Your responsibilities</h2>
       <ul>
         <li>
@@ -118,6 +132,34 @@ export function PrivacyPage() {
           deleted with the order after 30 days.
         </li>
         <li>
+          <strong>For the Santa letter tool, a child’s first name</strong> (never a surname, address
+          or photo), an age band, a few good things they did this year and, if you add them, a
+          sibling’s or pet’s first name, an encouragement and a present hint. These are used only to
+          write that letter and are deleted with the order after 30 days.
+        </li>
+        <li>
+          <strong>For the flight delay claim tool, passenger names</strong>, your booking reference,
+          flight details, any expenses you list, and your name, address and email for the letter.
+          These are used only to write that letter and are deleted with the order after 30 days.
+        </li>
+        <li>
+          <strong>For the deposit return tool, your name and address</strong>, your landlord’s or
+          agent’s name and address, the rented property’s address, tenancy dates, deposit amounts
+          and any deductions you list. These are used only to write that letter and are deleted with
+          the order after 30 days.
+        </li>
+        <li>
+          <strong>For the refund letter tool, your name and address</strong>, the company’s details,
+          what you bought, dates, the price, how you paid and what went wrong. These are used only
+          to write that letter and are deleted with the order after 30 days.
+        </li>
+        <li>
+          <strong>For the meal planner, your household’s allergies and diet</strong>, plus how many
+          people, budget, dislikes and cooking preferences. Allergy and diet details can be health
+          information, so we use them only to write and check your meal plan, and they are deleted
+          with the order after 30 days.
+        </li>
+        <li>
           <strong>For the listing writer, photos of the item you’re selling.</strong> Photos are
           resized in your browser (which also removes location data), used once to write the
           listing, and deleted straight afterwards. We keep the listing text for 30 days.
@@ -151,6 +193,12 @@ export function PrivacyPage() {
         </li>
         <li>
           To keep transaction records – <em>legal obligation</em> (held by Stripe).
+        </li>
+        <li>
+          Allergy and diet information you choose to give the meal planner can be health data. We
+          use it only to write and check your meal plan, on the basis of your{' '}
+          <em>explicit consent</em>, which you give by entering it and submitting the form. You
+          don’t have to give it, and you can ask us to delete it at any time.
         </li>
       </ul>
       <p>

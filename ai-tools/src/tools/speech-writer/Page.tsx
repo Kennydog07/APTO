@@ -11,7 +11,10 @@ const STEPS: HowStep[] = [
   { t: 'Tell us about the occasion', d: 'Your name, your relationship and the type of speech.' },
   { t: 'Add your stories', d: '2 to 5 stories or facts, then pick the tone and length.' },
   { t: 'Pay £4.99', d: 'Secure checkout by Stripe.' },
-  { t: 'Your speech is written', d: 'Built around your own stories, at a comfortable speaking pace with [pause] marks.' },
+  {
+    t: 'Your speech is written',
+    d: 'Built around your own stories, at a comfortable speaking pace with [pause] marks.',
+  },
   { t: 'Download and practise', d: 'PDF and Word file, with printable cue cards.' },
 ];
 
@@ -19,7 +22,11 @@ function Mascot() {
   const src = (w: number, ext: string) => withBase(`/img/mascot-speech-${w}.${ext}`);
   return (
     <picture>
-      <source type="image/webp" srcSet={`${src(600, 'webp')} 600w, ${src(1024, 'webp')} 1024w`} sizes="(max-width: 768px) 100vw, 720px" />
+      <source
+        type="image/webp"
+        srcSet={`${src(600, 'webp')} 600w, ${src(1024, 'webp')} 1024w`}
+        sizes="(max-width: 768px) 100vw, 720px"
+      />
       <img
         src={src(1024, 'jpg')}
         srcSet={`${src(600, 'jpg')} 600w, ${src(1024, 'jpg')} 1024w`}

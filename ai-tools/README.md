@@ -1,14 +1,19 @@
 # APTO Quick Tools: pay-per-use AI mini apps
 
-Five small AI tools in one site. Each one works the same way: the visitor fills in a form, pays once with Stripe Checkout, the AI writes the result, and the visitor downloads it. There are no accounts and no logins. The site is built to run unattended: failed orders refund themselves, stuck jobs are swept up, and personal data deletes itself after 30 days.
+Ten small AI tools in one site. Each one works the same way: the visitor fills in a form, pays once with Stripe Checkout, the AI writes the result, and the visitor downloads it. There are no accounts and no logins. The site is built to run unattended: failed orders refund themselves, stuck jobs are swept up, and personal data deletes itself after 30 days.
 
-| Tool           | Route                | Price        | Output                                                                                                   |
-| -------------- | -------------------- | ------------ | -------------------------------------------------------------------------------------------------------- |
-| Parking Appeal | `/ai/parking-appeal` | £3.99        | Appeal letter (PDF + Word), evidence list, next steps                                                    |
-| Bedtime Story  | `/ai/bedtime-story`  | £2.99        | A5 PDF: cover, large-type pages, vector borders, "The End"                                               |
-| Speech Writer  | `/ai/speech-writer`  | £4.99        | Large-print PDF + Word, printable cue cards, `[pause]` markers                                           |
-| Listing Writer | `/ai/listing-writer` | £1.99 for 10 | eBay/Vinted title, description, category, specifics, condition and 5 keywords, each with a copy button   |
-| CV Tailor      | `/ai/cv-tailor`      | £4.99        | Tailored ATS-friendly CV and a one-page cover letter (PDF + Word each), changes list. Free match preview |
+| Tool               | Route                    | Price        | Output                                                                                                   |
+| ------------------ | ------------------------ | ------------ | -------------------------------------------------------------------------------------------------------- |
+| Parking Appeal     | `/ai/parking-appeal`     | £3.99        | Appeal letter (PDF + Word), evidence list, next steps                                                    |
+| Bedtime Story      | `/ai/bedtime-story`      | £2.99        | A5 PDF: cover, large-type pages, vector borders, "The End"                                               |
+| Speech Writer      | `/ai/speech-writer`      | £4.99        | Large-print PDF + Word, printable cue cards, `[pause]` markers                                           |
+| Listing Writer     | `/ai/listing-writer`     | £1.99 for 10 | eBay/Vinted title, description, category, specifics, condition and 5 keywords, each with a copy button   |
+| CV Tailor          | `/ai/cv-tailor`          | £4.99        | Tailored ATS-friendly CV and a one-page cover letter (PDF + Word each), changes list. Free match preview |
+| Santa Letter       | `/ai/santa-letter`       | £1.99        | A4 PDF: letter with festive vector borders, Nice List certificate, envelope. Seasonal: 1 Oct – 24 Dec    |
+| Flight Delay Claim | `/ai/flight-delay-claim` | £3.99        | UK261/EU261 claim letter (PDF + Word). Free eligibility and amount check, worked out in code             |
+| Deposit Return     | `/ai/deposit-return`     | £3.99        | Deposit request, deductions dispute or letter before action (PDF + Word), per-nation next steps          |
+| Refund Letter      | `/ai/refund-letter`      | £2.99        | Consumer Rights Act complaint letter (PDF + Word). Free rights check from your dates                     |
+| Meal Planner       | `/ai/meal-planner`       | £2.99        | A4 PDF: pastel 7-day planner, tick-box shopping list by aisle, recipe cards. Allergens checked in code   |
 
 Everything is served under **`/ai/`**: the pages, the assets and the API (`/ai/api/...`). That lets the tools go live **inside the main apto-pro.com site** (`apto-pro.com/ai/...`) without clashing with its pages or its own `/ai/api/*` functions. There are two ways to deploy:
 
@@ -99,7 +104,7 @@ If Resend isn't set up, the site still works. Emails are skipped (with a warning
    | `PLAUSIBLE_DOMAIN`                          | Optional. Your domain in Plausible, which turns on cookie-free analytics                                                                          |
    | `LISTING_SYNC_TIMEOUT_MS`                   | Optional. Default `20000`                                                                                                                         |
 
-4. Click **Deploy**. When it finishes, open the site and check that the home page and all five tool pages load.
+4. Click **Deploy**. When it finishes, open the site and check that the home page and all ten tool pages load (the Santa letter only shows 1 Oct – 24 Dec).
 5. **Custom domain:** go to **Domain management → Add a domain**, enter `tools.apto-pro.com`, and add the CNAME record Netlify shows. HTTPS is set up automatically. Then update `SITE_URL` to match and **redeploy**. Environment variables only take effect on a new deploy.
 
 ### Step 6: Stripe webhook
@@ -221,23 +226,25 @@ form ──POST /ai/api/create-job──► jobs row (awaiting_payment) + Stripe
 
 ### Code map
 
-| Path                                           | Purpose                                                                                                           |
-| ---------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| `shared/tools.ts`                              | **Prices**, routes, `max_tokens`, credit-pack sizes and SEO copy for every tool (the single source of truth)      |
-| `shared/budget.ts`                             | AI cost estimate and the kill-switch logic                                                                        |
-| `shared/schemas/`                              | zod schemas for form inputs (used by both the browser and the server)                                             |
-| `prompts/<tool>.ts`                            | `buildSystemPrompt`, `buildUserPrompt`, `max_tokens`, `parseOutput` (zod-validated, with honesty checks)          |
-| `netlify/lib/pipeline.ts`                      | Shared generation, retry, refund and email logic                                                                  |
-| `netlify/lib/generators/`                      | Per-tool code that turns AI JSON into files. Every tool is registered in `index.ts`                               |
-| `netlify/lib/docs/`                            | PDF (pdf-lib) and Word (docx) builders                                                                            |
-| `netlify/functions/`                           | API endpoints, the background job and scheduled jobs                                                              |
-| `src/`                                         | React SPA. Each tool lives in `src/tools/<tool>/`. `src/config/brand.ts` holds the name, logo and contact details |
-| `content/blog/*.md`                            | Blog posts, pre-rendered at build time                                                                            |
-| `scripts/`                                     | Pre-render, seed, e2e test and OG image generator                                                                 |
-| `supabase/migrations/`                         | Database schema; run these in order                                                                               |
-| `shared/paths.ts`                              | The `/ai` base path, and `withBase()` / `stripBase()`                                                             |
-| `merge-kit/` + `scripts/apply-merge-kit.mjs`   | Everything needed to merge into apto-pro.com (see `MERGE_INTO_APTO_TOOLS.md`)                                     |
-| `vite.functions.config.ts` → `functions-dist/` | Pre-bundled functions used by the merged site (generated at build time, not committed)                            |
+| Path                                           | Purpose                                                                                                                                                                                        |
+| ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `shared/tools.ts`                              | **Prices**, routes, `max_tokens`, credit-pack sizes and SEO copy for every tool (the single source of truth)                                                                                   |
+| `shared/budget.ts`                             | AI cost estimate and the kill-switch logic                                                                                                                                                     |
+| `shared/rules/`                                | **Static legal and safety facts** (flight compensation, deposits, consumer rights, allergens), each with its source URL and check date. Listed in [`FACTS_TO_VERIFY.md`](./FACTS_TO_VERIFY.md) |
+| `shared/data/airports.json`                    | ~750 airports from the public-domain OurAirports data (`scripts/build-airports.py`), for distance bands                                                                                        |
+| `shared/schemas/`                              | zod schemas for form inputs (used by both the browser and the server)                                                                                                                          |
+| `prompts/<tool>.ts`                            | `buildSystemPrompt`, `buildUserPrompt`, `max_tokens`, `parseOutput` (zod-validated, with honesty checks)                                                                                       |
+| `netlify/lib/pipeline.ts`                      | Shared generation, retry, refund and email logic                                                                                                                                               |
+| `netlify/lib/generators/`                      | Per-tool code that turns AI JSON into files. Every tool is registered in `index.ts`                                                                                                            |
+| `netlify/lib/docs/`                            | PDF (pdf-lib) and Word (docx) builders                                                                                                                                                         |
+| `netlify/functions/`                           | API endpoints, the background job and scheduled jobs                                                                                                                                           |
+| `src/`                                         | React SPA. Each tool lives in `src/tools/<tool>/`. `src/config/brand.ts` holds the name, logo and contact details                                                                              |
+| `content/blog/*.md`                            | Blog posts, pre-rendered at build time                                                                                                                                                         |
+| `scripts/`                                     | Pre-render, seed, e2e test and OG image generator                                                                                                                                              |
+| `supabase/migrations/`                         | Database schema; run these in order                                                                                                                                                            |
+| `shared/paths.ts`                              | The `/ai` base path, and `withBase()` / `stripBase()`                                                                                                                                          |
+| `merge-kit/` + `scripts/apply-merge-kit.mjs`   | Everything needed to merge into apto-pro.com (see `MERGE_INTO_APTO_TOOLS.md`)                                                                                                                  |
+| `vite.functions.config.ts` → `functions-dist/` | Pre-bundled functions used by the merged site (generated at build time, not committed)                                                                                                         |
 
 ### Endpoints
 
@@ -265,7 +272,10 @@ form ──POST /ai/api/create-job──► jobs row (awaiting_payment) + Stripe
   - the story must mention the child's name;
   - the speech must be roughly the requested length;
   - the listing must contain no prices;
-  - the CV must contain **no employer, institution or year that isn't in the original**.
+  - the CV must contain **no employer, institution or year that isn't in the original**;
+  - the Santa letter must use the child's name and avoid promising presents;
+  - the claim and complaint letters must not change the amounts, rights or deadlines worked out in code, or threaten court;
+  - the meal plan must contain **no word from the allergen, diet or dislike tables** (`shared/rules/allergens.ts`), have a recipe card for every dinner, and cost no more than 1.25× the budget.
 - **Privacy by default.**
   - IPs are hashed before they reach the database.
   - Listing photos are deleted as soon as the listing is written.
@@ -276,17 +286,18 @@ form ──POST /ai/api/create-job──► jobs row (awaiting_payment) + Stripe
 
 ## Day-to-day maintenance
 
-| Task                              | How                                                                                                                                                        |
-| --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Change a price                    | Edit `pricePence` in `shared/tools.ts`, commit and push. Netlify redeploys                                                                                 |
-| Change the brand                  | Edit `src/config/brand.ts` and replace `public/logo.jpg`. Regenerate OG images with `NODE_PATH=$(npm root -g) node scripts/make-og.mjs` (needs Playwright) |
-| Raise or lower the AI budget      | Change `DAILY_AI_BUDGET_GBP` in Netlify, then redeploy                                                                                                     |
-| Switch AI model                   | Set `ANTHROPIC_MODEL` and redeploy. Check the price table in `shared/budget.ts` covers it (unknown models are costed pessimistically)                      |
-| Turn a tool off                   | Set `live: false` in `shared/tools.ts`. It disappears from navigation, the sitemap and checkout                                                            |
-| See what's happening              | Netlify **Logs → Functions**; Supabase **Table Editor → jobs**; `/ai/api/stats`                                                                            |
-| A customer can't find their files | Find their job in Supabase `jobs` by `email`, then send them `https://<domain>/ai/t/<tool>/done?job=<id>` (it works for 30 days)                           |
-| Manual refund                     | Refund in Stripe, using the `job_id` in the payment metadata                                                                                               |
-| Database change                   | Add `supabase/migrations/0003_….sql` and run it in the SQL Editor. Never edit migrations that have already been run                                        |
+| Task                                  | How                                                                                                                                                        |
+| ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Change a price                        | Edit `pricePence` in `shared/tools.ts`, commit and push. Netlify redeploys                                                                                 |
+| Change the brand                      | Edit `src/config/brand.ts` and replace `public/logo.jpg`. Regenerate OG images with `NODE_PATH=$(npm root -g) node scripts/make-og.mjs` (needs Playwright) |
+| Raise or lower the AI budget          | Change `DAILY_AI_BUDGET_GBP` in Netlify, then redeploy                                                                                                     |
+| Switch AI model                       | Set `ANTHROPIC_MODEL` and redeploy. Check the price table in `shared/budget.ts` covers it (unknown models are costed pessimistically)                      |
+| Turn a tool off                       | Set `live: false` in `shared/tools.ts`. It disappears from navigation, the sitemap and checkout                                                            |
+| See what's happening                  | Netlify **Logs → Functions**; Supabase **Table Editor → jobs**; `/ai/api/stats`                                                                            |
+| A customer can't find their files     | Find their job in Supabase `jobs` by `email`, then send them `https://<domain>/ai/t/<tool>/done?job=<id>` (it works for 30 days)                           |
+| Manual refund                         | Refund in Stripe, using the `job_id` in the payment metadata                                                                                               |
+| Re-check legal facts (every 6 months) | Work through [`FACTS_TO_VERIFY.md`](./FACTS_TO_VERIFY.md), update `shared/rules/*` and the check dates, then run `npm test`                                |
+| Database change                       | Add `supabase/migrations/0003_….sql` and run it in the SQL Editor. Never edit migrations that have already been run                                        |
 
 ---
 

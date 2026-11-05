@@ -174,6 +174,9 @@ Raw HTML is escaped (shown as text), not rendered. Tables and code blocks aren't
 
 - Every post should link to at least one tool landing page with descriptive anchor text, for example "our [parking appeal letter writer](/parking-appeal)" (written without `/ai`; it's added automatically).
 - Write in British English, keep it plain and helpful, and cover one topic per post.
+- Flight, deposit and refund posts: never promise a payout. Use the amounts and deadlines from `FACTS_TO_VERIFY.md` only, with their source links, and say they're a guide.
+- Meal and allergy posts: always end with "Always check ingredient labels for allergens. This is not medical or nutritional advice." Never make health, weight-loss or nutrition claims.
+- Santa posts: only promote between 1 October and 24 December (the page hides itself outside that window).
 - Parking posts: include the disclaimer, and tell readers to check the deadline on their own ticket. Never cite specific laws, case names or statistics unless a human has verified them.
 - Don't use real people's names, real tickets or real CVs as examples.
 
@@ -189,11 +192,17 @@ Raw HTML is escaped (shown as text), not rendered. Tables and code blocks aren't
 | Speech writer                       | `/ai/speech-writer`                                      | best man speech writer, eulogy writer, retirement speech, leaving speech       |
 | Listing writer                      | `/ai/listing-writer`                                     | eBay listing description writer, Vinted description generator                  |
 | CV tailor                           | `/ai/cv-tailor`                                          | tailor CV to job description, cover letter writer UK                           |
+| Santa letter (1 Oct – 24 Dec only)  | `/ai/santa-letter`                                       | personalised letter from Santa, letter from Father Christmas                   |
+| Flight delay claim                  | `/ai/flight-delay-claim`                                 | flight delay compensation UK, UK261 claim letter, EU261 claim                  |
+| Deposit return                      | `/ai/deposit-return`                                     | get tenancy deposit back, deposit dispute letter, letter before action deposit |
+| Refund letter                       | `/ai/refund-letter`                                      | refund letter faulty goods, Consumer Rights Act complaint letter               |
+| Meal planner                        | `/ai/meal-planner`                                       | weekly meal plan UK, family meal planner on a budget, allergy meal plan        |
 | Blog                                | `/ai/blog` and `/ai/blog/<slug>`                         | (per post)                                                                     |
 | Terms / Privacy / Refunds / Contact | `/ai/terms`, `/ai/privacy`, `/ai/refunds`, `/ai/contact` | (don't promote)                                                                |
 
 - **Sitemap:** `/ai/sitemap.xml`, which always reflects the live tool pages and posts. It's also listed in the main site's `robots.txt`.
 - **Social images:** each tool has an Open Graph image at `/ai/og/<tool-id>.png` (1200×630), already set in the page meta tags. `/ai/og/default.png` covers everything else.
+- **Existing posts** to share: `/ai/blog/how-to-write-a-letter-from-santa`, `/ai/blog/how-to-claim-compensation-for-a-delayed-flight-uk`, `/ai/blog/how-to-get-your-tenancy-deposit-back-uk`, `/ai/blog/how-to-get-a-refund-for-faulty-goods-uk`, `/ai/blog/weekly-meal-plan-on-a-budget-uk`, `/ai/blog/how-to-appeal-a-parking-ticket-uk`.
 - **Never link to** `/ai/t/…` (private order pages, set to noindex) or any `/ai/api/…` URL.
 
 ### Tracking links

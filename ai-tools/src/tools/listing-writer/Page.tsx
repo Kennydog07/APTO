@@ -11,9 +11,15 @@ const tool = TOOLS['listing-writer'];
 
 const STEPS: HowStep[] = [
   { t: 'Buy 10 listings for £1.99', d: 'Secure checkout by Stripe. No account needed.' },
-  { t: 'Open your private link', d: 'We email it straight after payment. Your 10 credits live there.' },
+  {
+    t: 'Open your private link',
+    d: 'We email it straight after payment. Your 10 credits live there.',
+  },
   { t: 'Snap your item', d: 'Add 1 to 3 photos, plus any notes.' },
-  { t: 'Get your listing', d: 'A search-friendly title and description, ready for eBay or Vinted.' },
+  {
+    t: 'Get your listing',
+    d: 'A search-friendly title and description, ready for eBay or Vinted.',
+  },
   { t: 'Copy, paste, sell', d: 'Each listing uses 1 credit. Top up any time.' },
 ];
 
@@ -21,7 +27,11 @@ function Mascot() {
   const src = (w: number, ext: string) => withBase(`/img/mascot-listing-${w}.${ext}`);
   return (
     <picture>
-      <source type="image/webp" srcSet={`${src(600, 'webp')} 600w, ${src(1024, 'webp')} 1024w`} sizes="(max-width: 768px) 100vw, 720px" />
+      <source
+        type="image/webp"
+        srcSet={`${src(600, 'webp')} 600w, ${src(1024, 'webp')} 1024w`}
+        sizes="(max-width: 768px) 100vw, 720px"
+      />
       <img
         src={src(1024, 'jpg')}
         srcSet={`${src(600, 'jpg')} 600w, ${src(1024, 'jpg')} 1024w`}

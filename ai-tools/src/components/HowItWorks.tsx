@@ -4,7 +4,9 @@ export type HowStep = { t: string; d: string };
 export function HowItWorks({ steps }: { steps: HowStep[] }) {
   return (
     <section aria-labelledby="how-h" className="mx-auto max-w-5xl px-4 pt-12">
-      <h2 id="how-h" className="text-2xl font-bold">How it works</h2>
+      <h2 id="how-h" className="text-2xl font-bold">
+        How it works
+      </h2>
       <ol className="mt-5 flex flex-col items-stretch gap-2 md:flex-row md:items-stretch">
         {steps.map((s, i) => (
           <li key={s.t} className="flex flex-col items-center md:flex-1 md:flex-row">
@@ -16,7 +18,10 @@ export function HowItWorks({ steps }: { steps: HowStep[] }) {
               <p className="mt-1 text-sm text-stone-600">{s.d}</p>
             </div>
             {i < steps.length - 1 && (
-              <span aria-hidden="true" className="px-1 py-1 text-2xl font-bold text-[#eb6e14] md:py-0">
+              <span
+                aria-hidden="true"
+                className="px-1 py-1 text-2xl font-bold text-[#eb6e14] md:py-0"
+              >
                 <span className="md:hidden">↓</span>
                 <span className="hidden md:inline">→</span>
               </span>
