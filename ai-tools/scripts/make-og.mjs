@@ -23,6 +23,8 @@ const cards = [
   { file: 'cv-tailor', title: 'Tailored CV &amp;<br>cover letter', price: '£4.99' },
   { file: 'santa-letter', title: 'Personalised letter<br>from Santa', price: '£1.99' },
   { file: 'flight-delay-claim', title: 'Flight delay<br>compensation claim', price: '£3.99' },
+  { file: 'deposit-return', title: 'Get your tenancy<br>deposit back', price: '£3.99' },
+  { file: 'refund-letter', title: 'Refund &amp;<br>complaint letter', price: '£2.99' },
 ];
 
 const logo = fs.readFileSync(path.join(root, 'public/logo.jpg')).toString('base64');

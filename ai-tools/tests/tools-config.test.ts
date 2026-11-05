@@ -10,6 +10,8 @@ describe('tool and price config', () => {
     expect(TOOLS['cv-tailor'].pricePence).toBe(499);
     expect(TOOLS['santa-letter'].pricePence).toBe(199);
     expect(TOOLS['flight-delay-claim'].pricePence).toBe(399);
+    expect(TOOLS['deposit-return'].pricePence).toBe(399);
+    expect(TOOLS['refund-letter'].pricePence).toBe(299);
   });
   it('has the agreed max_tokens caps', () => {
     expect(TOOLS['parking-appeal'].maxTokens).toBe(2000);
@@ -19,6 +21,8 @@ describe('tool and price config', () => {
     expect(TOOLS['cv-tailor'].maxTokens).toBe(5000);
     expect(TOOLS['santa-letter'].maxTokens).toBe(1500);
     expect(TOOLS['flight-delay-claim'].maxTokens).toBe(2000);
+    expect(TOOLS['deposit-return'].maxTokens).toBe(2000);
+    expect(TOOLS['refund-letter'].maxTokens).toBe(1800);
   });
   it('keeps ids, routes and keys consistent', () => {
     for (const id of TOOL_IDS) {

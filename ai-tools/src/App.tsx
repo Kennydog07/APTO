@@ -12,6 +12,8 @@ import { ListingWriterPage } from './tools/listing-writer/Page';
 import { CvTailorPage } from './tools/cv-tailor/Page';
 import { SantaLetterPage } from './tools/santa-letter/Page';
 import { FlightDelayClaimPage } from './tools/flight-delay-claim/Page';
+import { DepositReturnPage } from './tools/deposit-return/Page';
+import { RefundLetterPage } from './tools/refund-letter/Page';
 
 /** Static routes. Each one is pre-rendered to HTML at build time. */
 export const STATIC_ROUTES: Record<string, () => React.ReactElement> = {
@@ -23,6 +25,8 @@ export const STATIC_ROUTES: Record<string, () => React.ReactElement> = {
   '/cv-tailor': () => <CvTailorPage />,
   '/santa-letter': () => <SantaLetterPage />,
   '/flight-delay-claim': () => <FlightDelayClaimPage />,
+  '/deposit-return': () => <DepositReturnPage />,
+  '/refund-letter': () => <RefundLetterPage />,
   '/terms': () => <TermsPage />,
   '/privacy': () => <PrivacyPage />,
   '/refunds': () => <RefundsPage />,

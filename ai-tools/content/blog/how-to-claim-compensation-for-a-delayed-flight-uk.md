@@ -10,11 +10,11 @@ If your flight left from a UK airport, or arrived in the UK on a UK or EU airlin
 
 Compensation is a **fixed amount per passenger**, based on the flight distance. It has nothing to do with what you paid for the ticket.
 
-| Flight distance | Compensation |
-| --- | --- |
-| 1,500 km or less (e.g. Glasgow to Amsterdam) | £220 |
-| 1,500 – 3,500 km (e.g. East Midlands to Marrakesh) | £350 |
-| Over 3,500 km (e.g. London to New York) | £520 (£260 if you arrive 3 to 4 hours late) |
+| Flight distance                                    | Compensation                                |
+| -------------------------------------------------- | ------------------------------------------- |
+| 1,500 km or less (e.g. Glasgow to Amsterdam)       | £220                                        |
+| 1,500 – 3,500 km (e.g. East Midlands to Marrakesh) | £350                                        |
+| Over 3,500 km (e.g. London to New York)            | £520 (£260 if you arrive 3 to 4 hours late) |
 
 Source: the [Civil Aviation Authority's delays page](https://www.caa.co.uk/passengers-and-public/resolving-travel-problems/delays-and-cancellations/delays/). Flights covered only by the EU rules pay €250, €400 or €600.
 
@@ -41,4 +41,4 @@ You can claim for flights up to **6 years** ago in England, Wales and Northern I
 
 Our [flight delay claim letter tool](/flight-delay-claim) works out the distance between your airports and what you may be owed – **for free, before you pay**. If your flight looks eligible, £3.99 gets you a formal claim letter as PDF and Word, with the amounts and an expenses table, ready to paste into the airline's form.
 
-*This is general information, not legal advice. Compensation is not guaranteed.*
+_This is general information, not legal advice. Compensation is not guaranteed._

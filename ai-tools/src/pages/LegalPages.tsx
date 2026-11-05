@@ -129,6 +129,17 @@ export function PrivacyPage() {
           These are used only to write that letter and are deleted with the order after 30 days.
         </li>
         <li>
+          <strong>For the deposit return tool, your name and address</strong>, your landlord’s or
+          agent’s name and address, the rented property’s address, tenancy dates, deposit amounts and
+          any deductions you list. These are used only to write that letter and are deleted with the
+          order after 30 days.
+        </li>
+        <li>
+          <strong>For the refund letter tool, your name and address</strong>, the company’s details,
+          what you bought, dates, the price, how you paid and what went wrong. These are used only to
+          write that letter and are deleted with the order after 30 days.
+        </li>
+        <li>
           <strong>For the listing writer, photos of the item you’re selling.</strong> Photos are
           resized in your browser (which also removes location data), used once to write the
           listing, and deleted straight afterwards. We keep the listing text for 30 days.

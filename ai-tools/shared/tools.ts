@@ -13,7 +13,9 @@ export type ToolId =
   | 'listing-writer'
   | 'cv-tailor'
   | 'santa-letter'
-  | 'flight-delay-claim';
+  | 'flight-delay-claim'
+  | 'deposit-return'
+  | 'refund-letter';
 
 /** Month (1-12) and day, inclusive. */
 export type MonthDay = [month: number, day: number];
@@ -153,6 +155,36 @@ export const TOOLS: Record<ToolId, ToolConfig> = {
     metaTitle: 'Flight Delay Compensation Claim Letter (UK261) – Free Check | £3.99',
     metaDescription:
       'Delayed, cancelled or bumped flight? Check free what UK261 or EU261 compensation you may be owed, then get a formal claim letter (PDF + Word) for £3.99.',
+  },
+  'deposit-return': {
+    id: 'deposit-return',
+    route: '/deposit-return',
+    name: 'Tenancy Deposit Return Letter',
+    shortName: 'Deposit return',
+    stripeProductName: 'Tenancy deposit return letter (PDF + Word)',
+    pricePence: 399,
+    maxTokens: 2000,
+    live: true,
+    tagline:
+      'Get your tenancy deposit back: a request, a dispute of unfair deductions, or a letter before action.',
+    metaTitle: 'Tenancy Deposit Return Letter (UK) – Dispute Deductions | £3.99',
+    metaDescription:
+      'Landlord keeping your deposit? Get a letter asking for it back or disputing unfair deductions, with next steps for England, Wales, Scotland or NI. £3.99.',
+  },
+  'refund-letter': {
+    id: 'refund-letter',
+    route: '/refund-letter',
+    name: 'Refund & Complaint Letter',
+    shortName: 'Refund letter',
+    stripeProductName: 'Refund and complaint letter (PDF + Word)',
+    pricePence: 299,
+    maxTokens: 1800,
+    live: true,
+    tagline:
+      'Faulty item, missing order, bad service or a wrong energy bill? Get a firm letter that uses your consumer rights.',
+    metaTitle: 'Refund & Complaint Letter (Consumer Rights Act) – UK | £2.99',
+    metaDescription:
+      'Faulty goods, a missing delivery, poor service or a wrong energy bill? Get a firm complaint letter using the right consumer rights for your dates. £2.99.',
   },
 };
 
