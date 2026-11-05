@@ -124,6 +124,11 @@ export function PrivacyPage() {
           write that letter and are deleted with the order after 30 days.
         </li>
         <li>
+          <strong>For the flight delay claim tool, passenger names</strong>, your booking reference,
+          flight details, any expenses you list, and your name, address and email for the letter.
+          These are used only to write that letter and are deleted with the order after 30 days.
+        </li>
+        <li>
           <strong>For the listing writer, photos of the item you’re selling.</strong> Photos are
           resized in your browser (which also removes location data), used once to write the
           listing, and deleted straight afterwards. We keep the listing text for 30 days.

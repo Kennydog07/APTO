@@ -14,6 +14,7 @@ import { SpeechResult, type SpeechDisplay } from '../tools/speech-writer/Result'
 import { PackDone } from '../tools/listing-writer/PackDone';
 import { CvResult, type CvDisplay } from '../tools/cv-tailor/Result';
 import { SantaLetterResult, type SantaLetterDisplay } from '../tools/santa-letter/Result';
+import { FlightClaimResult, type FlightClaimDisplay } from '../tools/flight-delay-claim/Result';
 
 const RESULT_VIEWS: Partial<Record<ToolId, (r: unknown) => ReactNode>> = {
   'parking-appeal': (r) => <ParkingAppealResult r={r as ParkingAppealDisplay} />,
@@ -21,6 +22,7 @@ const RESULT_VIEWS: Partial<Record<ToolId, (r: unknown) => ReactNode>> = {
   'speech-writer': (r) => <SpeechResult r={r as SpeechDisplay} />,
   'cv-tailor': (r) => <CvResult r={r as CvDisplay} />,
   'santa-letter': (r) => <SantaLetterResult r={r as SantaLetterDisplay} />,
+  'flight-delay-claim': (r) => <FlightClaimResult r={r as FlightClaimDisplay} />,
   'listing-writer': (r) => (
     <PackDone r={r as { token: string; added: number; remaining: number; topUp: boolean }} />
   ),

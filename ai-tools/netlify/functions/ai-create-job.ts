@@ -46,6 +46,8 @@ export default async (req: Request, context: Context) => {
       fields: z.flattenError(parsed.error as z.ZodError).fieldErrors,
     });
   }
+  const refusal = generator.preCheck?.(parsed.data) ?? null;
+  if (refusal) return errorJson(422, refusal, { notEligible: true });
   const inputs = parsed.data as Record<string, unknown>;
   // Test-only hook used by scripts/e2e.ts to exercise the failure -> refund path.
   if (isStripeTestMode() && body.testForceFail === true) inputs._test_force_fail = true;

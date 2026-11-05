@@ -1,5 +1,5 @@
 import { PDFDocument, StandardFonts, rgb, type PDFFont, type PDFPage } from 'pdf-lib';
-import type { Letter } from './letter.ts';
+import type { Letter, LetterBlock } from './letter.ts';
 
 /**
  * pdf-lib's built-in fonts only support the WinAnsi character set. Map common
@@ -161,6 +161,40 @@ export class FlowWriter {
     }
   }
 
+  /** One table row: label on the left, value right-aligned, with a thin rule underneath. */
+  row(label: string, value: string, size = 10.5) {
+    const lh = size * 1.6;
+    const font = this.fonts.regular;
+    const v = toWinAnsi(value, font);
+    const vw = font.widthOfTextAtSize(v, size);
+    const lines = wrapText(toWinAnsi(label, font), font, size, this.width - vw - 16);
+    if (this.y - lh * lines.length < this.floor) this.newPage();
+    lines.forEach((line, i) => {
+      this.y -= lh;
+      this.page.drawText(line, {
+        x: this.opts.margin,
+        y: this.y,
+        size,
+        font,
+        color: rgb(0.08, 0.08, 0.08),
+      });
+      if (i === 0)
+        this.page.drawText(v, {
+          x: this.opts.margin + this.width - vw,
+          y: this.y,
+          size,
+          font,
+          color: rgb(0.08, 0.08, 0.08),
+        });
+    });
+    this.page.drawLine({
+      start: { x: this.opts.margin, y: this.y - 4 },
+      end: { x: this.opts.margin + this.width, y: this.y - 4 },
+      thickness: 0.4,
+      color: rgb(0.8, 0.8, 0.8),
+    });
+  }
+
   space(h: number) {
     this.y -= h;
     if (this.y < this.floor) this.newPage();
@@ -190,10 +224,31 @@ export async function letterToPdf(letter: Letter, title: string): Promise<Uint8A
     w.space(8);
     w.text(p);
   }
+  for (const b of letter.blocks ?? []) {
+    w.space(12);
+    drawBlock(w, b);
+  }
   w.space(14);
   w.text(letter.signOff);
   w.space(28);
   w.text(letter.signature);
+  if (letter.appendix?.length) {
+    w.newPage();
+    for (const b of letter.appendix) {
+      drawBlock(w, b);
+      w.space(14);
+    }
+  }
 
   return doc.save();
+}
+
+/** Heading, lines and a simple label/value table, used by Letter.blocks and Letter.appendix. */
+function drawBlock(w: FlowWriter, b: LetterBlock) {
+  w.text(b.heading, { bold: true });
+  for (const line of b.lines ?? []) {
+    w.space(2);
+    w.text(line);
+  }
+  for (const [k, v] of b.rows ?? []) w.row(k, v);
 }

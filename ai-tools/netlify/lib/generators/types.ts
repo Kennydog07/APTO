@@ -14,6 +14,11 @@ export interface ToolGenerator<TIn = unknown, TOut = unknown> {
    */
   purchaseSchema?: ZodType<unknown>;
   prompt: PromptModule<TIn, TOut>;
+  /**
+   * Optional pre-payment check, run by create-job after validation. Return a message to refuse
+   * checkout (e.g. the flight clearly doesn't qualify), or null to continue.
+   */
+  preCheck?(inputs: TIn): string | null;
   /** Turn validated AI output into files + the JSON shown inline on the done page. */
   build(inputs: TIn, output: TOut): Promise<{ display: unknown; files: OutputFile[] }>;
 }

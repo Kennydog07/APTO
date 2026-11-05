@@ -12,7 +12,8 @@ export type ToolId =
   | 'speech-writer'
   | 'listing-writer'
   | 'cv-tailor'
-  | 'santa-letter';
+  | 'santa-letter'
+  | 'flight-delay-claim';
 
 /** Month (1-12) and day, inclusive. */
 export type MonthDay = [month: number, day: number];
@@ -137,6 +138,21 @@ export const TOOLS: Record<ToolId, ToolConfig> = {
     metaTitle: 'Personalised Letter from Santa (UK) – Printable PDF | £1.99',
     metaDescription:
       'A personalised letter from Father Christmas that mentions your child’s good deeds, plus a Nice List certificate and envelope to print. A4 PDF for £1.99.',
+  },
+  'flight-delay-claim': {
+    id: 'flight-delay-claim',
+    route: '/flight-delay-claim',
+    name: 'Flight Delay & Cancellation Claim Letter',
+    shortName: 'Flight delay claim',
+    stripeProductName: 'Flight delay compensation claim letter (PDF + Word)',
+    pricePence: 399,
+    maxTokens: 2000,
+    live: true,
+    tagline:
+      'Check what UK261 / EU261 compensation you may be owed for free, then get a firm claim letter.',
+    metaTitle: 'Flight Delay Compensation Claim Letter (UK261) – Free Check | £3.99',
+    metaDescription:
+      'Delayed, cancelled or bumped flight? Check free what UK261 or EU261 compensation you may be owed, then get a formal claim letter (PDF + Word) for £3.99.',
   },
 };
 

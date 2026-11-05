@@ -6,6 +6,7 @@ import { speechWriterGenerator } from './speech-writer.ts';
 import { listingWriterGenerator } from './listing-writer.ts';
 import { cvTailorGenerator } from './cv-tailor.ts';
 import { santaLetterGenerator } from './santa-letter.ts';
+import { flightDelayClaimGenerator } from './flight-delay-claim.ts';
 
 /** Registry of built tools. Tools without an entry cannot be purchased. */
 export const GENERATORS: Partial<Record<ToolId, ToolGenerator>> = {
@@ -15,4 +16,5 @@ export const GENERATORS: Partial<Record<ToolId, ToolGenerator>> = {
   'listing-writer': listingWriterGenerator as ToolGenerator,
   'cv-tailor': cvTailorGenerator as ToolGenerator,
   'santa-letter': santaLetterGenerator as ToolGenerator,
+  'flight-delay-claim': flightDelayClaimGenerator as ToolGenerator,
 };

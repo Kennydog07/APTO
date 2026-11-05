@@ -77,6 +77,29 @@ export const SAMPLE_INPUTS = {
     presentHint: 'a space rocket',
     tone: 'magical',
   },
+  'flight-delay-claim': {
+    airline: 'Example Airways',
+    airlineBase: 'uk',
+    flightNumber: 'EX 1234',
+    flightDate: '2026-08-14',
+    from: 'EMA',
+    to: 'RAK',
+    what: 'delayed',
+    delayHours: 4,
+    delayMinutes: 20,
+    rerouted: false,
+    rerouteDepartedEarlyMins: 0,
+    reasonGiven: 'Technical problem with the aircraft',
+    passengers: ['Sam Example', 'Alex Example'],
+    bookingRef: 'ABC123',
+    expenses: [
+      { type: 'meals', description: 'Airport dinner for two', amount: 38.5, receipt: true },
+    ],
+    claimantName: 'Sam Example',
+    claimantAddress: '1 Example Street, Exampletown, EX1 2AB',
+    claimantEmail: 'sam@example.com',
+    extra: 'We were given one £5 voucher each and no updates for the first three hours.',
+  },
 } as const;
 
 /** A 96x96 plain red JPEG, used by the e2e test to exercise the listing writer end to end. */

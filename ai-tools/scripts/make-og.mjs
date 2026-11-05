@@ -22,6 +22,7 @@ const cards = [
   { file: 'listing-writer', title: 'eBay &amp; Vinted<br>listing writer', price: '10 for £1.99' },
   { file: 'cv-tailor', title: 'Tailored CV &amp;<br>cover letter', price: '£4.99' },
   { file: 'santa-letter', title: 'Personalised letter<br>from Santa', price: '£1.99' },
+  { file: 'flight-delay-claim', title: 'Flight delay<br>compensation claim', price: '£3.99' },
 ];
 
 const logo = fs.readFileSync(path.join(root, 'public/logo.jpg')).toString('base64');
