@@ -48,6 +48,20 @@ export function TermsPage() {
         particular outcome, such as an appeal succeeding. Please read everything before you use it
         and check any deadlines yourself.
       </p>
+      <ul>
+        <li>
+          <strong>Claims and complaint letters</strong> (flight delay, deposit return, refund): any
+          compensation amount, right or deadline we show is worked out from published official
+          guidance and the details you give. It is a guide, not a guarantee that you will be paid.
+        </li>
+        <li>
+          <strong>Meal planner:</strong> we check plans against the allergens, diet and dislikes you
+          enter, but no automated check is perfect and recipes and products change.{' '}
+          <strong>
+            Always check ingredient labels for allergens. This is not medical or nutritional advice.
+          </strong>
+        </li>
+      </ul>
       <h2>Your responsibilities</h2>
       <ul>
         <li>
@@ -179,6 +193,12 @@ export function PrivacyPage() {
         </li>
         <li>
           To keep transaction records – <em>legal obligation</em> (held by Stripe).
+        </li>
+        <li>
+          Allergy and diet information you choose to give the meal planner can be health data. We
+          use it only to write and check your meal plan, on the basis of your{' '}
+          <em>explicit consent</em>, which you give by entering it and submitting the form. You
+          don’t have to give it, and you can ask us to delete it at any time.
         </li>
       </ul>
       <p>
