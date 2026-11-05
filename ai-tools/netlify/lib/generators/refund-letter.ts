@@ -48,11 +48,7 @@ export function buildRefundLetter(
   return {
     senderLines: [inputs.customerName, ...lines(inputs.customerAddress)],
     dateLine: ukDate(date),
-    recipientLines: [
-      inputs.companyName,
-      'Customer Services – Complaints',
-      ...lines(inputs.companyAddress),
-    ],
+    recipientLines: refundRecipientLines(inputs.companyName, inputs.companyAddress),
     subjectLines: [
       `Re: Complaint – ${COMPLAINT_TYPES[inputs.complaintType].toLowerCase()}: ${inputs.item}`,
       `${inputs.orderRef ? `Reference: ${inputs.orderRef} · ` : ''}${DATE_LABEL[inputs.complaintType]}: ${isoToUk(inputs.date)} · Price: ${gbp(inputs.price)}`,
@@ -116,3 +112,23 @@ export const refundLetterGenerator: ToolGenerator<RefundLetterInputs, RefundOutp
     };
   },
 };
+
+const DEPARTMENT_RE =
+  /\b(customer|complaints?|relations|services?|care|department|dept|team|attn|f\.?a\.?o)\b/i;
+
+/**
+ * Company name, a complaints department line, then the address. If the buyer's address already
+ * starts with a department (e.g. "Customer Relations"), don't add a second one, and drop an address
+ * line that just repeats the company name.
+ */
+export function refundRecipientLines(companyName: string, companyAddress: string): string[] {
+  const norm = (s: string) =>
+    s
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, ' ')
+      .trim();
+  const addr = lines(companyAddress).filter((l) => norm(l) !== norm(companyName));
+  const hasDept = addr.length > 0 && !/\d/.test(addr[0]!) && DEPARTMENT_RE.test(addr[0]!);
+  return [companyName, ...(hasDept ? [] : ['Customer Services – Complaints']), ...addr];
+}

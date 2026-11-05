@@ -1,4 +1,6 @@
-import type Anthropic from '@anthropic-ai/sdk';
+/** Provider-neutral user content: text, or a base64 image (listing writer photos). */
+export type AiPart =
+  { type: 'text'; text: string } | { type: 'image'; mediaType: string; data: string };
 
 /** Context passed when the user uses their one free regeneration. */
 export interface RegenContext<TOutput> {
@@ -12,14 +14,11 @@ export interface RegenContext<TOutput> {
  */
 export interface PromptModule<TInputs, TOutput> {
   max_tokens: number;
-  /** Optional model override (e.g. a cheaper model for the free CV preview). Defaults to ANTHROPIC_MODEL. */
+  /** Optional model override (e.g. a cheaper model for the free CV preview). Defaults to GEMINI_MODEL. */
   model?: string;
   buildSystemPrompt(): string;
   /** A string, or content blocks (e.g. images for the listing writer). */
-  buildUserPrompt(
-    inputs: TInputs,
-    regen?: RegenContext<TOutput>,
-  ): string | Anthropic.ContentBlockParam[];
+  buildUserPrompt(inputs: TInputs, regen?: RegenContext<TOutput>): string | AiPart[];
   /**
    * Throws OutputParseError if the model output is not valid. `inputs` is passed so a tool
    * can run input-dependent checks (e.g. the speech is roughly the requested length).

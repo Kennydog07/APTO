@@ -53,13 +53,14 @@ Allow about an hour. Do the steps in this order, because later steps need values
 
 You don't need the `anon` or public key. The browser never talks to Supabase directly.
 
-### Step 2: Anthropic (AI)
+### Step 2: Google Gemini (AI)
 
-1. In the [Claude Console](https://platform.claude.com), create an API key. This becomes `ANTHROPIC_API_KEY`.
-2. Under **Billing / Limits**, set a **monthly spend limit**. This is a second safety net on top of the app's own daily budget (`DAILY_AI_BUDGET_GBP`).
+1. Use the same `GEMINI_API_KEY` the main apto-pro.com site already uses (or create one in [Google AI Studio](https://aistudio.google.com/apikey) on a **paid-tier** project, so inputs aren't used to improve Google's products). Set `AI_TOOLS_GEMINI_API_KEY` instead if you want separate billing.
+2. In Google Cloud billing, set a **budget alert** for the project. This is a second safety net on top of the app's own daily budget (`DAILY_AI_BUDGET_GBP`).
 3. Model choice:
-   - `ANTHROPIC_MODEL` defaults to `claude-sonnet-5-5` and is used for all paid generations.
-   - `ANTHROPIC_PREVIEW_MODEL` defaults to `claude-haiku-5-5` and is used only for the free CV match preview.
+   - `GEMINI_MODEL` defaults to `gemini-3.5-flash-lite` (the main site's default) and is used for all generations.
+   - `GEMINI_PREVIEW_MODEL` (optional) overrides the model for the free CV match preview only.
+4. Without a Gemini key, `ai-site-status` reports not accepting and checkouts are paused.
 
 ### Step 3: Resend (emails with download links)
 
@@ -91,9 +92,9 @@ If Resend isn't set up, the site still works. Emails are skipped (with a warning
 
    | Variable                                    | Value                                                                                                                                             |
    | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-   | `ANTHROPIC_API_KEY`                         | From Step 2                                                                                                                                       |
-   | `ANTHROPIC_MODEL`                           | `claude-sonnet-5-5` (optional)                                                                                                                    |
-   | `ANTHROPIC_PREVIEW_MODEL`                   | `claude-haiku-5-5` (optional)                                                                                                                     |
+   | `GEMINI_API_KEY`                            | From Step 2 (shared with the main site)                                                                                                           |
+   | `GEMINI_MODEL`                              | `gemini-3.5-flash-lite` (optional)                                                                                                                |
+   | `GEMINI_PREVIEW_MODEL`                      | Defaults to `GEMINI_MODEL` (optional)                                                                                                             |
    | `STRIPE_SECRET_KEY`                         | From Step 4                                                                                                                                       |
    | `STRIPE_WEBHOOK_SECRET`                     | From Step 6 (add it after the first deploy)                                                                                                       |
    | `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` | From Step 1                                                                                                                                       |
@@ -126,7 +127,7 @@ If Resend isn't set up, the site still works. Emails are skipped (with a warning
 - [ ] Check `https://<your-domain>/ai/sitemap.xml` and `/robots.txt`, then submit the sitemap in Google Search Console.
 - [ ] Read the legal pages (`/ai/terms`, `/ai/privacy`, `/ai/refunds`, `/ai/contact`) and confirm the business name and contact details in `src/config/brand.ts`. I wrote them as a careful starting point; they haven't been reviewed by a lawyer.
 - [ ] Run Lighthouse (Chrome DevTools → Lighthouse, mobile) on each landing page. The targets are 90+ for performance, SEO and accessibility. A local production build with compression scored 99–100 for performance and 100 for accessibility and SEO.
-- [ ] Set your Anthropic monthly limit (Step 2) and a Stripe balance alert.
+- [ ] Set a Google Cloud budget alert for the Gemini project (Step 2) and a Stripe balance alert.
 
 ---
 
@@ -194,7 +195,7 @@ Open a tool page, fill in the form, and pay with `4242 4242 4242 4242` (any futu
 | Kill switch    | Set `DAILY_AI_BUDGET_GBP=0` and restart. Forms show "Back shortly", `create-job` returns 503, and the CV preview is off                                                                                                 |
 | Rate limits    | `create-job`: 10 per IP per hour. CV preview: 3 per IP per day. CV upload: 20 per hour. Listings: 30 per hour                                                                                                           |
 | Scheduled jobs | `npx netlify functions:invoke ai-sweeper` and `npx netlify functions:invoke ai-retention-cleanup`                                                                                                                       |
-| Sample outputs | `npm run seed` calls Claude once per tool (a few pence) and rewrites `src/samples/<tool>.json`. Use `npm run seed -- cv-tailor` for one tool. The listing writer's sample is hand-written, because it needs real photos |
+| Sample outputs | `npm run seed` calls Gemini once per tool (a few pence) and rewrites `src/samples/<tool>.json`. Use `npm run seed -- cv-tailor` for one tool. The listing writer's sample is hand-written, because it needs real photos |
 
 ---
 
@@ -210,7 +211,7 @@ form ──POST /ai/api/create-job──► jobs row (awaiting_payment) + Stripe
             POST /ai/api/stripe-webhook (signature verified) ──► status=paid
                                    │  (HMAC-signed call)
                                    ▼
-        generate-background: claim job → Claude → zod-validate → PDF/DOCX
+        generate-background: claim job → Gemini → zod-validate → PDF/DOCX
               → Supabase Storage (private "outputs" bucket) → status=done → email link
               ✗ after 3 attempts → status=failed → automatic full refund → apology email
                                    │
@@ -267,7 +268,7 @@ form ──POST /ai/api/create-job──► jobs row (awaiting_payment) + Stripe
 
 - **Idempotent.** Generation atomically claims a job (`paid → generating`), so duplicate webhooks or triggers do nothing. Refunds and Checkout Sessions use Stripe idempotency keys, and credit-pack fulfilment is unique per job.
 - **Kill switch.** Before any new checkout or free preview, the app reads `daily_spend`. If the database can't be read, it **fails closed** (checkouts pause). Orders that are already paid always finish. Listing credits keep working up to twice the daily cap.
-- **Hard caps.** Each tool has a fixed `max_tokens`. On `claude-sonnet-5-5`, thinking is switched off (`between_tools`) so the whole budget goes to the answer. Anthropic's server-side refusal fallback (`fallbacks: "default"`) is switched on.
+- **Hard caps.** Each tool has a fixed `max_tokens`, sent to Gemini as `maxOutputTokens` (thinking tokens count towards it and are billed as output; Flash-Lite's default thinking level is minimal). Calls use JSON mode (`responseMimeType: application/json`). A Gemini safety block is treated as a refusal. Token costs in `shared/budget.ts` are Google's paid-tier list prices, checked 2026-11-05 (Flash-Lite: $0.30 in / $2.50 out per million tokens).
 - **Validated output.** The model returns JSON, which is checked with zod and parsed again once if it fails. Each tool also runs its own checks:
   - the story must mention the child's name;
   - the speech must be roughly the requested length;
@@ -291,7 +292,7 @@ form ──POST /ai/api/create-job──► jobs row (awaiting_payment) + Stripe
 | Change a price                        | Edit `pricePence` in `shared/tools.ts`, commit and push. Netlify redeploys                                                                                 |
 | Change the brand                      | Edit `src/config/brand.ts` and replace `public/logo.jpg`. Regenerate OG images with `NODE_PATH=$(npm root -g) node scripts/make-og.mjs` (needs Playwright) |
 | Raise or lower the AI budget          | Change `DAILY_AI_BUDGET_GBP` in Netlify, then redeploy                                                                                                     |
-| Switch AI model                       | Set `ANTHROPIC_MODEL` and redeploy. Check the price table in `shared/budget.ts` covers it (unknown models are costed pessimistically)                      |
+| Switch AI model                       | Set `GEMINI_MODEL` and redeploy. Check the price table in `shared/budget.ts` covers it (unknown models are costed pessimistically)                         |
 | Turn a tool off                       | Set `live: false` in `shared/tools.ts`. It disappears from navigation, the sitemap and checkout                                                            |
 | See what's happening                  | Netlify **Logs → Functions**; Supabase **Table Editor → jobs**; `/ai/api/stats`                                                                            |
 | A customer can't find their files     | Find their job in Supabase `jobs` by `email`, then send them `https://<domain>/ai/t/<tool>/done?job=<id>` (it works for 30 days)                           |
@@ -303,7 +304,7 @@ form ──POST /ai/api/create-job──► jobs row (awaiting_payment) + Stripe
 
 ## Dependencies
 
-The runtime dependencies are the ones the spec lists, plus the official clients they need: `@anthropic-ai/sdk`, `stripe`, `@supabase/supabase-js`, `resend`, `docx`, `pdf-lib`, `mammoth`, `pdf-parse`, `zod`, `react` and `react-dom`. Dev dependencies cover Vite, Tailwind, TypeScript, Vitest, ESLint and Prettier, plus `@netlify/functions` for types.
+The runtime dependencies are the ones the spec lists, plus the official clients they need (Gemini is called with plain `fetch`, no SDK): `stripe`, `@supabase/supabase-js`, `resend`, `docx`, `pdf-lib`, `mammoth`, `pdf-parse`, `zod`, `react` and `react-dom`. Dev dependencies cover Vite, Tailwind, TypeScript, Vitest, ESLint and Prettier, plus `@netlify/functions` for types.
 
 These were deliberately **not** added:
 

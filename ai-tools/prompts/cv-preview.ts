@@ -12,13 +12,14 @@ export const cvPreviewOutputSchema = z.object({
 });
 export type CvPreviewOutput = z.infer<typeof cvPreviewOutputSchema>;
 
-export const CV_PREVIEW_MODEL_DEFAULT = 'claude-haiku-5-5';
+/** Optional cheaper model for the free preview; unset = GEMINI_MODEL (or its default). */
+export const CV_PREVIEW_MODEL_DEFAULT = undefined;
 
 export const cvPreviewPrompt: PromptModule<CvPreviewInputs, CvPreviewOutput> = {
   max_tokens: 300,
   model:
-    process.env.AI_TOOLS_ANTHROPIC_PREVIEW_MODEL ||
-    process.env.ANTHROPIC_PREVIEW_MODEL ||
+    process.env.AI_TOOLS_GEMINI_PREVIEW_MODEL ||
+    process.env.GEMINI_PREVIEW_MODEL ||
     CV_PREVIEW_MODEL_DEFAULT,
   buildSystemPrompt() {
     return [

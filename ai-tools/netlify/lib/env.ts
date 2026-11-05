@@ -34,8 +34,11 @@ export function appUrl(): string {
   return `${siteOrigin()}${BASE_PATH}`;
 }
 
-export function anthropicModel(): string {
-  return envOptional('ANTHROPIC_MODEL', 'claude-sonnet-5-5');
+/** Same default as the main site's functions/lib/gemini.js. */
+export const DEFAULT_GEMINI_MODEL = 'gemini-3.5-flash-lite';
+
+export function geminiModel(): string {
+  return envOptional('GEMINI_MODEL', DEFAULT_GEMINI_MODEL);
 }
 
 /** True when using Stripe test keys. Test-only hooks (forced failures) require this. */

@@ -3,7 +3,7 @@
  * display JSON to src/samples/<tool>.json, which the landing pages show as "What you'll get".
  * Also writes the files to ./sample-output/ so you can inspect the PDF/DOCX.
  *
- *   npm run seed            (needs ANTHROPIC_API_KEY in .env; Supabase is optional)
+ *   npm run seed            (needs GEMINI_API_KEY in .env; Supabase is optional)
  *   npm run seed -- parking-appeal
  *
  * Costs a few pence per tool. Review the JSON before committing.

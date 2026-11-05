@@ -26,14 +26,14 @@ describe('budget kill switch', () => {
     expect(isOverBudget(0, 0)).toBe(true); // a cap of 0 pauses everything
   });
   it('estimates cost from token counts', () => {
-    // Sonnet 5.5: $2 in / $10 out per MTok, x0.8 GBP
-    expect(estimateCostGbp('claude-sonnet-5-5', 1_000_000, 0)).toBeCloseTo(1.6);
-    expect(estimateCostGbp('claude-sonnet-5-5', 0, 1_000_000)).toBeCloseTo(8);
-    expect(estimateCostGbp('claude-sonnet-5-5', 1500, 1200)).toBeCloseTo(0.012, 4);
+    // Gemini 3.5 Flash-Lite: $0.30 in / $2.50 out per MTok, x0.8 GBP
+    expect(estimateCostGbp('gemini-3.5-flash-lite', 1_000_000, 0)).toBeCloseTo(0.24);
+    expect(estimateCostGbp('gemini-3.5-flash-lite', 0, 1_000_000)).toBeCloseTo(2);
+    expect(estimateCostGbp('gemini-3.5-flash-lite', 1500, 1200)).toBeCloseTo(0.0028, 4);
   });
   it('prices unknown models pessimistically', () => {
     expect(estimateCostGbp('some-future-model', 1_000_000, 0)).toBeGreaterThan(
-      estimateCostGbp('claude-sonnet-5-5', 1_000_000, 0),
+      estimateCostGbp('gemini-3.6-flash', 1_000_000, 0),
     );
   });
 });

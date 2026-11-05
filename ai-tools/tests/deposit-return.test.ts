@@ -127,6 +127,7 @@ describe('deposit documents', () => {
     expect(d.disclaimer).toBe(DEPOSIT_DISCLAIMER);
     expect(d.headline).toBe('Dispute of proposed deductions');
     const pdf = await PDFDocument.load(out.files[0]!.bytes);
-    expect(pdf.getPageCount()).toBeGreaterThanOrEqual(2);
+    // sample letter fits on page 1 (sign-off included); page 2 is the next-steps appendix
+    expect(pdf.getPageCount()).toBe(2);
   });
 });

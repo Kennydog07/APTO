@@ -1,12 +1,13 @@
 /**
  * AI cost estimation and the daily budget kill switch (pure functions, unit-tested).
- * Prices are Anthropic list prices in USD per million tokens. Update if they change.
+ * Prices are Google Gemini API paid-tier list prices in USD per million tokens (output includes
+ * thinking tokens). Checked 2026-11-05 at https://ai.google.dev/gemini-api/docs/pricing.
+ * Update if they change, or when GEMINI_MODEL is set to a model not listed here.
  */
 
 export const PRICES_USD_PER_MTOK: Record<string, { input: number; output: number }> = {
-  'claude-sonnet-5-5': { input: 2, output: 10 },
-  'claude-haiku-5-5': { input: 0.1, output: 0.5 },
-  'claude-opus-5-5': { input: 4, output: 20 },
+  'gemini-3.5-flash-lite': { input: 0.3, output: 2.5 },
+  'gemini-3.6-flash': { input: 1.5, output: 7.5 },
 };
 
 /** Used for any model not in the table above, so unknown models are never under-counted. */

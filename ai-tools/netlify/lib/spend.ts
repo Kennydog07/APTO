@@ -27,6 +27,11 @@ export async function getTodaySpendGbp(): Promise<number> {
  */
 export async function budgetStatus(): Promise<{ over: boolean; spentGbp: number; capGbp: number }> {
   const capGbp = budgetCapGbp();
+  // No AI key = nothing can be generated, so don't take payments (fail closed).
+  if (!readEnv('GEMINI_API_KEY')) {
+    console.error('GEMINI_API_KEY is not set, pausing checkouts');
+    return { over: true, spentGbp: NaN, capGbp };
+  }
   try {
     const spentGbp = await getTodaySpendGbp();
     return { over: isOverBudget(spentGbp, capGbp), spentGbp, capGbp };

@@ -90,7 +90,7 @@ describe('cv tailor config and schema', () => {
     expect(TOOLS['cv-tailor'].pricePence).toBe(499);
     expect(cvTailorPrompt.max_tokens).toBe(5000);
     expect(cvPreviewPrompt.max_tokens).toBe(300);
-    expect(cvPreviewPrompt.model).toBe('claude-haiku-5-5');
+    expect(cvPreviewPrompt.model).toBeUndefined(); // falls back to GEMINI_MODEL
   });
   it('caps the advert at 6000 characters and needs real CV text', () => {
     expect(cvTailorSchema.safeParse({ cvText: CV, advert: 'x'.repeat(6001) }).success).toBe(false);

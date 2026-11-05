@@ -13,6 +13,7 @@ import {
   buildRefundLetter,
   refundLetterGenerator,
 } from '../netlify/lib/generators/refund-letter.ts';
+import { refundRecipientLines } from '../netlify/lib/generators/refund-letter.ts';
 import { GENERATORS } from '../netlify/lib/generators/index.ts';
 import { letterToText } from '../netlify/lib/docs/letter.ts';
 import { SAMPLE_INPUTS } from '../scripts/sample-inputs.ts';
@@ -121,5 +122,21 @@ describe('refund documents', () => {
     );
     const pdf = await PDFDocument.load(out.files[0]!.bytes);
     expect(pdf.getPageCount()).toBeGreaterThanOrEqual(2);
+  });
+});
+
+describe('refund recipient block', () => {
+  it('adds a complaints line only when the address has no department', () => {
+    expect(refundRecipientLines('Shop Ltd', 'Customer Relations, 20 Trade Park, EX4 5EF')).toEqual([
+      'Shop Ltd',
+      'Customer Relations',
+      '20 Trade Park',
+      'EX4 5EF',
+    ]);
+    expect(refundRecipientLines('Shop Ltd', 'Shop Ltd\n20 Trade Park')).toEqual([
+      'Shop Ltd',
+      'Customer Services – Complaints',
+      '20 Trade Park',
+    ]);
   });
 });

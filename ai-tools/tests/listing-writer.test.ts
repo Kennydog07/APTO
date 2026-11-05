@@ -132,12 +132,9 @@ describe('listing prompt', () => {
     const blocks = listingWriterPrompt.buildUserPrompt(inputs) as {
       type: string;
       text?: string;
-      source?: { media_type: string };
+      mediaType?: string;
     }[];
-    expect(blocks[0]).toMatchObject({
-      type: 'image',
-      source: { type: 'base64', media_type: 'image/jpeg' },
-    });
+    expect(blocks[0]).toMatchObject({ type: 'image', mediaType: 'image/jpeg' });
     const text = blocks.at(-1)!;
     expect(text.type).toBe('text');
     expect(text.text).toContain('eBay');

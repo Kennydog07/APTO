@@ -217,9 +217,9 @@ export function PrivacyPage() {
       <h2>Who processes it for us</h2>
       <ul>
         <li>
-          <strong>Anthropic</strong> – the AI model that writes your document. Your inputs are sent
-          to it only after payment (except the optional free CV match preview, which you choose to
-          run).
+          <strong>Google (Gemini API, paid tier)</strong> – the AI model that writes your document.
+          Google does not use these inputs to improve its products. Your inputs are sent to it only
+          after payment (except the optional free CV match preview, which you choose to run).
         </li>
         <li>
           <strong>Supabase</strong> – database and file storage.

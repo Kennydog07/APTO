@@ -1,14 +1,23 @@
-import Anthropic from '@anthropic-ai/sdk';
-import { anthropicModel, env } from './env.ts';
+/**
+ * Google Gemini client (plain fetch to the REST API, no SDK).
+ * Env: GEMINI_API_KEY (required), GEMINI_MODEL (optional, default gemini-3.5-flash-lite),
+ * read as AI_TOOLS_<NAME> first, then <NAME> – the same names the main apto-pro.com functions use
+ * (functions/lib/gemini.js).
+ */
+import { geminiModel, readEnv } from './env.ts';
 import { recordSpend } from './spend.ts';
-import { OutputParseError, type PromptModule, type RegenContext } from '../../prompts/types.ts';
+import {
+  OutputParseError,
+  type AiPart,
+  type PromptModule,
+  type RegenContext,
+} from '../../prompts/types.ts';
 
-let client: Anthropic | undefined;
-function anthropic(): Anthropic {
-  // maxRetries: the SDK retries 429/5xx/connection errors itself before we see them.
-  client ??= new Anthropic({ apiKey: env('ANTHROPIC_API_KEY'), maxRetries: 2, timeout: 120_000 });
-  return client;
-}
+const API = 'https://generativelanguage.googleapis.com/v1beta/models';
+const DEFAULT_TIMEOUT_MS = 120_000;
+const DEFAULT_RETRIES = 2;
+
+export const geminiConfigured = () => Boolean(readEnv('GEMINI_API_KEY'));
 
 export interface AiUsage {
   tokensIn: number;
@@ -31,65 +40,134 @@ export class AiRefusalError extends Error {
   }
 }
 
+export class GeminiError extends Error {
+  constructor(
+    message: string,
+    public status = 0,
+  ) {
+    super(message);
+    this.name = 'GeminiError';
+  }
+}
+
+const REFUSAL_REASONS = new Set([
+  'SAFETY',
+  'PROHIBITED_CONTENT',
+  'BLOCKLIST',
+  'SPII',
+  'RECITATION',
+  'IMAGE_SAFETY',
+]);
+
+function toGeminiParts(user: string | AiPart[]) {
+  if (typeof user === 'string') return [{ text: user }];
+  return user.map((p) =>
+    p.type === 'text'
+      ? { text: p.text }
+      : { inline_data: { mime_type: p.mediaType, data: p.data } },
+  );
+}
+
+interface GeminiResponse {
+  candidates?: {
+    content?: { parts?: { text?: string; thought?: boolean }[] };
+    finishReason?: string;
+  }[];
+  promptFeedback?: { blockReason?: string };
+  usageMetadata?: {
+    promptTokenCount?: number;
+    candidatesTokenCount?: number;
+    thoughtsTokenCount?: number;
+  };
+  modelVersion?: string;
+  error?: { message?: string };
+}
+
+async function postOnce(model: string, body: unknown, timeoutMs: number): Promise<GeminiResponse> {
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+  let res: Response;
+  try {
+    res = await fetch(`${API}/${encodeURIComponent(model)}:generateContent`, {
+      method: 'POST',
+      signal: ctrl.signal,
+      headers: {
+        'content-type': 'application/json',
+        'x-goog-api-key': readEnv('GEMINI_API_KEY') ?? '',
+      },
+      body: JSON.stringify(body),
+    });
+  } catch (e) {
+    throw new GeminiError(
+      (e as Error)?.name === 'AbortError' ? 'Gemini request timed out' : 'Gemini request failed',
+    );
+  } finally {
+    clearTimeout(timer);
+  }
+  const data = (await res.json().catch(() => null)) as GeminiResponse | null;
+  if (!res.ok)
+    throw new GeminiError(
+      `Gemini ${res.status}: ${(data?.error?.message ?? '').slice(0, 200)}`,
+      res.status,
+    );
+  return data ?? {};
+}
+
+const retryable = (e: unknown) =>
+  e instanceof GeminiError && (e.status === 0 || e.status === 429 || e.status >= 500);
+
 /**
- * One Messages API call. Records token spend in daily_spend whatever the outcome.
- *
- * Model-specific settings:
- *  - claude-sonnet-5-5: thinking switched off ("between_tools", no tools are used) so the whole
- *    max_tokens budget goes to the answer; server-side refusal fallback enabled.
- *  - claude-haiku-5-5 (CV preview): thinking disabled, low effort, so 300 tokens go to the answer.
- *  - other models: low effort keeps any thinking short.
+ * One generateContent call in JSON mode. Retries 429/5xx/network errors itself (like the old SDK
+ * did). Records token spend in daily_spend whatever the outcome. Thinking tokens are billed as
+ * output, so they are counted in tokensOut.
  */
-export async function callClaude(opts: {
+export async function callModel(opts: {
   system: string;
-  user: string | Anthropic.ContentBlockParam[];
+  user: string | AiPart[];
   maxTokens: number;
   model?: string;
-  /** Per-request overrides, used by the synchronous listing writer. */
   timeoutMs?: number;
   maxRetries?: number;
 }): Promise<{ text: string; usage: AiUsage; stopReason: string | null }> {
-  const model = opts.model ?? anthropicModel();
-  const isSonnet55 = model === 'claude-sonnet-5-5';
-  const isHaiku55 = model === 'claude-haiku-5-5';
+  if (!geminiConfigured())
+    throw new Error(
+      'Missing required environment variable AI_TOOLS_GEMINI_API_KEY (or GEMINI_API_KEY)',
+    );
+  const model = opts.model ?? geminiModel();
+  const body = {
+    systemInstruction: { parts: [{ text: opts.system }] },
+    contents: [{ role: 'user', parts: toGeminiParts(opts.user) }],
+    generationConfig: { maxOutputTokens: opts.maxTokens, responseMimeType: 'application/json' },
+  };
+  const deadline = Date.now() + (opts.timeoutMs ?? DEFAULT_TIMEOUT_MS);
+  const retries = opts.maxRetries ?? DEFAULT_RETRIES;
+  let data: GeminiResponse | undefined;
+  for (let attempt = 0; ; attempt++) {
+    try {
+      data = await postOnce(model, body, Math.max(1000, deadline - Date.now()));
+      break;
+    } catch (e) {
+      if (attempt >= retries || !retryable(e) || deadline - Date.now() < 3000) throw e;
+      await new Promise((r) => setTimeout(r, 500 * 2 ** attempt));
+    }
+  }
 
-  const response = await anthropic().beta.messages.create(
-    {
-      model,
-      max_tokens: opts.maxTokens,
-      system: opts.system,
-      messages: [
-        { role: 'user', content: opts.user as Anthropic.Beta.BetaContentBlockParam[] | string },
-      ],
-      ...(isSonnet55
-        ? {
-            thinking: { type: 'between_tools' as const },
-            output_config: { effort: 'medium' as const },
-            betas: ['server-side-fallback-2026-07-01'],
-            fallbacks: 'default' as const,
-          }
-        : isHaiku55
-          ? { thinking: { type: 'disabled' as const }, output_config: { effort: 'low' as const } }
-          : { output_config: { effort: 'low' as const } }),
-    },
-    {
-      ...(opts.timeoutMs !== undefined ? { timeout: opts.timeoutMs } : {}),
-      ...(opts.maxRetries !== undefined ? { maxRetries: opts.maxRetries } : {}),
-    },
-  );
-
-  const tokensIn = response.usage.input_tokens ?? 0;
-  const tokensOut = response.usage.output_tokens ?? 0;
-  const costGbp = await recordSpend(response.model || model, tokensIn, tokensOut);
+  const u = data.usageMetadata ?? {};
+  const tokensIn = u.promptTokenCount ?? 0;
+  const tokensOut = (u.candidatesTokenCount ?? 0) + (u.thoughtsTokenCount ?? 0);
+  const costGbp = await recordSpend(model, tokensIn, tokensOut);
   const usage = { tokensIn, tokensOut, costGbp };
 
-  if (response.stop_reason === 'refusal') throw new AiRefusalError();
+  const cand = data.candidates?.[0];
+  const stopReason = cand?.finishReason ?? data.promptFeedback?.blockReason ?? null;
+  if (data.promptFeedback?.blockReason || (stopReason && REFUSAL_REASONS.has(stopReason)))
+    throw new AiRefusalError();
 
-  const text = response.content
-    .filter((b): b is Anthropic.Beta.BetaTextBlock => b.type === 'text')
-    .map((b) => b.text)
+  const text = (cand?.content?.parts ?? [])
+    .filter((p) => !p.thought)
+    .map((p) => p.text ?? '')
     .join('');
-  return { text, usage, stopReason: response.stop_reason };
+  return { text, usage, stopReason };
 }
 
 /**
@@ -100,7 +178,7 @@ export async function generateStructured<TIn, TOut>(
   module: PromptModule<TIn, TOut>,
   inputs: TIn,
   regen?: RegenContext<TOut>,
-  /** Absolute time (ms since epoch) by which we must be finished. No SDK retries when set. */
+  /** Absolute time (ms since epoch) by which we must be finished. No HTTP retries when set. */
   deadline?: number,
 ): Promise<{ output: TOut; usage: AiUsage }> {
   const total: AiUsage = { tokensIn: 0, tokensOut: 0, costGbp: 0 };
@@ -108,7 +186,7 @@ export async function generateStructured<TIn, TOut>(
   for (let attempt = 0; attempt < 2; attempt++) {
     const timeLeft = deadline === undefined ? undefined : deadline - Date.now();
     if (timeLeft !== undefined && timeLeft < 1500) throw new DeadlineError();
-    const { text, usage } = await callClaude({
+    const { text, usage } = await callModel({
       system: module.buildSystemPrompt(),
       user: module.buildUserPrompt(inputs, regen),
       maxTokens: module.max_tokens,

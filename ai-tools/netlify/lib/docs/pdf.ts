@@ -195,13 +195,41 @@ export class FlowWriter {
     });
   }
 
+  /** Start a new page unless `h` points of content still fit on this one. */
+  keepTogether(h: number) {
+    if (this.y - h < this.floor) this.newPage();
+  }
+
+  get pageCount() {
+    return this.doc.getPageCount();
+  }
+
   space(h: number) {
     this.y -= h;
     if (this.y < this.floor) this.newPage();
   }
 }
 
+/** Spacing presets: normal first, then a tighter one used only if it saves a page. */
+const LETTER_LAYOUTS = [
+  { margin: 64, size: 11, gap: 1 },
+  { margin: 52, size: 10.5, gap: 0.7 },
+] as const;
+
 export async function letterToPdf(letter: Letter, title: string): Promise<Uint8Array> {
+  const normal = await renderLetter(letter, title, LETTER_LAYOUTS[0]);
+  if (normal.letterPages === 1) return normal.bytes;
+  // The letter ran over a page (often just the sign-off). Use the tighter layout if that fits it
+  // on fewer pages.
+  const tight = await renderLetter(letter, title, LETTER_LAYOUTS[1]);
+  return tight.letterPages < normal.letterPages ? tight.bytes : normal.bytes;
+}
+
+async function renderLetter(
+  letter: Letter,
+  title: string,
+  l: (typeof LETTER_LAYOUTS)[number],
+): Promise<{ bytes: Uint8Array; letterPages: number }> {
   const doc = await PDFDocument.create();
   doc.setTitle(title);
   doc.setCreator('APTO');
@@ -209,29 +237,35 @@ export async function letterToPdf(letter: Letter, title: string): Promise<Uint8A
     regular: await doc.embedFont(StandardFonts.Helvetica),
     bold: await doc.embedFont(StandardFonts.HelveticaBold),
   };
-  const w = new FlowWriter(doc, fonts, { margin: 64, footer: letter.footer });
+  const w = new FlowWriter(doc, fonts, { margin: l.margin, footer: letter.footer });
+  const t = { size: l.size };
+  const sp = (h: number) => w.space(h * l.gap);
 
-  for (const line of letter.senderLines) w.text(line, { align: 'right' });
-  w.space(12);
-  w.text(letter.dateLine, { align: 'right' });
-  w.space(16);
-  for (const line of letter.recipientLines) w.text(line);
-  w.space(16);
-  for (const line of letter.subjectLines) w.text(line, { bold: true });
-  w.space(12);
-  w.text(letter.salutation);
+  for (const line of letter.senderLines) w.text(line, { ...t, align: 'right' });
+  sp(12);
+  w.text(letter.dateLine, { ...t, align: 'right' });
+  sp(16);
+  for (const line of letter.recipientLines) w.text(line, t);
+  sp(16);
+  for (const line of letter.subjectLines) w.text(line, { ...t, bold: true });
+  sp(12);
+  w.text(letter.salutation, t);
   for (const p of letter.paragraphs) {
-    w.space(8);
-    w.text(p);
+    sp(8);
+    w.text(p, t);
   }
   for (const b of letter.blocks ?? []) {
-    w.space(12);
+    sp(12);
     drawBlock(w, b);
   }
-  w.space(14);
-  w.text(letter.signOff);
-  w.space(28);
-  w.text(letter.signature);
+  sp(14);
+  // Keep "Yours sincerely" and the signature on the same page.
+  const lh = l.size * 1.4;
+  w.keepTogether(lh * 2 + 28 * l.gap);
+  w.text(letter.signOff, t);
+  sp(28);
+  w.text(letter.signature, t);
+  const letterPages = w.pageCount;
   if (letter.appendix?.length) {
     w.newPage();
     for (const b of letter.appendix) {
@@ -240,7 +274,7 @@ export async function letterToPdf(letter: Letter, title: string): Promise<Uint8A
     }
   }
 
-  return doc.save();
+  return { bytes: await doc.save(), letterPages };
 }
 
 /** Heading, lines and a simple label/value table, used by Letter.blocks and Letter.appendix. */

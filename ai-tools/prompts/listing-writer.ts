@@ -1,4 +1,3 @@
-import type Anthropic from '@anthropic-ai/sdk';
 import { z } from 'zod';
 import { TOOLS } from '../shared/tools.ts';
 import {
@@ -6,7 +5,7 @@ import {
   PLATFORMS,
   type ListingJobInputs,
 } from '../shared/schemas/listing-writer.ts';
-import { OutputParseError, parseJsonWith, type PromptModule } from './types.ts';
+import { OutputParseError, parseJsonWith, type PromptModule, type AiPart } from './types.ts';
 
 export const listingOutputSchema = z.object({
   title: z.string().trim().min(3).max(200),
@@ -64,10 +63,11 @@ export const listingWriterPrompt: PromptModule<ListingJobInputs, ListingOutput> 
     ].join('\n');
   },
 
-  buildUserPrompt(inputs): Anthropic.ContentBlockParam[] {
-    const images: Anthropic.ContentBlockParam[] = inputs.images.map((img) => ({
+  buildUserPrompt(inputs): AiPart[] {
+    const images: AiPart[] = inputs.images.map((img) => ({
       type: 'image',
-      source: { type: 'base64', media_type: img.mediaType, data: img.data },
+      mediaType: img.mediaType,
+      data: img.data,
     }));
     const text = [
       `Platform: ${PLATFORMS[inputs.platform]}`,
