@@ -1,18 +1,22 @@
 # Merging the AI tools into apto-tools (apto-pro.com)
 
-This guide is for whoever does the merge, whether that's a person or Grokbot. When it's done, the five tools are live inside the **existing** apto-pro.com Netlify site (project `aptotools`) at:
+This guide is for whoever does the merge, whether that's a person or Grokbot. When it's done, the ten tools are live inside the **existing** apto-pro.com Netlify site (project `aptotools`) at:
 
-| Page           | URL                                      |
-| -------------- | ---------------------------------------- |
-| Tools home     | `https://apto-pro.com/ai/`               |
-| Parking appeal | `https://apto-pro.com/ai/parking-appeal` |
-| Bedtime story  | `https://apto-pro.com/ai/bedtime-story`  |
-| Speech writer  | `https://apto-pro.com/ai/speech-writer`  |
-| Listing writer | `https://apto-pro.com/ai/listing-writer` |
-| CV tailor      | `https://apto-pro.com/ai/cv-tailor`      |
-| Santa letter   | `https://apto-pro.com/ai/santa-letter`   |
-| Blog           | `https://apto-pro.com/ai/blog`           |
-| API (internal) | `https://apto-pro.com/ai/api/...`        |
+| Page               | URL                                          |
+| ------------------ | -------------------------------------------- |
+| Tools home         | `https://apto-pro.com/ai/`                   |
+| Parking appeal     | `https://apto-pro.com/ai/parking-appeal`     |
+| Bedtime story      | `https://apto-pro.com/ai/bedtime-story`      |
+| Speech writer      | `https://apto-pro.com/ai/speech-writer`      |
+| Listing writer     | `https://apto-pro.com/ai/listing-writer`     |
+| CV tailor          | `https://apto-pro.com/ai/cv-tailor`          |
+| Santa letter       | `https://apto-pro.com/ai/santa-letter`       |
+| Flight delay claim | `https://apto-pro.com/ai/flight-delay-claim` |
+| Deposit return     | `https://apto-pro.com/ai/deposit-return`     |
+| Refund letter      | `https://apto-pro.com/ai/refund-letter`      |
+| Meal planner       | `https://apto-pro.com/ai/meal-planner`       |
+| Blog               | `https://apto-pro.com/ai/blog`               |
+| API (internal)     | `https://apto-pro.com/ai/api/...`            |
 
 Everything belongs to `/ai/`, so nothing clashes with the main site's pages, its `/api/*` functions, its `/privacy` and `/terms` redirects, or `tools.html` and `apps.html`.
 
@@ -81,7 +85,7 @@ In Stripe, open **Developers → Webhooks** (also called **Workbench → Event d
 
 Push to the branch the `aptotools` project deploys from. The build takes about a minute longer than before, because it now builds the tools too. Then check:
 
-- [ ] `https://apto-pro.com/ai/` and the five tool pages load.
+- [ ] `https://apto-pro.com/ai/` and the ten tool pages load (Santa letter only 1 Oct – 24 Dec).
 - [ ] `https://apto-pro.com/` and the other existing pages look unchanged.
 - [ ] `https://apto-pro.com/ai/api/site-status` returns `{"accepting":true}`. `false` means the Supabase variables aren't set yet.
 - [ ] In Netlify **Logs → Functions**, the 13 `ai-*` functions sit next to the existing ones, and `ai-sweeper` and `ai-retention-cleanup` show as scheduled.

@@ -104,7 +104,7 @@ If Resend isn't set up, the site still works. Emails are skipped (with a warning
    | `PLAUSIBLE_DOMAIN`                          | Optional. Your domain in Plausible, which turns on cookie-free analytics                                                                          |
    | `LISTING_SYNC_TIMEOUT_MS`                   | Optional. Default `20000`                                                                                                                         |
 
-4. Click **Deploy**. When it finishes, open the site and check that the home page and all five tool pages load.
+4. Click **Deploy**. When it finishes, open the site and check that the home page and all ten tool pages load (the Santa letter only shows 1 Oct – 24 Dec).
 5. **Custom domain:** go to **Domain management → Add a domain**, enter `tools.apto-pro.com`, and add the CNAME record Netlify shows. HTTPS is set up automatically. Then update `SITE_URL` to match and **redeploy**. Environment variables only take effect on a new deploy.
 
 ### Step 6: Stripe webhook
