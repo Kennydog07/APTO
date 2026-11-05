@@ -21,6 +21,7 @@ const MINI_APPS: { href: string; name: string; price: string; seasonal?: 'santa-
   { href: '/ai/flight-delay-claim/', name: '✈️ Flight Delay Claim', price: '£3.99' },
   { href: '/ai/deposit-return/', name: '🔑 Deposit Return', price: '£3.99' },
   { href: '/ai/refund-letter/', name: '🧾 Refund Letter', price: '£2.99' },
+  { href: '/ai/meal-planner/', name: '🥗 Meal Planner', price: '£2.99' },
 ];
 
 /** Main APTO site bar, so every /ai/ page has a way back to apto-pro.com (matches the main site's nav). */

@@ -153,6 +153,21 @@ export const SAMPLE_INPUTS = {
     customerName: 'Sam Example',
     customerAddress: '1 Example Street, Exampletown, EX1 2AB',
   },
+  'meal-planner': {
+    adults: 2,
+    children: ['5to11', 'under5'],
+    meals: 'lunch_dinner',
+    diets: [],
+    allergens: ['peanuts', 'tree_nuts'],
+    otherAllergies: '',
+    dislikes: 'mushrooms, olives',
+    budget: 85,
+    weekdayMinutes: 30,
+    skill: 'confident',
+    batch: true,
+    equipment: ['oven', 'hob', 'slow_cooker'],
+    useUp: 'half a bag of spinach, a tub of natural yoghurt',
+  },
 } as const;
 
 /** A 96x96 plain red JPEG, used by the e2e test to exercise the listing writer end to end. */

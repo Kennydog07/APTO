@@ -25,6 +25,7 @@ const cards = [
   { file: 'flight-delay-claim', title: 'Flight delay<br>compensation claim', price: '£3.99' },
   { file: 'deposit-return', title: 'Get your tenancy<br>deposit back', price: '£3.99' },
   { file: 'refund-letter', title: 'Refund &amp;<br>complaint letter', price: '£2.99' },
+  { file: 'meal-planner', title: 'Weekly meal plan<br>&amp; shopping list', price: '£2.99' },
 ];
 
 const logo = fs.readFileSync(path.join(root, 'public/logo.jpg')).toString('base64');

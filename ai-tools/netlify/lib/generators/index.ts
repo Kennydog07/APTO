@@ -9,6 +9,7 @@ import { santaLetterGenerator } from './santa-letter.ts';
 import { flightDelayClaimGenerator } from './flight-delay-claim.ts';
 import { depositReturnGenerator } from './deposit-return.ts';
 import { refundLetterGenerator } from './refund-letter.ts';
+import { mealPlannerGenerator } from './meal-planner.ts';
 
 /** Registry of built tools. Tools without an entry cannot be purchased. */
 export const GENERATORS: Partial<Record<ToolId, ToolGenerator>> = {
@@ -21,4 +22,5 @@ export const GENERATORS: Partial<Record<ToolId, ToolGenerator>> = {
   'flight-delay-claim': flightDelayClaimGenerator as ToolGenerator,
   'deposit-return': depositReturnGenerator as ToolGenerator,
   'refund-letter': refundLetterGenerator as ToolGenerator,
+  'meal-planner': mealPlannerGenerator as ToolGenerator,
 };

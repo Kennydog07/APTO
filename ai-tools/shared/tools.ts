@@ -15,7 +15,8 @@ export type ToolId =
   | 'santa-letter'
   | 'flight-delay-claim'
   | 'deposit-return'
-  | 'refund-letter';
+  | 'refund-letter'
+  | 'meal-planner';
 
 /** Month (1-12) and day, inclusive. */
 export type MonthDay = [month: number, day: number];
@@ -185,6 +186,21 @@ export const TOOLS: Record<ToolId, ToolConfig> = {
     metaTitle: 'Refund & Complaint Letter (Consumer Rights Act) – UK | £2.99',
     metaDescription:
       'Faulty goods, a missing delivery, poor service or a wrong energy bill? Get a firm complaint letter using the right consumer rights for your dates. £2.99.',
+  },
+  'meal-planner': {
+    id: 'meal-planner',
+    route: '/meal-planner',
+    name: 'Weekly Meal Plan & Shopping List',
+    shortName: 'Meal planner',
+    stripeProductName: 'Personalised weekly meal plan and shopping list (PDF)',
+    pricePence: 299,
+    maxTokens: 4000,
+    live: true,
+    tagline:
+      'A week of meals built around your family, budget and allergies, with a shopping list by aisle.',
+    metaTitle: 'Personalised Weekly Meal Plan & Shopping List (UK) – PDF | £2.99',
+    metaDescription:
+      'A 7-day meal plan for your household, budget, diet and allergies, with a shopping list by supermarket aisle and simple recipe cards. Printable PDF, £2.99.',
   },
 };
 

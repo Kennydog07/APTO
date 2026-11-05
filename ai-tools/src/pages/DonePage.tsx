@@ -16,6 +16,7 @@ import { CvResult, type CvDisplay } from '../tools/cv-tailor/Result';
 import { SantaLetterResult, type SantaLetterDisplay } from '../tools/santa-letter/Result';
 import { FlightClaimResult, type FlightClaimDisplay } from '../tools/flight-delay-claim/Result';
 import { LetterResult, type LetterDisplay } from '../components/LetterResult';
+import { MealPlanResult, type MealDisplay } from '../tools/meal-planner/Result';
 
 const RESULT_VIEWS: Partial<Record<ToolId, (r: unknown) => ReactNode>> = {
   'parking-appeal': (r) => <ParkingAppealResult r={r as ParkingAppealDisplay} />,
@@ -26,6 +27,7 @@ const RESULT_VIEWS: Partial<Record<ToolId, (r: unknown) => ReactNode>> = {
   'flight-delay-claim': (r) => <FlightClaimResult r={r as FlightClaimDisplay} />,
   'deposit-return': (r) => <LetterResult r={r as LetterDisplay} />,
   'refund-letter': (r) => <LetterResult r={r as LetterDisplay} evidenceTitle="Evidence to keep" />,
+  'meal-planner': (r) => <MealPlanResult r={r as MealDisplay} />,
   'listing-writer': (r) => (
     <PackDone r={r as { token: string; added: number; remaining: number; topUp: boolean }} />
   ),

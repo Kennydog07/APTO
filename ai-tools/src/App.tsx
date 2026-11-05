@@ -14,6 +14,7 @@ import { SantaLetterPage } from './tools/santa-letter/Page';
 import { FlightDelayClaimPage } from './tools/flight-delay-claim/Page';
 import { DepositReturnPage } from './tools/deposit-return/Page';
 import { RefundLetterPage } from './tools/refund-letter/Page';
+import { MealPlannerPage } from './tools/meal-planner/Page';
 
 /** Static routes. Each one is pre-rendered to HTML at build time. */
 export const STATIC_ROUTES: Record<string, () => React.ReactElement> = {
@@ -27,6 +28,7 @@ export const STATIC_ROUTES: Record<string, () => React.ReactElement> = {
   '/flight-delay-claim': () => <FlightDelayClaimPage />,
   '/deposit-return': () => <DepositReturnPage />,
   '/refund-letter': () => <RefundLetterPage />,
+  '/meal-planner': () => <MealPlannerPage />,
   '/terms': () => <TermsPage />,
   '/privacy': () => <PrivacyPage />,
   '/refunds': () => <RefundsPage />,
