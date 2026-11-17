@@ -1,0 +1,27 @@
+---
+const steps = [
+  { t: 'Choose your destination', d: 'Browse our collection of city-specific brunch and dining guides.' },
+  { t: 'Purchase your guide', d: 'Select your guide and complete your purchase securely through Gumroad.' },
+  { t: 'Access your guide', d: 'Follow the delivery instructions provided with your purchase to access your digital guide.' },
+];
+---
+<section class="section" id="how-it-works" aria-labelledby="how-title">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <p class="kicker">Three simple steps</p>
+        <h2 id="how-title">How it <em>works</em></h2>
+        <p class="section-note">No account to create on this site. Checkout and delivery happen on Gumroad.</p>
+      </div>
+    </div>
+    <ol class="steps">
+      {steps.map((s, i) => (
+        <li>
+          <span class="num" aria-hidden="true">{i + 1}</span>
+          <h3><span class="sr-only">Step {i + 1}: </span>{s.t}</h3>
+          <p>{s.d}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

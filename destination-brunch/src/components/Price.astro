@@ -1,0 +1,12 @@
+---
+import type { Product } from '../data/products';
+import { priceOf, formatPrice, currency } from '../lib/catalog';
+
+interface Props { product: Product; big?: boolean }
+const { product, big = false } = Astro.props;
+const p = priceOf(product);
+---
+<div class:list={['price', { big }]}>
+  <span class="amt"><span class="sr-only">Price: </span>{formatPrice(p)}</span>
+  <span class="cur">{currency}</span>
+</div>

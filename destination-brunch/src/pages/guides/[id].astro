@@ -1,0 +1,143 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Gallery from '../../components/Gallery.astro';
+import Faq from '../../components/Faq.astro';
+import Price from '../../components/Price.astro';
+import BuyButton from '../../components/BuyButton.astro';
+import { visibleProducts, destinationOf, relatedProducts, priceOf, formatPrice, canBuy, saleState, formatChecked } from '../../lib/catalog';
+import { CATEGORIES } from '../../data/categories';
+import { PURCHASE_FAQS } from '../../data/faqs';
+import { breadcrumbLd, faqLd, productLd } from '../../lib/seo';
+import fs from 'node:fs';
+
+export function getStaticPaths() {
+  return visibleProducts().map((p) => ({ params: { id: p.id }, props: { product: p } }));
+}
+
+const { product: p } = Astro.props;
+const site = Astro.site!;
+const d = destinationOf(p);
+const cat = CATEGORIES[p.category];
+const state = saleState(p);
+const related = relatedProducts(p);
+const price = formatPrice(priceOf(p));
+const crumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Destinations', href: '/destinations' },
+  { name: d.city, href: `/destinations/${d.slug}` },
+  { name: `${cat.label} guide`, href: `/guides/${p.id}` },
+];
+const faqs = [...(p.faqs ?? []), ...PURCHASE_FAQS];
+const checked = formatChecked(p.lastUpdated);
+const desc = `${p.seoDescription}${canBuy(p) ? ` ${price} USD.` : ' Coming soon.'}`.trim();
+const ogImage = fs.existsSync(`public/og/${p.id}.jpg`) ? `/og/${p.id}.jpg` : fs.existsSync(`public/og/${d.slug}.jpg`) ? `/og/${d.slug}.jpg` : '/og/default.jpg';
+const ld = [breadcrumbLd(site, crumbs), faqLd(faqs), productLd(site, p)].filter(Boolean) as object[];
+---
+<BaseLayout
+  title={p.seoTitle}
+  description={desc}
+  theme={d.theme}
+  ogImage={ogImage}
+  ogType="product"
+  jsonLd={ld}
+  track={{ type: 'product', city: d.city, product: p.id, category: p.category }}
+  bodyClass={state === 'buy' ? 'has-buybar' : undefined}
+>
+  <header class="page-head">
+    <div class="wrap">
+      <Breadcrumbs items={crumbs} />
+      <p class="eyebrow" style="margin:0"><span class="dot"></span> {d.city} · {d.country} · {cat.label} guide</p>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="product-top lift">
+      <div class="buybox">
+        <div class="chips-row">
+          <span class={`badge cat-${p.category}`}>{cat.label}</span>
+          {state === 'coming-soon' && <span class="badge soon">Coming soon</span>}
+          {state === 'draft' && <span class="badge draft">Draft: not public</span>}
+        </div>
+        <p class="where">{d.city}, {d.country}</p>
+        <h1>{p.title}</h1>
+        <p class="lead">{p.shortDescription}</p>
+        <ul class="benefits">{p.highlights.map((h) => <li>{h}</li>)}</ul>
+        <Price product={p} big />
+        <BuyButton product={p} block place="top" />
+        <dl class="facts">
+          <div><dt>Format</dt><dd>Mobile-friendly web app</dd></div>
+          <div><dt>Works on</dt><dd>{p.compatibility}</dd></div>
+          {d.areas.length > 0 && <div><dt>Areas</dt><dd>{d.areas.join(', ')}</dd></div>}
+          {p.category === 'brunch' && <div><dt>Brunch days</dt><dd>{d.brunchDays}</dd></div>}
+          {checked && <div><dt>Last checked</dt><dd><time datetime={p.lastUpdated}>{checked}</time></dd></div>}
+          <div><dt>Delivery</dt><dd>Access details from Gumroad after purchase</dd></div>
+        </dl>
+      </div>
+      <div class="gallery-wrap">
+        {p.screenshots.length > 0 ? (
+          <Gallery shots={p.screenshots} label={`${p.title} screenshots`} eager />
+        ) : (
+          <div class="gallery-placeholder">Screenshots coming soon</div>
+        )}
+      </div>
+    </div>
+
+    <section class="section tight" aria-labelledby="inside-title">
+      <div class="two-col">
+        <div class="prose">
+          <p class="kicker">About this guide</p>
+          <h2 id="inside-title">What's <em>inside</em></h2>
+          {p.description.map((para) => <p>{para}</p>)}
+        </div>
+        {p.features.length > 0 && (
+          <div>
+            <h3 style="margin:0 0 14px;font-size:22px">Key features</h3>
+            <ul class="features">{p.features.map((f) => <li>{f}</li>)}</ul>
+          </div>
+        )}
+      </div>
+    </section>
+
+    <div class="cta-band">
+      <div>
+        <h2>{state === 'buy' ? `Get the ${d.city} guide` : `The ${d.city} guide is coming soon`}</h2>
+        <p>{state === 'buy' ? 'One-off purchase. Checkout and delivery are handled securely by Gumroad.' : 'This guide cannot be bought yet. Check back soon.'}</p>
+      </div>
+      <div class="right">
+        <Price product={p} />
+        <BuyButton product={p} place="bottom" />
+      </div>
+    </div>
+
+    <section class="section tight" aria-labelledby="pfaq-title">
+      <div class="narrow">
+        <div class="section-head"><div><p class="kicker">Before you buy</p><h2 id="pfaq-title">What you <em>receive</em></h2></div></div>
+        <Faq items={faqs} openFirst />
+        <p class="notice" style="margin-top:18px">
+          Restaurant offers, prices and opening times change. Please confirm details with the venue before you go.
+          Destination : Brunch is an independent guide publisher and is not affiliated with or endorsed by the venues listed.
+          See <a href="/refunds">Refunds &amp; delivery</a> and the <a href="/disclaimer">disclaimer</a>.
+        </p>
+      </div>
+    </section>
+
+    {related.length > 0 && (
+      <section class="section tight" aria-labelledby="rel-title">
+        <div class="section-head">
+          <div><p class="kicker">You might also like</p><h2 id="rel-title">Related <em>guides</em></h2></div>
+          <a class="link-arrow" href="/guides">All guides →</a>
+        </div>
+        <div class="grid">{related.map((r) => <ProductCard product={r} />)}</div>
+      </section>
+    )}
+  </div>
+
+  {state === 'buy' && (
+    <div class="buybar" role="region" aria-label="Quick buy">
+      <Price product={p} />
+      <BuyButton product={p} place="sticky" />
+    </div>
+  )}
+</BaseLayout>

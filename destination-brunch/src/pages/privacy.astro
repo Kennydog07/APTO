@@ -1,0 +1,29 @@
+---
+import LegalPage from '../components/LegalPage.astro';
+import Todo from '../components/Todo.astro';
+import { SITE, ANALYTICS } from '../data/site';
+const analyticsName = ANALYTICS.provider === 'plausible' ? 'Plausible Analytics' : ANALYTICS.provider === 'umami' ? 'Umami' : '';
+---
+<LegalPage title="Privacy Policy" heading="Privacy policy" path="/privacy" description="How Destination : Brunch handles personal information, analytics and purchases made through Gumroad.">
+  <h2>Who we are</h2>
+  <p>This website is operated by <Todo value={SITE.legalName || ''} field="legalName" label="your business or trading name" />, publishing as {SITE.name}. Contact: <Todo value={SITE.contactEmail} field="contactEmail" label="a contact email" asEmail />.</p>
+
+  <h2>What this website collects</h2>
+  <p>You can browse this website without creating an account or giving us your name or email address. We do not use advertising cookies or sell personal information.</p>
+  <ul>
+    <li><b>Campaign tags.</b> If you arrive from a link containing campaign tags (such as <code>utm_source</code>), your browser keeps those tags in session storage until you close the tab, so we can tell which post or advert brought you here. When you click Download Now, the tags are added to the Gumroad link.</li>
+    <li><b>Analytics.</b> {analyticsName
+      ? `We use ${analyticsName}, a privacy-focused analytics service that does not use cookies and reports only aggregated statistics, such as page views, referring websites, campaign tags and clicks to Gumroad.`
+      : 'Analytics are currently switched off. If we turn on privacy-focused, cookie-free analytics in future, this policy will be updated first.'}</li>
+    <li><b>Hosting logs.</b> Our hosting provider, Netlify, processes technical information such as IP addresses to deliver and secure the website.</li>
+  </ul>
+
+  <h2>Purchases</h2>
+  <p>All purchases are made on Gumroad. When you buy a guide, Gumroad collects and processes your name, email address and payment details as an independent service under its own <a href="https://gumroad.com/privacy" target="_blank" rel="noopener">privacy policy</a>. Gumroad shares order information with us, such as your email address and the product you bought, so we can provide the guide and support you. We never see your full card details.</p>
+
+  <h2>Your rights</h2>
+  <p>Depending on where you live (for example under the UK GDPR, EU GDPR or Californian law), you may have rights to access, correct or delete personal information we hold about you, and to complain to a data protection authority. To make a request, contact us using the details above.</p>
+
+  <h2>Changes</h2>
+  <p>We will update this page if the way we handle information changes.</p>
+</LegalPage>

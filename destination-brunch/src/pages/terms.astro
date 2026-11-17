@@ -1,0 +1,38 @@
+---
+import LegalPage from '../components/LegalPage.astro';
+import Todo from '../components/Todo.astro';
+import { SITE } from '../data/site';
+---
+<LegalPage title="Terms and Conditions" heading="Terms & conditions" path="/terms" description="Terms for using the Destination : Brunch website and its city guides.">
+  <h2>About us</h2>
+  <p>{SITE.name} guides are published by <Todo value={SITE.legalName} field="legalName" label="your business or trading name" />{SITE.businessAddress ? `, ${SITE.businessAddress}` : ''}.</p>
+  {!SITE.businessAddress && <p class="todo"><b>To complete before launch:</b> check whether the law where you trade requires a business address on this page, and if so set <code>businessAddress</code> in <code>src/data/site.ts</code>.</p>}
+
+  <h2>The guides</h2>
+  <p>Each guide is a digital product: a web app for one city, opened in a web browser. The product page describes what each guide includes, the price in US dollars and the date its information was last checked.</p>
+
+  <h2>Buying a guide</h2>
+  <p>Guides are sold through Gumroad. When you click Download Now you go to Gumroad, where you review and complete your order under Gumroad's terms. Clicking Download Now does not place an order or charge you. A purchase is complete only when Gumroad confirms it.</p>
+  <p>Prices may change, but the price you pay is the price shown at Gumroad's checkout when you order. Your bank may charge currency conversion fees if you do not pay in US dollars.</p>
+
+  <h2>Your licence</h2>
+  <p>Your purchase gives you a personal, non-transferable licence to use the guide for your own non-commercial purposes. Please do not copy, resell, republish or share access to the guide.</p>
+
+  <h2>Restaurant information</h2>
+  <p>Guides contain information about third-party venues and their offers. Venues may change or withdraw offers, prices, menus and opening times at any time. We take care when checking information but cannot guarantee that it is complete, current or accurate. Always confirm details with the venue. See the <a href="/disclaimer">disclaimer</a>.</p>
+
+  <h2>Independence</h2>
+  <p>{SITE.name} is an independent guide publisher. Unless a guide clearly says otherwise, we are not affiliated with, paid by or endorsed by the venues listed, and listing a venue is not a recommendation that it is suitable for you.</p>
+
+  <h2>Refunds</h2>
+  <p>See <a href="/refunds">Refunds &amp; delivery</a>. Nothing in these terms affects your statutory rights as a consumer.</p>
+
+  <h2>Liability</h2>
+  <p>We are not responsible for the services, food, drink, safety or conduct of any venue. Nothing in these terms limits liability that cannot be limited by law.</p>
+
+  <h2>Governing law</h2>
+  <p>These terms are governed by the law of <Todo value={SITE.governingLaw} field="governingLaw" label="the governing law, e.g. England and Wales" />. If you are a consumer, you also keep the protection of the mandatory laws of the country where you live.</p>
+
+  <h2>Contact</h2>
+  <p><Todo value={SITE.contactEmail} field="contactEmail" label="a contact email" asEmail /></p>
+</LegalPage>

@@ -1,0 +1,21 @@
+{
+  "name": "destination-brunch",
+  "version": "1.0.0",
+  "description": "Destination : Brunch - storefront for city brunch, happy hour and daily deals guides",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "node scripts/check-site.mjs",
+    "test": "astro build && node scripts/check-site.mjs",
+    "images": "node scripts/make-images.mjs"
+  },
+  "dependencies": {
+    "astro": "7.4.5"
+  },
+  "engines": {
+    "node": ">=22.23.4"
+  }
+}

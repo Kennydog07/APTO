@@ -1,0 +1,21 @@
+---
+import LegalPage from '../components/LegalPage.astro';
+import { DESTINATIONS } from '../data/destinations';
+import { visibleDestinations } from '../lib/catalog';
+
+const shown = new Set(visibleDestinations().map((d) => d.slug));
+const credited = DESTINATIONS.filter((d) => d.image && shown.has(d.slug));
+---
+<LegalPage title="Photo Credits" heading="Photo credits" path="/credits" description="Credits and licences for the destination photos used on Destination : Brunch.">
+  <p>City photos are used under licences that allow commercial use (Creative Commons Attribution or CC0). They have been resized and converted to WebP. No photographer endorses {`Destination : Brunch`}. App screenshots are of our own guides.</p>
+  <ul>
+    {credited.map((d) => (
+      <li>
+        <b>{d.city}:</b> “{d.image!.credit.title}” by {d.image!.credit.author},{' '}
+        <a href={d.image!.credit.licenseUrl} target="_blank" rel="license noopener">{d.image!.credit.license}</a>,{' '}
+        via <a href={d.image!.credit.sourceUrl} target="_blank" rel="noopener">Wikimedia Commons</a>.
+      </li>
+    ))}
+  </ul>
+  <p>Fonts: Playfair Display and Inter, both under the SIL Open Font License.</p>
+</LegalPage>

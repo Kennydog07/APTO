@@ -1,0 +1,8 @@
+---
+/* Shows the value if it is set, otherwise a clearly marked "to complete before launch" note. */
+interface Props { value: string; field: string; label: string; asEmail?: boolean }
+const { value, field, label, asEmail = false } = Astro.props;
+---
+{value
+  ? (asEmail ? <a href={`mailto:${value}`}>{value}</a> : <>{value}</>)
+  : <span class="todo" style="display:inline-block;margin:0"><b>To complete before launch:</b> {label} (set <code>{field}</code> in <code>src/data/site.ts</code>)</span>}

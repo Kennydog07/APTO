@@ -1,0 +1,97 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE, ANALYTICS } from '../data/site';
+import { validateCatalog } from '../lib/catalog';
+
+validateCatalog();
+
+interface Theme { primary: string; deep: string; accent: string; onAccent: string }
+interface Props {
+  title: string;
+  description: string;
+  /** Path of the og image in /public, e.g. /og/dubai.jpg */
+  ogImage?: string;
+  ogType?: 'website' | 'product';
+  noindex?: boolean;
+  jsonLd?: object[];
+  theme?: Theme;
+  /** Analytics page tags */
+  track?: { type: 'destination' | 'product'; city: string; product?: string; category?: string };
+  bodyClass?: string;
+  preloadImage?: string;
+}
+
+const { title, description, ogImage = '/og/default.jpg', ogType = 'website', noindex = false, jsonLd = [], theme, track, bodyClass, preloadImage } = Astro.props;
+const site = Astro.site!;
+// Clean URL without .html or trailing slash, e.g. /destinations/dubai
+const cleanPath = Astro.url.pathname.replace(/(\/index)?\.html$/, '').replace(/\/$/, '') || '/';
+const canonical = new URL(cleanPath, site).href;
+const fullTitle = title.includes(SITE.name) ? title : `${title} | ${SITE.name}`;
+const ogUrl = new URL(ogImage, site).href;
+const themeStyle = theme ? `--city:${theme.primary};--city-deep:${theme.deep};--city-accent:${theme.accent}` : undefined;
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>{fullTitle}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  {noindex && <meta name="robots" content="noindex, follow" />}
+  <meta name="theme-color" content={theme?.deep ?? '#2a0a14'} />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <link rel="sitemap" href="/sitemap.xml" />
+  <link rel="preload" href="/fonts/playfair.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin />
+  {preloadImage && <link rel="preload" as="image" href={preloadImage} fetchpriority="high" />}
+
+  <meta property="og:site_name" content={SITE.name} />
+  <meta property="og:type" content={ogType === 'product' ? 'product' : 'website'} />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={ogUrl} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_GB" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={fullTitle} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogUrl} />
+  <meta name="pinterest-rich-pin" content="true" />
+
+  {jsonLd.map((d) => <script type="application/ld+json" set:html={JSON.stringify(d)} />)}
+
+  {ANALYTICS.provider === 'plausible' && ANALYTICS.plausibleDomain && (
+    <script defer data-domain={ANALYTICS.plausibleDomain} src={ANALYTICS.plausibleScript}></script>
+  )}
+  {ANALYTICS.provider === 'umami' && ANALYTICS.umamiWebsiteId && (
+    <script defer data-website-id={ANALYTICS.umamiWebsiteId} src={ANALYTICS.umamiScript}></script>
+  )}
+</head>
+<body
+  class={bodyClass}
+  style={themeStyle}
+  data-track-type={track?.type}
+  data-track-city={track?.city}
+  data-track-product={track?.product}
+  data-track-category={track?.category}
+>
+  <a class="skip" href="#main">Skip to content</a>
+  <Header />
+  <main id="main">
+    <slot />
+  </main>
+  <Footer />
+  <script>
+    import '../scripts/nav';
+    import '../scripts/track';
+  </script>
+</body>
+</html>

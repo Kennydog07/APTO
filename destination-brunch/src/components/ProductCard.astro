@@ -1,0 +1,48 @@
+---
+import type { Product } from '../data/products';
+import Cover from './Cover.astro';
+import Price from './Price.astro';
+import BuyButton from './BuyButton.astro';
+import { CATEGORIES } from '../data/categories';
+import { destinationOf, priceOf, saleState } from '../lib/catalog';
+
+interface Props { product: Product; headingLevel?: 'h2' | 'h3' }
+const { product: p, headingLevel = 'h3' } = Astro.props;
+const d = destinationOf(p);
+const state = saleState(p);
+const H = headingLevel;
+const url = `/guides/${p.id}`;
+---
+<article
+  class="pcard rise"
+  data-item
+  data-name={d.city.toLowerCase()}
+  data-search={`${d.city} ${d.country} ${d.region} ${p.title} ${CATEGORIES[p.category].label}`.toLowerCase()}
+  data-region={d.region}
+  data-cats={p.category}
+  data-price={priceOf(p)}
+>
+  <a href={url} tabindex="-1" aria-hidden="true">
+    <Cover destination={d} src={p.coverImage}>
+      <div class="badges">
+        <span class={`badge cat-${p.category}`}>{CATEGORIES[p.category].label}</span>
+        {state === 'coming-soon' && <span class="badge soon">Coming soon</span>}
+        {state === 'draft' && <span class="badge draft">Draft</span>}
+      </div>
+      <div class="on-photo"><b>{d.city}</b><span>{d.country}</span></div>
+    </Cover>
+  </a>
+  <div class="body">
+    <p class="dest">{d.city} · {CATEGORIES[p.category].label} guide</p>
+    <H><a href={url}>{p.title}</a></H>
+    <p class="desc">{p.shortDescription}</p>
+    <ul class="benefits" aria-label="Key benefits">
+      {p.highlights.map((h) => <li>{h}</li>)}
+    </ul>
+    <a class="more" href={url}>See what's inside<span class="sr-only"> {p.title}</span> →</a>
+    <div class="price-row">
+      <Price product={p} />
+      <BuyButton product={p} note={false} place="card" />
+    </div>
+  </div>
+</article>

@@ -1,0 +1,43 @@
+---
+/* The ONLY place a purchase link is rendered. An active button appears only when
+   the product is 'published' AND has a valid Gumroad product link (see lib/catalog.ts). */
+import type { Product } from '../data/products';
+import { saleState, priceOf, destinationOf, formatPrice } from '../lib/catalog';
+
+interface Props { product: Product; note?: boolean; block?: boolean; place?: string }
+const { product, note = true, block = false, place = 'page' } = Astro.props;
+const state = saleState(product);
+const d = destinationOf(product);
+---
+<div class="buy">
+  {state === 'buy' ? (
+    <a
+      class:list={['btn', 'btn-buy', { 'btn-block': block }]}
+      href={product.gumroadURL.trim()}
+      target="_blank"
+      rel="noopener external"
+      data-buy
+      data-product={product.id}
+      data-city={d.city}
+      data-category={product.category}
+      data-price={priceOf(product)}
+      data-place={place}
+      aria-label={`Download Now: ${product.title}, ${formatPrice(priceOf(product))} US dollars, opens Gumroad in a new tab`}
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12" /><path d="m7 10 5 5 5-5" /><path d="M5 21h14" /></svg>
+      Download Now
+    </a>
+  ) : (
+    <span class:list={['btn', 'btn-soon', { 'btn-block': block }]} role="note" aria-label={`${product.title} is coming soon and cannot be bought yet`}>
+      {state === 'draft' ? 'Draft (not public)' : 'Coming soon'}
+    </span>
+  )}
+  {note && (state === 'buy' ? (
+    <p class="buy-note">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" /><path d="M8 11V7a4 4 0 0 1 8 0v4" /></svg>
+      Secure checkout on Gumroad. You pay only if you complete checkout there.
+    </p>
+  ) : (
+    <p class="buy-note">Not available to buy yet. Check back soon.</p>
+  ))}
+</div>

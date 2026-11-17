@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import DestinationCard from '../../components/DestinationCard.astro';
+import CatalogFilters from '../../components/CatalogFilters.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { visibleDestinations, productsFor } from '../../lib/catalog';
+import { breadcrumbLd } from '../../lib/seo';
+
+const site = Astro.site!;
+const destinations = [...visibleDestinations()].sort((a, b) => a.city.localeCompare(b.city));
+const cats = [...new Set(destinations.flatMap((d) => productsFor(d.slug).map((p) => p.category)))];
+const crumbs = [{ name: 'Home', href: '/' }, { name: 'Destinations', href: '/destinations' }];
+---
+<BaseLayout
+  title="Destinations: Brunch & Dining Deals Guides by City"
+  description={`Browse ${destinations.length} city guides to brunches, happy hours and dining deals, including ${destinations.slice(0, 5).map((d) => d.city).join(', ')} and more.`}
+  jsonLd={[breadcrumbLd(site, crumbs)]}
+>
+  <header class="page-head">
+    <div class="wrap">
+      <Breadcrumbs items={crumbs} />
+      <h1>Find your <em>destination</em></h1>
+      <p>Search by city or country, filter by region and guide type, and open a city to see what each guide includes.</p>
+    </div>
+  </header>
+  <div class="wrap">
+    <CatalogFilters noun="destination" nounPlural="destinations" total={destinations.length} categoriesPresent={cats} />
+    <div class="grid" data-list>
+      {destinations.map((d, i) => <DestinationCard destination={d} eager={i < 3} />)}
+    </div>
+    <div class="empty" data-empty hidden>
+      <h3>No destinations match your search</h3>
+      <p>Try another city or country, choose a different region or guide type, or clear the filters.</p>
+      <button type="button" class="btn btn-dark" data-reset-empty>Show all destinations</button>
+    </div>
+  </div>
+  <div class="section tight"></div>
+  <script>import '../../scripts/catalog';</script>
+</BaseLayout>

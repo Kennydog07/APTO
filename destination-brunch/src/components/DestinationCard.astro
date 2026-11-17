@@ -1,0 +1,43 @@
+---
+import type { Destination } from '../data/destinations';
+import Cover from './Cover.astro';
+import { CATEGORIES } from '../data/categories';
+import { productsFor, startingPrice, formatPrice, destinationIsComingSoon } from '../lib/catalog';
+
+interface Props { destination: Destination; eager?: boolean }
+const { destination: d, eager = false } = Astro.props;
+const products = productsFor(d.slug);
+const cats = [...new Set(products.map((p) => p.category))];
+const from = startingPrice(d.slug);
+const soon = destinationIsComingSoon(d);
+const isDraft = d.status === 'draft';
+---
+<article
+  class="dcard rise"
+  data-item
+  data-name={d.city.toLowerCase()}
+  data-search={`${d.city} ${d.country} ${d.region} ${d.areas.join(' ')}`.toLowerCase()}
+  data-region={d.region}
+  data-cats={cats.join(' ')}
+  data-price={from ?? 0}
+>
+  <Cover destination={d} eager={eager}>
+    <div class="badges">
+      {isDraft ? <span class="badge draft">Draft</span> : soon ? <span class="badge soon">Coming soon</span> : <span class="badge live">Available now</span>}
+    </div>
+    <div class="on-photo">
+      <b>{d.city}</b>
+      <span>{d.country}</span>
+    </div>
+  </Cover>
+  <div class="body">
+    <p class="tagline">{d.tagline}</p>
+    <div class="chips-row" aria-label="Guide categories">
+      {cats.map((c) => <span class={`badge cat-${c}`}>{CATEGORIES[c].label}</span>)}
+    </div>
+    <div class="foot">
+      {from !== null && <span class="from">From <b>{formatPrice(from)}</b></span>}
+      <a class="stretched fake-btn" href={`/destinations/${d.slug}`} aria-label={`View guides for ${d.city}`}>View guides</a>
+    </div>
+  </div>
+</article>

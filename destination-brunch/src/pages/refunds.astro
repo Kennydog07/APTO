@@ -1,0 +1,27 @@
+---
+import LegalPage from '../components/LegalPage.astro';
+import Todo from '../components/Todo.astro';
+import { SITE } from '../data/site';
+---
+<LegalPage title="Refunds and Digital Delivery" heading="Refunds & delivery" path="/refunds" description="How Destination : Brunch guides are delivered through Gumroad, and how refunds work.">
+  <h2>How delivery works</h2>
+  <ol>
+    <li>Choose a guide and click <b>Download Now</b>. This opens the guide's own page on Gumroad.</li>
+    <li>Complete checkout on Gumroad. Gumroad processes your payment securely.</li>
+    <li>Gumroad shows the access details for your guide once payment is complete and emails them to the address you used at checkout. Follow those instructions to open your guide.</li>
+  </ol>
+  <p>Can't find the email? Check your spam folder, or visit Gumroad's library page while logged in with the same email address. If you still need help, contact us.</p>
+
+  <h2>What you receive</h2>
+  <p>Each guide is a web app for one city that you open in your browser. It is not a native app-store app. You need an internet connection to use it.</p>
+
+  <h2>Refunds</h2>
+  <p><Todo value={SITE.refundPolicy} field="refundPolicy" label="your refund policy, matching the policy set on Gumroad" /></p>
+  <p>Refunds are issued through Gumroad to your original payment method. To ask for one, contact us with your Gumroad receipt.</p>
+
+  <h2>Your statutory rights</h2>
+  <p>Consumer law in some countries, including the UK and EU, gives you rights when you buy digital content. For example, if digital content is faulty or not as described, you may be entitled to a repair, replacement or refund. Nothing on this page affects those rights.</p>
+
+  <h2>Contact</h2>
+  <p><Todo value={SITE.contactEmail} field="contactEmail" label="a contact email" asEmail /></p>
+</LegalPage>

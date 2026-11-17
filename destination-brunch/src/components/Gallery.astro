@@ -1,0 +1,15 @@
+---
+/* Phone-frame screenshot strip. Swipe on mobile; scrolls with keyboard (focusable region). */
+interface Props { shots: { src: string; alt: string }[]; label: string; eager?: boolean }
+const { shots, label, eager = false } = Astro.props;
+---
+{shots.length > 0 && (
+  <div class="gallery" role="region" aria-label={label} tabindex="0">
+    {shots.map((s, i) => (
+      <figure>
+        <img src={s.src} alt={s.alt} width="390" height="844" loading={eager && i === 0 ? 'eager' : 'lazy'} decoding="async" />
+        <figcaption>{s.alt.replace(/^.*?(guide|deals guide) /, '').replace(/^./, (c) => c.toUpperCase())}</figcaption>
+      </figure>
+    ))}
+  </div>
+)}

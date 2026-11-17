@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import CatalogFilters from '../../components/CatalogFilters.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { visibleProducts, destinationOf, canBuy } from '../../lib/catalog';
+import { PRICES } from '../../data/pricing';
+import { breadcrumbLd } from '../../lib/seo';
+
+const site = Astro.site!;
+const products = [...visibleProducts()].sort(
+  (a, b) => Number(canBuy(b)) - Number(canBuy(a)) || destinationOf(a).city.localeCompare(destinationOf(b).city),
+);
+const cats = [...new Set(products.map((p) => p.category))];
+const crumbs = [{ name: 'Home', href: '/' }, { name: 'All guides', href: '/guides' }];
+---
+<BaseLayout
+  title="All City Guides: Brunch, Happy Hours & Daily Deals"
+  description={`Every Destination : Brunch city guide in one place. Brunch guides US $${PRICES.brunch.toFixed(2)}, happy hour and daily deals guides US $${PRICES.deals.toFixed(2)}.`}
+  jsonLd={[breadcrumbLd(site, crumbs)]}
+>
+  <header class="page-head">
+    <div class="wrap">
+      <Breadcrumbs items={crumbs} />
+      <h1>All <em>guides</em></h1>
+      <p>Brunch guides are ${PRICES.brunch.toFixed(2)} each and happy hour &amp; daily deals guides are ${PRICES.deals.toFixed(2)} each (USD). Checkout is on Gumroad.</p>
+    </div>
+  </header>
+  <div class="wrap">
+    <CatalogFilters noun="guide" nounPlural="guides" total={products.length} categoriesPresent={cats} />
+    <div class="grid" data-list>
+      {products.map((p) => <ProductCard product={p} headingLevel="h2" />)}
+    </div>
+    <div class="empty" data-empty hidden>
+      <h3>No guides match your search</h3>
+      <p>Try another city or country, choose a different region or guide type, or clear the filters.</p>
+      <button type="button" class="btn btn-dark" data-reset-empty>Show all guides</button>
+    </div>
+  </div>
+  <div class="section tight"></div>
+  <script>import '../../scripts/catalog';</script>
+</BaseLayout>

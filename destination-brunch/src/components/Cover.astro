@@ -1,0 +1,28 @@
+---
+/* City photo with a coloured fallback when no licensed photo exists yet. */
+import type { Destination } from '../data/destinations';
+import { imageFor } from '../lib/catalog';
+
+interface Props { destination: Destination; src?: string; alt?: string; eager?: boolean; sizes?: string }
+const { destination: d, src, alt, eager = false, sizes = '(max-width: 640px) 100vw, (max-width: 1020px) 50vw, 400px' } = Astro.props;
+const small = src ?? imageFor(d, 800);
+const large = src ? undefined : imageFor(d, 1600);
+const style = `--c-primary:${d.theme.primary};--c-deep:${d.theme.deep}`;
+---
+<div class="cover" style={style}>
+  {small ? (
+    <img
+      src={small}
+      srcset={large ? `${small} 800w, ${large} 1600w` : undefined}
+      sizes={large ? sizes : undefined}
+      alt={alt ?? d.image?.alt ?? ''}
+      width="800"
+      height="600"
+      loading={eager ? 'eager' : 'lazy'}
+      decoding="async"
+    />
+  ) : (
+    <div class="cover-fallback" aria-hidden="true"></div>
+  )}
+  <slot />
+</div>

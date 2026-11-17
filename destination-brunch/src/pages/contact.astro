@@ -1,0 +1,18 @@
+---
+import LegalPage from '../components/LegalPage.astro';
+import Todo from '../components/Todo.astro';
+import { SITE } from '../data/site';
+---
+<LegalPage title="Contact" heading="Contact us" path="/contact" description="Contact Destination : Brunch about a guide, an order or a correction." intro="Questions about a guide, an order, or a venue we should update? Get in touch.">
+  <h2>Email</h2>
+  <p><Todo value={SITE.contactEmail} field="contactEmail" label="a contact email" asEmail /></p>
+
+  <h2>Orders and downloads</h2>
+  <p>Please include the email address you used on Gumroad and your receipt, so we can find your order quickly. You can also find past purchases in your Gumroad library.</p>
+
+  <h2>Corrections</h2>
+  <p>Spotted an offer that has changed or ended? Tell us the venue and city and we will check it for the next update.</p>
+
+  <h2>Venues and partnerships</h2>
+  <p>{SITE.name} is independent. If you run a venue and want to suggest a correction, email us. Any future partnership would be clearly labelled in the relevant guide.</p>
+</LegalPage>

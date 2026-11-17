@@ -1,0 +1,189 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import DestinationCard from '../components/DestinationCard.astro';
+import ProductCard from '../components/ProductCard.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import Faq from '../components/Faq.astro';
+import { SITE } from '../data/site';
+import { GENERAL_FAQS } from '../data/faqs';
+import { REVIEWS } from '../data/reviews';
+import { PRODUCTS } from '../data/products';
+import { visibleDestinations, visibleProducts, priceOf, formatPrice, canBuy, destinationOf } from '../lib/catalog';
+import { organizationLd, websiteLd, faqLd } from '../lib/seo';
+
+const site = Astro.site!;
+const destinations = visibleDestinations();
+const products = visibleProducts();
+const featured = destinations.filter((d) => d.featured).slice(0, 8);
+const byBuyable = (a: (typeof products)[number], b: (typeof products)[number]) =>
+  Number(canBuy(b)) - Number(canBuy(a)) || Number(destinationOf(b).featured) - Number(destinationOf(a).featured);
+const brunch = products.filter((p) => p.category === 'brunch').sort(byBuyable);
+const deals = products.filter((p) => p.category !== 'brunch').sort(byBuyable);
+const lowest = products.length ? Math.min(...products.map(priceOf)) : null;
+const quickCities = destinations.filter((d) => d.featured).slice(0, 6);
+const reviews = REVIEWS.filter((r) => PRODUCTS.some((p) => p.id === r.guide));
+---
+<BaseLayout
+  title={`${SITE.name}: City Brunch, Happy Hour & Dining Deals Guides`}
+  description={SITE.description}
+  jsonLd={[organizationLd(site), websiteLd(site), faqLd(GENERAL_FAQS)]}
+  preloadImage="/images/destinations/dubai-1600.webp"
+>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-bg" aria-hidden="true">
+      <img src="/images/destinations/dubai-1600.webp" srcset="/images/destinations/dubai-800.webp 800w, /images/destinations/dubai-1600.webp 1600w" sizes="100vw" alt="" width="1600" height="1000" fetchpriority="high" />
+    </div>
+    <div class="hero-inner">
+      <p class="eyebrow"><span class="dot"></span> Brunch · Happy hours · Dining deals</p>
+      <h1 id="hero-title" class="brand-title">DESTINATION <em>: BRUNCH</em></h1>
+      <p class="hero-sub">Discover the world's best brunches, happy hours and dining deals.</p>
+      <p class="lede">From Dubai to London, Bangkok to New York — discover incredible places to eat, drink and save with our downloadable city guides.</p>
+      <div class="hero-actions">
+        <a class="btn btn-gold" href="#destinations">Explore Destinations</a>
+        <a class="btn btn-outline-light" href="/guides">Browse All Guides</a>
+      </div>
+      <form class="search" action="/destinations" method="get" role="search" aria-label="Search destinations">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></svg>
+        <label for="home-q" class="sr-only">Search by city or country</label>
+        <input id="home-q" name="q" type="search" list="city-list" placeholder="Where are you going? Try “Dubai” or “UK”" autocomplete="off" enterkeyhint="search" />
+        <datalist id="city-list">
+          {destinations.map((d) => <option value={d.city}>{d.country}</option>)}
+        </datalist>
+        <button class="btn btn-gold" type="submit">Find guides</button>
+      </form>
+      <nav class="quick" aria-label="Popular destinations">
+        {quickCities.map((d) => <a href={`/destinations/${d.slug}`}>{d.city}</a>)}
+      </nav>
+      <div class="hero-stats">
+        <div><b>{destinations.length}</b><span>Destinations</span></div>
+        <div><b>{products.length}</b><span>City guides</span></div>
+        {lowest !== null && <div><b>{formatPrice(lowest)}</b><span>Guides from (USD)</span></div>}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="destinations" aria-labelledby="feat-title">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="kicker">Where to next?</p>
+          <h2 id="feat-title">Featured <em>destinations</em></h2>
+          <p class="section-note">Each city has its own guide, built around how people eat out there.</p>
+        </div>
+        <a class="link-arrow" href="/destinations">All {destinations.length} destinations →</a>
+      </div>
+      <div class="grid four">
+        {featured.map((d, i) => <DestinationCard destination={d} eager={i < 2} />)}
+      </div>
+    </div>
+  </section>
+
+  {brunch.length > 0 && (
+    <section class="section tight" aria-labelledby="brunch-title">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="kicker">Weekend plans</p>
+            <h2 id="brunch-title">Brunch <em>guides</em></h2>
+            <p class="section-note">Weekend brunches with prices, packages, days, times and venue links.</p>
+          </div>
+          <a class="link-arrow" href="/guides?cat=brunch">All brunch guides →</a>
+        </div>
+        <div class="grid">
+          {brunch.slice(0, 6).map((p) => <ProductCard product={p} />)}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {deals.length > 0 && (
+    <section class="section tight" aria-labelledby="deals-title">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="kicker">Every day of the week</p>
+            <h2 id="deals-title">Happy hour &amp; <em>daily deals</em> guides</h2>
+            <p class="section-note">Business lunches, restaurant specials and locally appropriate offers, sorted by day and time.</p>
+          </div>
+        </div>
+        <div class="grid">
+          {deals.map((p) => <ProductCard product={p} />)}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <HowItWorks />
+
+  <section class="section tight" aria-labelledby="why-title">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="kicker">What you get</p>
+          <h2 id="why-title">Why choose <em>our guides</em></h2>
+        </div>
+      </div>
+      <div class="why">
+        <div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21Z" /><circle cx="12" cy="9.5" r="2.5" /></svg>
+          <p><b>One city, one guide</b><span>Each guide focuses on a single city, its neighbourhoods and its weekend.</span></p>
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg>
+          <p><b>Prices, days and times</b><span>See what each option costs and when it runs before you book.</span></p>
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></svg>
+          <p><b>Search the way you talk</b><span>Pick a cuisine or type what you fancy, then filter by area.</span></p>
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Z" /><path d="M9 4v14M15 6v14" /></svg>
+          <p><b>Maps and venue links</b><span>Open directions in Google or Apple Maps and go straight to the venue page.</span></p>
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2" /><path d="M11 18h2" /></svg>
+          <p><b>Made for your phone</b><span>Opens in your browser on any phone, tablet or computer. Nothing to install.</span></p>
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z" /><path d="m9 12 2 2 4-4" /></svg>
+          <p><b>Independent and dated</b><span>Not paid by venues. Each guide shows when its information was last checked.</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {reviews.length > 0 && (
+    <section class="section tight" aria-labelledby="rev-title">
+      <div class="wrap">
+        <div class="section-head"><div><p class="kicker">From our customers</p><h2 id="rev-title">What people <em>say</em></h2></div></div>
+        <div class="reviews">
+          {reviews.map((r) => (
+            <figure>
+              <blockquote>“{r.quote}”</blockquote>
+              <figcaption>{r.name} · {PRODUCTS.find((p) => p.id === r.guide)?.title}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="section" id="faq" aria-labelledby="faq-title">
+    <div class="wrap narrow">
+      <div class="section-head"><div><p class="kicker">Good to know</p><h2 id="faq-title">Frequently asked <em>questions</em></h2></div></div>
+      <Faq items={GENERAL_FAQS} />
+    </div>
+  </section>
+
+  <section class="section tight" aria-labelledby="cta-title">
+    <div class="wrap">
+      <div class="cta-band">
+        <div>
+          <h2 id="cta-title">Where are you eating this weekend?</h2>
+          <p>Pick your city and see what's inside each guide before you buy.</p>
+        </div>
+        <a class="btn btn-gold" href="/destinations">Explore Destinations</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

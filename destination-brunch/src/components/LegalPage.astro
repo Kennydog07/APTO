@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from './Breadcrumbs.astro';
+import { SITE } from '../data/site';
+import { breadcrumbLd } from '../lib/seo';
+
+interface Props { title: string; heading: string; description: string; path: string; intro?: string }
+const { title, heading, description, path, intro } = Astro.props;
+const crumbs = [{ name: 'Home', href: '/' }, { name: heading, href: path }];
+---
+<BaseLayout title={title} description={description} jsonLd={[breadcrumbLd(Astro.site!, crumbs)]}>
+  <header class="page-head">
+    <div class="wrap">
+      <Breadcrumbs items={crumbs} />
+      <h1>{heading}</h1>
+      {intro && <p>{intro}</p>}
+    </div>
+  </header>
+  <div class="wrap narrow">
+    <div class="panel lift prose">
+      {SITE.legalLastReviewed
+        ? <p><small>Last reviewed: {SITE.legalLastReviewed}</small></p>
+        : <p class="todo"><b>To complete before launch:</b> have this page reviewed for the countries you sell to, then set <code>legalLastReviewed</code> in <code>src/data/site.ts</code>.</p>}
+      <slot />
+    </div>
+  </div>
+  <div class="section tight"></div>
+</BaseLayout>

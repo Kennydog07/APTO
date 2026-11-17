@@ -1,0 +1,129 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import DestinationCard from '../../components/DestinationCard.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Gallery from '../../components/Gallery.astro';
+import Faq from '../../components/Faq.astro';
+import { visibleDestinations, productsFor, nearbyDestinations, imageFor, priceOf, formatPrice, canBuy, destinationIsComingSoon } from '../../lib/catalog';
+import { CATEGORIES } from '../../data/categories';
+import { breadcrumbLd, faqLd } from '../../lib/seo';
+import fs from 'node:fs';
+
+export function getStaticPaths() {
+  return visibleDestinations().map((d) => ({ params: { slug: d.slug }, props: { destination: d } }));
+}
+
+const { destination: d } = Astro.props;
+const site = Astro.site!;
+const products = [...productsFor(d.slug)].sort((a, b) => Number(canBuy(b)) - Number(canBuy(a)));
+const main = products.find((p) => p.screenshots.length) ?? products[0];
+const nearby = nearbyDestinations(d);
+const soon = destinationIsComingSoon(d);
+const hero = imageFor(d, 1600);
+const crumbs = [{ name: 'Home', href: '/' }, { name: 'Destinations', href: '/destinations' }, { name: d.city, href: `/destinations/${d.slug}` }];
+const catNames = [...new Set(products.map((p) => CATEGORIES[p.category].label.toLowerCase()))];
+const heading = products.length > 1 ? `${d.city} brunch & dining guides` : `${d.city} ${CATEGORIES[products[0].category].label.toLowerCase()} guide`;
+
+const faqs = [
+  ...(d.faqs ?? []),
+  {
+    q: `Which guides are available for ${d.city}?`,
+    a: products.map((p) => `${p.title} (${CATEGORIES[p.category].label}, ${formatPrice(priceOf(p))} USD${canBuy(p) ? '' : ', coming soon'})`).join('; ') + '.',
+  },
+  ...(d.areas.length ? [{ q: `Which areas of ${d.city} are covered?`, a: `The guides cover areas including ${d.areas.join(', ')}.` }] : []),
+  { q: `When do people brunch in ${d.city}?`, a: `Brunches in ${d.city} mainly take place on ${d.brunchDays}.` },
+  ...(d.alcoholFree ? [{ q: `Do the ${d.city} guides include drinks offers?`, a: `No. Venues in ${d.country} do not serve alcohol, so the guides list food, set-menu and other locally appropriate offers only.` }] : []),
+  { q: 'How do I buy a guide?', a: 'Open the guide, check what is included, then tap Download Now. You complete your purchase securely on Gumroad, which shows the access details once payment is complete and emails them to you.' },
+  { q: 'Are prices and offers guaranteed?', a: 'No. Venues change prices and offers, sometimes at short notice. Always confirm details with the venue before you go.' },
+];
+const ogImage = fs.existsSync(`public/og/${d.slug}.jpg`) ? `/og/${d.slug}.jpg` : '/og/default.jpg';
+---
+<BaseLayout
+  title={d.seoTitle}
+  description={d.seoDescription}
+  theme={d.theme}
+  ogImage={ogImage}
+  jsonLd={[breadcrumbLd(site, crumbs), faqLd(faqs)]}
+  track={{ type: 'destination', city: d.city }}
+  preloadImage={hero ?? undefined}
+>
+  <section class="hero city-hero" aria-labelledby="city-title">
+    {hero && (
+      <div class="hero-bg" aria-hidden="true">
+        <img src={hero} srcset={`${imageFor(d, 800)} 800w, ${hero} 1600w`} sizes="100vw" alt="" width="1600" height="1000" fetchpriority="high" />
+      </div>
+    )}
+    <div class="wrap">
+      <div class="hero-inner">
+        <Breadcrumbs items={crumbs} />
+        <p class="eyebrow"><span class="dot"></span> {d.country} · {d.region}{soon ? ' · Coming soon' : ''}</p>
+        <h1 id="city-title">{d.city} <em>{heading.slice(d.city.length + 1)}</em></h1>
+        <p class="lede">{d.tagline}</p>
+        {d.areas.length > 0 && (
+          <div class="areas" aria-label="Areas covered">{d.areas.map((a) => <span>{a}</span>)}</div>
+        )}
+        <div class="hero-actions" style="justify-content:flex-start;margin-top:26px">
+          <a class="btn btn-gold" href="#guides">See the {d.city} {products.length > 1 ? 'guides' : 'guide'}</a>
+        </div>
+      </div>
+    </div>
+    {d.image && (
+      <p class="photo-credit">Photo: {d.image.credit.author}, <a href={d.image.credit.licenseUrl} rel="license noopener" target="_blank">{d.image.credit.license}</a></p>
+    )}
+  </section>
+
+  <section class="section tight" id="guides" aria-labelledby="guides-title">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="kicker">Available for {d.city}</p>
+          <h2 id="guides-title">{d.city} <em>{catNames.join(' & ')}</em> {products.length > 1 ? 'guides' : 'guide'}</h2>
+        </div>
+      </div>
+      <div class="city-shop" style={`--n:${Math.min(products.length, 2)}`}>
+        {products.map((p) => <ProductCard product={p} />)}
+        {main && main.screenshots.length > 0 && (
+          <div class="gallery-wrap"><Gallery shots={main.screenshots} label={`${main.title} screenshots`} /></div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <section class="section tight" aria-labelledby="about-title">
+    <div class="wrap narrow">
+      <div class="prose">
+        <p class="kicker">About {d.city}</p>
+        <h2 id="about-title">Eating out in <em>{d.city}</em></h2>
+        {d.intro.map((para) => <p>{para}</p>)}
+        {main && main.features.length > 0 && (
+          <>
+            <h3>Inside the {main.title.replace('Destination : Brunch — ', '')} {CATEGORIES[main.category].label.toLowerCase()} guide</h3>
+            <ul>{main.features.slice(0, 6).map((f) => <li>{f}</li>)}</ul>
+            <p><a class="link-arrow" href={`/guides/${main.id}`}>Full details, screenshots and price →</a></p>
+          </>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <section class="section tight" aria-labelledby="cfaq-title">
+    <div class="wrap narrow">
+      <div class="section-head"><div><p class="kicker">{d.city} questions</p><h2 id="cfaq-title">Good to <em>know</em></h2></div></div>
+      <Faq items={faqs} />
+      <p class="notice" style="margin-top:18px">Restaurant offers change. Prices and availability should always be confirmed with the venue. Destination : Brunch is an independent guide publisher and is not affiliated with the venues listed. <a href="/disclaimer">Read the full disclaimer</a>.</p>
+    </div>
+  </section>
+
+  {nearby.length > 0 && (
+    <section class="section tight" aria-labelledby="near-title">
+      <div class="wrap">
+        <div class="section-head">
+          <div><p class="kicker">Travelling on?</p><h2 id="near-title">More <em>destinations</em></h2></div>
+          <a class="link-arrow" href="/destinations">All destinations →</a>
+        </div>
+        <div class="grid four">{nearby.map((n) => <DestinationCard destination={n} />)}</div>
+      </div>
+    </section>
+  )}
+</BaseLayout>

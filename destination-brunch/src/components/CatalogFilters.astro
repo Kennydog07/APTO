@@ -1,0 +1,42 @@
+---
+/* Search, region, category and sort controls. Filtering runs in the browser
+   (src/scripts/catalog.ts); without JavaScript every item simply stays visible. */
+import { CATEGORIES, CATEGORY_IDS } from '../data/categories';
+import { REGIONS } from '../lib/catalog';
+
+interface Props { noun: string; nounPlural: string; total: number; categoriesPresent: string[] }
+const { noun, nounPlural, total, categoriesPresent } = Astro.props;
+const cats = CATEGORY_IDS.filter((c) => categoriesPresent.includes(c));
+---
+<div class="panel lift" data-catalog data-noun={noun} data-noun-plural={nounPlural}>
+  <form class="filters" role="search" onsubmit="return false" aria-label={`Filter ${nounPlural}`}>
+    <div class="field q">
+      <label for="f-q">Search city or country</label>
+      <input id="f-q" name="q" type="search" placeholder="e.g. Dubai, UK, Bangkok" autocomplete="off" enterkeyhint="search" />
+    </div>
+    <div class="field">
+      <label for="f-region">Region</label>
+      <select id="f-region" name="region">
+        <option value="">All regions</option>
+        {REGIONS.map((r) => <option value={r}>{r}</option>)}
+      </select>
+    </div>
+    <div class="field">
+      <label for="f-sort">Sort by</label>
+      <select id="f-sort" name="sort">
+        <option value="az">Alphabetical (A–Z)</option>
+        <option value="za">Alphabetical (Z–A)</option>
+        <option value="price-asc">Price: low to high</option>
+        <option value="price-desc">Price: high to low</option>
+      </select>
+    </div>
+    <div class="cat-chips" role="group" aria-label="Guide type">
+      <button type="button" class="chip" data-cat="" aria-pressed="true">All guides</button>
+      {cats.map((c) => <button type="button" class="chip" data-cat={c} aria-pressed="false">{CATEGORIES[c].label}</button>)}
+    </div>
+  </form>
+</div>
+<div class="results-bar">
+  <p data-count aria-live="polite">Showing {total} {total === 1 ? noun : nounPlural}</p>
+  <button type="button" class="reset" data-reset hidden>Clear all filters</button>
+</div>

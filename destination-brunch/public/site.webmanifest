@@ -1,0 +1,13 @@
+{
+  "name": "Destination : Brunch",
+  "short_name": "Destination Brunch",
+  "description": "City guides to brunches, happy hours and dining deals.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#f8f5f0",
+  "theme_color": "#2a0a14",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
