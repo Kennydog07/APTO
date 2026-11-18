@@ -6,7 +6,7 @@ import Gallery from '../../components/Gallery.astro';
 import Faq from '../../components/Faq.astro';
 import Price from '../../components/Price.astro';
 import BuyButton from '../../components/BuyButton.astro';
-import { visibleProducts, destinationOf, relatedProducts, priceOf, formatPrice, canBuy, saleState, formatChecked } from '../../lib/catalog';
+import { visibleProducts, destinationOf, relatedProducts, priceOf, formatPrice, canBuy, saleState, formatChecked, categoriesOf } from '../../lib/catalog';
 import { CATEGORIES } from '../../data/categories';
 import { PURCHASE_FAQS } from '../../data/faqs';
 import { breadcrumbLd, faqLd, productLd } from '../../lib/seo';
@@ -20,6 +20,8 @@ const { product: p } = Astro.props;
 const site = Astro.site!;
 const d = destinationOf(p);
 const cat = CATEGORIES[p.category];
+const cats = categoriesOf(p);
+const kind = cats.map((c) => CATEGORIES[c].label).join(' & ');
 const state = saleState(p);
 const related = relatedProducts(p);
 const price = formatPrice(priceOf(p));
@@ -27,7 +29,7 @@ const crumbs = [
   { name: 'Home', href: '/' },
   { name: 'Destinations', href: '/destinations' },
   { name: d.city, href: `/destinations/${d.slug}` },
-  { name: `${cat.label} guide`, href: `/guides/${p.id}` },
+  { name: `${kind} guide`, href: `/guides/${p.id}` },
 ];
 const faqs = [...(p.faqs ?? []), ...PURCHASE_FAQS];
 const checked = formatChecked(p.lastUpdated);
@@ -48,7 +50,7 @@ const ld = [breadcrumbLd(site, crumbs), faqLd(faqs), productLd(site, p)].filter(
   <header class="page-head">
     <div class="wrap">
       <Breadcrumbs items={crumbs} />
-      <p class="eyebrow" style="margin:0"><span class="dot"></span> {d.city} · {d.country} · {cat.label} guide</p>
+      <p class="eyebrow" style="margin:0"><span class="dot"></span> {d.city} · {d.country} · {kind} guide</p>
     </div>
   </header>
 
@@ -56,7 +58,7 @@ const ld = [breadcrumbLd(site, crumbs), faqLd(faqs), productLd(site, p)].filter(
     <div class="product-top lift">
       <div class="buybox">
         <div class="chips-row">
-          <span class={`badge cat-${p.category}`}>{cat.label}</span>
+          {cats.map((c) => <span class={`badge cat-${c}`}>{CATEGORIES[c].label}</span>)}
           {state === 'coming-soon' && <span class="badge soon">Coming soon</span>}
           {state === 'draft' && <span class="badge draft">Draft: not public</span>}
         </div>

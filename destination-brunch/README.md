@@ -126,7 +126,9 @@ Same as section 4, but set `category` to:
 - `'happy-hours'`: happy hours and drinks offers. **Never use this for places where alcohol promotions are not allowed**, such as Saudi Arabia.
 - `'daily-deals'`: business lunches, restaurant specials, family deals and other food offers.
 
-The price ($2.49) is applied automatically. `Daily Deals Riyadh` is a ready-made example, and there's a draft `dubai-happy-hours` example at the bottom of `products.ts`.
+The price ($2.49) is applied automatically. `Daily Deals Riyadh` and `Happy Hour Dubai` are ready-made examples; the `hhFeatures(...)` and `dealShots(...)` shortcuts fill in the standard happy hour app features and screenshots.
+
+For an app that is **both** a brunch and a happy hour guide (like *Brunch & Happy Hour Paris*), use `category: 'happy-hours'` and add `alsoIn: ['brunch'],` so it also shows under the Brunch filter. It is priced as a happy hour guide unless you add `priceUSD`.
 
 ---
 

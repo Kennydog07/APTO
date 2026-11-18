@@ -3,7 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProductCard from '../../components/ProductCard.astro';
 import CatalogFilters from '../../components/CatalogFilters.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
-import { visibleProducts, destinationOf, canBuy } from '../../lib/catalog';
+import { visibleProducts, destinationOf, canBuy, categoriesOf } from '../../lib/catalog';
 import { PRICES } from '../../data/pricing';
 import { breadcrumbLd } from '../../lib/seo';
 
@@ -11,7 +11,7 @@ const site = Astro.site!;
 const products = [...visibleProducts()].sort(
   (a, b) => Number(canBuy(b)) - Number(canBuy(a)) || destinationOf(a).city.localeCompare(destinationOf(b).city),
 );
-const cats = [...new Set(products.map((p) => p.category))];
+const cats = [...new Set(products.flatMap(categoriesOf))];
 const crumbs = [{ name: 'Home', href: '/' }, { name: 'All guides', href: '/guides' }];
 ---
 <BaseLayout

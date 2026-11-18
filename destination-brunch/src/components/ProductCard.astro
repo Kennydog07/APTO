@@ -4,7 +4,7 @@ import Cover from './Cover.astro';
 import Price from './Price.astro';
 import BuyButton from './BuyButton.astro';
 import { CATEGORIES } from '../data/categories';
-import { destinationOf, priceOf, saleState } from '../lib/catalog';
+import { destinationOf, priceOf, saleState, categoriesOf } from '../lib/catalog';
 
 interface Props { product: Product; headingLevel?: 'h2' | 'h3' }
 const { product: p, headingLevel = 'h3' } = Astro.props;
@@ -12,20 +12,22 @@ const d = destinationOf(p);
 const state = saleState(p);
 const H = headingLevel;
 const url = `/guides/${p.id}`;
+const cats = categoriesOf(p);
+const kind = cats.map((c) => CATEGORIES[c].label).join(' & ');
 ---
 <article
   class="pcard rise"
   data-item
   data-name={d.city.toLowerCase()}
-  data-search={`${d.city} ${d.country} ${d.region} ${p.title} ${CATEGORIES[p.category].label}`.toLowerCase()}
+  data-search={`${d.city} ${d.country} ${d.region} ${p.title} ${kind}`.toLowerCase()}
   data-region={d.region}
-  data-cats={p.category}
+  data-cats={cats.join(' ')}
   data-price={priceOf(p)}
 >
   <a href={url} tabindex="-1" aria-hidden="true">
     <Cover destination={d} src={p.coverImage}>
       <div class="badges">
-        <span class={`badge cat-${p.category}`}>{CATEGORIES[p.category].label}</span>
+        {cats.map((c) => <span class={`badge cat-${c}`}>{CATEGORIES[c].label}</span>)}
         {state === 'coming-soon' && <span class="badge soon">Coming soon</span>}
         {state === 'draft' && <span class="badge draft">Draft</span>}
       </div>
@@ -33,7 +35,7 @@ const url = `/guides/${p.id}`;
     </Cover>
   </a>
   <div class="body">
-    <p class="dest">{d.city} · {CATEGORIES[p.category].label} guide</p>
+    <p class="dest">{d.city} · {kind} guide</p>
     <H><a href={url}>{p.title}</a></H>
     <p class="desc">{p.shortDescription}</p>
     <ul class="benefits" aria-label="Key benefits">

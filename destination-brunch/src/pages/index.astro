@@ -103,11 +103,12 @@ const reviews = REVIEWS.filter((r) => PRODUCTS.some((p) => p.id === r.guide));
           <div>
             <p class="kicker">Every day of the week</p>
             <h2 id="deals-title">Happy hour &amp; <em>daily deals</em> guides</h2>
-            <p class="section-note">Business lunches, restaurant specials and locally appropriate offers, sorted by day and time.</p>
+            <p class="section-note">Happy hours, ladies' nights, business lunches and food deals, sorted by day and time.</p>
           </div>
+          <a class="link-arrow" href="/guides?cat=happy-hours">All happy hour guides →</a>
         </div>
         <div class="grid">
-          {deals.map((p) => <ProductCard product={p} />)}
+          {deals.slice(0, 6).map((p) => <ProductCard product={p} />)}
         </div>
       </div>
     </section>

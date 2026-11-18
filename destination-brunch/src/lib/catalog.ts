@@ -38,6 +38,11 @@ export function formatPrice(n: number): string {
 }
 export const currency = CURRENCY;
 
+/** Main category plus any extra ones (alsoIn), for filters and badges. */
+export function categoriesOf(p: Product): CategoryId[] {
+  return [p.category, ...(p.alsoIn ?? []).filter((c) => c !== p.category)];
+}
+
 export function categoryLabel(c: CategoryId): string {
   return CATEGORIES[c].label;
 }
@@ -134,6 +139,7 @@ export function validateCatalog(): void {
     ids.add(p.id);
     if (!slugs.has(p.destination)) errors.push(`Product "${p.id}": destination "${p.destination}" is not in destinations.ts.`);
     if (!CATEGORY_IDS.includes(p.category)) errors.push(`Product "${p.id}": unknown category "${p.category}".`);
+    for (const c of p.alsoIn ?? []) if (!CATEGORY_IDS.includes(c)) errors.push(`Product "${p.id}": unknown alsoIn category "${c}".`);
     if (!statuses.includes(p.status)) errors.push(`Product "${p.id}": unknown status "${p.status}".`);
     if (p.priceUSD !== undefined && !(typeof p.priceUSD === 'number' && p.priceUSD > 0))
       errors.push(`Product "${p.id}": priceUSD must be a number above 0.`);

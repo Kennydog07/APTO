@@ -3,12 +3,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import DestinationCard from '../../components/DestinationCard.astro';
 import CatalogFilters from '../../components/CatalogFilters.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
-import { visibleDestinations, productsFor } from '../../lib/catalog';
+import { visibleDestinations, productsFor, categoriesOf } from '../../lib/catalog';
 import { breadcrumbLd } from '../../lib/seo';
 
 const site = Astro.site!;
 const destinations = [...visibleDestinations()].sort((a, b) => a.city.localeCompare(b.city));
-const cats = [...new Set(destinations.flatMap((d) => productsFor(d.slug).map((p) => p.category)))];
+const cats = [...new Set(destinations.flatMap((d) => productsFor(d.slug).flatMap(categoriesOf)))];
 const crumbs = [{ name: 'Home', href: '/' }, { name: 'Destinations', href: '/destinations' }];
 ---
 <BaseLayout
