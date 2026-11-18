@@ -233,6 +233,41 @@ export const DESTINATIONS: Destination[] = [
       'Manchester brunch guide covering bottomless and weekend brunches in the Northern Quarter, Ancoats, Spinningfields and Deansgate, with prices and times.',
   },
   {
+    slug: 'brighton',
+    city: 'Brighton',
+    country: 'United Kingdom',
+    region: 'Europe',
+    status: 'published',
+    featured: true,
+    tagline: 'Weekend brunches from The Lanes and Hove along the coast to Worthing.',
+    areas: ['The Lanes', 'North Laine', 'Kemptown', 'Hove', 'Shoreham-by-Sea', 'Lancing', 'Worthing'],
+    brunchDays: 'Saturday and Sunday',
+    intro: [
+      'Brighton does weekend brunch in every style, from bottomless brunches in The Lanes and on West Street to award-winning cafés along Church Road in Hove.',
+      'The Brighton guide follows the coast west too, with beach-café brunches in Lancing and bottomless brunches in Worthing, plus our picks of the best pubs, bars and restaurants from Brighton to Shoreham-by-Sea and Worthing.',
+    ],
+    image: {
+      alt: 'Brighton Palace Pier at golden hour',
+      credit: {
+        title: 'Brighton Palace Pier at the golden hour',
+        author: 'August Schwerdfeger',
+        license: 'CC BY 4.0',
+        licenseUrl: 'https://creativecommons.org/licenses/by/4.0',
+        sourceUrl: 'https://commons.wikimedia.org/wiki/File:Brighton_Palace_Pier_at_the_golden_hour_2019-05-28_-_1.jpg',
+      },
+    },
+    theme: { primary: '#1d4f8f', deep: '#0f2f59', accent: '#e0303f', onAccent: '#ffffff' },
+    seoTitle: 'Brighton & Hove Brunch Guide: Weekend Brunches to Worthing',
+    seoDescription:
+      'Brighton and Hove brunch guide, from The Lanes and Church Road along the coast to Lancing and Worthing, with bottomless brunch prices, times and links.',
+    faqs: [
+      {
+        q: 'Does the Brighton guide cover Hove and Worthing?',
+        a: 'Yes. Alongside central Brighton it lists brunches in Hove, Lancing and Worthing, and its pubs, bars and restaurants section also covers Shoreham-by-Sea.',
+      },
+    ],
+  },
+  {
     slug: 'barcelona',
     city: 'Barcelona',
     country: 'Spain',

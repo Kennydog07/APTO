@@ -5,124 +5,659 @@
     "brunch-barcelona": {
       "city": "Barcelona",
       "items": [
-        {"type": "bar", "name": "Sips", "area": "Eixample", "what": "Award-winning cocktail bar where drinks are built like recipes, with a theatrical bar counter.", "price": 3},
-        {"type": "bar", "name": "Paradiso", "area": "El Born", "what": "Speakeasy hidden behind a fridge door inside a pastrami bar. Inventive, showy cocktails.", "price": 3},
-        {"type": "bar", "name": "Dry Martini", "area": "Eixample", "what": "Old-school, wood-panelled martini institution with white-jacketed bartenders.", "price": 3},
-        {"type": "bar", "name": "Boadas", "area": "El Raval, off La Rambla", "what": "Barcelona's oldest cocktail bar, open since 1933. Tiny, classic and always lively.", "price": 2},
-        {"type": "pub", "name": "BierCaB", "area": "Eixample", "what": "Craft beer bar with around thirty rotating taps and good food to match.", "price": 2},
-        {"type": "pub", "name": "La Cervesera Artesana", "area": "Gràcia", "what": "Neighbourhood brewpub brewing since 1996, one of the pioneers of the city's beer scene.", "price": 1},
-        {"type": "restaurant", "name": "Cal Pep", "area": "El Born", "what": "Legendary seafood tapas counter. No printed menu: sit at the bar and let them cook for you.", "price": 3},
-        {"type": "restaurant", "name": "Bar Cañete", "area": "El Raval", "what": "Buzzy, classic tapas bar near the Liceu with a long counter and top-quality Spanish produce.", "price": 3},
-        {"type": "restaurant", "name": "Can Solé", "area": "Barceloneta", "what": "Traditional seafood restaurant for paella, fideuà and grilled fish since the early 1900s.", "price": 3},
-        {"type": "restaurant", "name": "Disfrutar", "area": "Eixample", "what": "Michelin-starred creative tasting menus. Book well ahead.", "price": 4}
+        {
+          "type": "bar",
+          "name": "Sips",
+          "area": "Eixample",
+          "what": "Award-winning cocktail bar where drinks are built like recipes, with a theatrical bar counter.",
+          "price": 3
+        },
+        {
+          "type": "bar",
+          "name": "Paradiso",
+          "area": "El Born",
+          "what": "Speakeasy hidden behind a fridge door inside a pastrami bar. Inventive, showy cocktails.",
+          "price": 3
+        },
+        {
+          "type": "bar",
+          "name": "Dry Martini",
+          "area": "Eixample",
+          "what": "Old-school, wood-panelled martini institution with white-jacketed bartenders.",
+          "price": 3
+        },
+        {
+          "type": "bar",
+          "name": "Boadas",
+          "area": "El Raval, off La Rambla",
+          "what": "Barcelona's oldest cocktail bar, open since 1933. Tiny, classic and always lively.",
+          "price": 2
+        },
+        {
+          "type": "pub",
+          "name": "BierCaB",
+          "area": "Eixample",
+          "what": "Craft beer bar with around thirty rotating taps and good food to match.",
+          "price": 2
+        },
+        {
+          "type": "pub",
+          "name": "La Cervesera Artesana",
+          "area": "Gràcia",
+          "what": "Neighbourhood brewpub brewing since 1996, one of the pioneers of the city's beer scene.",
+          "price": 1
+        },
+        {
+          "type": "restaurant",
+          "name": "Cal Pep",
+          "area": "El Born",
+          "what": "Legendary seafood tapas counter. No printed menu: sit at the bar and let them cook for you.",
+          "price": 3
+        },
+        {
+          "type": "restaurant",
+          "name": "Bar Cañete",
+          "area": "El Raval",
+          "what": "Buzzy, classic tapas bar near the Liceu with a long counter and top-quality Spanish produce.",
+          "price": 3
+        },
+        {
+          "type": "restaurant",
+          "name": "Can Solé",
+          "area": "Barceloneta",
+          "what": "Traditional seafood restaurant for paella, fideuà and grilled fish since the early 1900s.",
+          "price": 3
+        },
+        {
+          "type": "restaurant",
+          "name": "Disfrutar",
+          "area": "Eixample",
+          "what": "Michelin-starred creative tasting menus. Book well ahead.",
+          "price": 4
+        }
       ],
       "sources": [
-        {"label": "The World's 50 Best Bars", "url": "https://www.theworlds50best.com/bars/best-in-europe/the-list/sips.html"},
-        {"label": "Barcelona Turisme", "url": "https://www.barcelonaturisme.com/wv3/en/enjoy/229/signature-cocktails-in-barcelona-traditional-creative-and-cutting-edge-bars-for-cocktail-lovers-.html"},
-        {"label": "Time Out Barcelona", "url": "https://www.timeout.com/barcelona/bars-and-pubs/best-craft-beer-bars-in-barcelona"}
+        {
+          "label": "The World's 50 Best Bars",
+          "url": "https://www.theworlds50best.com/bars/best-in-europe/the-list/sips.html"
+        },
+        {
+          "label": "Barcelona Turisme",
+          "url": "https://www.barcelonaturisme.com/wv3/en/enjoy/229/signature-cocktails-in-barcelona-traditional-creative-and-cutting-edge-bars-for-cocktail-lovers-.html"
+        },
+        {
+          "label": "Time Out Barcelona",
+          "url": "https://www.timeout.com/barcelona/bars-and-pubs/best-craft-beer-bars-in-barcelona"
+        }
       ]
     },
     "brunch-singapore": {
       "city": "Singapore",
       "items": [
-        {"type": "bar", "name": "Jigger & Pony", "area": "Tanjong Pagar", "what": "Polished cocktail bar and a long-time regular on Asia's 50 Best Bars list.", "price": 3},
-        {"type": "bar", "name": "Atlas", "area": "Parkview Square, Bugis", "what": "Grand Art Deco hall with a towering gin collection.", "price": 4},
-        {"type": "bar", "name": "Native", "area": "Amoy Street", "what": "Cocktails made with local and regional ingredients, in a cosy shophouse setting.", "price": 3},
-        {"type": "bar", "name": "Long Bar", "area": "Raffles Hotel", "what": "Birthplace of the Singapore Sling, with peanut shells on the floor.", "price": 3},
-        {"type": "pub", "name": "LeVeL33", "area": "Marina Bay Financial Centre", "what": "Rooftop microbrewery with house-brewed beers and big Marina Bay views.", "price": 3},
-        {"type": "pub", "name": "Druggists", "area": "Jalan Besar", "what": "Laid-back craft beer bar with a wall of rotating taps from local and overseas brewers.", "price": 2},
-        {"type": "pub", "name": "Little Island Brewing Co.", "area": "Changi Village", "what": "Seaside brewery and pour-your-own taproom, worth the trip for beer lovers.", "price": 2},
-        {"type": "restaurant", "name": "Odette", "area": "National Gallery, City Hall", "what": "Three-Michelin-star modern French dining in the National Gallery. A special-occasion booking.", "price": 4},
-        {"type": "restaurant", "name": "Burnt Ends", "area": "Dempsey", "what": "Michelin-starred wood-fired barbecue, famously hard to book.", "price": 4},
-        {"type": "restaurant", "name": "Candlenut", "area": "Dempsey", "what": "Michelin-starred Peranakan cooking, with a generous chef's-choice menu.", "price": 3},
-        {"type": "restaurant", "name": "Maxwell Food Centre", "area": "Chinatown", "what": "Classic hawker centre, home of the Bib Gourmand Tian Tian Hainanese Chicken Rice.", "price": 1}
+        {
+          "type": "bar",
+          "name": "Jigger & Pony",
+          "area": "Tanjong Pagar",
+          "what": "Polished cocktail bar and a long-time regular on Asia's 50 Best Bars list.",
+          "price": 3
+        },
+        {
+          "type": "bar",
+          "name": "Atlas",
+          "area": "Parkview Square, Bugis",
+          "what": "Grand Art Deco hall with a towering gin collection.",
+          "price": 4
+        },
+        {
+          "type": "bar",
+          "name": "Native",
+          "area": "Amoy Street",
+          "what": "Cocktails made with local and regional ingredients, in a cosy shophouse setting.",
+          "price": 3
+        },
+        {
+          "type": "bar",
+          "name": "Long Bar",
+          "area": "Raffles Hotel",
+          "what": "Birthplace of the Singapore Sling, with peanut shells on the floor.",
+          "price": 3
+        },
+        {
+          "type": "pub",
+          "name": "LeVeL33",
+          "area": "Marina Bay Financial Centre",
+          "what": "Rooftop microbrewery with house-brewed beers and big Marina Bay views.",
+          "price": 3
+        },
+        {
+          "type": "pub",
+          "name": "Druggists",
+          "area": "Jalan Besar",
+          "what": "Laid-back craft beer bar with a wall of rotating taps from local and overseas brewers.",
+          "price": 2
+        },
+        {
+          "type": "pub",
+          "name": "Little Island Brewing Co.",
+          "area": "Changi Village",
+          "what": "Seaside brewery and pour-your-own taproom, worth the trip for beer lovers.",
+          "price": 2
+        },
+        {
+          "type": "restaurant",
+          "name": "Odette",
+          "area": "National Gallery, City Hall",
+          "what": "Three-Michelin-star modern French dining in the National Gallery. A special-occasion booking.",
+          "price": 4
+        },
+        {
+          "type": "restaurant",
+          "name": "Burnt Ends",
+          "area": "Dempsey",
+          "what": "Michelin-starred wood-fired barbecue, famously hard to book.",
+          "price": 4
+        },
+        {
+          "type": "restaurant",
+          "name": "Candlenut",
+          "area": "Dempsey",
+          "what": "Michelin-starred Peranakan cooking, with a generous chef's-choice menu.",
+          "price": 3
+        },
+        {
+          "type": "restaurant",
+          "name": "Maxwell Food Centre",
+          "area": "Chinatown",
+          "what": "Classic hawker centre, home of the Bib Gourmand Tian Tian Hainanese Chicken Rice.",
+          "price": 1
+        }
       ],
       "sources": [
-        {"label": "Tatler Best 20 Bars in Singapore 2026", "url": "https://www.tatlerasia.com/dining/drinks/tatler-best-20-bars-in-singapore-for-2026"},
-        {"label": "Michelin Guide Singapore 2026 (HungryGoWhere)", "url": "https://hungrygowhere.com/food-news/michelin-guide-singapore-2026/"},
-        {"label": "Time Out Singapore", "url": "https://www.timeout.com/singapore/bars-and-pubs/best-microbreweries-in-singapore"}
+        {
+          "label": "Tatler Best 20 Bars in Singapore 2026",
+          "url": "https://www.tatlerasia.com/dining/drinks/tatler-best-20-bars-in-singapore-for-2026"
+        },
+        {
+          "label": "Michelin Guide Singapore 2026 (HungryGoWhere)",
+          "url": "https://hungrygowhere.com/food-news/michelin-guide-singapore-2026/"
+        },
+        {
+          "label": "Time Out Singapore",
+          "url": "https://www.timeout.com/singapore/bars-and-pubs/best-microbreweries-in-singapore"
+        }
       ]
     },
     "brunch-hong-kong": {
       "city": "Hong Kong",
       "items": [
-        {"type": "bar", "name": "Bar Leone", "area": "Central", "what": "Roman-style neighbourhood bar named No. 1 in The World's 50 Best Bars 2025. Walk-in only.", "price": 3},
-        {"type": "bar", "name": "COA", "area": "Central", "what": "Agave specialist with a huge mezcal and tequila collection and bright, fresh cocktails.", "price": 3},
-        {"type": "bar", "name": "Quinary", "area": "Central", "what": "Hong Kong's pioneer of molecular mixology. Try the Earl Grey Caviar Martini.", "price": 3},
-        {"type": "bar", "name": "OZONE", "area": "The Ritz-Carlton, West Kowloon", "what": "Sky-high bar with sweeping views over Victoria Harbour.", "price": 4},
-        {"type": "pub", "name": "The Globe", "area": "Central", "what": "Long-running British-style pub with one of the city's best beer ranges and pub classics.", "price": 2},
-        {"type": "pub", "name": "Ned Kelly's Last Stand", "area": "Tsim Sha Tsui", "what": "Aussie pub open since the early 1970s, known for its live jazz band.", "price": 2},
-        {"type": "restaurant", "name": "Lung King Heen", "area": "Four Seasons, Central", "what": "Michelin-starred Cantonese fine dining and dim sum with harbour views.", "price": 4},
-        {"type": "restaurant", "name": "Luk Yu Tea House", "area": "Central", "what": "Old-world tea house serving dim sum since the 1930s.", "price": 2},
-        {"type": "restaurant", "name": "Kam's Roast Goose", "area": "Wan Chai", "what": "Celebrated roast goose from a family famous for it for generations.", "price": 2},
-        {"type": "restaurant", "name": "Tim Ho Wan", "area": "Sham Shui Po (and other branches)", "what": "Budget dim sum famous for its baked char siu buns.", "price": 1}
+        {
+          "type": "bar",
+          "name": "Bar Leone",
+          "area": "Central",
+          "what": "Roman-style neighbourhood bar named No. 1 in The World's 50 Best Bars 2025. Walk-in only.",
+          "price": 3
+        },
+        {
+          "type": "bar",
+          "name": "COA",
+          "area": "Central",
+          "what": "Agave specialist with a huge mezcal and tequila collection and bright, fresh cocktails.",
+          "price": 3
+        },
+        {
+          "type": "bar",
+          "name": "Quinary",
+          "area": "Central",
+          "what": "Hong Kong's pioneer of molecular mixology. Try the Earl Grey Caviar Martini.",
+          "price": 3
+        },
+        {
+          "type": "bar",
+          "name": "OZONE",
+          "area": "The Ritz-Carlton, West Kowloon",
+          "what": "Sky-high bar with sweeping views over Victoria Harbour.",
+          "price": 4
+        },
+        {
+          "type": "pub",
+          "name": "The Globe",
+          "area": "Central",
+          "what": "Long-running British-style pub with one of the city's best beer ranges and pub classics.",
+          "price": 2
+        },
+        {
+          "type": "pub",
+          "name": "Ned Kelly's Last Stand",
+          "area": "Tsim Sha Tsui",
+          "what": "Aussie pub open since the early 1970s, known for its live jazz band.",
+          "price": 2
+        },
+        {
+          "type": "restaurant",
+          "name": "Lung King Heen",
+          "area": "Four Seasons, Central",
+          "what": "Michelin-starred Cantonese fine dining and dim sum with harbour views.",
+          "price": 4
+        },
+        {
+          "type": "restaurant",
+          "name": "Luk Yu Tea House",
+          "area": "Central",
+          "what": "Old-world tea house serving dim sum since the 1930s.",
+          "price": 2
+        },
+        {
+          "type": "restaurant",
+          "name": "Kam's Roast Goose",
+          "area": "Wan Chai",
+          "what": "Celebrated roast goose from a family famous for it for generations.",
+          "price": 2
+        },
+        {
+          "type": "restaurant",
+          "name": "Tim Ho Wan",
+          "area": "Sham Shui Po (and other branches)",
+          "what": "Budget dim sum famous for its baked char siu buns.",
+          "price": 1
+        }
       ],
       "sources": [
-        {"label": "The Standard: Bar Leone named world's best bar", "url": "https://www.thestandard.com.hk/news/article/313660/Historic-win-for-Asia-as-HKs-Bar-Leone-makes-worlds-best-bar"},
-        {"label": "A Foodie World: best pubs in Hong Kong (2026)", "url": "https://www.afoodieworld.com/blog/2026/07/15/best-pubs-hong-kong/"},
-        {"label": "SCMP 100 Top Tables", "url": "https://100toptables.scmp.com/restaurants-profile-2026/lung-king-heen"}
+        {
+          "label": "The Standard: Bar Leone named world's best bar",
+          "url": "https://www.thestandard.com.hk/news/article/313660/Historic-win-for-Asia-as-HKs-Bar-Leone-makes-worlds-best-bar"
+        },
+        {
+          "label": "A Foodie World: best pubs in Hong Kong (2026)",
+          "url": "https://www.afoodieworld.com/blog/2026/07/15/best-pubs-hong-kong/"
+        },
+        {
+          "label": "SCMP 100 Top Tables",
+          "url": "https://100toptables.scmp.com/restaurants-profile-2026/lung-king-heen"
+        }
       ]
     },
     "brunch-bangkok": {
       "city": "Bangkok",
       "items": [
-        {"type": "bar", "name": "BKK Social Club", "area": "Four Seasons, Chao Phraya riverside", "what": "Glamorous Buenos Aires-inspired cocktail bar, a regular on Asia's 50 Best Bars.", "price": 3},
-        {"type": "bar", "name": "Lennon's", "area": "Rosewood Bangkok, Ploenchit", "what": "30th-floor vinyl-record bar with thousands of LPs. No. 7 on Asia's 50 Best Bars 2026.", "price": 3},
-        {"type": "bar", "name": "Vesper", "area": "Silom", "what": "Elegant, long-standing cocktail bar known for skilled bartenders.", "price": 3},
-        {"type": "bar", "name": "Sky Bar at lebua", "area": "State Tower, Silom", "what": "Famous open-air rooftop bar with dramatic views over the river and skyline.", "price": 4},
-        {"type": "pub", "name": "Hair of the Dog", "area": "Phrom Phong, Sukhumvit", "what": "Craft beer bar with one of the city's best tap lists from around the world.", "price": 2},
-        {"type": "restaurant", "name": "Sorn", "area": "Sukhumvit 26", "what": "Three-Michelin-star Southern Thai tasting menu. Book well ahead.", "price": 4},
-        {"type": "restaurant", "name": "Le Du", "area": "Silom", "what": "Michelin-starred modern Thai built on seasonal Thai produce.", "price": 4},
-        {"type": "restaurant", "name": "Jay Fai", "area": "Old Town (Maha Chai Road)", "what": "Michelin-starred street food, famous for its crab omelette. Expect queues; check it's open before you go.", "price": 3},
-        {"type": "restaurant", "name": "Thipsamai", "area": "Old Town (Maha Chai Road)", "what": "Bangkok's most famous pad thai shop, serving since the 1960s.", "price": 1}
+        {
+          "type": "bar",
+          "name": "BKK Social Club",
+          "area": "Four Seasons, Chao Phraya riverside",
+          "what": "Glamorous Buenos Aires-inspired cocktail bar, a regular on Asia's 50 Best Bars.",
+          "price": 3
+        },
+        {
+          "type": "bar",
+          "name": "Lennon's",
+          "area": "Rosewood Bangkok, Ploenchit",
+          "what": "30th-floor vinyl-record bar with thousands of LPs. No. 7 on Asia's 50 Best Bars 2026.",
+          "price": 3
+        },
+        {
+          "type": "bar",
+          "name": "Vesper",
+          "area": "Silom",
+          "what": "Elegant, long-standing cocktail bar known for skilled bartenders.",
+          "price": 3
+        },
+        {
+          "type": "bar",
+          "name": "Sky Bar at lebua",
+          "area": "State Tower, Silom",
+          "what": "Famous open-air rooftop bar with dramatic views over the river and skyline.",
+          "price": 4
+        },
+        {
+          "type": "pub",
+          "name": "Hair of the Dog",
+          "area": "Phrom Phong, Sukhumvit",
+          "what": "Craft beer bar with one of the city's best tap lists from around the world.",
+          "price": 2
+        },
+        {
+          "type": "restaurant",
+          "name": "Sorn",
+          "area": "Sukhumvit 26",
+          "what": "Three-Michelin-star Southern Thai tasting menu. Book well ahead.",
+          "price": 4
+        },
+        {
+          "type": "restaurant",
+          "name": "Le Du",
+          "area": "Silom",
+          "what": "Michelin-starred modern Thai built on seasonal Thai produce.",
+          "price": 4
+        },
+        {
+          "type": "restaurant",
+          "name": "Jay Fai",
+          "area": "Old Town (Maha Chai Road)",
+          "what": "Michelin-starred street food, famous for its crab omelette. Expect queues; check it's open before you go.",
+          "price": 3
+        },
+        {
+          "type": "restaurant",
+          "name": "Thipsamai",
+          "area": "Old Town (Maha Chai Road)",
+          "what": "Bangkok's most famous pad thai shop, serving since the 1960s.",
+          "price": 1
+        }
       ],
       "sources": [
-        {"label": "Asia's 50 Best Bars: Lennon's", "url": "https://www.theworlds50best.com/bars/best-in-asia/the-list/lennons.html"},
-        {"label": "SilverKris: Bangkok's best cocktail bars 2026", "url": "https://silverkris.singaporeair.com/experience/food-drink/the-2026-guide-to-bangkoks-best-cocktail-bars/"},
-        {"label": "Time Out Bangkok: best beer bars", "url": "https://www.timeout.com/bangkok/bars/best-beer-bars-in-bangkok"}
+        {
+          "label": "Asia's 50 Best Bars: Lennon's",
+          "url": "https://www.theworlds50best.com/bars/best-in-asia/the-list/lennons.html"
+        },
+        {
+          "label": "SilverKris: Bangkok's best cocktail bars 2026",
+          "url": "https://silverkris.singaporeair.com/experience/food-drink/the-2026-guide-to-bangkoks-best-cocktail-bars/"
+        },
+        {
+          "label": "Time Out Bangkok: best beer bars",
+          "url": "https://www.timeout.com/bangkok/bars/best-beer-bars-in-bangkok"
+        }
       ]
     },
     "brunch-manchester": {
       "city": "Manchester",
       "items": [
-        {"type": "pub", "name": "The Peveril of the Peak", "area": "Great Bridgewater Street", "what": "Tiled, Grade II-listed Victorian boozer, named the UK's best pub by Time Out in 2026.", "price": 1},
-        {"type": "pub", "name": "The Briton's Protection", "area": "Great Bridgewater Street", "what": "Historic pub dating to 1806, with ornate snug rooms and hundreds of whiskies.", "price": 1},
-        {"type": "pub", "name": "Sinclair's Oyster Bar", "area": "Shambles Square", "what": "One of the city's oldest pubs, with a big beer garden and low prices.", "price": 1},
-        {"type": "pub", "name": "Port Street Beer House", "area": "Northern Quarter", "what": "Craft beer specialist with rotating taps, tap takeovers and quiz nights.", "price": 2},
-        {"type": "bar", "name": "Schofield's Bar", "area": "City centre", "what": "Polished cocktail bar run by the Schofield brothers, known for impeccable classics.", "price": 3},
-        {"type": "bar", "name": "Cloud 23", "area": "Hilton, Deansgate", "what": "Cocktails with a view from the 23rd floor of the Beetham Tower.", "price": 3},
-        {"type": "bar", "name": "Speak in Code", "area": "City centre", "what": "Intimate cocktail bar with creative drinks and live music.", "price": 3},
-        {"type": "bar", "name": "The Morris", "area": "Manchester", "what": "Newer cocktail bar already named in the UK's Top 50 Bars for 2026.", "price": 3},
-        {"type": "restaurant", "name": "Mana", "area": "Ancoats", "what": "Michelin-starred tasting menus from chef Simon Martin, Manchester's first star in decades.", "price": 4},
-        {"type": "restaurant", "name": "Hawksmoor", "area": "Deansgate", "what": "Steakhouse serving dry-aged beef from native British breeds.", "price": 3},
-        {"type": "restaurant", "name": "Mackie Mayor", "area": "Northern Quarter", "what": "Food hall in a restored Victorian meat market, with independent kitchens and bars.", "price": 2},
-        {"type": "restaurant", "name": "Rudy's Pizza", "area": "Ancoats", "what": "The original Rudy's: blistered Neapolitan pizza at friendly prices.", "price": 1}
+        {
+          "type": "pub",
+          "name": "The Peveril of the Peak",
+          "area": "Great Bridgewater Street",
+          "what": "Tiled, Grade II-listed Victorian boozer, named the UK's best pub by Time Out in 2026.",
+          "price": 1
+        },
+        {
+          "type": "pub",
+          "name": "The Briton's Protection",
+          "area": "Great Bridgewater Street",
+          "what": "Historic pub dating to 1806, with ornate snug rooms and hundreds of whiskies.",
+          "price": 1
+        },
+        {
+          "type": "pub",
+          "name": "Sinclair's Oyster Bar",
+          "area": "Shambles Square",
+          "what": "One of the city's oldest pubs, with a big beer garden and low prices.",
+          "price": 1
+        },
+        {
+          "type": "pub",
+          "name": "Port Street Beer House",
+          "area": "Northern Quarter",
+          "what": "Craft beer specialist with rotating taps, tap takeovers and quiz nights.",
+          "price": 2
+        },
+        {
+          "type": "bar",
+          "name": "Schofield's Bar",
+          "area": "City centre",
+          "what": "Polished cocktail bar run by the Schofield brothers, known for impeccable classics.",
+          "price": 3
+        },
+        {
+          "type": "bar",
+          "name": "Cloud 23",
+          "area": "Hilton, Deansgate",
+          "what": "Cocktails with a view from the 23rd floor of the Beetham Tower.",
+          "price": 3
+        },
+        {
+          "type": "bar",
+          "name": "Speak in Code",
+          "area": "City centre",
+          "what": "Intimate cocktail bar with creative drinks and live music.",
+          "price": 3
+        },
+        {
+          "type": "bar",
+          "name": "The Morris",
+          "area": "Manchester",
+          "what": "Newer cocktail bar already named in the UK's Top 50 Bars for 2026.",
+          "price": 3
+        },
+        {
+          "type": "restaurant",
+          "name": "Mana",
+          "area": "Ancoats",
+          "what": "Michelin-starred tasting menus from chef Simon Martin, Manchester's first star in decades.",
+          "price": 4
+        },
+        {
+          "type": "restaurant",
+          "name": "Hawksmoor",
+          "area": "Deansgate",
+          "what": "Steakhouse serving dry-aged beef from native British breeds.",
+          "price": 3
+        },
+        {
+          "type": "restaurant",
+          "name": "Mackie Mayor",
+          "area": "Northern Quarter",
+          "what": "Food hall in a restored Victorian meat market, with independent kitchens and bars.",
+          "price": 2
+        },
+        {
+          "type": "restaurant",
+          "name": "Rudy's Pizza",
+          "area": "Ancoats",
+          "what": "The original Rudy's: blistered Neapolitan pizza at friendly prices.",
+          "price": 1
+        }
       ],
       "sources": [
-        {"label": "Taste of Manchester: Peveril crowned UK's best pub", "url": "https://tasteofmanchester.com/news/congratulations-the-peveril-of-the-peak-crowned-the-uks-best-pub/"},
-        {"label": "Skiddle: best cocktail bars in Manchester", "url": "https://www.skiddle.com/news/all/The-best-cocktail-bars-in-Manchester/62121/"},
-        {"label": "Michelin Guide: best restaurants in Manchester", "url": "https://guide.michelin.com/ie/en/best-of/best-restaurants-manchester"}
+        {
+          "label": "Taste of Manchester: Peveril crowned UK's best pub",
+          "url": "https://tasteofmanchester.com/news/congratulations-the-peveril-of-the-peak-crowned-the-uks-best-pub/"
+        },
+        {
+          "label": "Skiddle: best cocktail bars in Manchester",
+          "url": "https://www.skiddle.com/news/all/The-best-cocktail-bars-in-Manchester/62121/"
+        },
+        {
+          "label": "Michelin Guide: best restaurants in Manchester",
+          "url": "https://guide.michelin.com/ie/en/best-of/best-restaurants-manchester"
+        }
       ]
     },
     "brunch-new-york": {
       "city": "New York",
       "items": [
-        {"type": "bar", "name": "Dante", "area": "Greenwich Village", "what": "Historic café-bar famous for its Negronis and Martinis, a former World's Best Bar.", "price": 3},
-        {"type": "bar", "name": "Double Chicken Please", "area": "Lower East Side", "what": "Inventive cocktails that turn famous dishes into drinks. On North America's 50 Best Bars 2026.", "price": 3},
-        {"type": "bar", "name": "Bemelmans Bar", "area": "The Carlyle, Upper East Side", "what": "Glamorous piano bar with murals by Ludwig Bemelmans and live jazz.", "price": 4},
-        {"type": "bar", "name": "Employees Only", "area": "West Village", "what": "Speakeasy-style cocktail bar with late-night food and a loyal following.", "price": 3},
-        {"type": "pub", "name": "McSorley's Old Ale House", "area": "East Village", "what": "One of the city's oldest saloons: sawdust floors and two choices, light or dark ale.", "price": 1},
-        {"type": "pub", "name": "The Dead Rabbit", "area": "Financial District", "what": "Irish taproom and cocktail parlour, once voted the world's best bar. Great Guinness and Irish coffee.", "price": 2},
-        {"type": "pub", "name": "Paddy Reilly's Music Bar", "area": "Murray Hill", "what": "Classic Irish pub with live traditional music most nights.", "price": 1},
-        {"type": "restaurant", "name": "Katz's Delicatessen", "area": "Lower East Side", "what": "Lower East Side icon since 1888, famous for hand-cut pastrami on rye.", "price": 2},
-        {"type": "restaurant", "name": "Peter Luger", "area": "Williamsburg, Brooklyn", "what": "Old-school steakhouse known for its dry-aged porterhouse since 1887.", "price": 4},
-        {"type": "restaurant", "name": "Via Carota", "area": "West Village", "what": "Hugely popular Italian trattoria, one of the hardest tables in town. Go early.", "price": 3},
-        {"type": "restaurant", "name": "Balthazar", "area": "SoHo", "what": "Buzzing French brasserie serving from breakfast until late.", "price": 3}
+        {
+          "type": "bar",
+          "name": "Dante",
+          "area": "Greenwich Village",
+          "what": "Historic café-bar famous for its Negronis and Martinis, a former World's Best Bar.",
+          "price": 3
+        },
+        {
+          "type": "bar",
+          "name": "Double Chicken Please",
+          "area": "Lower East Side",
+          "what": "Inventive cocktails that turn famous dishes into drinks. On North America's 50 Best Bars 2026.",
+          "price": 3
+        },
+        {
+          "type": "bar",
+          "name": "Bemelmans Bar",
+          "area": "The Carlyle, Upper East Side",
+          "what": "Glamorous piano bar with murals by Ludwig Bemelmans and live jazz.",
+          "price": 4
+        },
+        {
+          "type": "bar",
+          "name": "Employees Only",
+          "area": "West Village",
+          "what": "Speakeasy-style cocktail bar with late-night food and a loyal following.",
+          "price": 3
+        },
+        {
+          "type": "pub",
+          "name": "McSorley's Old Ale House",
+          "area": "East Village",
+          "what": "One of the city's oldest saloons: sawdust floors and two choices, light or dark ale.",
+          "price": 1
+        },
+        {
+          "type": "pub",
+          "name": "The Dead Rabbit",
+          "area": "Financial District",
+          "what": "Irish taproom and cocktail parlour, once voted the world's best bar. Great Guinness and Irish coffee.",
+          "price": 2
+        },
+        {
+          "type": "pub",
+          "name": "Paddy Reilly's Music Bar",
+          "area": "Murray Hill",
+          "what": "Classic Irish pub with live traditional music most nights.",
+          "price": 1
+        },
+        {
+          "type": "restaurant",
+          "name": "Katz's Delicatessen",
+          "area": "Lower East Side",
+          "what": "Lower East Side icon since 1888, famous for hand-cut pastrami on rye.",
+          "price": 2
+        },
+        {
+          "type": "restaurant",
+          "name": "Peter Luger",
+          "area": "Williamsburg, Brooklyn",
+          "what": "Old-school steakhouse known for its dry-aged porterhouse since 1887.",
+          "price": 4
+        },
+        {
+          "type": "restaurant",
+          "name": "Via Carota",
+          "area": "West Village",
+          "what": "Hugely popular Italian trattoria, one of the hardest tables in town. Go early.",
+          "price": 3
+        },
+        {
+          "type": "restaurant",
+          "name": "Balthazar",
+          "area": "SoHo",
+          "what": "Buzzing French brasserie serving from breakfast until late.",
+          "price": 3
+        }
       ],
       "sources": [
-        {"label": "North America's 50 Best Bars 2026", "url": "https://www.theworlds50best.com/stories/News/north-americas-50-best-bars-2026-the-list.html"},
-        {"label": "Time Out New York: best Irish pubs", "url": "https://www.timeout.com/newyork/bars/the-best-irish-pubs"},
-        {"label": "Michelin Guide: New York's most iconic restaurants", "url": "https://guide.michelin.com/us/en/best-of/new-york-s-5-most-iconic-restaurants"}
+        {
+          "label": "North America's 50 Best Bars 2026",
+          "url": "https://www.theworlds50best.com/stories/News/north-americas-50-best-bars-2026-the-list.html"
+        },
+        {
+          "label": "Time Out New York: best Irish pubs",
+          "url": "https://www.timeout.com/newyork/bars/the-best-irish-pubs"
+        },
+        {
+          "label": "Michelin Guide: New York's most iconic restaurants",
+          "url": "https://guide.michelin.com/us/en/best-of/new-york-s-5-most-iconic-restaurants"
+        }
+      ]
+    },
+    "brunch-brighton": {
+      "city": "Brighton, Hove & Worthing",
+      "items": [
+        {
+          "type": "pub",
+          "name": "The Basketmakers Arms",
+          "area": "North Laine, Brighton",
+          "what": "Much-loved North Laine backstreet pub, its walls lined with old tins, serving real ales.",
+          "price": 1
+        },
+        {
+          "type": "pub",
+          "name": "The Robin Hood",
+          "area": "Norfolk Square, Brighton",
+          "what": "Cosy community pub with armchairs and friendly staff, a past BRAVO best pub winner.",
+          "price": 1
+        },
+        {
+          "type": "pub",
+          "name": "The Bridge",
+          "area": "Shoreham-by-Sea",
+          "what": "Riverside pub on the edge of the River Adur, with garden views and well-reviewed fish and chips.",
+          "price": 2
+        },
+        {
+          "type": "pub",
+          "name": "The Corner House",
+          "area": "Worthing town centre",
+          "what": "Free house on the site of one of Worthing's oldest pubs.",
+          "price": 1
+        },
+        {
+          "type": "bar",
+          "name": "The Grand",
+          "area": "King's Road seafront, Brighton",
+          "what": "Elegant hotel bar, voted best for cocktails at the BRAVO awards 2026.",
+          "price": 3
+        },
+        {
+          "type": "bar",
+          "name": "Clementine and Co",
+          "area": "Brighton",
+          "what": "Premium spirits and creative seasonal cocktails, with good no- and low-alcohol options.",
+          "price": 3
+        },
+        {
+          "type": "bar",
+          "name": "Apiary",
+          "area": "Norfolk Square, Brighton",
+          "what": "Honey-infused cocktails, mead and an organic, biodynamic drinks list.",
+          "price": 2
+        },
+        {
+          "type": "bar",
+          "name": "Tap House Shoreham",
+          "area": "Shoreham-by-Sea",
+          "what": "Relaxed spot for a rotating line-up of craft beers.",
+          "price": 2
+        },
+        {
+          "type": "restaurant",
+          "name": "terre à terre",
+          "area": "The Lanes, Brighton",
+          "what": "Inventive vegetarian restaurant, voted Brighton's top restaurant at the BRAVO awards 2026.",
+          "price": 3
+        },
+        {
+          "type": "restaurant",
+          "name": "Maré",
+          "area": "Hove",
+          "what": "Hove's Michelin-starred restaurant, the area's first star in decades.",
+          "price": 4
+        },
+        {
+          "type": "restaurant",
+          "name": "Etch",
+          "area": "Church Road, Hove",
+          "what": "Chef Steven Edwards' tasting menus in a relaxed Hove dining room.",
+          "price": 4
+        },
+        {
+          "type": "restaurant",
+          "name": "Tern",
+          "area": "Warwick Street, Worthing",
+          "what": "Worthing's go-to for fine dining, now in a new home on Warwick Street.",
+          "price": 3
+        }
+      ],
+      "sources": [
+        {
+          "label": "BRAVO awards 2026 (Restaurants Brighton)",
+          "url": "https://restaurantsbrighton.co.uk/brightons-best-restaurants/"
+        },
+        {
+          "label": "Restaurants Brighton: Shoreham restaurants",
+          "url": "https://restaurantsbrighton.co.uk/shoreham-restaurants/"
+        },
+        {
+          "label": "Neverending Voyage: best restaurants in Worthing",
+          "url": "https://www.neverendingvoyage.com/worthing-restaurants/"
+        }
       ]
     }
   }

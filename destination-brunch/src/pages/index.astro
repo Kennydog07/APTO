@@ -14,7 +14,7 @@ import { organizationLd, websiteLd, faqLd } from '../lib/seo';
 const site = Astro.site!;
 const destinations = visibleDestinations();
 const products = visibleProducts();
-const featured = destinations.filter((d) => d.featured).slice(0, 8);
+const featured = destinations.filter((d) => d.featured).slice(0, 9);
 const byBuyable = (a: (typeof products)[number], b: (typeof products)[number]) =>
   Number(canBuy(b)) - Number(canBuy(a)) || Number(destinationOf(b).featured) - Number(destinationOf(a).featured);
 const brunch = products.filter((p) => p.category === 'brunch').sort(byBuyable);
@@ -72,7 +72,7 @@ const reviews = REVIEWS.filter((r) => PRODUCTS.some((p) => p.id === r.guide));
         </div>
         <a class="link-arrow" href="/destinations">All {destinations.length} destinations →</a>
       </div>
-      <div class="grid four">
+      <div class="grid">
         {featured.map((d, i) => <DestinationCard destination={d} eager={i < 2} />)}
       </div>
     </div>

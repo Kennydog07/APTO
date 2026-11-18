@@ -1,7 +1,10 @@
 # "Best pubs, bars & restaurants" add-on for the city apps
 
-Added in November 2026 to the six brunch apps with the fewest listings:
-Barcelona, Singapore, Hong Kong, Bangkok, Manchester and New York.
+Added in November 2026 to the brunch apps with the fewest listings:
+Barcelona, Singapore, Hong Kong, Bangkok, Manchester, New York and Brighton.
+
+**Brighton** was also expanded from 8 to 16 brunches to cover Hove, Lancing and Worthing
+(`brighton-expansion.py`; run it on an unmodified copy of the app *before* `build.py`).
 
 Each app gets a **Beyond brunch** section after the brunch results, with filter buttons
 (All / Bars / Pubs / Restaurants), an "Open in Maps" button per venue, a price level,

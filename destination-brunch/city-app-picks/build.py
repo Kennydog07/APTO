@@ -14,7 +14,7 @@ here = os.path.dirname(os.path.abspath(__file__))
 src, out, site = sys.argv[1], sys.argv[2], sys.argv[3]
 data = json.load(open(os.path.join(here, "picks.json"), encoding="utf-8"))
 city = data["cities"][site]
-CUR = {"brunch-barcelona": "€", "brunch-manchester": "£", "brunch-bangkok": "฿"}.get(site, "$")
+CUR = {"brunch-barcelona": "€", "brunch-manchester": "£", "brunch-brighton": "£", "brunch-bangkok": "฿"}.get(site, "$")
 LABEL = {"bar": ("🍸", "Bars", "Bar"), "pub": ("🍺", "Pubs", "Pub"), "restaurant": ("🍽️", "Restaurants", "Restaurant")}
 e = lambda s: html.escape(s, quote=True)
 
