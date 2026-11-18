@@ -1,0 +1,23 @@
+/* "Best pubs, bars & restaurants" add-on. Uses the app's own design tokens from styles.css. */
+.picks{margin:40px 0 0;background:var(--paper);border:1px solid var(--line);border-radius:28px;padding:28px 30px 30px;box-shadow:var(--shadow);scroll-margin-top:16px}
+.picks .section-head{flex-wrap:wrap}
+.pk-chips{margin:0 0 18px;flex-wrap:wrap}
+.pk-chips .chip{min-height:44px}
+.pk-chips .chip b{font-weight:700;opacity:.7;margin-left:2px}
+.pk-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.pk-card{display:flex;flex-direction:column;gap:8px;background:var(--cream,#f7f6f3);border:1px solid var(--line);border-radius:18px;padding:16px 18px 18px;transition:transform .2s,box-shadow .2s}
+.pk-card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.pk-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.pk-type{font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:5px 10px;border-radius:99px;background:var(--paper);border:1px solid var(--line);color:var(--maroon-deep)}
+.pk-price{font-weight:700;font-size:14px;letter-spacing:1px;color:var(--maroon-deep)}
+.pk-price i{font-style:normal;opacity:.28}
+.pk-card h3{font-family:var(--serif);font-size:21px;line-height:1.2;margin:2px 0 0;color:var(--maroon-deep)}
+.pk-area{margin:0;font-size:13.5px;color:var(--muted);font-weight:600}
+.pk-what{margin:0;font-size:14.5px;line-height:1.5;color:var(--ink);flex:1}
+.pk-map{align-self:flex-start;display:inline-flex;align-items:center;gap:6px;min-height:44px;margin-top:4px;padding:0 16px;border-radius:99px;border:1px solid var(--maroon);color:var(--maroon);font-weight:600;font-size:13.5px;text-decoration:none;transition:background .2s,color .2s}
+.pk-map:hover{background:var(--maroon);color:#fff}
+.pk-note{margin:18px 0 0;font-size:13px;color:var(--muted);line-height:1.6}
+.pk-note a{color:var(--maroon-2)}
+.pk-card[hidden]{display:none}
+@media (max-width:1020px){.pk-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.picks{padding:22px 16px 24px;border-radius:22px}.pk-grid{grid-template-columns:minmax(0,1fr)}.nav-picks{display:none}}
