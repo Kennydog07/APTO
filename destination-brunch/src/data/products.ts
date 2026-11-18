@@ -88,6 +88,19 @@ const brunchFaq = (city: string, days: string) => [
   },
 ];
 
+/** "Beyond brunch" section added to some apps in Nov 2026 (see city-app-picks/). */
+const PICKS = (city: string) =>
+  `Bonus \u201cBeyond brunch\u201d section: our picks of the best pubs, bars and restaurants in ${city}, with Maps links`;
+const PICKS_HIGHLIGHT = 'Plus best pubs, bars & restaurants';
+const picksShot = (id: string, city: string) => ({
+  src: `/images/screens/${id}-4.webp`,
+  alt: `${city} brunch guide best pubs, bars and restaurants section`,
+});
+const picksFaq = (city: string) => ({
+  q: `Does the ${city} guide cover anything besides brunch?`,
+  a: `Yes. It includes a \u201cBeyond brunch\u201d section with our picks of the best pubs, bars and restaurants in ${city}, each with its area, a short description, a price level and a link to open it in Maps.`,
+});
+
 /* ---- The catalogue ----------------------------------------------------- */
 
 export const PRODUCTS: Product[] = [
@@ -246,16 +259,17 @@ export const PRODUCTS: Product[] = [
     description: [
       'Find your Saturday or Sunday brunch in Manchester, including bottomless brunches across the Northern Quarter, Ancoats, Spinningfields and Deansgate.',
       'Each listing shows prices, packages, timings, the vibe and a link to the venue or menu.',
+      'New: a \u201cBeyond brunch\u201d section with our picks of the best pubs, bars and restaurants in Manchester, so the guide covers the rest of your trip too.',
     ],
-    highlights: ['Prices, packages and times', 'Bottomless brunch options', 'Maps and venue links'],
-    features: [...BRUNCH_CORE, DRINKS],
-    screenshots: shots('manchester-brunch', 'Manchester'),
+    highlights: ['Prices, packages and times', 'Bottomless brunch options', PICKS_HIGHLIGHT],
+    features: [PICKS('Manchester'), ...BRUNCH_CORE, DRINKS],
+    screenshots: [...shots('manchester-brunch', 'Manchester'), picksShot('manchester-brunch', 'Manchester')],
     compatibility: WEB_APP_COMPAT,
     lastUpdated: '2026-11',
     seoTitle: 'Manchester Bottomless Brunch Guide 2026',
     seoDescription:
       'Manchester bottomless brunch guide: weekend brunches in the Northern Quarter, Ancoats, Spinningfields and Deansgate, with prices and times.',
-    faqs: brunchFaq('Manchester', 'Saturday and Sunday'),
+    faqs: [...brunchFaq('Manchester', 'Saturday and Sunday'), picksFaq('Manchester')],
   },
   {
     id: 'barcelona-brunch',
@@ -268,16 +282,17 @@ export const PRODUCTS: Product[] = [
     description: [
       'Find your Saturday or Sunday brunch in Barcelona, from the Gothic Quarter and Born to Eixample and Sant Antoni.',
       'Each listing shows prices, timings, the vibe and a link to the venue or menu.',
+      'New: a \u201cBeyond brunch\u201d section with our picks of the best pubs, bars and restaurants in Barcelona, so the guide covers the rest of your trip too.',
     ],
-    highlights: ['Prices and times', 'Search by cuisine, area or vibe', 'Maps and venue links'],
-    features: [...BRUNCH_CORE, DRINKS],
-    screenshots: shots('barcelona-brunch', 'Barcelona'),
+    highlights: ['Prices and times', 'Search by cuisine, area or vibe', PICKS_HIGHLIGHT],
+    features: [PICKS('Barcelona'), ...BRUNCH_CORE, DRINKS],
+    screenshots: [...shots('barcelona-brunch', 'Barcelona'), picksShot('barcelona-brunch', 'Barcelona')],
     compatibility: WEB_APP_COMPAT,
     lastUpdated: '2026-11',
     seoTitle: 'Barcelona Brunch Guide 2026: Weekend Brunches',
     seoDescription:
       'Barcelona brunch guide with weekend brunches in the Gothic Quarter, Born, Eixample and Sant Antoni: prices, times, maps and links.',
-    faqs: brunchFaq('Barcelona', 'Saturday and Sunday'),
+    faqs: [...brunchFaq('Barcelona', 'Saturday and Sunday'), picksFaq('Barcelona')],
   },
   {
     id: 'bangkok-brunch',
@@ -290,16 +305,17 @@ export const PRODUCTS: Product[] = [
     description: [
       'Find your Saturday or Sunday brunch in Bangkok, from hotel brunches to rooftop venues across Sukhumvit, Silom, Sathorn and Siam.',
       'Each listing shows prices, packages, timings, the vibe and a link to the venue or menu.',
+      'New: a \u201cBeyond brunch\u201d section with our picks of the best pubs, bars and restaurants in Bangkok, so the guide covers the rest of your trip too.',
     ],
-    highlights: ['Prices, packages and times', 'Views and pool filters', 'Maps and venue links'],
-    features: [...BRUNCH_CORE, DRINKS],
-    screenshots: shots('bangkok-brunch', 'Bangkok'),
+    highlights: ['Prices, packages and times', 'Views and pool filters', PICKS_HIGHLIGHT],
+    features: [PICKS('Bangkok'), ...BRUNCH_CORE, DRINKS],
+    screenshots: [...shots('bangkok-brunch', 'Bangkok'), picksShot('bangkok-brunch', 'Bangkok')],
     compatibility: WEB_APP_COMPAT,
     lastUpdated: '2026-11',
     seoTitle: 'Bangkok Brunch Guide 2026: Hotel & Rooftop Brunches',
     seoDescription:
       'Bangkok brunch guide with weekend hotel and rooftop brunches on Sukhumvit, Silom, Sathorn and Siam: prices, times, maps and links.',
-    faqs: brunchFaq('Bangkok', 'Saturday and Sunday'),
+    faqs: [...brunchFaq('Bangkok', 'Saturday and Sunday'), picksFaq('Bangkok')],
   },
   {
     id: 'singapore-brunch',
@@ -312,16 +328,17 @@ export const PRODUCTS: Product[] = [
     description: [
       'Find your Saturday or Sunday brunch in Singapore, from Marina Bay hotel brunches to spots on Orchard Road and Sentosa.',
       'Each listing shows prices, packages, timings, the vibe and a link to the venue or menu.',
+      'New: a \u201cBeyond brunch\u201d section with our picks of the best pubs, bars and restaurants in Singapore, so the guide covers the rest of your trip too.',
     ],
-    highlights: ['Prices, packages and times', 'Search by cuisine, area or vibe', 'Maps and venue links'],
-    features: [...BRUNCH_CORE, DRINKS],
-    screenshots: shots('singapore-brunch', 'Singapore'),
+    highlights: ['Prices, packages and times', 'Search by cuisine, area or vibe', PICKS_HIGHLIGHT],
+    features: [PICKS('Singapore'), ...BRUNCH_CORE, DRINKS],
+    screenshots: [...shots('singapore-brunch', 'Singapore'), picksShot('singapore-brunch', 'Singapore')],
     compatibility: WEB_APP_COMPAT,
     lastUpdated: '2026-11',
     seoTitle: 'Singapore Brunch Guide 2026: Weekend Brunches & Dining',
     seoDescription:
       'Singapore brunch and dining guide: weekend brunches at Marina Bay, Orchard and Sentosa with prices, packages, times, maps and links.',
-    faqs: brunchFaq('Singapore', 'Saturday and Sunday'),
+    faqs: [...brunchFaq('Singapore', 'Saturday and Sunday'), picksFaq('Singapore')],
   },
   {
     id: 'hong-kong-brunch',
@@ -334,16 +351,17 @@ export const PRODUCTS: Product[] = [
     description: [
       'Find your Saturday or Sunday brunch in Hong Kong, from harbour-view hotel brunches in Central and Tsim Sha Tsui to Discovery Bay.',
       'Each listing shows prices, packages, timings, the vibe and a link to the venue or menu.',
+      'New: a \u201cBeyond brunch\u201d section with our picks of the best pubs, bars and restaurants in Hong Kong, so the guide covers the rest of your trip too.',
     ],
-    highlights: ['Prices, packages and times', 'Views filter', 'Maps and venue links'],
-    features: [...BRUNCH_CORE, DRINKS],
-    screenshots: shots('hong-kong-brunch', 'Hong Kong'),
+    highlights: ['Prices, packages and times', 'Views filter', PICKS_HIGHLIGHT],
+    features: [PICKS('Hong Kong'), ...BRUNCH_CORE, DRINKS],
+    screenshots: [...shots('hong-kong-brunch', 'Hong Kong'), picksShot('hong-kong-brunch', 'Hong Kong')],
     compatibility: WEB_APP_COMPAT,
     lastUpdated: '2026-11',
     seoTitle: 'Hong Kong Brunch Guide 2026: Weekend Brunches',
     seoDescription:
       'Hong Kong brunch guide with weekend brunches in Central, Tsim Sha Tsui, Admiralty and Discovery Bay: prices, times, maps and links.',
-    faqs: brunchFaq('Hong Kong', 'Saturday and Sunday'),
+    faqs: [...brunchFaq('Hong Kong', 'Saturday and Sunday'), picksFaq('Hong Kong')],
   },
   {
     id: 'new-york-brunch',
@@ -356,16 +374,17 @@ export const PRODUCTS: Product[] = [
     description: [
       'Find your Saturday or Sunday brunch in New York, across Manhattan, Brooklyn and Queens.',
       'Each listing shows prices, timings, the vibe and a link to the venue or menu.',
+      'New: a \u201cBeyond brunch\u201d section with our picks of the best pubs, bars and restaurants in New York, so the guide covers the rest of your trip too.',
     ],
-    highlights: ['Prices and times', 'Search by cuisine, area or vibe', 'Maps and venue links'],
-    features: [...BRUNCH_CORE, DRINKS],
-    screenshots: shots('new-york-brunch', 'New York'),
+    highlights: ['Prices and times', 'Search by cuisine, area or vibe', PICKS_HIGHLIGHT],
+    features: [PICKS('New York'), ...BRUNCH_CORE, DRINKS],
+    screenshots: [...shots('new-york-brunch', 'New York'), picksShot('new-york-brunch', 'New York')],
     compatibility: WEB_APP_COMPAT,
     lastUpdated: '2026-11',
     seoTitle: 'New York Brunch Guide 2026: Saturday & Sunday Brunches',
     seoDescription:
       'New York brunch guide with weekend brunches in Manhattan, Brooklyn and Queens: prices, times, maps and venue links.',
-    faqs: brunchFaq('New York', 'Saturday and Sunday'),
+    faqs: [...brunchFaq('New York', 'Saturday and Sunday'), picksFaq('New York')],
   },
 
   /* ---- Example of a future product (draft: not shown on the live site) ----
