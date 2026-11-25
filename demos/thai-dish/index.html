@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Thai Dish Worthing | Authentic Thai Restaurant, Bath Place</title>
-<meta name="description" content="Thai Dish is a small, family-run Thai restaurant at 6 Bath Place, Worthing. Fresh, authentic Thai cooking, bring your own drinks. Call 07834 555597 to book.">
+<meta name="description" content="We are Thai Dish, a small, family-run Thai restaurant at 6 Bath Place, Worthing. Fresh, authentic Thai cooking, bring your own drinks. Call 07834 555597 to book.">
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -87,7 +87,7 @@ em.accent{font-style:italic;color:var(--brand)}
 .rating small{display:block;color:var(--ink-soft);font-size:.85rem;margin-top:.15rem}
 .hero-art{position:relative}
 .arch{aspect-ratio:4/5;border-radius:240px 240px 28px 28px;overflow:hidden;box-shadow:var(--shadow);background:linear-gradient(160deg,#2F5D3A 0%,#1E4128 100%)}
-.arch svg{width:100%;height:100%}
+.arch img{width:100%;height:100%;object-fit:cover}
 .float{position:absolute;background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:.85rem 1.1rem;font-size:.92rem;display:flex;align-items:center;gap:.7rem;max-width:250px}
 .float .dot{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;flex:none}
 .float .dot svg{width:18px;height:18px}
@@ -127,7 +127,12 @@ section.block{padding:5.5rem 0}
 .tabs button{font:600 .95rem var(--sans);border:1px solid var(--line);background:#fff;color:var(--ink);padding:.65rem 1.15rem;border-radius:999px;cursor:pointer}
 .tabs button[aria-selected=true]{background:var(--brand);color:#fff;border-color:var(--brand)}
 .dishes{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.2rem}
-.dish{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:1.4rem 1.5rem;display:flex;flex-direction:column;gap:.4rem;transition:transform .2s,box-shadow .2s}
+.dish{background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
+.dish-img{position:relative;aspect-ratio:4/3;background:var(--bg-tint);overflow:hidden}
+.dish-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.dish:hover .dish-img img{transform:scale(1.04)}
+.dish-body{padding:1.2rem 1.4rem 1.4rem;display:flex;flex-direction:column;gap:.4rem;flex:1}
+.photo-tag{position:absolute;right:10px;bottom:10px;font-size:.68rem;font-weight:600;background:rgba(0,0,0,.5);color:#fff;padding:.2rem .5rem;border-radius:999px}
 .dish:hover{transform:translateY(-3px);box-shadow:var(--shadow-sm)}
 .dish header{display:flex;justify-content:space-between;align-items:baseline;gap:1rem}
 .dish h3{font-size:1.18rem;margin:0}
@@ -191,6 +196,10 @@ footer strong{color:#fff;font-family:var(--serif);font-size:1.2rem}
 footer a{color:#E7EFE8;text-decoration:none}
 footer a:hover{text-decoration:underline}
 footer ul{list-style:none;padding:0;margin:.6rem 0 0;display:grid;gap:.4rem}
+.credits{grid-column:1/-1;font-size:.78rem}
+.credits summary{cursor:pointer;color:#E7EFE8;font-weight:600}
+.credits ul{margin-top:.6rem;gap:.25rem}
+.credits a{text-decoration:underline}
 .legal{grid-column:1/-1;border-top:1px solid rgba(255,255,255,.1);padding-top:1.4rem;font-size:.8rem}
 @media (max-width:720px){footer .wrap{grid-template-columns:1fr}}
 
@@ -346,10 +355,10 @@ footer ul{list-style:none;padding:0;margin:.6rem 0 0;display:grid;gap:.4rem}
       <div class="reveal">
         <p class="kicker"><svg><use href="#i-spark"/></svg>About Thai Dish</p>
         <h2>A little taste of Thailand <em class="accent">in Bath Place</em></h2>
-        <p class="lead">Thai Dish is a small, independent restaurant tucked into Bath Place, the pretty lane between Worthing's town centre and the seafront. The kitchen is all about fresh herbs, balanced spice and recipes cooked the traditional way.</p>
+        <p class="lead">We are a small, independent restaurant tucked into Bath Place, the pretty lane between Worthing's town centre and the seafront. Our kitchen is all about fresh herbs, balanced spice and recipes cooked the traditional way.</p>
         <ul class="ticks">
           <li><svg><use href="#i-check"/></svg><span><strong>Authentic recipes</strong> — curries, stir fries and noodle dishes with real Thai flavour.</span></li>
-          <li><svg><use href="#i-check"/></svg><span><strong>Great value</strong> — and with BYO, a night out costs less.</span></li>
+          <li><svg><use href="#i-check"/></svg><span><strong>Great value</strong> — and as we are BYO, a night out costs less.</span></li>
           <li><svg><use href="#i-check"/></svg><span><strong>Eat in or take away</strong> — call ahead and your order will be ready to collect.</span></li>
         </ul>
       </div>
@@ -411,7 +420,7 @@ footer ul{list-style:none;padding:0;margin:.6rem 0 0;display:grid;gap:.4rem}
       <div class="quotes">
         <article class="quote reveal"><div class="stars" aria-hidden="true"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></div><h3>Authentic &amp; fresh</h3><p>Diners say the food is genuinely authentic and freshly cooked. The green curry, the chilli garlic basil stir fry and the Thai ribs come up again and again.</p></article>
         <article class="quote reveal"><div class="stars" aria-hidden="true"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></div><h3>Warm, friendly owners</h3><p>Reviewers often mention how welcoming the owners are, saying it feels like being looked after in someone's home.</p></article>
-        <article class="quote reveal"><div class="stars" aria-hidden="true"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></div><h3>Great value, BYO</h3><p>Fair prices plus bring-your-own drinks make it a favourite for relaxed evenings with friends. It's small and cosy, so booking is a good idea.</p></article>
+        <article class="quote reveal"><div class="stars" aria-hidden="true"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></div><h3>Great value, BYO</h3><p>Fair prices plus bring-your-own drinks make it a favourite for relaxed evenings with friends. We are small and cosy, so booking is a good idea.</p></article>
       </div>
     </div>
   </section>
@@ -460,7 +469,7 @@ footer ul{list-style:none;padding:0;margin:.6rem 0 0;display:grid;gap:.4rem}
       <div class="cta-box reveal">
         <p class="kicker"><svg><use href="#i-spark"/></svg>Hungry yet?</p>
         <h2>Book your table <em class="accent">tonight</em></h2>
-        <p class="lead" style="margin-inline:auto">It's a small restaurant, so call ahead to be sure of a seat, or to order a takeaway for collection.</p>
+        <p class="lead" style="margin-inline:auto">We are a small restaurant, so call ahead to be sure of a seat, or to order a takeaway for collection.</p>
         <div class="hero-ctas">
           <a class="btn btn-primary" href="tel:+447834555597"><svg><use href="#i-phone"/></svg>07834 555597</a>
           <a class="btn btn-ghost" href="#visit"><svg><use href="#i-clock"/></svg>Opening hours</a>
@@ -474,7 +483,7 @@ footer ul{list-style:none;padding:0;margin:.6rem 0 0;display:grid;gap:.4rem}
   <div class="wrap">
     <div>
       <strong>Thai Dish</strong>
-      <p>Authentic, family-run Thai restaurant in Worthing town centre. Eat in or take away, and bring your own drinks.</p>
+      <p>We are an authentic, family-run Thai restaurant in Worthing town centre. Eat in or take away, and bring your own drinks.</p>
     </div>
     <div>
       <span style="color:#fff;font-weight:700">Visit</span>
