@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Thai Dish Worthing | Authentic Thai Restaurant, Bath Place</title>
-<meta name="description" content="We are Thai Dish, a small, family-run Thai restaurant at 6 Bath Place, Worthing. Fresh, authentic Thai cooking, bring your own drinks. Call 07834 555597 to book.">
+<meta name="description" content="We are Thai Dish, a small, family-run Thai restaurant at 6 Bath Place, Worthing. Fresh, authentic Thai cooking, bring your own drinks. Call 07723 669463 to book.">
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -142,6 +142,25 @@ section.block{padding:5.5rem 0}
 .chip{font-size:.74rem;font-weight:700;padding:.2rem .55rem;border-radius:999px;background:var(--brand-soft);color:var(--brand-dark)}
 .chip.hot{background:#FBE3DE;color:var(--chilli)}
 .chip.fav{background:var(--gold-soft);color:#8A5E05}
+.mpanel{max-width:900px;margin-inline:auto}
+.prices{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.5rem;margin:0 0 1.6rem}
+.prices .plab{font-weight:700;font-size:.9rem;color:var(--ink-soft);margin-right:.2rem}
+.prices span:not(.plab){background:#fff;border:1px solid var(--line);border-radius:999px;padding:.35rem .85rem;font-size:.92rem}
+.prices b{color:var(--brand-dark)}
+.mlist{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:.9rem 1.4rem}
+.mitem{display:flex;gap:1rem;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:16px;padding:.9rem 1rem}
+.mitem img,.mitem .num{width:72px;height:72px;border-radius:12px;flex:none;object-fit:cover}
+.mitem .num{display:grid;place-items:center;background:var(--brand-soft);color:var(--brand-dark);font-family:var(--serif);font-weight:700;font-size:1.2rem}
+.mtext{flex:1;min-width:0}
+.mhead{display:flex;align-items:center;flex-wrap:wrap;gap:.35rem .5rem}
+.mhead h3{font-size:1.08rem;margin:0}
+.mhead .dots{flex:1;min-width:10px}
+.price{font-weight:800;color:var(--brand-dark);white-space:nowrap}
+.mtext p{margin:.25rem 0 0;color:var(--ink-soft);font-size:.9rem;line-height:1.5}
+.heat{display:inline-flex;color:var(--chilli)}
+.heat .ch{width:15px;height:15px}
+@media (max-width:760px){.mlist{grid-template-columns:1fr}.mitem img,.mitem .num{width:60px;height:60px}}
+.menu-note .chip{vertical-align:middle}
 .menu-note{text-align:center;color:var(--ink-soft);font-size:.92rem;margin-top:2rem}
 [hidden]{display:none!important}
 
@@ -252,7 +271,7 @@ footer ul{list-style:none;padding:0;margin:.6rem 0 0;display:grid;gap:.4rem}
       <a href="#reviews">Reviews</a>
       <a href="#visit">Find us</a>
     </nav>
-    <a class="btn btn-primary head-call" href="tel:+447834555597"><svg><use href="#i-phone"/></svg><span>07834 555597</span></a>
+    <a class="btn btn-primary head-call" href="tel:+447723669463"><svg><use href="#i-phone"/></svg><span>07723 669463</span></a>
   </div>
 </header>
 
@@ -264,8 +283,8 @@ footer ul{list-style:none;padding:0;margin:.6rem 0 0;display:grid;gap:.4rem}
         <h1>Proper Thai cooking, <em>made fresh to order</em></h1>
         <p class="lead">Fragrant curries, wok-fired stir fries and Thai favourites cooked from scratch in a small, cosy dining room just off Worthing town centre. Bring your own bottle — no corkage fuss.</p>
         <div class="hero-ctas">
-          <a class="btn btn-primary" href="tel:+447834555597"><svg><use href="#i-phone"/></svg>Call to book a table</a>
-          <a class="btn btn-ghost" href="#menu"><svg><use href="#i-menu"/></svg>See house favourites</a>
+          <a class="btn btn-primary" href="tel:+447723669463"><svg><use href="#i-phone"/></svg>Call to book a table</a>
+          <a class="btn btn-ghost" href="#menu"><svg><use href="#i-menu"/></svg>See the menu</a>
         </div>
         <div class="rating">
           <b>4.8</b>
@@ -316,38 +335,83 @@ footer ul{list-style:none;padding:0;margin:.6rem 0 0;display:grid;gap:.4rem}
   <section class="block menu" id="menu">
     <div class="wrap">
       <div class="center reveal">
-        <p class="kicker"><svg><use href="#i-spark"/></svg>House favourites</p>
-        <h2>From the <em class="accent">kitchen</em></h2>
-        <p class="lead">A taste of what's cooking. Just ask if you'd like a dish milder, hotter, or vegetarian.</p>
+        <p class="kicker"><svg><use href="#i-spark"/></svg>Take away &amp; dinner menu</p>
+        <h2>Our <em class="accent">menu</em></h2>
+        <p class="lead">Our full take away &amp; dinner menu. Eat in, or call ahead and collect. Just ask if you'd like a dish milder or hotter.</p>
       </div>
       <div class="tabs" role="tablist" aria-label="Menu sections">
-        <button role="tab" aria-selected="true" aria-controls="p-curry" id="t-curry">Curries</button>
-        <button role="tab" aria-selected="false" aria-controls="p-wok" id="t-wok" tabindex="-1">Wok &amp; stir fry</button>
+        <button role="tab" aria-selected="true" aria-controls="p-start" id="t-start">Starters</button>
+        <button role="tab" aria-selected="false" aria-controls="p-soup" id="t-soup" tabindex="-1">Soup &amp; salad</button>
+        <button role="tab" aria-selected="false" aria-controls="p-curry" id="t-curry" tabindex="-1">Curries</button>
+        <button role="tab" aria-selected="false" aria-controls="p-wok" id="t-wok" tabindex="-1">Stir fry</button>
         <button role="tab" aria-selected="false" aria-controls="p-noodle" id="t-noodle" tabindex="-1">Noodles &amp; rice</button>
-        <button role="tab" aria-selected="false" aria-controls="p-start" id="t-start" tabindex="-1">Starters</button>
+        <button role="tab" aria-selected="false" aria-controls="p-special" id="t-special" tabindex="-1">Chef's specials</button>
       </div>
-
-      <div class="dishes" role="tabpanel" id="p-curry" aria-labelledby="t-curry">
-        <article class="dish"><div class="dish-img"><img src="img/green-curry.jpg" alt="Thai green curry with roti" loading="lazy" width="720" height="540"><span class="photo-tag">Stock photo</span></div><div class="dish-body"><header><h3>Green Curry</h3><span class="thai">Gaeng Keow Wan</span></header><p>Creamy coconut green curry with Thai aubergine, bamboo shoots, chilli and sweet basil.</p><div class="chips"><span class="chip fav">Diners' favourite</span><span class="chip hot">Hot</span></div></div></article>
-        <article class="dish"><div class="dish-img"><img src="img/red-curry.jpg" alt="Thai red curry" loading="lazy" width="720" height="540"><span class="photo-tag">Stock photo</span></div><div class="dish-body"><header><h3>Red Curry</h3><span class="thai">Gaeng Daeng</span></header><p>Rich red curry paste simmered with coconut milk, bamboo shoots, peppers and kaffir lime leaf.</p><div class="chips"><span class="chip fav">Diners' favourite</span><span class="chip hot">Medium–hot</span></div></div></article>
-        <article class="dish"><div class="dish-img"><img src="img/massaman.jpg" alt="Massaman curry in a white bowl" loading="lazy" width="720" height="540"><span class="photo-tag">Stock photo</span></div><div class="dish-body"><header><h3>Massaman Curry</h3><span class="thai">Gaeng Massaman</span></header><p>Mild, warmly spiced curry with potato, onion and roasted peanuts.</p><div class="chips"><span class="chip">Mild</span></div></div></article>
-        <article class="dish"><div class="dish-img"><img src="img/panang.jpg" alt="Panang curry garnished with Thai basil" loading="lazy" width="720" height="540"><span class="photo-tag">Stock photo</span></div><div class="dish-body"><header><h3>Panang Curry</h3><span class="thai">Phanaeng</span></header><p>Thick, fragrant curry with coconut cream and shredded lime leaf.</p><div class="chips"><span class="chip hot">Medium</span></div></div></article>
+      <div class="mpanel" role="tabpanel" id="p-start" aria-labelledby="t-start">
+        <ul class="mlist">
+          <li class="mitem"><span class="num">1</span><div class="mtext"><div class="mhead"><h3>Prawn Crackers</h3><span class="dots"></span><span class="price">£3.00</span></div></div></li>
+          <li class="mitem"><span class="num">2</span><div class="mtext"><div class="mhead"><h3>Vegetable Spring Rolls</h3><span class="chip">V</span><span class="dots"></span><span class="price">£6.50</span></div><p>Crispy spring rolls filled with seasoned vegetables</p></div></li>
+          <li class="mitem has-img"><img src="img/satay.jpg" alt="Chicken satay skewers with peanut sauce" loading="lazy" width="96" height="96"><div class="mtext"><div class="mhead"><h3>Chicken Satay</h3><span class="dots"></span><span class="price">£6.95</span></div><p>Marinated chargrilled chicken served with peanut sauce</p></div></li>
+          <li class="mitem"><span class="num">4</span><div class="mtext"><div class="mhead"><h3>Salt &amp; Pepper Squid / Prawn</h3><span class="dots"></span><span class="price">£7.50 / £7.95</span></div><p>Crispy fried squid in batter tossed with salt, ground black pepper, spring onion and sliced chilli</p></div></li>
+          <li class="mitem has-img"><img src="img/ribs.jpg" alt="Crispy Thai pork ribs on a banana leaf" loading="lazy" width="96" height="96"><div class="mtext"><div class="mhead"><h3>Spare Ribs</h3><span class="chip fav">Diners' favourite</span><span class="dots"></span><span class="price">£7.95</span></div><p>Wok-fried tender pork spare ribs marinated in Thai sauce or BBQ sauce</p></div></li>
+          <li class="mitem"><span class="num">6</span><div class="mtext"><div class="mhead"><h3>Prawn Tempura</h3><span class="dots"></span><span class="price">£6.95</span></div><p>Marinated prawns coated in crispy breadcrumbs and deep fried</p></div></li>
+          <li class="mitem"><span class="num">7</span><div class="mtext"><div class="mhead"><h3>Golden Parcels</h3><span class="dots"></span><span class="price">£6.95</span></div><p>Minced chicken with turmeric wrapped in rice paper and deep fried</p></div></li>
+          <li class="mitem"><span class="num">8</span><div class="mtext"><div class="mhead"><h3>Vegetable Tempura</h3><span class="chip">V</span><span class="dots"></span><span class="price">£6.50</span></div><p>Crispy mixed vegetables in batter, served with chilli sauce</p></div></li>
+          <li class="mitem"><span class="num">9</span><div class="mtext"><div class="mhead"><h3>Prawn on Bread</h3><span class="dots"></span><span class="price">£6.95</span></div><p>A blend of seasoned prawn on crispy fried bread</p></div></li>
+          <li class="mitem"><span class="num">10</span><div class="mtext"><div class="mhead"><h3>Pork Dumplings</h3><span class="dots"></span><span class="price">£6.95</span></div><p>Minced pork with water chestnuts in wonton sheets, steamed</p></div></li>
+          <li class="mitem"><span class="num">11</span><div class="mtext"><div class="mhead"><h3>Spicy Corn Cake</h3><span class="chip">V</span><span class="dots"></span><span class="price">£6.50</span></div><p>Thai corn cake with aromatic Thai herbs, red curry paste and lime leaves</p></div></li>
+        </ul>
       </div>
-      <div class="dishes" role="tabpanel" id="p-wok" aria-labelledby="t-wok" hidden>
-        <article class="dish"><div class="dish-img"><img src="img/kra-pao.jpg" alt="Pad kra pao with rice and a fried egg" loading="lazy" width="720" height="540"><span class="photo-tag">Stock photo</span></div><div class="dish-body"><header><h3>Chilli, Garlic &amp; Basil</h3><span class="thai">Pad Kra Pao</span></header><p>Wok-fried with fresh chilli, garlic and holy basil — a Thai street classic, great with chicken.</p><div class="chips"><span class="chip fav">Diners' favourite</span><span class="chip hot">Hot</span></div></div></article>
-        <article class="dish"><div class="dish-img"><img src="img/cashew.jpg" alt="Chicken and cashew nut stir fry" loading="lazy" width="720" height="540"><span class="photo-tag">Stock photo</span></div><div class="dish-body"><header><h3>Cashew Nut Stir Fry</h3><span class="thai">Pad Med Mamuang</span></header><p>Roasted cashews, onion, peppers and dried chilli in a light sweet-savoury sauce.</p><div class="chips"><span class="chip">Mild</span></div></div></article>
+      <div class="mpanel" role="tabpanel" id="p-soup" aria-labelledby="t-soup" hidden>
+        <div class="prices"><span class="plab">Tom Yum soup:</span><span><b>Prawn</b> £7.50</span><span><b>Chicken</b> £6.95</span><span><b>Veg</b> £5.95</span></div>
+        <ul class="mlist">
+          <li class="mitem has-img"><img src="img/tom-yum.jpg" alt="Tom yum soup in a white bowl" loading="lazy" width="96" height="96"><div class="mtext"><div class="mhead"><h3>Spicy Soup (Tom Yum)</h3><span class="heat" aria-label="Spice level 2 of 3" title="Spice level 2 of 3"><svg class="ch"><use href="#i-chilli"/></svg><svg class="ch"><use href="#i-chilli"/></svg></span><span class="dots"></span></div><p>Classic hot and sour soup with Thai herbs, lemongrass and galangal</p></div></li>
+          <li class="mitem"><span class="num">13</span><div class="mtext"><div class="mhead"><h3>Spicy Coconut Soup (Tom Kha)</h3><span class="heat" aria-label="Spice level 1 of 3" title="Spice level 1 of 3"><svg class="ch"><use href="#i-chilli"/></svg></span><span class="dots"></span></div><p>Creamy coconut hot and sour soup with lemongrass, galangal and kaffir lime leaves</p></div></li>
+          <li class="mitem"><span class="num">18</span><div class="mtext"><div class="mhead"><h3>Beef Salad</h3><span class="dots"></span><span class="price">£11.95</span></div><p>Grilled rib eye, finely sliced and tossed with spicy dressing and vegetables</p></div></li>
+          <li class="mitem"><span class="num">19</span><div class="mtext"><div class="mhead"><h3>Prawn Salad</h3><span class="dots"></span><span class="price">£11.95</span></div><p>Spicy prawn salad with mixed vegetables and a hot and sour dressing</p></div></li>
+        </ul>
       </div>
-      <div class="dishes" role="tabpanel" id="p-noodle" aria-labelledby="t-noodle" hidden>
-        <article class="dish"><div class="dish-img"><img src="img/pad-thai.jpg" alt="Pad Thai with prawns, beansprouts and lime" loading="lazy" width="720" height="540"><span class="photo-tag">Stock photo</span></div><div class="dish-body"><header><h3>Pad Thai</h3><span class="thai">Phat Thai</span></header><p>Rice noodles with egg, beansprouts, spring onion, crushed peanuts and a squeeze of lime.</p><div class="chips"><span class="chip">Mild</span></div></div></article>
-        <article class="dish"><div class="dish-img"><img src="img/kee-mao.jpg" alt="Drunken noodles with tofu and red pepper" loading="lazy" width="720" height="540"><span class="photo-tag">Stock photo</span></div><div class="dish-body"><header><h3>Drunken Noodles</h3><span class="thai">Pad Kee Mao</span></header><p>Wide rice noodles stir-fried with chilli, garlic, vegetables and basil.</p><div class="chips"><span class="chip hot">Hot</span></div></div></article>
-        <article class="dish"><div class="dish-img"><img src="img/fried-rice.jpg" alt="Thai fried rice" loading="lazy" width="720" height="540"><span class="photo-tag">Stock photo</span></div><div class="dish-body"><header><h3>Thai Fried Rice</h3><span class="thai">Khao Pad</span></header><p>Jasmine rice wok-fried with egg, onion and tomato, served with cucumber and lime.</p><div class="chips"><span class="chip">Mild</span></div></div></article>
+      <div class="mpanel" role="tabpanel" id="p-curry" aria-labelledby="t-curry" hidden>
+        <div class="prices"><span class="plab">Choose your filling:</span><span><b>Prawn</b> £11.95</span><span><b>Beef</b> £11.95</span><span><b>Chicken</b> £11.50</span><span><b>Veg</b> £10.50</span></div>
+        <ul class="mlist">
+          <li class="mitem has-img"><img src="img/green-curry.jpg" alt="Thai green curry with roti" loading="lazy" width="96" height="96"><div class="mtext"><div class="mhead"><h3>Green Curry</h3><span class="heat" aria-label="Spice level 2 of 3" title="Spice level 2 of 3"><svg class="ch"><use href="#i-chilli"/></svg><svg class="ch"><use href="#i-chilli"/></svg></span><span class="chip fav">Diners' favourite</span><span class="dots"></span></div><p>The famous fragrant Thai green curry in coconut milk with bamboo shoots, courgettes, red chilli and sweet basil</p></div></li>
+          <li class="mitem has-img"><img src="img/red-curry.jpg" alt="Thai red curry" loading="lazy" width="96" height="96"><div class="mtext"><div class="mhead"><h3>Red Curry</h3><span class="heat" aria-label="Spice level 2 of 3" title="Spice level 2 of 3"><svg class="ch"><use href="#i-chilli"/></svg><svg class="ch"><use href="#i-chilli"/></svg></span><span class="dots"></span></div><p>Aromatic Thai red curry in coconut milk with bamboo shoots, courgettes, red chilli and sweet basil</p></div></li>
+          <li class="mitem has-img"><img src="img/panang.jpg" alt="Panang curry garnished with Thai basil" loading="lazy" width="96" height="96"><div class="mtext"><div class="mhead"><h3>Panaeng Curry</h3><span class="heat" aria-label="Spice level 1 of 3" title="Spice level 1 of 3"><svg class="ch"><use href="#i-chilli"/></svg></span><span class="dots"></span></div><p>A rich and creamy curry in coconut milk with shredded kaffir lime leaves</p></div></li>
+          <li class="mitem has-img"><img src="img/massaman.jpg" alt="Massaman curry in a white bowl" loading="lazy" width="96" height="96"><div class="mtext"><div class="mhead"><h3>Massaman Beef Curry</h3><span class="heat" aria-label="Spice level 1 of 3" title="Spice level 1 of 3"><svg class="ch"><use href="#i-chilli"/></svg></span><span class="dots"></span><span class="price">£12.50</span></div><p>A mild curry with sweet spices, cinnamon, nutmeg, star anise, potato, sweet potato and onion</p></div></li>
+        </ul>
       </div>
-      <div class="dishes" role="tabpanel" id="p-start" aria-labelledby="t-start" hidden>
-        <article class="dish"><div class="dish-img"><img src="img/ribs.jpg" alt="Crispy Thai pork ribs on a banana leaf" loading="lazy" width="720" height="540"><span class="photo-tag">Stock photo</span></div><div class="dish-body"><header><h3>Thai Ribs</h3><span class="thai">Kra Dook Moo</span></header><p>Sticky, tender pork ribs glazed in a sweet and savoury marinade.</p><div class="chips"><span class="chip fav">Diners' favourite</span></div></div></article>
-        <article class="dish"><div class="dish-img"><img src="img/satay.jpg" alt="Chicken satay skewers with peanut sauce" loading="lazy" width="720" height="540"><span class="photo-tag">Stock photo</span></div><div class="dish-body"><header><h3>Chicken Satay</h3><span class="thai">Satay Gai</span></header><p>Grilled marinated chicken skewers with peanut sauce and cucumber relish.</p><div class="chips"><span class="chip">Mild</span></div></div></article>
-        <article class="dish"><div class="dish-img"><img src="img/tom-yum.jpg" alt="Tom yum soup in a white bowl" loading="lazy" width="720" height="540"><span class="photo-tag">Stock photo</span></div><div class="dish-body"><header><h3>Tom Yum Soup</h3><span class="thai">Tom Yum</span></header><p>Hot and sour soup with lemongrass, galangal, lime leaf and mushrooms.</p><div class="chips"><span class="chip hot">Hot</span></div></div></article>
+      <div class="mpanel" role="tabpanel" id="p-wok" aria-labelledby="t-wok" hidden>
+        <div class="prices"><span class="plab">Choose your filling:</span><span><b>Prawn</b> £11.95</span><span><b>Beef</b> £11.95</span><span><b>Chicken</b> £11.50</span><span><b>Veg</b> £10.50</span></div>
+        <ul class="mlist">
+          <li class="mitem"><span class="num">20</span><div class="mtext"><div class="mhead"><h3>Sweet &amp; Sour</h3><span class="dots"></span></div><p>Sweet and sour sauce with cucumber, onion, pineapple, tomato, peppers and spring onion</p></div></li>
+          <li class="mitem has-img"><img src="img/cashew.jpg" alt="Chicken and cashew nut stir fry" loading="lazy" width="96" height="96"><div class="mtext"><div class="mhead"><h3>Cashew Nut</h3><span class="heat" aria-label="Spice level 1 of 3" title="Spice level 1 of 3"><svg class="ch"><use href="#i-chilli"/></svg></span><span class="dots"></span></div><p>Cashew nuts, onion, mushroom, peppers and spring onion</p></div></li>
+          <li class="mitem"><span class="num">22</span><div class="mtext"><div class="mhead"><h3>Yummy Chicken</h3><span class="heat" aria-label="Spice level 1 of 3" title="Spice level 1 of 3"><svg class="ch"><use href="#i-chilli"/></svg></span><span class="dots"></span></div><p>Crispy chicken tossed in the chef's special sauce</p></div></li>
+          <li class="mitem has-img"><img src="img/kra-pao.jpg" alt="Pad krapow with rice and a fried egg" loading="lazy" width="96" height="96"><div class="mtext"><div class="mhead"><h3>Chilli &amp; Basil (Pad Krapow)</h3><span class="heat" aria-label="Spice level 3 of 3" title="Spice level 3 of 3"><svg class="ch"><use href="#i-chilli"/></svg><svg class="ch"><use href="#i-chilli"/></svg><svg class="ch"><use href="#i-chilli"/></svg></span><span class="chip fav">Diners' favourite</span><span class="dots"></span></div><p>The popular Thai favourite: hot and spicy with chilli, garlic and basil</p></div></li>
+          <li class="mitem"><span class="num">24</span><div class="mtext"><div class="mhead"><h3>Ginger</h3><span class="chip">V</span><span class="dots"></span></div><p>Fresh ginger, mushroom, onion, red and green chilli, celery and spring onion</p></div></li>
+          <li class="mitem"><span class="num">25</span><div class="mtext"><div class="mhead"><h3>Oyster Sauce</h3><span class="dots"></span></div><p>Mushroom, onion, broccoli and spring onion in oyster sauce</p></div></li>
+          <li class="mitem"><span class="num">26</span><div class="mtext"><div class="mhead"><h3>Mixed Vegetables &amp; Tofu</h3><span class="chip">V</span><span class="dots"></span></div><p>Stir-fried with soya sauce</p></div></li>
+        </ul>
       </div>
-      <p class="menu-note">Sample dishes for this demo. The full menu and today's prices are available in the restaurant or by phone.</p>
+      <div class="mpanel" role="tabpanel" id="p-noodle" aria-labelledby="t-noodle" hidden>
+        <div class="prices"><span class="plab">Choose your filling:</span><span><b>Prawn</b> £11.95</span><span><b>Beef</b> £11.95</span><span><b>Chicken</b> £11.50</span><span><b>Veg</b> £10.50</span></div>
+        <ul class="mlist">
+          <li class="mitem has-img"><img src="img/pad-thai.jpg" alt="Pad Thai with prawns, beansprouts and lime" loading="lazy" width="96" height="96"><div class="mtext"><div class="mhead"><h3>Pad Thai</h3><span class="chip fav">Diners' favourite</span><span class="dots"></span></div><p>The most popular Thai noodle dish: rice noodles with egg, beansprouts, spring onion and tamarind sauce</p></div></li>
+          <li class="mitem"><span class="num">32</span><div class="mtext"><div class="mhead"><h3>Pad Mee Siam</h3><span class="dots"></span></div><p>Egg noodles with beansprouts, spring onion and dark soya sauce</p></div></li>
+          <li class="mitem has-img"><img src="img/fried-rice.jpg" alt="Thai fried rice" loading="lazy" width="96" height="96"><div class="mtext"><div class="mhead"><h3>Special Fried Rice</h3><span class="dots"></span><span class="price">£10.50</span></div><p>Fried rice with egg, chicken, prawn and vegetables</p></div></li>
+          <li class="mitem"><span class="num">34</span><div class="mtext"><div class="mhead"><h3>Steamed Rice</h3><span class="dots"></span><span class="price">£3.00</span></div></div></li>
+          <li class="mitem"><span class="num">35</span><div class="mtext"><div class="mhead"><h3>Coconut Rice</h3><span class="dots"></span><span class="price">£3.50</span></div></div></li>
+          <li class="mitem"><span class="num">36</span><div class="mtext"><div class="mhead"><h3>Sticky Rice</h3><span class="dots"></span><span class="price">£3.25</span></div></div></li>
+        </ul>
+      </div>
+      <div class="mpanel" role="tabpanel" id="p-special" aria-labelledby="t-special" hidden>
+        <ul class="mlist">
+          <li class="mitem"><span class="num">27</span><div class="mtext"><div class="mhead"><h3>Neua Kra Ta</h3><span class="dots"></span><span class="price">£15.95</span></div><p>Grilled rib eye, finely sliced, with vegetables and black pepper sauce</p></div></li>
+          <li class="mitem"><span class="num">28</span><div class="mtext"><div class="mhead"><h3>Weeping Tiger</h3><span class="dots"></span><span class="price">£15.95</span></div><p>Grilled rib eye marinated in a spicy Thai sauce, served with chilli sauce</p></div></li>
+          <li class="mitem"><span class="num">29</span><div class="mtext"><div class="mhead"><h3>Garlic Prawns</h3><span class="dots"></span><span class="price">£12.95</span></div><p>Deep-fried prawns with garlic and black pepper sauce</p></div></li>
+          <li class="mitem"><span class="num">30</span><div class="mtext"><div class="mhead"><h3>Prawn Chu Chi</h3><span class="dots"></span><span class="price">£12.95</span></div><p>Deep-fried prawns in Thai red curry sauce with shredded lime leaves</p></div></li>
+        </ul>
+      </div>
+      <p class="menu-note">Dishes with a photo are shown with a stock image. Prices may change, so please check when you order. If you have any allergies or dietary requirements, tell us before ordering. <span class="chip">V</span> = vegetarian</p>
     </div>
   </section>
 
@@ -384,26 +448,26 @@ footer ul{list-style:none;padding:0;margin:.6rem 0 0;display:grid;gap:.4rem}
           <table class="hours" id="hours">
             <tbody>
               <tr data-day="1"><th scope="row">Monday</th><td>Closed</td></tr>
-              <tr data-day="2"><th scope="row">Tuesday</th><td>12:00–3:30pm · 5:30–8:30pm</td></tr>
-              <tr data-day="3"><th scope="row">Wednesday</th><td>12:00–3:30pm · 5:30–8:30pm</td></tr>
-              <tr data-day="4"><th scope="row">Thursday</th><td>12:00–3:30pm · 5:30–8:30pm</td></tr>
-              <tr data-day="5"><th scope="row">Friday</th><td>12:00–3:30pm · 5:30–8:30pm</td></tr>
-              <tr data-day="6"><th scope="row">Saturday</th><td>12:00–3:30pm · 5:30–8:30pm</td></tr>
-              <tr data-day="0"><th scope="row">Sunday</th><td>12:00–3:30pm · 5:30–8:30pm</td></tr>
+              <tr data-day="2"><th scope="row">Tuesday</th><td>5:30–8:30pm</td></tr>
+              <tr data-day="3"><th scope="row">Wednesday</th><td>5:30–8:30pm</td></tr>
+              <tr data-day="4"><th scope="row">Thursday</th><td>5:30–8:30pm</td></tr>
+              <tr data-day="5"><th scope="row">Friday</th><td>5:30–8:30pm</td></tr>
+              <tr data-day="6"><th scope="row">Saturday</th><td>5:30–8:30pm</td></tr>
+              <tr data-day="0"><th scope="row">Sunday</th><td>5:30–8:30pm</td></tr>
             </tbody>
           </table>
-          <p class="small-note">Hours can change on bank holidays. Please call to check.</p>
+          <p class="small-note">Evenings only, Tuesday to Sunday. Hours can change on bank holidays, so please call to check.</p>
         </div>
         <div class="panel">
           <h3>Bookings &amp; takeaway</h3>
           <ul class="contact-list">
-            <li><svg><use href="#i-phone"/></svg><span><a href="tel:+447834555597">07834 555597</a><br>Call to book a table or order a takeaway</span></li>
+            <li><svg><use href="#i-phone"/></svg><span><a href="tel:+447723669463">07723 669463</a><br>Call to book a table or order a takeaway</span></li>
             <li><svg><use href="#i-pin"/></svg><span>6 Bath Place, Worthing<br>West Sussex, BN11 3BA</span></li>
             <li><svg><use href="#i-glass"/></svg><span>Unlicensed. Bring your own wine or beer.</span></li>
           </ul>
           <iframe class="map" title="Map showing Thai Dish, 6 Bath Place, Worthing" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=6%20Bath%20Place%2C%20Worthing%20BN11%203BA&amp;z=16&amp;output=embed"></iframe>
           <div class="hero-ctas" style="margin:1.2rem 0 0">
-            <a class="btn btn-primary" href="tel:+447834555597"><svg><use href="#i-phone"/></svg>Call now</a>
+            <a class="btn btn-primary" href="tel:+447723669463"><svg><use href="#i-phone"/></svg>Call now</a>
             <a class="btn btn-ghost" href="https://www.google.com/maps/dir/?api=1&amp;destination=6+Bath+Place+Worthing+BN11+3BA" target="_blank" rel="noopener"><svg><use href="#i-pin"/></svg>Directions</a>
           </div>
         </div>
@@ -418,7 +482,7 @@ footer ul{list-style:none;padding:0;margin:.6rem 0 0;display:grid;gap:.4rem}
         <h2>Book your table <em class="accent">tonight</em></h2>
         <p class="lead" style="margin-inline:auto">We are a small restaurant, so call ahead to be sure of a seat, or to order a takeaway for collection.</p>
         <div class="hero-ctas">
-          <a class="btn btn-primary" href="tel:+447834555597"><svg><use href="#i-phone"/></svg>07834 555597</a>
+          <a class="btn btn-primary" href="tel:+447723669463"><svg><use href="#i-phone"/></svg>07723 669463</a>
           <a class="btn btn-ghost" href="#visit"><svg><use href="#i-clock"/></svg>Opening hours</a>
         </div>
       </div>
@@ -434,7 +498,7 @@ footer ul{list-style:none;padding:0;margin:.6rem 0 0;display:grid;gap:.4rem}
     </div>
     <div>
       <span style="color:#fff;font-weight:700">Visit</span>
-      <ul><li>6 Bath Place, Worthing</li><li>West Sussex, BN11 3BA</li><li><a href="tel:+447834555597">07834 555597</a></li></ul>
+      <ul><li>6 Bath Place, Worthing</li><li>West Sussex, BN11 3BA</li><li><a href="tel:+447723669463">07723 669463</a></li></ul>
     </div>
     <div>
       <span style="color:#fff;font-weight:700">Explore</span>
@@ -448,19 +512,18 @@ footer ul{list-style:none;padding:0;margin:.6rem 0 0;display:grid;gap:.4rem}
 <li>Massaman: <a href="https://commons.wikimedia.org/wiki/File:Masaman-curry.jpg" target="_blank" rel="noopener">Masaman-curry.jpg</a> by Vee Satayamas (CC BY 4.0)</li>
 <li>Panang: <a href="https://commons.wikimedia.org/wiki/File:Panang_curry_(42943883862).jpg" target="_blank" rel="noopener">Panang curry (42943883862).jpg</a> by Vee Satayamas from Bangkok, Thailand (CC BY 2.0)</li>
 <li>Pad Thai: <a href="https://commons.wikimedia.org/wiki/File:Phat_Thai_kung_Chang_Khien_street_stall.jpg" target="_blank" rel="noopener">Phat Thai kung Chang Khien street stall.jpg</a> by Takeaway (CC BY-SA 3.0)</li>
-<li>Kee Mao: <a href="https://commons.wikimedia.org/wiki/File:Drunken_noodles_(pad_kee_mao).jpg" target="_blank" rel="noopener">Drunken noodles (pad kee mao).jpg</a> by Joy (CC BY 2.0)</li>
 <li>Fried Rice: <a href="https://commons.wikimedia.org/wiki/File:Khao_phat_thale_(rice_fried_with_seafood),_2018-05-20.jpg" target="_blank" rel="noopener">Khao phat thale (rice fried with seafood), 2018-05-20.jpg</a> by Bitterschoko (CC0)</li>
 <li>Ribs: <a href="https://commons.wikimedia.org/wiki/File:Si_khrong_mu_thot_2.JPG" target="_blank" rel="noopener">Si khrong mu thot 2.JPG</a> by Takeaway (CC BY-SA 3.0)</li>
 <li>Satay: <a href="https://commons.wikimedia.org/wiki/File:Chicken_Satay_(54029806221).jpg" target="_blank" rel="noopener">Chicken Satay (54029806221).jpg</a> by Thank You (25 Millions ) views from Fresno, USA (CC BY 2.0)</li>
 <li>Tom Yum: <a href="https://commons.wikimedia.org/wiki/File:Siam_Garden_Tom_yum_goong_ac.jpg" target="_blank" rel="noopener">Siam Garden Tom yum goong ac.jpg</a> by Asturio Cantabrio (CC BY-SA 4.0)</li>
 <li>Cashew: <a href="https://commons.wikimedia.org/wiki/File:%E0%B9%84%E0%B8%81%E0%B9%88%E0%B8%9C%E0%B8%B1%E0%B8%94%E0%B9%80%E0%B8%A1%E0%B9%87%E0%B8%94%E0%B8%A1%E0%B8%B0%E0%B8%A1%E0%B9%88%E0%B8%A7%E0%B8%87%E0%B8%AB%E0%B8%B4%E0%B8%A1%E0%B8%9E%E0%B8%B2%E0%B8%99%E0%B8%95%E0%B9%8C_02.jpg" target="_blank" rel="noopener">ไก่ผัดเม็ดมะม่วงหิมพานต์ 02.jpg</a> by Chainwit. (CC BY-SA 4.0)</li>
 </ul></details>
-    <p class="legal">This is an unsolicited concept website made by APTO to show what a site could look like for Thai Dish. Thai Dish is not an APTO client and has not endorsed this page. Ratings are summarised from public review sites; dishes shown are examples and photos are stock images. Want one for your business? <a href="https://apto-pro.com/web/#contact" style="color:#F5C55A">Get your website →</a></p>
+    <p class="legal">This is an unsolicited concept website made by APTO to show what a site could look like for Thai Dish. Thai Dish is not an APTO client and has not endorsed this page. Ratings are summarised from public review sites; dish photos are stock images. Want one for your business? <a href="https://apto-pro.com/web/#contact" style="color:#F5C55A">Get your website →</a></p>
   </div>
 </footer>
 
 <div class="callbar">
-  <a class="btn btn-primary" href="tel:+447834555597"><svg><use href="#i-phone"/></svg>Call to book</a>
+  <a class="btn btn-primary" href="tel:+447723669463"><svg><use href="#i-phone"/></svg>Call to book</a>
   <a class="btn btn-ghost" href="#menu"><svg><use href="#i-menu"/></svg>Menu</a>
 </div>
 
@@ -493,7 +556,7 @@ footer ul{list-style:none;padding:0;margin:.6rem 0 0;display:grid;gap:.4rem}
     var mins=(+get('hour'))*60+(+get('minute'));
     var row=document.querySelector('#hours tr[data-day="'+day+'"]');
     if(row)row.classList.add('today');
-    var open=day!==1&&((mins>=720&&mins<930)||(mins>=1050&&mins<1110));
+    var open=day!==1&&mins>=1050&&mins<1110;
     var el=document.getElementById('openNow');
     el.classList.toggle('yes',open);
     el.lastElementChild.textContent=open?'Open now':'Closed right now';
